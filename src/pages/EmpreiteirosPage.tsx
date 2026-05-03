@@ -102,7 +102,7 @@ export default function EmpreiteirosPage() {
           <div className="absolute inset-0 bg-gradient-to-br from-[#1a1208]/95 via-[#1a1208]/80 to-[#2d1f0a]/90" />
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_60%,rgba(201,136,13,0.22),transparent_60%)]" />
 
-          <div className="container mx-auto px-4 relative py-20 sm:py-32 lg:py-40">
+          <div className="container mx-auto px-4 relative pt-28 pb-20 sm:py-32 lg:py-40">
             <div className="max-w-3xl">
               <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm text-white/80 font-medium mb-8">
                 <Clock className="w-4 h-4 text-primary" />

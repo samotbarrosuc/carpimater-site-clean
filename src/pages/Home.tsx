@@ -69,7 +69,7 @@ export default function Home() {
         <Navbar />
 
         {/* ── HERO ── */}
-        <section id="home-hero" className="pt-20 pb-12 sm:pt-32 sm:pb-20 bg-secondary text-secondary-foreground relative overflow-hidden">
+        <section id="home-hero" className="pt-28 pb-12 sm:pt-32 sm:pb-20 bg-secondary text-secondary-foreground relative overflow-hidden">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(201,136,13,0.22),transparent_42%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_75%,rgba(255,255,255,0.07),transparent_38%)]" />
           <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />

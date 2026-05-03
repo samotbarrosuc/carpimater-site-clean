@@ -26,7 +26,7 @@ const ALL_SERVICE_PILLS: Array<{ label: string; href: string; key: string; previ
 function scrollToSection(id: string) {
   const element = document.getElementById(id)
   if (element) {
-    const top = element.getBoundingClientRect().top + window.scrollY - 100
+    const top = element.getBoundingClientRect().top + window.scrollY - 120
     window.scrollTo({ top, behavior: 'smooth' })
   }
 }

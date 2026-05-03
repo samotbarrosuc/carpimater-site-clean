@@ -56,7 +56,7 @@ export default function PavimentosLanding() {
         <Navbar />
 
         {/* ── HERO HEADER ── */}
-        <section className="pt-[73px] bg-secondary">
+        <section className="pt-28 sm:pt-32 bg-secondary">
 
           {/* Top label + headline */}
           <div className="text-center pt-8 pb-5 px-4">

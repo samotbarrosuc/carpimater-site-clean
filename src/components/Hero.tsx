@@ -62,7 +62,7 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className={`relative min-h-[88vh] sm:min-h-screen bg-secondary flex items-center overflow-hidden pt-20 pb-12 sm:pt-32 sm:pb-20 lg:pt-32 lg:pb-20 ${
+      className={`relative min-h-[88vh] sm:min-h-screen bg-secondary flex items-center overflow-hidden pt-28 pb-12 sm:pt-32 sm:pb-20 lg:pt-32 lg:pb-20 ${
         isKitchen ? 'bg-[#1f2427]' : ''
       }`}
     >
