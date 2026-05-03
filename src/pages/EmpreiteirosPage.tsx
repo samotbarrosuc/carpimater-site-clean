@@ -310,7 +310,7 @@ export default function EmpreiteirosPage() {
         </section>
 
         {/* ── FAQ ── */}
-        <section id="faq-section" className="py-12 sm:py-20 bg-white">
+        <section id="faq" className="py-12 sm:py-20 bg-white">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-14">

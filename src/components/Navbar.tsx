@@ -109,6 +109,11 @@ export default function Navbar() {
         { label: 'Início', sectionId: 'home-hero' },
         { label: 'Serviços', sectionId: 'home-servicos' },
       ]
+    : isKitchen
+    ? [
+        { label: 'FAQ', sectionId: 'faq' },
+        { label: 'Sobre Nós', sectionId: 'sobre-nos' },
+      ]
     : [
         { label: 'Catálogo', sectionId: 'catalogo' },
         { label: 'FAQ', sectionId: 'faq' },
