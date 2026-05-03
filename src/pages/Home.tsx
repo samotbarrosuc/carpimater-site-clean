@@ -123,7 +123,7 @@ export default function Home() {
                   {[
                     { label: 'Cozinhas', sub: 'Cozinhas por medida', href: '/cozinha', icon: Wrench, img: '/images/card-cozinhas.png' },
                     { label: 'Pavimentos', sub: 'Vinílico SPC & Flutuante', href: '/pavimentos', icon: Layers, img: '/images/pavimento-vinilico-sala-coimbra.png' },
-                    { label: 'Construção & Obra', sub: 'Para empreiteiros e investidores imobiliários', href: '/empreiteiros', icon: ShieldCheck, img: '/images/card-obras.png' },
+                    { label: 'Construção & Obra', sub: 'Para empreiteiros e investidores imobiliários', href: '/construção', icon: ShieldCheck, img: '/images/card-obras.png' },
                   ].map(({ label, sub, href, icon: Icon, img }) => (
                     <a
                       key={href}
@@ -306,7 +306,7 @@ export default function Home() {
               </a>
 
               {/* Empreiteiros */}
-              <a href="/empreiteiros" className="group flex flex-col rounded-2xl border border-primary/30 bg-card overflow-hidden hover:border-primary hover:shadow-[0_12px_40px_rgba(201,136,13,0.15)] transition-all duration-300 relative">
+              <a href="/construção" className="group flex flex-col rounded-2xl border border-primary/30 bg-card overflow-hidden hover:border-primary hover:shadow-[0_12px_40px_rgba(201,136,13,0.15)] transition-all duration-300 relative">
                 <div className="absolute top-3 right-3 z-10 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shadow-md">
                   Para Obra
                 </div>
@@ -542,7 +542,7 @@ export default function Home() {
                 {[
                   { label: 'Cozinhas', sub: 'Cozinhas por medida', href: '/cozinha', img: '/images/card-cozinhas.png' },
                   { label: 'Pavimentos', sub: 'Vinílico SPC & Flutuante', href: '/pavimentos', img: '/images/pavimento-vinilico-sala-coimbra.png' },
-                  { label: 'Construção & Obra', sub: 'Para empreiteiros e investidores imobiliários', href: '/empreiteiros', img: '/images/card-obras.png' },
+                  { label: 'Construção & Obra', sub: 'Para empreiteiros e investidores imobiliários', href: '/construção', img: '/images/card-obras.png' },
                 ].map(({ label, sub, href, img }) => (
                   <a
                     key={href}

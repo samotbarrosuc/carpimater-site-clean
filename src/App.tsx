@@ -22,7 +22,8 @@ function Router() {
       <Route path="/flutuante" component={FlutuantePage} />
       <Route path="/pavimentos" component={PavimentosLanding} />
       <Route path="/cozinha" component={CozinhaPage} />
-      <Route path="/empreiteiros" component={EmpreiteirosPage} />
+      <Route path="/construção" component={EmpreiteirosPage} />
+      <Route path="/empreiteiros" component={() => <Redirect to="/construção" />} />
       <Route path="/politica-de-privacidade" component={PrivacyPolicyPage} />
       <Route component={NotFound} />
     </Switch>

@@ -20,7 +20,7 @@ const WA_EMPREITEIROS = `https://wa.me/351919528638?text=${encodeURIComponent('O
 const ALL_SERVICE_PILLS: Array<{ label: string; href: string; key: string; preview: string }> = [
   { label: 'Cozinhas', href: '/cozinha', key: 'cozinha', preview: '/images/card-cozinhas.png' },
   { label: 'Pavimentos', href: '/pavimentos', key: 'pavimentos', preview: '/images/card-pavimentos.png' },
-  { label: 'Construção & Obra', href: '/empreiteiros', key: 'empreiteiros', preview: '/images/card-obras.png' },
+  { label: 'Construção', href: '/construção', key: 'empreiteiros', preview: '/images/card-obras.png' },
 ]
 
 function scrollToSection(id: string) {
@@ -42,7 +42,7 @@ export default function Navbar() {
   const [pathname] = useLocation()
 
   const isHomePage = pathname === '/'
-  const isEmpreiteiros = pathname.startsWith('/empreiteiros')
+  const isEmpreiteiros = pathname.startsWith('/construção')
   const isPavimentosLanding = pathname === '/pavimentos'
   const isPavimentos =
     pathname.startsWith('/vinilico') ||
@@ -59,7 +59,7 @@ export default function Navbar() {
   const basePath = isHomePage
     ? '/'
     : isEmpreiteiros
-    ? '/empreiteiros'
+    ? '/construção'
     : isPavimentosLanding
     ? '/pavimentos'
     : `/${activeVariant}`
@@ -109,7 +109,7 @@ export default function Navbar() {
       ? 'Flutuante'
       : 'SPC Vinílico'
     : activePillKey === 'empreiteiros'
-    ? 'Construção & Obra'
+    ? 'Construção'
     : activeContent?.subtitle ?? 'Serviços'
 
   const ctaLabel = isVinilico || isFlutuante ? 'Simulador' : 'Pedir Orçamento'
@@ -126,10 +126,7 @@ export default function Navbar() {
         { label: 'Serviços', sectionId: 'home-servicos' },
       ]
     : isEmpreiteiros
-    ? [
-        { label: 'Serviços', sectionId: 'servicos' },
-        { label: 'Projectos', sectionId: 'projectos' },
-      ]
+    ? []
     : isVinilico
     ? [
         { label: 'Flutuante', sectionId: '_flutuante' },

@@ -16,25 +16,25 @@ import {
 export default function Footer() {
   const [pathname] = useLocation()
   const isHomePage = pathname === '/'
-  const isEmpreiteiros = pathname.startsWith('/empreiteiros')
+  const isEmpreiteiros = pathname.startsWith('/construção')
   const isPavimentos = pathname.startsWith('/vinilico') || pathname.startsWith('/flutuante')
   const siteVariant = getSiteVariantFromPath(pathname)
   const isKitchen = siteVariant === 'cozinha'
   const siteContent = getSiteVariantContent(siteVariant)
   const currentYear = new Date().getFullYear()
-  const basePath = isEmpreiteiros ? '/empreiteiros' : `/${siteVariant}`
+  const basePath = isEmpreiteiros ? '/construção' : `/${siteVariant}`
 
   const serviceLinks = isHomePage
     ? [
         { label: 'Pavimentos (Vinílico & Flutuante)', href: '/pavimentos' },
         { label: 'Cozinhas por Medida', href: '/cozinha' },
-        { label: 'Construção & Empreiteiros', href: '/empreiteiros' },
+        { label: 'Construção & Empreiteiros', href: '/construção' },
         { label: 'Sobre Nós', href: '/sobre-nos' },
       ]
     : isEmpreiteiros
     ? [
-        { label: 'Serviços de Carpintaria', href: '/empreiteiros#servicos' },
-        { label: 'Galeria de Projectos', href: '/empreiteiros#projectos' },
+        { label: 'Serviços de Carpintaria', href: '/construção#servicos' },
+        { label: 'Galeria de Projectos', href: '/construção#projectos' },
         { label: 'Pavimentos', href: '/pavimentos' },
         { label: 'Cozinhas por Medida', href: '/cozinha' },
         { label: 'Sobre Nós', href: '/sobre-nos' },
@@ -45,7 +45,7 @@ export default function Footer() {
         { label: 'Simulador de Orçamento', href: `${basePath}#simulador` },
         { label: 'Como Funciona', href: `${basePath}#como-funciona` },
         { label: 'Cozinhas por Medida', href: '/cozinha' },
-        { label: 'Construção & Empreiteiros', href: '/empreiteiros' },
+        { label: 'Construção & Empreiteiros', href: '/construção' },
         { label: 'Sobre Nós', href: '/sobre-nos' },
       ]
     : isKitchen
@@ -54,7 +54,7 @@ export default function Footer() {
         { label: 'Pedido de Proposta', href: getWhatsAppUrl(undefined, siteVariant) },
         { label: 'Como Funciona', href: `${basePath}#como-funciona` },
         { label: 'Pavimentos', href: '/pavimentos' },
-        { label: 'Construção & Empreiteiros', href: '/empreiteiros' },
+        { label: 'Construção & Empreiteiros', href: '/construção' },
         { label: 'Sobre Nós', href: '/sobre-nos' },
       ]
     : [
@@ -62,7 +62,7 @@ export default function Footer() {
         { label: 'Cozinhas por Medida', href: '/cozinha' },
         { label: 'Simulador de Orçamento', href: `${basePath}#simulador` },
         { label: 'Como Funciona', href: `${basePath}#como-funciona` },
-        { label: 'Construção & Empreiteiros', href: '/empreiteiros' },
+        { label: 'Construção & Empreiteiros', href: '/construção' },
         { label: 'Sobre Nós', href: '/sobre-nos' },
       ]
 
@@ -98,7 +98,7 @@ export default function Footer() {
                 { label: 'Cozinhas à medida', href: '/cozinha' },
                 { label: 'Pavimento flutuante', href: '/flutuante' },
                 { label: 'Pavimento vinílico', href: '/vinilico' },
-                { label: 'Carpintaria para Obras', href: '/empreiteiros' },
+                { label: 'Carpintaria para Obras', href: '/construção' },
                 { label: 'Sobre Nós', href: '/' },
               ].map((link) => (
                 <li key={link.href}>
@@ -154,7 +154,7 @@ export default function Footer() {
                 {[
                   { label: 'Cozinhas', href: '/cozinha' },
                   { label: 'Pavimentos', href: '/pavimentos' },
-                  { label: 'Empreiteiros', href: '/empreiteiros' },
+                  { label: 'Empreiteiros', href: '/construção' },
                 ].map((p) => (
                   <a
                     key={p.href}

@@ -2,7 +2,6 @@
 
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { CompareSlider, pairs as beforeAfterPairs } from "@/components/cozinha/sections/BeforeAfter";
 
 const kpis = [
   { value: "Paços de Ferreira", label: "Fabrico" },
@@ -45,17 +44,6 @@ export default function FabricoPrazoAdjudicacao() {
             ))}
           </motion.div>
 
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.5, delay: 0.2 }}
-            className="rounded-[30px] border border-border/50 bg-white shadow-sm p-4 sm:p-5 lg:p-6"
-          >
-            <CompareSlider before={beforeAfterPairs[0].before} after={beforeAfterPairs[0].after} aspectRatio="16/9" />
-            <p className="text-center text-xs text-muted-foreground mt-4 font-medium tracking-wide">
-              Arraste o divisor — Antes & Depois
-            </p>
-          </motion.div>
         </div>
       </div>
     </section>

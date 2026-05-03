@@ -113,6 +113,12 @@ export default function Hero() {
                 <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">
                   Fabrico em Paços de Ferreira e montagem profissional incluída.<br />Qualidade superior à das grandes superfícies, a preços semelhantes.
                 </p>
+                <div className="w-full max-w-xl mx-auto mb-8 rounded-[1.75rem] overflow-hidden border border-white/10 bg-white/5 shadow-sm">
+                  <CompareSlider before={beforeAfterPairs[0].before} after={beforeAfterPairs[0].after} aspectRatio="16/9" />
+                </div>
+                <p className="text-center text-xs text-white/60 mt-2">
+                  Arraste o divisor para ver o antes e depois.
+                </p>
               </div>)
             ) : (
               <h1 className="w-full max-w-[13ch] sm:max-w-[14ch] lg:max-w-none text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] 2xl:text-[4rem] font-display font-bold leading-[1.08] tracking-[-0.015em] mb-5">

@@ -1,7 +1,10 @@
 import { useState } from 'react'
-import { MapPin, ChevronDown, CheckCircle2, Shield, Clock, Star, Wrench, Package, DoorOpen, UtensilsCrossed, Layers, Maximize2, BookOpen, Tv, Droplets, Briefcase, BedDouble, Archive, LayoutGrid, Ruler, LayoutDashboard, Shirt } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { MapPin, ChevronDown, CheckCircle2, Shield, Clock, Gem, Star, Wrench, Package, DoorOpen, UtensilsCrossed, Layers, Maximize2, BookOpen, Tv, Droplets, Briefcase, BedDouble, Archive, LayoutGrid, Ruler, LayoutDashboard, Shirt, MessageCircle } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
+import HowItWorks from '@/components/cozinha/sections/HowItWorks'
+import FabricoPrazoAdjudicacao from '@/components/cozinha/sections/FabricoPrazoAdjudicacao'
 import { SimulatorProvider } from '@/context/SimulatorContext'
 
 const WA_NUMBER = '351919528638'
@@ -14,20 +17,20 @@ const TEL_LINK = `tel:+${WA_NUMBER}`
 const SERVICES = [
   { icon: LayoutGrid, label: 'Roupeiros Embutidos' },
   { icon: UtensilsCrossed, label: 'Cozinhas Completas' },
-  { icon: Shirt, label: 'Closets & Walk-in' },
-  { icon: Layers, label: 'Painéis de Parede' },
-  { icon: DoorOpen, label: 'Portas Interiores' },
+  { icon: Shirt, label: 'Closets' },
+  { icon: Layers, label: 'Portas Interiores' },
+  { icon: DoorOpen, label: 'Painéis de Parede' },
   { icon: Ruler, label: 'Escadas em Madeira' },
   { icon: Maximize2, label: 'Aproveitamento de Espaços' },
   { icon: Package, label: 'Sapateiras & Entradas' },
   { icon: BookOpen, label: 'Estantes & Bibliotecas' },
   { icon: Tv, label: 'Móveis de TV Embutidos' },
   { icon: Droplets, label: 'Móveis de Casa de Banho' },
-  { icon: LayoutDashboard, label: 'Tetos Falsos & Sancas' },
-  { icon: Briefcase, label: 'Escritórios Embutidos' },
+  { icon: LayoutDashboard, label: 'Sancas e LEDs' },
+  { icon: Briefcase, label: 'Escritórios e Cadeiras' },
   { icon: BedDouble, label: 'Cabeceiras de Quarto' },
   { icon: Archive, label: 'Armários de Despensa' },
-  { icon: Wrench, label: 'Rodapés & Revestimentos' },
+  { icon: Wrench, label: 'Pavimentos & Rodapés' },
 ]
 
 const FAQS = [
@@ -97,49 +100,93 @@ export default function EmpreiteirosPage() {
         <Navbar />
 
         {/* ── HERO ── */}
-        <section className="relative min-h-[92vh] flex items-center overflow-hidden bg-[#1a1208]">
-          <div className="absolute inset-0 bg-[url('/images/hero-bg.png')] bg-cover bg-center opacity-20" />
-          <div className="absolute inset-0 bg-gradient-to-br from-[#1a1208]/95 via-[#1a1208]/80 to-[#2d1f0a]/90" />
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_60%,rgba(201,136,13,0.22),transparent_60%)]" />
+        <section id="hero" className="relative min-h-[88vh] sm:min-h-screen bg-secondary flex items-center overflow-hidden pt-28 pb-12 sm:pt-32 sm:pb-20 lg:pt-32 lg:pb-20">
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,#1f2427_0%,#2a3034_35%,#15191c_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(236,156,72,0.22),transparent_38%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_76%,rgba(96,126,142,0.24),transparent_36%)]" />
 
-          <div className="container mx-auto px-4 relative pt-28 pb-20 sm:py-32 lg:py-40">
-            <div className="max-w-3xl">
-              <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm text-white/80 font-medium mb-8">
-                <Clock className="w-4 h-4 text-primary" />
-                <span className="sm:hidden">Paços de Ferreira · +40 anos</span><span className="hidden sm:inline">Mais de 40 anos de carpintaria</span>
-              </div>
-
-              <h1 className="text-[1.9rem] sm:text-[2.5rem] lg:text-[3rem] font-display font-bold text-white leading-[1.07] mb-5">
-                A Carpintaria Que{' '}
-                <span className="block text-primary">Não Atrasa a Sua Obra</span>
-              </h1>
-
-              <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mb-8">
-                <span className="sm:hidden">Carpintaria sob medida para obras. Tratamos de tudo, da proposta à instalação.</span>
-                <span className="hidden sm:inline">Roupeiros, cozinhas, portas interiores, closets e painéis para empreiteiros e investidores. Materiais de qualidade, preços competitivos, entrega cumprida.</span>
-              </p>
-
-              <div className="flex flex-col gap-2.5 mb-7">
-                {['Orçamento Gratuito em 24h', 'Projecto Detalhado e Aprovado', 'Instalado na Sua Obra a Tempo'].map((item) => (
-                  <div key={item} className="flex items-center gap-2.5 text-white/75">
-                    <CheckCircle2 className="w-4 h-4 text-primary shrink-0" />
-                    <span className="text-sm">{item}</span>
-                  </div>
-                ))}
-              </div>
-
-              <a
-                href={WA_LINK_PROPOSTA}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-white font-bold px-7 py-4 rounded-full hover:bg-primary/90 transition-colors text-base shadow-[0_8px_30px_rgba(201,136,13,0.4)]"
+          <div className="container mx-auto px-5 sm:px-6 lg:px-8 relative z-10 w-full">
+            <div className="max-w-[1520px] mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,0.96fr)_minmax(540px,1.04fr)] gap-10 xl:gap-14 items-start">
+              <motion.div
+                initial={{ opacity: 0, y: 18 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.55 }}
+                className="max-w-[900px] mx-auto lg:mx-0 lg:pr-5 text-center lg:text-left flex flex-col items-center lg:items-start"
               >
-                Pedir Orçamento Gratuito
-              </a>
+                <div className="mb-6">
+                  <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
+                    <span className="block text-primary">Toda a carpintaria</span>
+                    <span className="block text-primary">para a sua obra,</span>
+                    <span className="block text-white text-[0.95em] italic">sem atrasos!</span>
+                  </h1>
+                  <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">
+                    <span className="sm:hidden">Carpintaria sob medida para obras.<br />Tratamos de tudo: das medidas à instalação.</span>
+                    <span className="hidden sm:inline">Roupeiros, cozinhas, portas interiores, closets e painéis, etc.<br />Materiais de qualidade, preços competitivos, prazos cumpridos.</span>
+                  </p>
 
-              <p className="text-white/45 text-sm mt-7">
-                Orçamento sem compromisso · Sem custos ocultos · Entrega cumprida
-              </p>
+                  <div className="sm:hidden rounded-[30px] border border-white/14 bg-white/[0.09] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.22)] mb-6">
+                    <div className="relative rounded-2xl overflow-hidden border border-white/10 h-[22rem]">
+                      <img
+                        src="/images/card-obras.png"
+                        alt="Carpintaria para obra CarpiMater"
+                        className="w-full h-full object-cover"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-2.5 mb-6">
+                  {['Orçamento gratuito e rápido', 'Pouca burocracia', 'Compromisso com os prazos'].map((item) => (
+                    <div key={item} className="flex items-center gap-2.5 text-white/80">
+                      <svg className="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                        <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                      </svg>
+                      <span className="text-sm">{item}</span>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start lg:flex-nowrap mb-6">
+                  <a
+                    href={WA_LINK_PROPOSTA}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="inline-flex items-center justify-center gap-3 min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
+                  >
+                    <MessageCircle className="w-4 h-4 shrink-0" />
+                    Pedir Orçamento Gratuito
+                  </a>
+                  <a
+                    href={TEL_LINK}
+                    className="inline-flex items-center justify-center gap-3 min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-semibold whitespace-nowrap border border-white/25 text-white bg-white/[0.04] hover:bg-white/[0.09] transition-colors"
+                  >
+                    Ligar Agora
+                  </a>
+                </div>
+
+                <p className="text-xs sm:text-sm text-white/40 max-w-[760px] mt-2">
+                  Orçamento sem compromisso · Sem custos ocultos · Entregue dentro do prazo
+                </p>
+              </motion.div>
+
+              <motion.aside
+                initial={{ opacity: 0, x: 20, y: 18 }}
+                animate={{ opacity: 1, x: 0, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.12 }}
+                className="hidden lg:block relative w-full max-w-[760px] mx-auto lg:mx-0 lg:justify-self-end lg:pt-2"
+              >
+                <div className="rounded-[30px] border border-white/14 bg-white/[0.09] backdrop-blur-xl p-4 sm:p-5 lg:p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
+                  <div className="relative rounded-2xl overflow-hidden border border-white/10 h-[22rem]">
+                    <img
+                      src="/images/card-obras.png"
+                      alt="Carpintaria para obra CarpiMater"
+                      className="w-full h-full object-cover"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                  </div>
+                </div>
+              </motion.aside>
             </div>
           </div>
 
@@ -149,16 +196,36 @@ export default function EmpreiteirosPage() {
           </div>
         </section>
 
+        {/* ── SERVICES GRID ── */}
+        <section id="servicos" className="py-12 sm:py-20 bg-[#f7f1e8]">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-14 rounded-[2rem] bg-white px-8 py-10 shadow-sm">
+              <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-950">
+                Tudo o que a sua obra precisa
+              </h2>
+              
+            </div>
+            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+              {SERVICES.map((s) => (
+                <div key={s.label} className="flex items-center gap-3 bg-[#efe2d1] border border-[#d8b3a0] rounded-3xl px-4 py-4 shadow-sm">
+                  <s.icon className="w-4 h-4 text-[#8b7355] shrink-0" />
+                  <span className="text-slate-950 text-sm font-medium">{s.label}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
         {/* ── TRUST BAR ── */}
         <div className="bg-[#111] border-y border-white/10 py-6">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 max-w-4xl mx-auto">
               {[
-                { val: 'Paços de Ferreira', sub: 'Capital Portuguesa do Móvel' },
-                { val: '40+ Anos', sub: 'De Tradição em Carpintaria' },
-                { val: 'Qualidade', sub: 'Materiais Premium por Defeito' },
+                { val: 'Fabrico Nacional', sub: 'Paços de Ferreira' },
+                { val: 'Tradição', sub: '40+ Anos' },
+                { val: 'Qualidade', sub: 'Materiais Premium' },
                 { val: 'Preço Justo', sub: 'Sem Intermediários' },
-                { val: 'Sem Atrasos', sub: 'Entrega Cumprida em Obra' },
+                { val: 'Prazos Cumpridos', sub: 'Sem Atrasos' },
               ].map((item, i, arr) => (
                 <div key={item.val} className={`text-center${i === arr.length - 1 && arr.length % 2 !== 0 ? ' col-span-2 sm:col-span-1' : ''}`}>
                   <p className="text-white font-bold text-sm">{item.val}</p>
@@ -169,108 +236,9 @@ export default function EmpreiteirosPage() {
           </div>
         </div>
 
-        {/* ── SERVICES GRID ── */}
-        <section id="servicos" className="py-12 sm:py-20 bg-[#1a1208]">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-14">
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-white">
-                Tudo o que a sua obra precisa
-              </h2>
-              <p className="text-white/55 mt-3 max-w-xl mx-auto">
-                De roupeiros a escadas, de cozinhas a tetos falsos — um único parceiro para toda a carpintaria.
-              </p>
-            </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 max-w-5xl mx-auto">
-              {SERVICES.map((s) => (
-                <div key={s.label} className="flex items-center gap-3 bg-white/5 border border-white/10 rounded-xl px-4 py-4">
-                  <s.icon className="w-4 h-4 text-primary shrink-0" />
-                  <span className="text-white/80 text-sm font-medium">{s.label}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* ── MARKET PROOF ── */}
-        <section className="py-12 sm:py-20 bg-[#111]">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-14">
-              <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">Porquê nos escolhem</p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-white">
-                O que nos torna diferentes
-              </h2>
-            </div>
-            <div className="grid gap-5 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto">
-              {[
-                {
-                  icon: Package,
-                  title: 'Fabrico próprio em Portugal',
-                  desc: 'Produção CNC em oficina própria em Paços de Ferreira. Sem intermediários, sem dependência de fornecedores externos.',
-                },
-                {
-                  icon: Clock,
-                  title: 'Prazos que não atrasam a obra',
-                  desc: 'A produção é nossa — o prazo está nas nossas mãos. Planeamos cada fase com datas concretas e cumprimo-las.',
-                },
-                {
-                  icon: Shield,
-                  title: 'Qualidade de material por defeito',
-                  desc: 'Não existe linha económica. Usamos MDF de qualidade, ferragens europeias e acabamentos que resistem ao tempo.',
-                },
-                {
-                  icon: Wrench,
-                  title: 'Orçamento fixo sem surpresas',
-                  desc: 'Preço fechado antes do fabrico. Sem alterações a meio da obra, sem custos ocultos, sem negociações de última hora.',
-                },
-              ].map((c) => (
-                <div key={c.title} className="rounded-2xl border border-white/10 bg-white/[0.04] p-7 hover:border-primary/40 hover:bg-white/[0.07] transition-all duration-300">
-                  <div className="w-11 h-11 rounded-xl bg-primary/15 flex items-center justify-center mb-5">
-                    <c.icon className="w-5 h-5 text-primary" />
-                  </div>
-                  <h3 className="font-bold text-white mb-2.5 leading-snug">{c.title}</h3>
-                  <p className="text-sm text-white/55 leading-relaxed">{c.desc}</p>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── HOW IT WORKS ── */}
-        <section className="py-12 sm:py-20 bg-[#150e04]">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-14">
-              <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">Processo</p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-white">Como Funciona</h2>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4 max-w-6xl mx-auto mb-12">
-              {[
-                { n: '01', title: 'Briefing Empresarial', when: 'Dia 1', desc: 'Analisamos o projecto e entregamos orçamento fixo em 48h, sem custos ocultos.' },
-                { n: '02', title: 'Projecto Detalhado', when: 'Semana 1–2', desc: 'Desenhamos cada solução com renders 3D para aprovação antes do fabrico.' },
-                { n: '03', title: 'Fabrico Eficiente', when: 'Semanas 2–10', desc: 'Produção CNC em oficina própria em Paços de Ferreira, com controlo total.' },
-                { n: '04', title: 'Instalação e Entrega', when: 'Até 3 Meses', desc: 'Montagem profissional em obra, pronto para venda ou entrega ao cliente final.' },
-              ].map((step) => (
-                <div key={step.n} className="relative rounded-2xl border border-white/10 bg-white/5 p-7 hover:border-primary/40 transition-colors">
-                  <div className="flex items-center gap-3 mb-5">
-                    <span className="text-4xl font-display font-bold text-primary/30">{step.n}</span>
-                    <span className="text-xs bg-primary/20 text-primary font-semibold px-3 py-1 rounded-full">{step.when}</span>
-                  </div>
-                  <h3 className="text-white font-bold text-lg mb-2">{step.title}</h3>
-                  <p className="text-white/55 text-sm leading-relaxed">{step.desc}</p>
-                </div>
-              ))}
-            </div>
-            <div className="text-center">
-              <a
-                href={WA_LINK_PROJETO}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:bg-primary/90 transition-colors shadow-[0_8px_30px_rgba(201,136,13,0.4)]"
-              >
-                Iniciar o Meu Projecto
-              </a>
-            </div>
-          </div>
-        </section>
+        <HowItWorks />
+        <FabricoPrazoAdjudicacao />
 
         {/* ── PROJECTS GALLERY ── */}
         <section id="projectos" className="py-12 sm:py-20 bg-background">
@@ -309,13 +277,69 @@ export default function EmpreiteirosPage() {
           </div>
         </section>
 
+        {/* ── MARKET PROOF ── */}
+        <section className="py-16 lg:py-20 bg-secondary">
+          <div className="container mx-auto px-4">
+            <div className="text-center mb-10">
+              <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
+                Porquê a CarpiMater
+              </p>
+              <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-white">
+                O que nos distingue
+              </h2>
+            </div>
+            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
+              {[
+                {
+                  icon: MapPin,
+                  title: 'Fabrico Próprio',
+                  desc: 'Produzimos em Paços de Ferreira, sem intermediários. Preço directo de fábrica.',
+                },
+                {
+                  icon: Clock,
+                  title: 'Prazos Cumpridos',
+                  desc: 'Planificamos cada fase antes de começar. O prazo acordado é o prazo de entrega.',
+                },
+                {
+                  icon: Gem,
+                  title: 'Materiais de Qualidade',
+                  desc: 'Utilizamos apenas ferragens de marca e madeiras de qualidade superior.',
+                },
+                {
+                  icon: Wrench,
+                  title: 'Montagem Incluída',
+                  desc: 'As nossas equipas instalam tudo. Do centro ao norte do país, sem custos adicionais.',
+                },
+              ].map((card, i) => {
+                const Icon = card.icon
+                return (
+                  <div
+                    key={card.title}
+                    className="rounded-xl border border-white/10 bg-white/[0.04] p-5 flex flex-col gap-3.5 hover:border-primary/25 transition-colors"
+                  >
+                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-primary/14">
+                      <Icon size={17} className="text-primary" />
+                    </div>
+                    <div>
+                      <h3 className="font-semibold text-white mb-1 text-sm leading-snug">
+                        {card.title}
+                      </h3>
+                      <p className="text-xs leading-relaxed text-white/45">{card.desc}</p>
+                    </div>
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        </section>
+
         {/* ── FAQ ── */}
-        <section id="faq" className="py-12 sm:py-20 bg-white">
+        <section id="faq" className="py-12 sm:py-20 bg-muted/30">
           <div className="container mx-auto px-4">
             <div className="max-w-3xl mx-auto">
               <div className="text-center mb-14">
                 <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">FAQ</p>
-                <h2 className="text-2xl sm:text-3xl font-display font-bold">Perguntas Frequentes</h2>
+                <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground">Perguntas Frequentes</h2>
               </div>
               <div className="space-y-3">
                 {FAQS.map((faq) => (
@@ -337,43 +361,13 @@ export default function EmpreiteirosPage() {
           </div>
         </section>
 
-        {/* ── TESTIMONIALS ── */}
-        <section className="py-12 sm:py-20 bg-[#1a1208]">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-14">
-              <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">Testemunhos</p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-white">O que dizem os nossos clientes</h2>
-            </div>
-            <div className="grid gap-6 lg:grid-cols-3 max-w-5xl mx-auto">
-              {[
-                { quote: 'A CarpiMater entregou a carpintaria da nossa promoção imobiliária dentro do prazo e com uma qualidade que superou as expectativas. Os acabamentos são excelentes.', name: 'Ricardo F.', role: 'Empreiteiro', location: 'Coimbra' },
-                { quote: 'Como investidor, o que mais me importa é cumprimento de prazos e qualidade. A CarpiMater entregou ambos. O projecto ficou pronto em menos de 3 meses.', name: 'Ana M.', role: 'Investidora Imobiliária', location: 'Porto' },
-                { quote: 'Os roupeiros e as portas encaixaram perfeitamente na construção. Trabalho com a CarpiMater em todas as obras da região centro.', name: 'Jorge S.', role: 'Gestor de Obra', location: 'Leiria' },
-              ].map((t) => (
-                <div key={t.name} className="rounded-2xl bg-white p-8">
-                  <div className="flex gap-1 mb-4">
-                    {[...Array(5)].map((_, i) => <Star key={i} className="w-4 h-4 fill-primary text-primary" />)}
-                  </div>
-                  <p className="text-foreground leading-7 mb-6 italic">"{t.quote}"</p>
-                  <div>
-                    <p className="font-bold text-foreground">{t.name}</p>
-                    <p className="text-sm text-muted-foreground">{t.role} · {t.location}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
-
         {/* ── FINAL CTA ── */}
-        <section className="relative overflow-hidden py-24 bg-[#0e0a04]">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_50%_50%,rgba(201,136,13,0.25),transparent_65%)]" />
-          <div className="absolute top-0 right-0 w-96 h-96 rounded-full border border-primary/10 -translate-y-1/2 translate-x-1/2" />
-          <div className="absolute bottom-0 left-0 w-64 h-64 rounded-full border border-primary/10 translate-y-1/2 -translate-x-1/2" />
+        <section className="py-20 lg:py-28 relative overflow-hidden bg-secondary">
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_0%,rgba(201,136,13,0.10),transparent_55%)]" />
 
-          <div className="container mx-auto px-4 relative text-center">
+          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
             <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">Pronto para começar?</p>
-            <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-4 max-w-2xl mx-auto leading-snug">
+            <h2 className="font-display font-bold mb-4 leading-snug text-white text-[clamp(1.5rem,3vw,2.2rem)]">
               Quer Qualidade de Carpintaria a Preço Justo?
             </h2>
             <p className="text-white/60 text-sm sm:text-base max-w-lg mx-auto mb-8">
@@ -426,23 +420,6 @@ export default function EmpreiteirosPage() {
           </svg>
         </a>
 
-        {/* ── MOBILE STICKY BAR ── */}
-        <div className="fixed bottom-0 left-0 right-0 z-40 sm:hidden flex border-t border-white/10 bg-[#1a1208]/95 backdrop-blur-sm">
-          <a
-            href={TEL_LINK}
-            className="flex-1 flex items-center justify-center py-4 text-white font-bold text-sm border-r border-white/10 hover:bg-white/5 transition-colors"
-          >
-            Ligar Agora
-          </a>
-          <a
-            href={WA_LINK_PROPOSTA}
-            target="_blank"
-            rel="noreferrer"
-            className="flex-1 flex items-center justify-center py-4 text-primary font-bold text-sm hover:bg-primary/10 transition-colors"
-          >
-            WhatsApp
-          </a>
-        </div>
       </div>
     </SimulatorProvider>
   )
