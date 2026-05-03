@@ -144,9 +144,7 @@ export default function Navbar() {
         { label: 'Flutuante', sectionId: '_flutuante' },
       ]
     : isKitchen
-    ? [
-        { label: 'FAQ', sectionId: 'faq' },
-      ]
+    ? []
     : [
         { label: 'Catálogo', sectionId: 'catalogo' },
         { label: 'FAQ', sectionId: 'faq' },

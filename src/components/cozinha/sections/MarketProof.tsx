@@ -16,7 +16,7 @@ const cards = [
   {
     icon: Gem,
     title: "Materiais de Qualidade",
-    desc: "Materiais de qualidade garantida em todos os projectos. Ferragens e tampos que superam as grandes superfícies.",
+    desc: "Utilizamos apenas ferragens de marca e madeiras de qualidade superior.",
   },
   {
     icon: Wrench,
