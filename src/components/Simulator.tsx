@@ -92,7 +92,7 @@ const PRECO_MAO_OBRA_CONSULTA_M2 = 10
 
 // Input styling helpers
 function inputCls(hasError: boolean): string {
-  return `w-full px-4 py-3 rounded-xl border bg-background text-foreground transition-colors focus:outline-none focus:ring-2 ${
+  return `w-full px-4 py-4 rounded-xl border bg-background text-foreground transition-colors focus:outline-none focus:ring-2 ${
     hasError
       ? 'border-destructive focus:ring-destructive/50'
       : 'border-input focus:border-primary focus:ring-primary/50'

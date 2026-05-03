@@ -24,7 +24,7 @@ export default function HowItWorks() {
   const steps = getStepsByVariant(siteVariant)
 
   return (
-    <section id="como-funciona" className="py-14 sm:py-24 bg-background relative overflow-hidden">
+    <section id="como-funciona" className="py-20 sm:py-28 bg-background relative overflow-hidden">
       <div className="absolute -top-24 right-0 w-80 h-80 bg-primary/10 rounded-full blur-3xl" />
 
       <div className="container mx-auto px-4 relative">

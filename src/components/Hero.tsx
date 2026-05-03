@@ -166,7 +166,7 @@ export default function Hero() {
                     href={getWhatsAppUrl(undefined, siteVariant)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center justify-center gap-2 min-h-[52px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
+                      className="inline-flex items-center justify-center min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
                   >
                     <MessageCircle className="w-4 h-4 shrink-0" />
                     Pedir Orçamento Gratuito
@@ -177,18 +177,19 @@ export default function Hero() {
                     <button
                       type="button"
                       onClick={() => { scrollToSection('simulador') }}
-                      className="inline-flex items-center justify-center min-h-[50px] px-7 lg:px-6 py-3 rounded-full text-[0.95rem] font-semibold whitespace-nowrap transition-all bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_12px_30px_rgba(201,136,13,0.28)]"
+                      className="inline-flex items-center justify-center min-h-[56px] px-7 lg:px-6 py-3 rounded-full text-[0.95rem] font-semibold whitespace-nowrap transition-all bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_12px_30px_rgba(201,136,13,0.28)]"
                     >
-                      Calcular o meu orçamento
+                      Simular orçamento
                     </button>
 
-                    <button
-                      type="button"
-                      onClick={() => { scrollToSection('catalogo') }}
-                      className="inline-flex items-center justify-center min-h-[50px] px-5 lg:px-4 py-3 rounded-full text-sm font-semibold whitespace-nowrap border border-white/25 text-white bg-white/[0.04] hover:bg-white/[0.09] transition-colors"
+                    <a
+                      href={getWhatsAppUrl(undefined, siteVariant)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center justify-center min-h-[56px] px-5 lg:px-4 py-3 rounded-full text-sm font-semibold whitespace-nowrap border border-white/25 text-white bg-white/[0.04] hover:bg-white/[0.09] transition-colors"
                     >
-                      {siteContent.catalogCtaLabel}
-                    </button>
+                      Falar no WhatsApp
+                    </a>
                   </>
                 )}
               </div>

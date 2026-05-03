@@ -11,7 +11,7 @@ import Testimonials from '@/components/Testimonials'
 import FAQ from '@/components/FAQ'
 import FinalCTA from '@/components/FinalCTA'
 import Footer from '@/components/Footer'
-import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+import TrustBadges from '@/components/TrustBadges'
 
 function PavimentoTypeSwitcher() {
   const [pathname] = useLocation()
@@ -87,12 +87,13 @@ export default function PavimentosPage() {
         <Navbar />
         <Hero />
         <PavimentoTypeSwitcher />
-        <MarketProof />
-        <HowItWorks />
-        <Catalog />
+        <TrustBadges />
         <Suspense fallback={null}>
           <Simulator />
         </Suspense>
+        <MarketProof />
+        <HowItWorks />
+        <Catalog />
         <FAQ />
         <Testimonials />
         <FinalCTA />

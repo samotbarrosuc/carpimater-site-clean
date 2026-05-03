@@ -32,6 +32,8 @@ export interface Produto {
   imagem?: string
   /** Quando true, o preço é sob consulta */
   sobConsulta?: boolean
+  /** Caso de uso ideal */
+  useCase?: string
 }
 
 /**
@@ -49,6 +51,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
     precoM2: 17.80,
     cor: '#C9A96E',
     imagem: '/images/produtos-vinil/carvalho_mel_IMG_2897_optimized_2000-scaled-e1729769492932.jpeg',
+    useCase: 'Ideal para salas de estar modernas',
   },
   {
     nome: 'Carvalho Nogal',
@@ -56,6 +59,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
     precoM2: 17.80,
     cor: '#8B8680',
     imagem: '/images/produtos-vinil/carvalho_nogal_PHOTO-2023-06-13-01-28-00-e1729769602770.jpg',
+    useCase: 'Perfeito para ambientes elegantes',
   },
   {
     nome: 'Eucalipto',
@@ -63,6 +67,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
     precoM2: 17.80,
     cor: '#B5935A',
     imagem: '/images/produtos-vinil/eucalipto_PHOTO-2023-11-21-08-25-04-e1729769679644.jpg',
+    useCase: 'Ideal para cozinhas e áreas de serviço',
   },
   {
     nome: 'Oliveira',

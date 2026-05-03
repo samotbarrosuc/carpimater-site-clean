@@ -100,6 +100,7 @@ function ProductCard({ product, isSelected, onSelect, onOpenInfo, materialSingul
           {product.referencia}
         </p>
         <h3 className="font-semibold text-foreground text-sm sm:text-base">{product.nome}</h3>
+        {product.useCase && <p className="text-xs text-muted-foreground mt-1">{product.useCase}</p>}
         {product.sobConsulta ? (
           <>
             <p className="text-sm text-primary font-semibold mt-1">Sob consulta</p>
@@ -507,7 +508,7 @@ export default function Catalog() {
   }
 
   return (
-    <section id="catalogo" className="py-16 bg-background">
+    <section id="catalogo" className="py-20 bg-background">
       <div className="container mx-auto px-4 max-w-6xl">
         {/* Header */}
         <div className="text-center mb-10">
