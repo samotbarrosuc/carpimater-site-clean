@@ -374,6 +374,21 @@ export default function Navbar() {
             {/* Desktop nav links */}
             <div className="hidden lg:flex items-center gap-6">
               {navLinks.map((link) => {
+                const isPavimentosPageLink = link.sectionId === '_vinilico' || link.sectionId === '_flutuante'
+                if (isPavimentosPageLink) {
+                  return (
+                    <a
+                      key={link.sectionId}
+                      href={getSectionHref(link.sectionId)}
+                      className={`text-sm font-medium transition-colors hover:text-primary ${
+                        isScrolled ? 'text-foreground' : 'text-white/90'
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  )
+                }
+
                 // For internal sections on same page, use button with scroll
                 if (pathname === basePath) {
                   return (
@@ -469,6 +484,24 @@ export default function Navbar() {
             >
               <div className="py-4 space-y-1">
                 {navLinks.map((link) => {
+                  const isPavimentosPageLink = link.sectionId === '_vinilico' || link.sectionId === '_flutuante'
+                  if (isPavimentosPageLink) {
+                    return (
+                      <a
+                        key={link.sectionId}
+                        href={getSectionHref(link.sectionId)}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                          isScrolled
+                            ? 'text-foreground hover:bg-muted'
+                            : 'text-white/90 hover:bg-white/10'
+                        }`}
+                      >
+                        {link.label}
+                      </a>
+                    )
+                  }
+
                   // For internal sections on same page, use button with scroll
                   if (pathname === basePath) {
                     return (
