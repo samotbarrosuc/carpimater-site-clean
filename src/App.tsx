@@ -20,7 +20,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/vinilico" component={VinilicoPage} />
       <Route path="/flutuante" component={FlutuantePage} />
-      <Route path="/pavimentos" component={PavimentosLanding} />
+      <Route path="/pavimentos" component={PavimentosPage} />
       <Route path="/cozinha" component={CozinhaPage} />
       <Route path="/empreiteiros" component={EmpreiteirosPage} />
       <Route path="/politica-de-privacidade" component={PrivacyPolicyPage} />
