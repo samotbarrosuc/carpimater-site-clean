@@ -130,14 +130,21 @@ export default function Navbar() {
   }
 
   const handleSectionClick = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
+    // Don't handle "Sobre Nós" page links
     if (sectionId === 'sobre-nos' || sectionId === 'sobre-nos-home') return
+    // Don't handle special pavimento links
     if (sectionId === '_vinilico' || sectionId === '_flutuante') return
-    // If it's a home section link but we're not on homepage, let browser navigate naturally
-    if (sectionId.startsWith('home-') && !isHomePage) return
-    // If we're not on the target page, let browser navigate
-    if (pathname !== basePath) return
-    event.preventDefault()
-    scrollToSection(sectionId)
+    
+    // Only prevent default if we're on the same page
+    if (pathname === basePath && !sectionId.startsWith('home-')) {
+      event.preventDefault()
+      scrollToSection(sectionId)
+    }
+    // Handle home-* sections on homepage
+    if (pathname === '/' && sectionId.startsWith('home-')) {
+      event.preventDefault()
+      scrollToSection(sectionId)
+    }
   }
 
   useEffect(() => {
@@ -388,18 +395,35 @@ export default function Navbar() {
 
             {/* Desktop nav links */}
             <div className="hidden lg:flex items-center gap-6">
-              {navLinks.map((link) => (
-                <a
-                  key={link.sectionId}
-                  href={getSectionHref(link.sectionId)}
-                  onClick={(e) => handleSectionClick(e, link.sectionId)}
-                  className={`text-sm font-medium transition-colors hover:text-primary ${
-                    isScrolled ? 'text-foreground' : 'text-white/90'
-                  }`}
-                >
-                  {link.label}
-                </a>
-              ))}
+              {navLinks.map((link) => {
+                // Use button for internal homepage sections
+                if (isHomePage && link.sectionId.startsWith('home-')) {
+                  return (
+                    <button
+                      key={link.sectionId}
+                      onClick={() => scrollToSection(link.sectionId)}
+                      className={`text-sm font-medium transition-colors hover:text-primary ${
+                        isScrolled ? 'text-foreground' : 'text-white/90'
+                      }`}
+                    >
+                      {link.label}
+                    </button>
+                  )
+                }
+                // Use link for external navigation
+                return (
+                  <a
+                    key={link.sectionId}
+                    href={getSectionHref(link.sectionId)}
+                    onClick={(e) => handleSectionClick(e, link.sectionId)}
+                    className={`text-sm font-medium transition-colors hover:text-primary ${
+                      isScrolled ? 'text-foreground' : 'text-white/90'
+                    }`}
+                  >
+                    {link.label}
+                  </a>
+                )
+              })}
 
               {/* CTA */}
               {isHomePage ? (
@@ -467,23 +491,45 @@ export default function Navbar() {
               className="lg:hidden overflow-hidden"
             >
               <div className="py-4 space-y-1">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.sectionId}
-                    href={getSectionHref(link.sectionId)}
-                    onClick={(e) => {
-                      setIsMobileMenuOpen(false)
-                      handleSectionClick(e, link.sectionId)
-                    }}
-                    className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                      isScrolled
-                        ? 'text-foreground hover:bg-muted'
-                        : 'text-white/90 hover:bg-white/10'
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                ))}
+                {navLinks.map((link) => {
+                  // Use button for internal homepage sections
+                  if (isHomePage && link.sectionId.startsWith('home-')) {
+                    return (
+                      <button
+                        key={link.sectionId}
+                        onClick={() => {
+                          setIsMobileMenuOpen(false)
+                          scrollToSection(link.sectionId)
+                        }}
+                        className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                          isScrolled
+                            ? 'text-foreground hover:bg-muted'
+                            : 'text-white/90 hover:bg-white/10'
+                        }`}
+                      >
+                        {link.label}
+                      </button>
+                    )
+                  }
+                  // Use link for external navigation
+                  return (
+                    <a
+                      key={link.sectionId}
+                      href={getSectionHref(link.sectionId)}
+                      onClick={(e) => {
+                        setIsMobileMenuOpen(false)
+                        handleSectionClick(e, link.sectionId)
+                      }}
+                      className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                        isScrolled
+                          ? 'text-foreground hover:bg-muted'
+                          : 'text-white/90 hover:bg-white/10'
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  )
+                })}
 
                 <div className="pt-2 px-4">
                   {/* CTA */}
