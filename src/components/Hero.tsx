@@ -107,8 +107,8 @@ export default function Hero() {
               (<div className="mb-6">
                 <h1 className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.6rem] lg:text-[2.75rem] xl:text-[3rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
                   <span className="block text-white">A Cozinha que</span>
-                  <span className="block text-primary">Imaginou,</span>
-                  <span className="block text-white">Fabricada em Portugal.</span>
+                  <span className="block text-primary">imaginou,</span>
+                  <span className="block text-white">é construída por nós.</span>
                 </h1>
                 <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">Fabrico em Paços de Ferreira e montagem profissional incluída. Qualidade superior à das grandes superfícies a preços semelhantes.</p>
               </div>)
