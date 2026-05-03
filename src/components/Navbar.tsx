@@ -115,6 +115,12 @@ export default function Navbar() {
     : activeContent?.subtitle ?? 'Serviços'
 
   const ctaLabel = isVinilico || isFlutuante ? 'Simulador' : 'Pedir Orçamento'
+  const ctaIsPrimary = isVinilico || isFlutuante
+  const ctaButtonClasses = `px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
+    ctaIsPrimary
+      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
+      : 'bg-muted text-foreground/90 hover:bg-muted/80'
+  }`
 
   const navLinks = isHomePage
     ? [
@@ -463,7 +469,7 @@ export default function Navbar() {
                 <a
                   href="/#home-contacto"
                   onClick={(e) => { e.preventDefault(); scrollToSection('home-contacto') }}
-                  className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
+                  className={ctaButtonClasses}
                 >
                   Pedir Orçamento
                 </a>
@@ -472,7 +478,7 @@ export default function Navbar() {
                   href={WA_EMPREITEIROS}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
+                  className={ctaButtonClasses}
                 >
                   Pedir Orçamento
                 </a>
@@ -481,7 +487,7 @@ export default function Navbar() {
                   href={getWhatsAppUrl(undefined, activeVariant ?? 'cozinha')}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
+                  className={ctaButtonClasses}
                 >
                   Pedir Orçamento
                 </a>
@@ -494,9 +500,9 @@ export default function Navbar() {
                     }
                     window.location.href = getSectionHref(budgetSectionId)
                   }}
-                  className="bg-primary text-primary-foreground px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
+                  className={ctaButtonClasses}
                 >
-                  Pedir Orçamento
+                  {ctaLabel}
                 </button>
               )}
             </div>
@@ -589,7 +595,7 @@ export default function Navbar() {
                         setIsMobileMenuOpen(false)
                         setTimeout(() => scrollToSection('home-contacto'), 100)
                       }}
-                      className="block w-full text-center bg-primary text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
+                      className={`block w-full text-center ${ctaButtonClasses}`}
                     >
                       Pedir Orçamento
                     </a>
@@ -599,7 +605,7 @@ export default function Navbar() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block w-full text-center bg-primary text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
+                      className={`block w-full text-center ${ctaButtonClasses}`}
                     >
                       Pedir Orçamento
                     </a>
@@ -609,7 +615,7 @@ export default function Navbar() {
                       target="_blank"
                       rel="noopener noreferrer"
                       onClick={() => setIsMobileMenuOpen(false)}
-                      className="block w-full text-center bg-primary text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
+                      className={`block w-full text-center ${ctaButtonClasses}`}
                     >
                       Pedir Orçamento
                     </a>
@@ -622,7 +628,7 @@ export default function Navbar() {
                           else window.location.href = getSectionHref(budgetSectionId)
                         }, 100)
                       }}
-                      className="w-full bg-primary text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
+                      className={`block w-full ${ctaButtonClasses}`}
                     >
                       {ctaLabel}
                     </button>
