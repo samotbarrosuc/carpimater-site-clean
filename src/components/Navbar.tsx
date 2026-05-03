@@ -132,6 +132,9 @@ export default function Navbar() {
   const handleSectionClick = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
     if (sectionId === 'sobre-nos' || sectionId === 'sobre-nos-home') return
     if (sectionId === '_vinilico' || sectionId === '_flutuante') return
+    // If it's a home section link but we're not on homepage, let browser navigate naturally
+    if (sectionId.startsWith('home-') && !isHomePage) return
+    // If we're not on the target page, let browser navigate
     if (pathname !== basePath) return
     event.preventDefault()
     scrollToSection(sectionId)
