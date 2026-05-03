@@ -48,6 +48,8 @@ export default function Navbar() {
     pathname.startsWith('/vinilico') ||
     pathname.startsWith('/flutuante') ||
     isPavimentosLanding
+  const isVinilico = pathname.startsWith('/vinilico')
+  const isFlutuante = pathname.startsWith('/flutuante')
   const activeVariant: SiteVariant | null =
     isHomePage || isEmpreiteiros || isPavimentosLanding
       ? null
@@ -67,18 +69,47 @@ export default function Navbar() {
   const activePillKey = isEmpreiteiros
     ? 'empreiteiros'
     : isPavimentos
-    ? 'pavimentos'
+    ? isPavimentosLanding
+      ? 'pavimentos'
+      : activeVariant
     : !isHomePage && activeVariant
     ? (activeVariant as string) // 'cozinha'
     : null
+
+  const pavimentosPillLabel = isPavimentosLanding
+    ? 'Pavimentos'
+    : isVinilico
+    ? 'SPC Vinílico'
+    : isFlutuante
+    ? 'Flutuante'
+    : 'Pavimentos'
+
+  const pavimentosPillHref = isPavimentosLanding
+    ? '/pavimentos'
+    : isVinilico
+    ? '/vinilico'
+    : isFlutuante
+    ? '/flutuante'
+    : '/pavimentos'
+
+  const servicePills = ALL_SERVICE_PILLS.map((pill) =>
+    pill.key === 'pavimentos'
+      ? {
+          ...pill,
+          key: isPavimentosLanding ? 'pavimentos' : (activeVariant ?? 'pavimentos'),
+          label: pavimentosPillLabel,
+          href: pavimentosPillHref,
+        }
+      : pill
+  )
 
   // Mobile chip label
   const activeChipLabel = isPavimentosLanding
     ? 'Pavimentos'
     : isPavimentos
-    ? pathname.startsWith('/flutuante')
+    ? isFlutuante
       ? 'Flutuante'
-      : 'Vinílico'
+      : 'SPC Vinílico'
     : activePillKey === 'empreiteiros'
     ? 'Construção & Obra'
     : activeContent?.subtitle ?? 'Serviços'
@@ -107,7 +138,7 @@ export default function Navbar() {
         { label: 'FAQ', sectionId: 'faq' },
       ]
 
-  const switchPills = ALL_SERVICE_PILLS.filter((p) => p.key !== activePillKey)
+  const switchPills = servicePills.filter((p) => p.key !== activePillKey)
 
   const getSectionHref = (sectionId: string) => {
     if (sectionId === '_vinilico') return '/vinilico'

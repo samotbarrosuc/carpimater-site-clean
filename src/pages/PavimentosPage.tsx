@@ -12,10 +12,36 @@ import FAQ from '@/components/FAQ'
 import FinalCTA from '@/components/FinalCTA'
 import Footer from '@/components/Footer'
 import TrustBadges from '@/components/TrustBadges'
+import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 
 function PavimentoTypeSwitcher() {
   const [pathname] = useLocation()
   const isVinilico = pathname.startsWith('/vinilico')
+  const isFlutuante = pathname.startsWith('/flutuante')
+
+  const pavimentoOptions = isVinilico || isFlutuante
+    ? [
+        {
+          href: isVinilico ? '/flutuante' : '/vinilico',
+          label: isVinilico ? 'Flutuante' : 'SPC Vinílico',
+          detail: isVinilico ? 'Aspeto madeira · Garantia 20 anos' : 'Impermeável · Garantia 25 anos',
+          active: false,
+        },
+      ]
+    : [
+        {
+          href: '/vinilico',
+          label: 'SPC Vinílico',
+          detail: 'Impermeável · Garantia 25 anos',
+          active: isVinilico,
+        },
+        {
+          href: '/flutuante',
+          label: 'Flutuante Tradicional',
+          detail: 'Aspeto madeira · Garantia 20 anos',
+          active: !isVinilico,
+        },
+      ]
 
   return (
     <section className="bg-background border-b border-white/10 py-5">
@@ -24,21 +50,8 @@ function PavimentoTypeSwitcher() {
           <p className="text-center text-[11px] uppercase tracking-[0.22em] text-muted-foreground font-semibold mb-3">
             Escolha o tipo de pavimento
           </p>
-          <div className="grid grid-cols-2 gap-3">
-            {[
-              {
-                href: '/vinilico',
-                label: 'Vinílico SPC',
-                detail: 'Impermeável · Garantia 25 anos',
-                active: isVinilico,
-              },
-              {
-                href: '/flutuante',
-                label: 'Flutuante Tradicional',
-                detail: 'Aspeto madeira · Garantia 20 anos',
-                active: !isVinilico,
-              },
-            ].map((t) => (
+          <div className={`grid gap-3 ${pavimentoOptions.length === 1 ? 'grid-cols-1' : 'grid-cols-2'}`}>
+            {pavimentoOptions.map((t) => (
               <a
                 key={t.href}
                 href={t.href}
