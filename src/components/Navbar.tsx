@@ -324,6 +324,19 @@ export default function Navbar() {
                         className="absolute left-0 top-full mt-2 min-w-[200px] rounded-2xl border border-border bg-card shadow-xl overflow-hidden z-50"
                       >
                         <div className="p-1.5">
+                          {isVinilico || isFlutuante ? (
+                            <a
+                              href={pathname.startsWith('/flutuante') ? '/vinilico' : '/flutuante'}
+                              onClick={() => setIsServiceDropdownOpen(false)}
+                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors group"
+                            >
+                              <div className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors shrink-0" />
+                              <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
+                                {pathname.startsWith('/flutuante') ? 'Pavimento Vinílico SPC' : 'Pavimento Flutuante'}
+                              </span>
+                            </a>
+                          ) : null}
+
                           <p className="px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
                             Outros serviços
                           </p>
@@ -340,19 +353,6 @@ export default function Navbar() {
                               </span>
                             </a>
                           ))}
-                          {/* On pavimentos pages, also show the other pavimento type */}
-                          {isPavimentos && (
-                            <a
-                              href={pathname.startsWith('/flutuante') ? '/vinilico' : '/flutuante'}
-                              onClick={() => setIsServiceDropdownOpen(false)}
-                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors group border-t border-border mt-1 pt-2"
-                            >
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors shrink-0" />
-                              <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                                {pathname.startsWith('/flutuante') ? 'Pavimento Vinílico SPC' : 'Pavimento Flutuante'}
-                              </span>
-                            </a>
-                          )}
                         </div>
                       </motion.div>
                     )}

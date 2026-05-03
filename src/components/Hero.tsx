@@ -95,7 +95,7 @@ export default function Hero() {
         </>
       )}
       <div className="container mx-auto px-5 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="max-w-[1520px] mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,0.96fr)_minmax(540px,1.04fr)] gap-10 xl:gap-14 items-start">
+        <div className="max-w-[1520px] mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,0.96fr)_minmax(540px,1.04fr)] gap-10 xl:gap-14 items-start lg:items-center">
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
@@ -145,9 +145,6 @@ export default function Hero() {
                   <span>Avance com uma das nossas equipas especializadas.</span>
                 </p>
               </div>
-              <p className="text-sm sm:text-base md:text-[1.05rem] text-white/62 leading-relaxed mb-8">
-                Tratamos de tudo por si. Sem complicações, sem surpresas.
-              </p>
             </div>
             )}
 
@@ -172,43 +169,40 @@ export default function Hero() {
             <div className="w-full max-w-3xl mb-8">
               <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start lg:flex-nowrap">
                 {isKitchen ? (
-                  <>
                   <a
                     href={getWhatsAppUrl(undefined, siteVariant)}
                     target="_blank"
                     rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center gap-3 min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
                   >
                     <MessageCircle className="w-4 h-4 shrink-0" />
                     Pedir Orçamento Gratuito
                   </a>
-                  </>
                 ) : (
                   <>
                     <button
                       type="button"
+                      onClick={() => { scrollToSection('catalogo') }}
+                      className="w-full sm:w-auto inline-flex items-center justify-center min-h-[56px] px-7 lg:px-6 py-3 rounded-full text-[0.95rem] font-semibold whitespace-nowrap transition-all border border-white/20 bg-white/10 text-white hover:bg-white/20"
+                    >
+                      Ver catálogo
+                    </button>
+
+                    <button
+                      type="button"
                       onClick={() => { scrollToSection('simulador') }}
-                      className="inline-flex items-center justify-center min-h-[56px] px-7 lg:px-6 py-3 rounded-full text-[0.95rem] font-semibold whitespace-nowrap transition-all bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_12px_30px_rgba(201,136,13,0.28)]"
+                      className="w-full sm:w-auto inline-flex items-center justify-center min-h-[56px] px-7 lg:px-6 py-3 rounded-full text-[0.95rem] font-semibold whitespace-nowrap transition-all bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_12px_30px_rgba(201,136,13,0.28)]"
                     >
                       Simular orçamento
                     </button>
-
-                    <a
-                      href={getWhatsAppUrl(undefined, siteVariant)}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center min-h-[56px] px-5 lg:px-4 py-3 rounded-full text-sm font-semibold whitespace-nowrap border border-white/25 text-white bg-white/[0.04] hover:bg-white/[0.09] transition-colors"
-                    >
-                      Falar no WhatsApp
-                    </a>
                   </>
                 )}
               </div>
             </div>
 
             {!isKitchen && (
-              <p className="text-xs sm:text-sm text-white/68 max-w-[760px]">
-                Sem compromisso inicial. Validamos tecnicamente antes de fechar o orçamento final.
+              <p className="text-sm sm:text-base md:text-[1.05rem] text-white/62 leading-relaxed mb-8 max-w-[760px]">
+                Tratamos de tudo por si. Sem complicações, sem surpresas.
               </p>
             )}
             {isKitchen && (
@@ -264,7 +258,7 @@ export default function Hero() {
               initial={{ opacity: 0, x: 20, y: 18 }}
               animate={{ opacity: 1, x: 0, y: 0 }}
               transition={{ duration: 0.6, delay: 0.12 }}
-              className="relative w-full max-w-[760px] mx-auto lg:mx-0 lg:justify-self-end lg:pt-2"
+              className="relative w-full max-w-full mx-auto lg:mx-0 lg:justify-self-end lg:pt-2"
             >
               <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-4">
                 {HERO_KPIS.map((kpi) => (

@@ -9,32 +9,47 @@ import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 const WA_DUVIDA = `https://wa.me/351910093635?text=${encodeURIComponent('Olá CarpiMater! Não tenho a certeza entre vinílico e flutuante. Podem ajudar-me a escolher?')}`
 
 const COMPARISON = [
-  { label: 'Garantia', vinilico: '25 anos', flutuante: '20 anos', winner: 'vinilico' },
-  { label: 'Impermeabilidade', vinilico: '100% impermeável', flutuante: 'Resistente a salpicos', winner: 'vinilico' },
-  { label: 'Melhor para', vinilico: 'Casa toda, WC, cozinha', flutuante: 'Sala, quartos, escritório', winner: null },
-  { label: 'Isolamento acústico', vinilico: 'Bom', flutuante: 'Excelente', winner: 'flutuante' },
-  { label: 'Aspeto', vinilico: 'Realista, texturado', flutuante: 'Madeira clássica premium', winner: null },
-  { label: 'Manutenção', vinilico: 'Muito fácil', flutuante: 'Fácil', winner: 'vinilico' },
+  { label: 'Garantia', vinilico: '25 anos', flutuante: '20 anos' },
+  { label: 'Impermeabilidade', vinilico: '100% impermeável', flutuante: 'Resistente a salpicos' },
+  { label: 'Melhor para', vinilico: 'Casa toda, WC, cozinha', flutuante: 'Sala, quartos, escritório' },
 ]
 
 const HOW_IT_WORKS = [
   {
     icon: Ruler,
     step: '01',
-    title: 'Escolha e meça',
-    desc: 'Escolha o tipo de pavimento e insira a área em m² no nosso simulador.',
+    title: 'Escolha o tipo certo',
+    desc: 'Identifique se precisa de resistência à água, isolamento acústico ou aspeto madeira realista.',
   },
   {
     icon: Calculator,
     step: '02',
-    title: 'Orçamento em segundos',
-    desc: 'Receba uma estimativa imediata de custo, com fornecimento e instalação incluídos.',
+    title: 'Simule o orçamento',
+    desc: 'Veja rapidamente o valor por m² com fornecimento, aplicação e rodapés incluídos.',
   },
   {
     icon: MessageCircle,
     step: '03',
-    title: 'Avance por WhatsApp',
-    desc: 'Envie o orçamento gerado e nós confirmamos os detalhes finais rapidamente.',
+    title: 'Avance com confiança',
+    desc: 'Envie o pedido por WhatsApp e receba a nossa resposta técnica em 24h.',
+  },
+]
+
+const REASONS = [
+  {
+    icon: Shield,
+    title: 'Garantia fiável',
+    text: 'Até 25 anos no vinílico SPC e 20 anos no flutuante, com instalação profissional.',
+  },
+  {
+    icon: Sparkles,
+    title: 'Acabamento premium',
+    text: 'Rodapés e juntas alinhados, para um resultado visual limpo e duradouro.',
+  },
+  {
+    icon: CheckCircle2,
+    title: 'Processo simplificado',
+    text: 'Orçamento rápido, projeto claro e execução coordenada até à entrega.',
   },
 ]
 
@@ -52,359 +67,162 @@ export default function PavimentosLanding() {
 
   return (
     <SimulatorProvider>
-      <main>
+      <main className="min-h-screen bg-secondary text-white">
         <Navbar />
 
-        {/* ── HERO HEADER ── */}
-        <section className="pt-28 sm:pt-32 bg-secondary">
-
-          {/* Top label + headline */}
-          <div className="text-center pt-8 pb-5 px-4">
-            <p className="text-[11px] uppercase tracking-[0.24em] text-white/45 font-semibold mb-2">
-              CarpiMater · Pavimentos
+        <section className="relative overflow-hidden pt-28 sm:pt-32 pb-14">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-[11px] uppercase tracking-[0.24em] text-white/60 font-semibold mb-4">
+              Pavimentos · Vinílico SPC ou Flutuante Tradicional
             </p>
-            <h1 className="text-2xl sm:text-3xl font-display font-bold text-white mb-2">
-              Qual pavimento é o certo para si?
+            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-[-0.03em] text-white max-w-4xl mx-auto">
+              Pavimentos que combinam conforto, estilo e instalação profissional.
             </h1>
-            <p className="text-white/55 text-sm max-w-md mx-auto">
-              Clique abaixo para escolher, veja o catálogo e calcule o orçamento em segundos.
+            <p className="mt-5 text-base sm:text-lg text-white/70 max-w-2xl mx-auto leading-relaxed">
+              Compare as opções, veja as vantagens e escolha a solução certa para a sua casa em Coimbra, Aveiro ou Leiria.
             </p>
-          </div>
 
-          {/* ── SOCIAL PROOF BAR ── */}
-          <div className="bg-white/[0.06] border-y border-white/10 py-3 px-4">
-            <div className="max-w-2xl mx-auto flex flex-wrap items-center justify-center gap-x-6 gap-y-2">
-              <div className="flex items-center gap-1.5">
-                <div className="flex">
-                  {[1,2,3,4,5].map(i => (
-                    <Star key={i} className="w-3.5 h-3.5 text-primary fill-primary" />
-                  ))}
-                </div>
-                <span className="text-white text-xs font-semibold">5,0 no Google</span>
-              </div>
-              <div className="w-px h-4 bg-white/20 hidden sm:block" />
-              <span className="text-white/65 text-xs font-medium">+150 obras concluídas</span>
-              <div className="w-px h-4 bg-white/20 hidden sm:block" />
-              <span className="text-white/65 text-xs font-medium">Resposta em 24h</span>
-              <div className="w-px h-4 bg-white/20 hidden sm:block" />
-              <span className="text-white/65 text-xs font-medium">Coimbra · Leiria · Aveiro</span>
-            </div>
-          </div>
-
-          {/* ── TWO OPTION CARDS ── */}
-          <div className="flex flex-col md:flex-row h-auto md:h-[580px]">
-
-            {/* ── Vinílico SPC ── */}
-            <a
-              href="/vinilico"
-              className="relative flex-1 group overflow-hidden flex flex-col justify-end min-h-[480px] md:min-h-0 cursor-pointer hover:opacity-90 transition-opacity"
-            >
-            <motion.div
-              className="absolute inset-0 flex flex-col justify-end"
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.03]"
-                style={{ backgroundImage: 'url("/images/pavimento-vinilico-sala-coimbra.png")' }}
-              />
-              {/* Lighter overlay so floor is visible */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/5" />
-              <div className="hidden md:block absolute right-0 top-0 bottom-0 w-px bg-white/15 z-10" />
-
-              <div className="relative z-10 p-7 sm:p-9 h-full flex flex-col justify-end">
-                {/* Badge */}
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/90 text-white px-3 py-1 text-[10px] uppercase tracking-[0.16em] font-bold">
-                    <Star className="w-3 h-3 fill-white" />
-                    Mais popular
-                  </span>
-                </div>
-
-                <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-1">
-                  Vinílico SPC
-                </h2>
-                {/* Decision guide */}
-                <p className="text-primary/90 text-sm font-semibold mb-3">
-                  Ideal para: WC · cozinha · entrada · casa toda
-                </p>
-
-                <ul className="space-y-2 mb-5">
-                  {[
-                    { icon: Droplets, text: '100% impermeável — sem riscos com água' },
-                    { icon: Shield, text: 'Núcleo SPC rígido, antirrisco e antiderrapante' },
-                    { icon: Sparkles, text: 'Aspeto realista com textura em relevo · Garantia 25 anos' },
-                  ].map(({ icon: Icon, text }) => (
-                    <li key={text} className="flex items-start gap-3">
-                      <Icon className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                      <span className="text-white/85 text-sm leading-snug">{text}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-col sm:flex-row gap-2.5" onClick={(e) => e.stopPropagation()}>
-                  <a
-                    href="/vinilico#simulador"
-                    className="inline-flex items-center justify-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors shadow-[0_6px_20px_rgba(201,136,13,0.4)]"
-                  >
-                    <Calculator className="w-4 h-4" />
-                    Calcular Orçamento
-                  </a>
-                  <a
-                    href="/vinilico"
-                    className="inline-flex items-center justify-center gap-2 border border-white/40 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-white/10 transition-colors"
-                  >
-                    Ver catálogo
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-            </a>
-
-            {/* ── Flutuante Tradicional ── */}
-            <a
-              href="/flutuante"
-              className="relative flex-1 group overflow-hidden flex flex-col justify-end min-h-[480px] md:min-h-0 cursor-pointer hover:opacity-90 transition-opacity"
-            >
-            <motion.div
-              className="absolute inset-0 flex flex-col justify-end"
-              initial={{ opacity: 0, x: 20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5, delay: 0.08 }}
-            >
-              <div
-                className="absolute inset-0 bg-cover bg-center transition-transform duration-700 group-hover:scale-[1.03]"
-                style={{ backgroundImage: 'url("/images/pavimento-flutuante-claro.png")' }}
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/5" />
-
-              <div className="relative z-10 p-7 sm:p-9 h-full flex flex-col justify-end">
-                <div className="flex items-center gap-2 mb-3">
-                  <span className="inline-flex items-center rounded-full border border-white/35 bg-white/12 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-white/80 font-bold">
-                    Clássico & elegante
-                  </span>
-                </div>
-
-                <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-1">
-                  Flutuante Tradicional
-                </h2>
-                <p className="text-white/75 text-sm font-semibold mb-3">
-                  Ideal para: salas · quartos · escritórios
-                </p>
-
-                <ul className="space-y-2 mb-5">
-                  {[
-                    { icon: TreePine, text: 'Aspeto de madeira natural — acabamento premium' },
-                    { icon: Thermometer, text: 'Isolamento térmico e acústico superior' },
-                    { icon: Sparkles, text: 'Clássico e elegante · Garantia 20 anos' },
-                  ].map(({ icon: Icon, text }) => (
-                    <li key={text} className="flex items-start gap-3">
-                      <Icon className="w-4 h-4 text-primary shrink-0 mt-0.5" />
-                      <span className="text-white/85 text-sm leading-snug">{text}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                <div className="flex flex-col sm:flex-row gap-2.5" onClick={(e) => e.stopPropagation()}>
-                  <a
-                    href="/flutuante#simulador"
-                    className="inline-flex items-center justify-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors shadow-[0_6px_20px_rgba(201,136,13,0.4)]"
-                  >
-                    <Calculator className="w-4 h-4" />
-                    Calcular Orçamento
-                  </a>
-                  <a
-                    href="/flutuante"
-                    className="inline-flex items-center justify-center gap-2 border border-white/40 text-white px-5 py-2.5 rounded-full text-sm font-semibold hover:bg-white/10 transition-colors"
-                  >
-                    Ver catálogo
-                    <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
-                  </a>
-                </div>
-              </div>
-            </motion.div>
-            </a>
-          </div>
-
-          {/* Dúvidas? bar */}
-          <div className="bg-black/30 border-t border-white/10 py-3.5 text-center px-4">
-            <p className="text-white/55 text-sm">
-              Não tem a certeza qual escolher?{' '}
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
-                href={`/whatsapp-redirect.html?url=${encodeURIComponent(WA_DUVIDA)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-primary font-semibold hover:text-primary/80 underline underline-offset-4 transition-colors"
+                href="/vinilico"
+                className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primary/90"
               >
-                Fale connosco por WhatsApp — ajudamo-lo a decidir →
+                Ver Pavimento Vinílico
               </a>
-            </p>
+              <a
+                href="/flutuante"
+                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+              >
+                Ver Pavimento Flutuante
+              </a>
+            </div>
           </div>
+
+          <div className="absolute inset-x-0 bottom-0 h-44 bg-gradient-to-t from-secondary to-transparent pointer-events-none" />
         </section>
 
-        {/* ── COMO FUNCIONA ── */}
-        <section className="py-14 bg-background border-b border-border">
+        <section className="py-16 bg-background text-slate-950">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-10">
-                <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-2">Processo simples</p>
-                <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-                  Do orçamento à instalação em 3 passos
-                </h2>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-                {HOW_IT_WORKS.map((step, i) => {
-                  const Icon = step.icon
-                  return (
-                    <motion.div
-                      key={step.step}
-                      initial={{ opacity: 0, y: 14 }}
-                      whileInView={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.35, delay: i * 0.1 }}
-                      viewport={{ once: true }}
-                      className="flex flex-col items-center text-center"
-                    >
-                      <div className="w-12 h-12 rounded-2xl bg-primary/12 text-primary flex items-center justify-center mb-4">
-                        <Icon className="w-6 h-6" />
+            <div className="rounded-[2rem] bg-white p-10 shadow-[0_45px_120px_rgba(15,23,42,0.08)]">
+              <div className="grid gap-8 lg:grid-cols-2 lg:items-center">
+                <div>
+                  <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">O que oferecemos</p>
+                  <h2 className="text-3xl sm:text-4xl font-display font-bold mb-4">Uma experiência de pavimento com design e garantia</h2>
+                  <p className="text-muted-foreground leading-7">
+                    Da escolha do material à instalação, oferecemos apoio técnico, orçamentos transparentes e qualidade visível no acabamento final.
+                  </p>
+                </div>
+                <div className="grid gap-4 sm:grid-cols-2">
+                  {REASONS.map((item) => (
+                    <div key={item.title} className="rounded-3xl border border-border bg-background p-6">
+                      <div className="mb-4 inline-flex h-12 w-12 items-center justify-center rounded-2xl bg-primary/10 text-primary">
+                        <item.icon className="w-6 h-6" />
                       </div>
-                      <span className="text-[11px] font-bold text-primary/70 tracking-[0.18em] uppercase mb-1">{step.step}</span>
-                      <p className="text-base font-bold text-foreground mb-1.5">{step.title}</p>
-                      <p className="text-sm text-muted-foreground leading-relaxed">{step.desc}</p>
-                    </motion.div>
-                  )
-                })}
-              </div>
-
-              {/* CTA to simulator */}
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-10">
-                <a
-                  href="/vinilico#simulador"
-                  className="inline-flex items-center gap-2 bg-primary text-white px-7 py-3 rounded-full font-bold text-sm hover:bg-primary/90 transition-colors shadow-[0_8px_24px_rgba(201,136,13,0.35)]"
-                >
-                  <Calculator className="w-4 h-4" />
-                  Simular orçamento — Vinílico
-                </a>
-                <a
-                  href="/flutuante#simulador"
-                  className="inline-flex items-center gap-2 border border-border text-foreground px-7 py-3 rounded-full font-semibold text-sm hover:bg-muted transition-colors"
-                >
-                  <Calculator className="w-4 h-4" />
-                  Simular orçamento — Flutuante
-                </a>
+                      <h3 className="text-lg font-semibold mb-2">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-7">{item.text}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── COMPARAÇÃO RÁPIDA ── */}
-        <section className="py-14 bg-muted/30 border-b border-border">
+        <section className="py-16 bg-[#f7f1e8] text-slate-950">
           <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-8">
-                <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-2">Comparação</p>
-                <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground">
-                  Vinílico SPC vs. Flutuante — diferenças principais
-                </h2>
-              </div>
-
-              <div className="rounded-2xl border border-border overflow-hidden bg-card shadow-sm">
-                <div className="grid grid-cols-3 bg-secondary text-secondary-foreground">
-                  <div className="px-5 py-3.5 text-xs font-semibold uppercase tracking-[0.14em] text-white/50" />
-                  <div className="px-5 py-3.5 text-center border-l border-white/10">
-                    <span className="text-sm font-bold text-white">Vinílico SPC</span>
-                  </div>
-                  <div className="px-5 py-3.5 text-center border-l border-white/10">
-                    <span className="text-sm font-bold text-white">Flutuante</span>
-                  </div>
-                </div>
-
-                {COMPARISON.map((row, i) => (
-                  <div
-                    key={row.label}
-                    className={`grid grid-cols-3 ${i % 2 === 0 ? 'bg-background' : 'bg-muted/40'} border-t border-border`}
-                  >
-                    <div className="px-5 py-3.5 text-sm font-semibold text-foreground/70">{row.label}</div>
-                    <div className={`px-5 py-3.5 text-sm text-center border-l border-border flex items-center justify-center gap-1.5 ${row.winner === 'vinilico' ? 'text-primary font-semibold' : 'text-foreground'}`}>
-                      {row.winner === 'vinilico' && <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />}
-                      {row.vinilico}
+            <div className="grid gap-8 lg:grid-cols-2">
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="rounded-[2rem] bg-white p-8 shadow-sm"
+              >
+                <div className="mb-5 text-xs uppercase tracking-[0.22em] text-primary font-semibold">Pavimentos à prova</div>
+                <h2 className="text-3xl font-display font-bold mb-4">Escolha a opção certa para cada divisão</h2>
+                <p className="text-muted-foreground leading-7 mb-8">
+                  As características de cada pavimento ajudam a definir o melhor uso: resistência à água, conforto térmico e isolamento acústico.
+                </p>
+                <div className="space-y-3">
+                  {COMPARISON.map((item) => (
+                    <div key={item.label} className="rounded-3xl border border-border bg-background p-5">
+                      <p className="text-xs uppercase tracking-[0.18em] text-muted-foreground font-semibold mb-2">{item.label}</p>
+                      <div className="grid gap-3 sm:grid-cols-2">
+                        <div>
+                          <p className="text-sm font-semibold text-foreground">Vinílico</p>
+                          <p className="text-sm text-muted-foreground leading-6">{item.vinilico}</p>
+                        </div>
+                        <div>
+                          <p className="text-sm font-semibold text-foreground">Flutuante</p>
+                          <p className="text-sm text-muted-foreground leading-6">{item.flutuante}</p>
+                        </div>
+                      </div>
                     </div>
-                    <div className={`px-5 py-3.5 text-sm text-center border-l border-border flex items-center justify-center gap-1.5 ${row.winner === 'flutuante' ? 'text-primary font-semibold' : 'text-foreground/70'}`}>
-                      {row.winner === 'flutuante' && <CheckCircle2 className="w-3.5 h-3.5 text-primary shrink-0" />}
-                      {row.flutuante}
-                    </div>
-                  </div>
-                ))}
-
-                <div className="grid grid-cols-3 border-t border-border bg-muted/20">
-                  <div className="px-5 py-4 text-xs text-muted-foreground font-medium">Ver e calcular</div>
-                  <div className="px-4 py-4 text-center border-l border-border">
-                    <a
-                      href="/vinilico#simulador"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline underline-offset-4"
-                    >
-                      Simular Vinílico <ArrowRight className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
-                  <div className="px-4 py-4 text-center border-l border-border">
-                    <a
-                      href="/flutuante#simulador"
-                      className="inline-flex items-center gap-1.5 text-xs font-bold text-primary hover:underline underline-offset-4"
-                    >
-                      Simular Flutuante <ArrowRight className="w-3.5 h-3.5" />
-                    </a>
-                  </div>
+                  ))}
                 </div>
-              </div>
+              </motion.div>
 
-              <p className="text-center text-xs text-muted-foreground mt-5">
-                Ainda com dúvidas?{' '}
-                <a
-                  href={WA_DUVIDA}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-primary font-semibold hover:underline underline-offset-4"
-                >
-                  Fale connosco — ajudamo-lo a escolher sem compromisso.
-                </a>
-              </p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                className="rounded-[2rem] border border-border bg-white p-8 shadow-sm"
+              >
+                <div className="mb-5 text-xs uppercase tracking-[0.22em] text-primary font-semibold">Como funciona</div>
+                <h2 className="text-3xl font-display font-bold mb-4">Três passos para avançar sem dúvidas</h2>
+                <div className="space-y-4">
+                  {HOW_IT_WORKS.map((item) => (
+                    <div key={item.step} className="rounded-3xl border border-border bg-background p-5">
+                      <div className="mb-3 inline-flex h-10 w-10 items-center justify-center rounded-2xl bg-primary/10 text-primary font-semibold">
+                        {item.step}
+                      </div>
+                      <h3 className="text-lg font-semibold text-foreground mb-2">{item.title}</h3>
+                      <p className="text-sm text-muted-foreground leading-7">{item.desc}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
             </div>
           </div>
         </section>
 
-        {/* ── CTA FINAL — SIMULADOR ── */}
-        <section className="py-14 bg-secondary">
-          <div className="container mx-auto px-4">
-            <div className="max-w-2xl mx-auto text-center">
-              <div className="inline-flex items-center gap-2 bg-primary/15 border border-primary/30 rounded-full px-4 py-1.5 mb-5">
-                <Calculator className="w-4 h-4 text-primary" />
-                <span className="text-primary text-xs font-bold uppercase tracking-[0.16em]">Simulador de orçamento</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-3">
-                Saiba o custo em segundos,<br className="hidden sm:block" /> sem sair do sofá.
-              </h2>
-              <p className="text-white/60 text-base mb-8 max-w-lg mx-auto">
-                Insira a área em m², escolha o modelo e receba uma estimativa imediata — com fornecimento e instalação incluídos.
+        <section className="py-16 bg-white">
+          <div className="container mx-auto px-4 text-center">
+            <div className="max-w-3xl mx-auto mb-8">
+              <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">Pronto para começar?</p>
+              <h2 className="text-3xl sm:text-4xl font-display font-bold text-foreground">Calcule, compare e peça o seu orçamento</h2>
+              <p className="text-muted-foreground mt-4 leading-7">
+                Comece por escolher o tipo de pavimento, veja o catálogo e fale connosco para agendar a instalação.
               </p>
-              <div className="flex flex-col sm:flex-row gap-3 justify-center">
-                <a
-                  href="/vinilico#simulador"
-                  className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-3.5 rounded-full font-bold text-base hover:bg-primary/90 transition-colors shadow-[0_8px_30px_rgba(201,136,13,0.4)]"
-                >
-                  <Calculator className="w-5 h-5" />
-                  Calcular — Vinílico SPC
-                </a>
-                <a
-                  href="/flutuante#simulador"
-                  className="inline-flex items-center justify-center gap-2 border border-white/25 text-white px-8 py-3.5 rounded-full font-semibold text-base hover:bg-white/10 transition-colors"
-                >
-                  <Calculator className="w-5 h-5" />
-                  Calcular — Flutuante
-                </a>
-              </div>
-              <p className="text-white/35 text-xs mt-5">Sem compromisso · Resposta em 24h · Instalação profissional</p>
             </div>
+            <div className="flex flex-col gap-4 sm:flex-row justify-center">
+              <a
+                href="/vinilico"
+                className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-4 text-sm font-semibold text-white transition hover:bg-primary/90"
+              >
+                Ver Vinílico SPC
+              </a>
+              <a
+                href="/flutuante"
+                className="inline-flex items-center justify-center rounded-full border border-border bg-background px-6 py-4 text-sm font-semibold text-foreground transition hover:bg-muted"
+              >
+                Ver Flutuante Tradicional
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="py-10 bg-secondary">
+          <div className="container mx-auto px-4 text-center">
+            <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">Tem dúvidas?</p>
+            <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-4">Fale connosco pelo WhatsApp</h2>
+            <a
+              href={`/whatsapp-redirect.html?url=${encodeURIComponent(WA_DUVIDA)}`}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-4 text-sm font-semibold text-white transition hover:bg-primary/90"
+            >
+              Enviar mensagem agora
+            </a>
           </div>
         </section>
 

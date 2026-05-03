@@ -5,8 +5,8 @@ import Navbar from '@/components/Navbar'
 import AboutUs from '@/components/AboutUs'
 import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
-import { WHATSAPP_NUMBER, PHONE_NUMBER, EMAIL } from '@/content/site'
-import { Star, ShieldCheck, Clock3, Layers, Wrench, ChevronRight, Phone, Mail, MessageCircle } from 'lucide-react'
+import { WHATSAPP_NUMBER, EMAIL } from '@/content/site'
+import { Star, ShieldCheck, Clock3, Layers, Wrench, ChevronRight, Mail, MessageCircle } from 'lucide-react'
 
 const WA_HOME = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá CarpiMater! Gostaria de saber mais sobre os vossos serviços.')}`
 
@@ -109,13 +109,6 @@ export default function Home() {
                   >
                     <MessageCircle className="w-4 h-4" />
                     Pedir Orçamento Gratuito
-                  </a>
-                  <a
-                    href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`}
-                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-sm font-bold border border-white/25 text-white hover:bg-white/10 transition-colors"
-                  >
-                    <Phone className="w-4 h-4" />
-                    {PHONE_NUMBER}
                   </a>
                 </div>
 
@@ -267,13 +260,8 @@ export default function Home() {
                 </div>
                 <div className="p-7 flex flex-col flex-1 items-center text-center">
                   <h3 className="text-xl font-display font-bold text-foreground mb-2">Cozinhas por Medida</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
-                    Projecto, fabrico em Paços de Ferreira e montagem profissional. Entrega em até 3 meses após adjudicação. Cobertura nacional.
-                  </p>
-                  <div className="flex gap-2 mb-5 justify-center">
-                    <span className="rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">Por medida</span>
-                    <span className="rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">Paços de Ferreira</span>
-                  </div>
+                  
+                  
                   <span className="inline-flex items-center gap-1 text-primary font-semibold text-sm group-hover:gap-2 transition-all">
                     Ver projetos e pedir proposta <ChevronRight className="w-4 h-4" />
                   </span>
@@ -292,23 +280,24 @@ export default function Home() {
                 </div>
                 <div className="p-7 flex flex-col flex-1 items-center text-center">
                   <h3 className="text-xl font-display font-bold text-foreground mb-2">Pavimentos</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
-                    Fornecimento e instalação profissional. Escolha entre Vinílico SPC (impermeável, 25 anos) ou Flutuante Tradicional (aspeto madeira, 20 anos).
-                  </p>
-                  <div className="flex gap-2 mb-5 justify-center">
+                  
+                  <div className="flex flex-wrap gap-2 mb-4 justify-center">
                     <span className="rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">Vinílico SPC</span>
                     <span className="rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">Flutuante</span>
                   </div>
                   <span className="inline-flex items-center gap-1 text-primary font-semibold text-sm group-hover:gap-2 transition-all">
-                    Ver catálogo e orçamentar <ChevronRight className="w-4 h-4" />
+                    Catálogo e Simulador Online <ChevronRight className="w-4 h-4" />
                   </span>
+                  <div className="flex justify-center mt-6">
+                    <span className="rounded-full border border-emerald-300 bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">Simulador Online</span>
+                  </div>
                 </div>
               </a>
 
               {/* Empreiteiros */}
               <a href="/construção" className="group flex flex-col rounded-2xl border border-primary/30 bg-card overflow-hidden hover:border-primary hover:shadow-[0_12px_40px_rgba(201,136,13,0.15)] transition-all duration-300 relative">
                 <div className="absolute top-3 right-3 z-10 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shadow-md">
-                  Para Obra
+                  Para Obras
                 </div>
                 <div className="relative h-56 overflow-hidden shrink-0">
                   <img
@@ -398,13 +387,6 @@ export default function Home() {
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     Para projectos fora desta zona, contacte-nos — avaliamos caso a caso com deslocação acordada.
                   </p>
-                  <a
-                    href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`}
-                    className="inline-flex items-center gap-2 mt-5 text-sm font-semibold text-primary hover:underline underline-offset-4"
-                  >
-                    <Clock3 className="w-4 h-4" />
-                    {PHONE_NUMBER} — resposta em 24h
-                  </a>
                 </div>
                 <div className="flex flex-wrap gap-2">
                   {ZONES.map((zone) => (
@@ -435,7 +417,7 @@ export default function Home() {
                     Fale connosco
                   </h2>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-8">
-                    Respondemos em menos de 24 horas, por WhatsApp, telefone ou e-mail. Sem compromisso.
+                    Respondemos em menos de 24 horas, por WhatsApp ou e-mail. Sem compromisso.
                   </p>
                   <div className="flex flex-col gap-3">
                     <a
@@ -450,19 +432,6 @@ export default function Home() {
                       <div>
                         <p className="font-semibold text-foreground text-sm">WhatsApp</p>
                         <p className="text-muted-foreground text-xs">Resposta mais rápida</p>
-                      </div>
-                      <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:translate-x-0.5 transition-transform" />
-                    </a>
-                    <a
-                      href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`}
-                      className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary/40 transition-all group"
-                    >
-                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
-                        <Phone className="w-5 h-5 text-primary" />
-                      </div>
-                      <div>
-                        <p className="font-semibold text-foreground text-sm">{PHONE_NUMBER}</p>
-                        <p className="text-muted-foreground text-xs">Segunda a Sábado, 9h–18h</p>
                       </div>
                       <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:translate-x-0.5 transition-transform" />
                     </a>
@@ -519,61 +488,6 @@ export default function Home() {
                     </p>
                   </form>
                 </div>
-              </div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── CTA BANNER ── */}
-        <section className="py-20 bg-secondary relative overflow-hidden">
-          <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/40 to-transparent" />
-          <div className="absolute -top-24 -right-24 w-96 h-96 bg-primary/6 rounded-full blur-3xl" />
-          <div className="absolute -bottom-24 -left-24 w-80 h-80 bg-primary/4 rounded-full blur-3xl" />
-          <div className="container mx-auto px-4 relative">
-            <div className="max-w-4xl mx-auto text-center">
-              <p className="text-xs uppercase tracking-[0.2em] text-white/70 font-semibold mb-4">Pronto para começar?</p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-4 leading-snug">
-                Transforme o seu espaço hoje.
-              </h2>
-              <p className="text-white/75 text-sm sm:text-base mb-8 max-w-xl mx-auto">
-                Orçamento rápido, sem compromisso e com resposta em menos de 24 horas. É assim que trabalhamos.
-              </p>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto mb-8">
-                {[
-                  { label: 'Cozinhas', sub: 'Cozinhas por medida', href: '/cozinha', img: '/images/card-cozinhas.png' },
-                  { label: 'Pavimentos', sub: 'Vinílico SPC & Flutuante', href: '/pavimentos', img: '/images/pavimento-vinilico-sala-coimbra.png' },
-                  { label: 'Construção & Obra', sub: 'Para empreiteiros e investidores imobiliários', href: '/construção', img: '/images/card-obras.png' },
-                ].map(({ label, sub, href, img }) => (
-                  <a
-                    key={href}
-                    href={href}
-                    className="group relative flex flex-col justify-end rounded-2xl overflow-hidden min-h-[280px] border border-white/10 hover:border-primary/60 transition-all duration-500 shadow-xl hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
-                  >
-                    <img src={img} alt={label} className="absolute inset-0 w-full h-full object-cover scale-105 transition-all duration-700 group-hover:scale-112 group-hover:blur-[2px]" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
-                    <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-500" />
-                    <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                    <div className="relative z-10 p-6 transition-transform duration-400 group-hover:-translate-y-1">
-                      <div className="mb-2">
-                        <span className="text-white/50 text-xs font-medium uppercase tracking-widest group-hover:text-white/80 transition-colors duration-300">{sub}</span>
-                      </div>
-                      <p className="font-display font-bold text-white leading-tight mb-5 text-xl transition-all duration-300 group-hover:text-[1.45rem]">{label}</p>
-                      <span className="inline-flex items-center gap-1.5 bg-white/0 group-hover:bg-white/15 border border-transparent group-hover:border-white/25 rounded-full px-0 group-hover:px-4 py-0 group-hover:py-2 text-white/60 group-hover:text-white text-xs font-bold transition-all duration-400">
-                        Ver mais <ChevronRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                      </span>
-                    </div>
-                  </a>
-                ))}
-              </div>
-              <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                <a
-                  href={`/whatsapp-redirect.html?url=${encodeURIComponent(WA_HOME)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-[#1ebe5d] transition-colors"
-                >
-                  Falar por WhatsApp
-                </a>
               </div>
             </div>
           </div>

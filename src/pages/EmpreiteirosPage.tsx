@@ -121,7 +121,7 @@ export default function EmpreiteirosPage() {
                   </h1>
                   <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">
                     <span className="sm:hidden">Carpintaria sob medida para obras.<br />Tratamos de tudo: das medidas à instalação.</span>
-                    <span className="hidden sm:inline">Roupeiros, cozinhas, portas interiores, closets e painéis, etc.<br />Materiais de qualidade, preços competitivos, prazos cumpridos.</span>
+                    <span className="hidden sm:inline">Roupeiros, cozinhas, portas interiores, closets e painéis, etc.<br />Materiais de qualidade, preços mais baixos que as outras carpintarias, prazos cumpridos.</span>
                   </p>
 
                   <div className="sm:hidden rounded-[30px] border border-white/14 bg-white/[0.09] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.22)] mb-6">
@@ -145,6 +145,15 @@ export default function EmpreiteirosPage() {
                       <span className="text-sm">{item}</span>
                     </div>
                   ))}
+                </div>
+
+                <div className="rounded-[2rem] border border-primary/20 bg-primary/10 p-5 mb-6 max-w-xl">
+                  <p className="text-base sm:text-lg font-semibold text-white leading-6">
+                    Qualidade de topo, aos preços mais baixos do mercado.
+                  </p>
+                  <p className="text-sm text-white/70 mt-2">
+                    Produção própria em Paços de Ferreira, sem intermediários, com instalação coordenada e cumprimento dos prazos (média de 10 semanas).
+                  </p>
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start lg:flex-nowrap mb-6">
@@ -224,7 +233,7 @@ export default function EmpreiteirosPage() {
                 { val: 'Fabrico Nacional', sub: 'Paços de Ferreira' },
                 { val: 'Tradição', sub: '40+ Anos' },
                 { val: 'Qualidade', sub: 'Materiais Premium' },
-                { val: 'Preço Justo', sub: 'Sem Intermediários' },
+                { val: 'Preço mais baixo', sub: 'Sem Intermediários' },
                 { val: 'Prazos Cumpridos', sub: 'Sem Atrasos' },
               ].map((item, i, arr) => (
                 <div key={item.val} className={`text-center${i === arr.length - 1 && arr.length % 2 !== 0 ? ' col-span-2 sm:col-span-1' : ''}`}>
@@ -293,7 +302,7 @@ export default function EmpreiteirosPage() {
                 {
                   icon: MapPin,
                   title: 'Fabrico Próprio',
-                  desc: 'Produzimos em Paços de Ferreira, sem intermediários. Preço directo de fábrica.',
+                  desc: 'Produzimos em Paços de Ferreira, sem intermediários. Os valores saem mais baixos e é difícil bater este nível de qualidade.',
                 },
                 {
                   icon: Clock,
@@ -368,7 +377,7 @@ export default function EmpreiteirosPage() {
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
             <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">Pronto para começar?</p>
             <h2 className="font-display font-bold mb-4 leading-snug text-white text-[clamp(1.5rem,3vw,2.2rem)]">
-              Quer Qualidade de Carpintaria a Preço Justo?
+              Quer carpintaria de qualidade com valores mais baixos?
             </h2>
             <p className="text-white/60 text-sm sm:text-base max-w-lg mx-auto mb-8">
               Fale connosco agora e receba um orçamento gratuito e detalhado em 24 horas. Sem compromisso.
