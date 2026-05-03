@@ -26,7 +26,8 @@ const ALL_SERVICE_PILLS: Array<{ label: string; href: string; key: string; previ
 function scrollToSection(id: string) {
   const element = document.getElementById(id)
   if (element) {
-    const top = element.getBoundingClientRect().top + window.scrollY - 120
+    const offset = window.innerWidth < 768 ? 80 : 120 // Menos offset em mobile
+    const top = element.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({ top, behavior: 'smooth' })
   }
 }
@@ -523,8 +524,8 @@ export default function Navbar() {
                       <button
                         key={link.sectionId}
                         onClick={() => {
-                          scrollToSection(link.sectionId)
-                          setTimeout(() => setIsMobileMenuOpen(false), 50)
+                          setIsMobileMenuOpen(false)
+                          setTimeout(() => scrollToSection(link.sectionId), 100)
                         }}
                         className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                           isScrolled
@@ -558,7 +559,11 @@ export default function Navbar() {
                   {isHomePage ? (
                     <a
                       href="/#home-contacto"
-                      onClick={(e) => { e.preventDefault(); scrollToSection('home-contacto'); setIsMobileMenuOpen(false) }}
+                      onClick={(e) => { 
+                        e.preventDefault()
+                        setIsMobileMenuOpen(false)
+                        setTimeout(() => scrollToSection('home-contacto'), 100)
+                      }}
                       className="block w-full text-center bg-primary text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
                     >
                       Pedir Orçamento
@@ -586,9 +591,11 @@ export default function Navbar() {
                   ) : (
                     <button
                       onClick={() => {
-                        if (window.location.pathname === basePath) scrollToSection(budgetSectionId)
-                        else window.location.href = getSectionHref(budgetSectionId)
                         setIsMobileMenuOpen(false)
+                        setTimeout(() => {
+                          if (window.location.pathname === basePath) scrollToSection(budgetSectionId)
+                          else window.location.href = getSectionHref(budgetSectionId)
+                        }, 100)
                       }}
                       className="w-full bg-primary text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
                     >
