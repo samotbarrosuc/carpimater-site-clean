@@ -124,6 +124,14 @@ export default function Navbar() {
         { label: 'Serviços', sectionId: 'servicos' },
         { label: 'Projectos', sectionId: 'projectos' },
       ]
+    : isVinilico
+    ? [
+        { label: 'Flutuante', sectionId: '_flutuante' },
+      ]
+    : isFlutuante
+    ? [
+        { label: 'SPC Vinílico', sectionId: '_vinilico' },
+      ]
     : isPavimentosLanding
     ? [
         { label: 'Vinílico SPC', sectionId: '_vinilico' },
@@ -251,7 +259,7 @@ export default function Navbar() {
             {!isHomePage && (
               <>
                 <div className="hidden lg:flex items-center gap-1.5">
-                  {ALL_SERVICE_PILLS.map((pill) => {
+                  {servicePills.map((pill) => {
                     const isActive = pill.key === activePillKey
                     return (
                       <div
