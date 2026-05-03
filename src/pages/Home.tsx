@@ -176,7 +176,7 @@ export default function Home() {
                   </div>
                   <div className="w-px h-7 lg:h-12 bg-white/18" />
                   <div>
-                    <p className="text-xl sm:text-2xl lg:text-5xl font-display font-bold text-primary">25</p>
+                    <p className="text-xl sm:text-2xl lg:text-5xl font-display font-bold text-primary">30</p>
                     <p className="text-[10px] lg:text-xs text-white/45 mt-0.5 lg:mt-2 uppercase tracking-[0.12em]">anos de exp.</p>
                   </div>
                   <div className="w-px h-7 lg:h-12 bg-white/18" />
