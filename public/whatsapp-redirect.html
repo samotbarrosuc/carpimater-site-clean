@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A abrir WhatsApp...</title>
+  <style>
+    body {
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      background: #111;
+      color: #fff;
+      font-family: sans-serif;
+      font-size: 1rem;
+    }
+  </style>
+  <script>
+    (function () {
+      var url = new URLSearchParams(window.location.search).get('url');
+      if (url) window.location.href = decodeURIComponent(url);
+      setTimeout(function () { window.close(); }, 1800);
+    })();
+  </script>
+</head>
+<body>A abrir WhatsApp…</body>
+</html>

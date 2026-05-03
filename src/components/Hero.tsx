@@ -1,0 +1,320 @@
+// client component
+
+import { useState, useEffect } from 'react'
+import { motion } from 'framer-motion'
+import { useLocation } from 'wouter'
+import {
+  MessageCircle,
+  ChevronLeft,
+  ChevronRight,
+} from 'lucide-react'
+import { getSiteVariantContent, getSiteVariantFromPath, getWhatsAppUrl } from '@/content/site'
+import { getGalleryItemsByVariant } from '@/content/galeria'
+import { CompareSlider, pairs as beforeAfterPairs } from '@/components/cozinha/sections/BeforeAfter'
+
+function scrollToSection(id: string) {
+  const element = document.getElementById(id)
+  if (element) {
+    const top = element.getBoundingClientRect().top + window.scrollY - 80
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
+}
+
+export default function Hero() {
+  const [pathname] = useLocation()
+  const siteVariant = getSiteVariantFromPath(pathname)
+  const isKitchen = siteVariant === 'cozinha'
+  const siteContent = getSiteVariantContent(siteVariant)
+  const galleryItems = getGalleryItemsByVariant(siteVariant)
+  const [currentProjectIndex, setCurrentProjectIndex] = useState(0)
+  const totalProjects = galleryItems.length
+
+  const HERO_KPIS = isKitchen
+    ? [
+        { value: 'Paços de Ferreira', label: 'Fabrico' },
+        { value: '8 a 10 semanas', label: 'Prazo' },
+        { value: '60% do valor total', label: 'Adjudicação' },
+      ]
+    : [
+        { value: '24h', label: 'Tempo de resposta' },
+        { value: siteContent.supplierWarrantyLabel, label: 'Garantia do fabricante' },
+        { value: '5,0 ★', label: 'Avaliação no Google' },
+      ]
+
+  const goToPreviousProject = () => {
+    setCurrentProjectIndex((prev) => (prev === 0 ? totalProjects - 1 : prev - 1))
+  }
+
+  const goToNextProject = () => {
+    setCurrentProjectIndex((prev) => (prev === totalProjects - 1 ? 0 : prev + 1))
+  }
+
+  useEffect(() => {
+    if (totalProjects <= 1) return
+
+    const interval = setInterval(() => {
+      setCurrentProjectIndex((prev) => (prev === totalProjects - 1 ? 0 : prev + 1))
+    }, 5000)
+
+    return () => clearInterval(interval)
+  }, [totalProjects])
+
+  return (
+    <section
+      id="hero"
+      className={`relative min-h-[88vh] sm:min-h-screen bg-secondary flex items-center overflow-hidden pt-20 pb-12 sm:pt-32 sm:pb-20 lg:pt-32 lg:pb-20 ${
+        isKitchen ? 'bg-[#1f2427]' : ''
+      }`}
+    >
+      {!isKitchen && (
+        <>
+          <div
+            className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-[1.02]"
+            style={{ backgroundImage: 'url("/images/ChatGPT Image 31_03_2026, 18_59_26.png")' }}
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-secondary/[0.97] via-secondary/80 to-secondary/32 sm:bg-gradient-to-r sm:from-secondary/[0.95] sm:via-secondary/72 sm:to-secondary/16" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,rgba(201,136,13,0.22),transparent_42%)]" />
+          <div className="absolute inset-y-0 left-0 w-[54%] bg-gradient-to-r from-black/28 via-transparent to-transparent pointer-events-none" />
+        </>
+      )}
+      {isKitchen && (
+        <>
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,#1f2427_0%,#2a3034_35%,#15191c_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(236,156,72,0.22),transparent_38%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_76%,rgba(96,126,142,0.24),transparent_36%)]" />
+        </>
+      )}
+      <div className="container mx-auto px-5 sm:px-6 lg:px-8 relative z-10 w-full">
+        <div className="max-w-[1520px] mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,0.96fr)_minmax(540px,1.04fr)] gap-10 xl:gap-14 items-start">
+          <motion.div
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55 }}
+            className="max-w-[900px] mx-auto lg:mx-0 lg:pr-5 text-center lg:text-left flex flex-col items-center lg:items-start"
+          >
+            {isKitchen ? (
+              /* ── COZINHA HERO HEADLINE ── */
+              (<div className="mb-6">
+                <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm text-white/80 font-medium mb-6">
+                  <span className="w-2 h-2 rounded-full bg-primary inline-block" />
+                  <span className="sm:hidden">Paços de Ferreira · +40 anos</span><span className="hidden sm:inline">Paços de Ferreira · Mais de 40 anos de carpintaria</span>
+                </div>
+                <h1 className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.6rem] lg:text-[2.75rem] xl:text-[3rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
+                  <span className="block text-white">A Cozinha que</span>
+                  <span className="block text-primary">Imaginou,</span>
+                  <span className="block text-white">Fabricada em Portugal.</span>
+                </h1>
+                <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">Fabrico em Paços de Ferreira e montagem profissional incluída. Qualidade superior à das grandes superfícies a preços semelhantes.</p>
+              </div>)
+            ) : (
+              <h1 className="w-full max-w-[13ch] sm:max-w-[14ch] lg:max-w-none text-[1.75rem] sm:text-[2.25rem] md:text-[2.6rem] lg:text-[2.75rem] xl:text-[3rem] font-display font-bold leading-[1.08] tracking-[-0.015em] mb-5">
+                <span className="block text-white">{siteContent.heroTitle}</span>
+                <span className="block text-primary text-[0.62em] sm:text-[0.56em] font-semibold tracking-[0.01em] mt-2">
+                  {siteContent.heroServiceLine}
+                </span>
+                <span className="block text-white/72 text-[0.38em] sm:text-[0.35em] font-medium tracking-[0.06em] uppercase mt-2">
+                  Coimbra · Leiria · Aveiro
+                </span>
+              </h1>
+            )}
+
+            {!isKitchen && (
+            <div className="w-full max-w-[760px]">
+              <div className="text-sm sm:text-lg md:text-[1.3rem] text-white/90 leading-relaxed mb-3 text-left space-y-1">
+                <p className="flex items-start gap-2">
+                  <span className="shrink-0">①</span>
+                  <span>{siteContent.heroStepOneText}</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="shrink-0">②</span>
+                  <span>Receba o orçamento em segundos.</span>
+                </p>
+                <p className="flex items-start gap-2">
+                  <span className="shrink-0">③</span>
+                  <span>Avance com uma das nossas equipas especializadas.</span>
+                </p>
+              </div>
+              <p className="text-sm sm:text-base md:text-[1.05rem] text-white/62 leading-relaxed mb-8">
+                Deixe connosco. Tratamos de tudo. Sem complicações, sem surpresas, sem stress.
+              </p>
+            </div>
+            )}
+
+            {isKitchen && (
+              /* ── 3 CHECKMARKS antes do botão ── */
+              (<div className="flex flex-col gap-2.5 mb-6">
+                {[
+                  { full: 'Orçamento gratuito. Resposta rápida.', short: 'Orçamento gratuito. Resposta rápida.' },
+                  { full: 'Projecto detalhado e aprovado por si', short: 'Projecto aprovado por si' },
+                  { full: 'Montagem profissional incluída', short: 'Montagem incluída' },
+                ].map((item) => (
+                  <div key={item.full} className="flex items-center gap-2.5 text-white/80">
+                    <svg className="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
+                      <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    <span className="text-sm"><span className="sm:hidden">{item.short}</span><span className="hidden sm:inline">{item.full}</span></span>
+                  </div>
+                ))}
+              </div>)
+            )}
+
+            <div className="w-full max-w-3xl mb-8">
+              <div className="flex flex-col sm:flex-row gap-3 justify-center lg:justify-start lg:flex-nowrap">
+                {isKitchen ? (
+                  <>
+                  <a
+                    href={getWhatsAppUrl(undefined, siteVariant)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center justify-center gap-2 min-h-[52px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
+                  >
+                    <MessageCircle className="w-4 h-4 shrink-0" />
+                    Pedir Orçamento Gratuito
+                  </a>
+                  </>
+                ) : (
+                  <>
+                    <button
+                      type="button"
+                      onClick={() => { scrollToSection('simulador') }}
+                      className="inline-flex items-center justify-center min-h-[50px] px-7 lg:px-6 py-3 rounded-full text-[0.95rem] font-semibold whitespace-nowrap transition-all bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_12px_30px_rgba(201,136,13,0.28)]"
+                    >
+                      Calcular o meu orçamento
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => { scrollToSection('catalogo') }}
+                      className="inline-flex items-center justify-center min-h-[50px] px-5 lg:px-4 py-3 rounded-full text-sm font-semibold whitespace-nowrap border border-white/25 text-white bg-white/[0.04] hover:bg-white/[0.09] transition-colors"
+                    >
+                      {siteContent.catalogCtaLabel}
+                    </button>
+                  </>
+                )}
+              </div>
+            </div>
+
+            {!isKitchen && (
+              <p className="text-xs sm:text-sm text-white/68 max-w-[760px]">
+                Sem compromisso inicial. Validamos tecnicamente antes de fechar o orçamento final.
+              </p>
+            )}
+            {isKitchen && (
+              <p className="text-xs sm:text-sm text-white/40 max-w-[760px] mt-2">
+                Orçamento sem compromisso · Sem custos ocultos · Fabrico em Portugal
+              </p>
+            )}
+          </motion.div>
+
+          <motion.aside
+            initial={{ opacity: 0, x: 20, y: 18 }}
+            animate={{ opacity: 1, x: 0, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.12 }}
+            className="relative w-full max-w-[760px] mx-auto lg:mx-0 lg:justify-self-end lg:pt-2"
+          >
+            <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-4">
+              {HERO_KPIS.map((kpi) => (
+                <div key={kpi.label} className="rounded-xl border border-white/12 bg-white/[0.08] px-4 py-3.5 text-center">
+                  {isKitchen ? (
+                    <>
+                      <p className="text-[1.05rem] sm:text-[1.2rem] font-bold text-white leading-tight">{kpi.label}</p>
+                      <p className="text-xs sm:text-sm text-white/72 mt-1.5">{kpi.value}</p>
+                    </>
+                  ) : (
+                    <>
+                      <p className="text-[1.35rem] sm:text-[1.55rem] font-bold text-white leading-none">{kpi.value}</p>
+                      <p className="text-xs sm:text-sm text-white/72 mt-1.5">{kpi.label}</p>
+                    </>
+                  )}
+                </div>
+              ))}
+            </div>
+
+            {isKitchen ? (
+              <div className="rounded-[30px] border border-white/14 bg-white/[0.09] backdrop-blur-xl p-4 sm:p-5 lg:p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
+                <CompareSlider before={beforeAfterPairs[0].before} after={beforeAfterPairs[0].after} />
+                <p className="text-center text-xs text-white/45 mt-3 font-medium tracking-wide">
+                  Arraste o divisor — Antes &amp; Depois
+                </p>
+              </div>
+            ) : (
+              <div className="rounded-[30px] border border-white/14 bg-white/[0.09] backdrop-blur-xl p-4 sm:p-5 lg:p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
+                <div className="relative rounded-2xl overflow-hidden border border-white/10 h-56 sm:h-64 lg:h-[22rem]">
+                  <img
+                    src={galleryItems[currentProjectIndex]?.image}
+                    alt={`${siteContent.projectAltPrefix} ${galleryItems[currentProjectIndex]?.description}`}
+                    className="w-full h-full object-cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />
+                  <p className="absolute left-4 bottom-3 text-sm text-white/90 font-medium">
+                    {galleryItems[currentProjectIndex]?.description}
+                  </p>
+
+                  <div className="absolute inset-y-0 left-3 flex items-center">
+                    <button
+                      type="button"
+                      onClick={goToPreviousProject}
+                      className="w-9 h-9 rounded-full border border-white/30 bg-black/35 text-white hover:bg-black/55 flex items-center justify-center transition-colors"
+                      aria-label="Projeto anterior"
+                    >
+                      <ChevronLeft className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="absolute inset-y-0 right-3 flex items-center">
+                    <button
+                      type="button"
+                      onClick={goToNextProject}
+                      className="w-9 h-9 rounded-full border border-white/30 bg-black/35 text-white hover:bg-black/55 flex items-center justify-center transition-colors"
+                      aria-label="Projeto seguinte"
+                    >
+                      <ChevronRight className="w-5 h-5" />
+                    </button>
+                  </div>
+                </div>
+
+                <div className="mt-3.5 flex items-center justify-center gap-2">
+                  {galleryItems.map((item, index) => (
+                    <button
+                      key={`${item.image}-${index}`}
+                      type="button"
+                      onClick={() => setCurrentProjectIndex(index)}
+                      className={`h-2 rounded-full transition-all ${
+                        currentProjectIndex === index
+                          ? 'w-6 bg-primary'
+                          : 'w-2 bg-white/45 hover:bg-white/70'
+                      }`}
+                      aria-label={`Ir para projeto ${index + 1}`}
+                    />
+                  ))}
+                </div>
+              </div>
+            )}
+          </motion.aside>
+        </div>
+      </div>
+      {/*
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ delay: 0.85, duration: 0.5 }}
+        className="absolute bottom-4 sm:bottom-7 left-1/2 -translate-x-1/2 text-center"
+      >
+        <button
+          type="button"
+          onClick={() => { window.location.href = '/catalogo' }}
+          className="flex flex-col items-center gap-2 text-white/58 hover:text-white/82 transition-colors"
+        >
+          <span className="text-xs tracking-wide">Ver vinílicos</span>
+          <motion.div
+            animate={{ y: [0, 8, 0] }}
+            transition={{ duration: 1.5, repeat: Infinity, ease: 'easeInOut' }}
+          >
+            <ArrowDown className="w-5 h-5" />
+          </motion.div>
+        </button>
+      </motion.div>
+      */}
+    </section>
+  );
+}
