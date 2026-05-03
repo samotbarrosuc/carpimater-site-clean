@@ -105,7 +105,7 @@ export default function Hero() {
             {isKitchen ? (
               /* ── COZINHA HERO HEADLINE ── */
               (<div className="mb-6">
-                <h1 className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.6rem] lg:text-[2.75rem] xl:text-[3rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
+                <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
                   <span className="block text-white"></span>
                   <span className="block text-primary">Cozinhas à medida</span>
                   <span className="block text-white">ao preço de Ikea.</span>
@@ -211,6 +211,27 @@ export default function Hero() {
               </p>
             )}
           </motion.div>
+
+          {isKitchen && (
+            <div className="lg:hidden grid grid-cols-1 gap-3 mt-8">
+              <div className="relative w-full max-w-[400px] mx-auto overflow-hidden rounded-[1.5rem] border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.25)] h-[200px]">
+                <img
+                  src={kitchenHeroImage}
+                  alt="Cozinha CarpiMater"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30" />
+              </div>
+              <div className="relative w-full max-w-[400px] mx-auto overflow-hidden rounded-[1.5rem] border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.15)] h-[200px]">
+                <img
+                  src={kitchenHeroImageSecondary}
+                  alt="Cozinha CarpiMater"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/20" />
+              </div>
+            </div>
+          )}
 
           {isKitchen && (
             <div className="hidden lg:grid grid-cols-1 gap-4">
