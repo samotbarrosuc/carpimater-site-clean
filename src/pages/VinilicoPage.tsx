@@ -1,4 +1,5 @@
-import { useEffect, Suspense } from 'react'
+import { Suspense } from 'react'
+import { Helmet } from 'react-helmet-async'
 import { SimulatorProvider } from '@/context/SimulatorContext'
 import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
@@ -12,19 +13,16 @@ import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 
 export default function VinilicoPage() {
-  useEffect(() => {
-    document.title = 'Pavimento Vinílico em Coimbra, Aveiro e Leiria — CarpiMater'
-    const meta = document.querySelector('meta[name="description"]')
-    if (meta) {
-      meta.setAttribute(
-        'content',
-        'Fornecimento e instalação profissional de pavimento vinílico SPC em Coimbra, Aveiro e Leiria. Garantia de 25 anos. Orçamento rápido e sem compromisso — CarpiMater.'
-      )
-    }
-  }, [])
-
   return (
     <SimulatorProvider>
+      <Helmet>
+        <title>Preço Pavimento Vinílico Coimbra, Aveiro, Leiria, Portugal — CarpiMater</title>
+        <meta
+          name="description"
+          content="Escolha o pavimento vinílico, simule o preço em segundos e peça o nosso serviço de aplicação. Preços em Coimbra, Aveiro, Leiria e Portugal. Garantia de 25 anos — CarpiMater."
+        />
+        <meta name="keywords" content="preço vinílico coimbra, preço vinílico aveiro, preço vinílico leiria, preço vinílico portugal, pavimento vinílico, instalação vinílico" />
+      </Helmet>
       <main>
         <Navbar />
         <Hero />
