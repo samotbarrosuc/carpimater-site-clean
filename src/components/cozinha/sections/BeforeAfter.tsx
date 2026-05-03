@@ -19,7 +19,7 @@ export const pairs = [
   },
 ]
 
-export function CompareSlider({ before, after }: { before: { src: string }; after: { src: string } }) {
+export function CompareSlider({ before, after, aspectRatio = "4/3" }: { before: { src: string }; after: { src: string }; aspectRatio?: string }) {
   const [pos, setPos] = useState(50);
   const [dragging, setDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -55,7 +55,7 @@ export function CompareSlider({ before, after }: { before: { src: string }; afte
   const imgStyle: CSSProperties = { position: "absolute", inset: 0, width: "100%", height: "100%", objectFit: "cover", objectPosition: "center", pointerEvents: "none", userSelect: "none", WebkitUserSelect: "none" };
 
   return (
-    <div ref={containerRef} className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio: "4/3", cursor: dragging ? "grabbing" : "default", touchAction: "pan-y" }}>
+    <div ref={containerRef} className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio, cursor: dragging ? "grabbing" : "default", touchAction: "pan-y" }}>
       <img src={after.src} alt="Depois" draggable={false} style={imgStyle} />
       <img src={before.src} alt="Antes" draggable={false} style={{ ...imgStyle, clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
       <div style={{ position: "absolute", top: 0, bottom: 0, left: `${pos}%`, width: "2px", transform: "translateX(-50%)", backgroundColor: "#C9880D", pointerEvents: "none" }} />

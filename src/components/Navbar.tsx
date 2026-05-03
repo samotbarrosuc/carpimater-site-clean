@@ -69,11 +69,9 @@ export default function Navbar() {
   const activePillKey = isEmpreiteiros
     ? 'empreiteiros'
     : isPavimentos
-    ? isPavimentosLanding
-      ? 'pavimentos'
-      : activeVariant
+    ? 'pavimentos'
     : !isHomePage && activeVariant
-    ? (activeVariant as string) // 'cozinha'
+    ? (activeVariant as string)
     : null
 
   const pavimentosPillLabel = isPavimentosLanding
@@ -96,7 +94,7 @@ export default function Navbar() {
     pill.key === 'pavimentos'
       ? {
           ...pill,
-          key: isPavimentosLanding ? 'pavimentos' : (activeVariant ?? 'pavimentos'),
+          key: 'pavimentos',
           label: pavimentosPillLabel,
           href: pavimentosPillHref,
         }

@@ -29,10 +29,13 @@ export default function Hero() {
   const [currentProjectIndex, setCurrentProjectIndex] = useState(0)
   const totalProjects = galleryItems.length
 
+  const kitchenHeroImage = '/images/cozinha-1.png'
+  const kitchenHeroImageSecondary = '/images/cozinha-4.png'
+
   const HERO_KPIS = isKitchen
     ? [
         { value: 'Paços de Ferreira', label: 'Fabrico' },
-        { value: '8 a 10 semanas', label: 'Prazo' },
+        { value: '8 a 10 semanas', label: 'Prazo de execução' },
         { value: '60% do valor total', label: 'Adjudicação' },
       ]
     : [
@@ -66,6 +69,13 @@ export default function Hero() {
         isKitchen ? 'bg-[#1f2427]' : ''
       }`}
     >
+      {isKitchen && (
+        <img
+          src={kitchenHeroImage}
+          alt="Cozinha CarpiMater"
+          className="absolute inset-0 w-full h-full object-cover block sm:hidden opacity-30"
+        />
+      )}
       {!isKitchen && (
         <>
           <div
@@ -95,10 +105,6 @@ export default function Hero() {
             {isKitchen ? (
               /* ── COZINHA HERO HEADLINE ── */
               (<div className="mb-6">
-                <div className="inline-flex items-center gap-2 bg-white/10 border border-white/20 rounded-full px-4 py-2 text-sm text-white/80 font-medium mb-6">
-                  <span className="w-2 h-2 rounded-full bg-primary inline-block" />
-                  <span className="sm:hidden">Paços de Ferreira · +40 anos</span><span className="hidden sm:inline">Paços de Ferreira · Mais de 40 anos de carpintaria</span>
-                </div>
                 <h1 className="text-[1.75rem] sm:text-[2.25rem] md:text-[2.6rem] lg:text-[2.75rem] xl:text-[3rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
                   <span className="block text-white">A Cozinha que</span>
                   <span className="block text-primary">Imaginou,</span>
@@ -163,7 +169,7 @@ export default function Hero() {
                     href={getWhatsAppUrl(undefined, siteVariant)}
                     target="_blank"
                     rel="noopener noreferrer"
-                      className="inline-flex items-center justify-center min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
+                      className="inline-flex items-center justify-center gap-3 min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
                   >
                     <MessageCircle className="w-4 h-4 shrink-0" />
                     Pedir Orçamento Gratuito
@@ -199,43 +205,49 @@ export default function Hero() {
             )}
             {isKitchen && (
               <p className="text-xs sm:text-sm text-white/40 max-w-[760px] mt-2">
-                Orçamento sem compromisso · Sem custos ocultos · Fabrico em Portugal
+                Orçamento sem compromisso · Sem custos ocultos · Fabrico em Paços de Ferreira
               </p>
             )}
           </motion.div>
 
-          <motion.aside
-            initial={{ opacity: 0, x: 20, y: 18 }}
-            animate={{ opacity: 1, x: 0, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.12 }}
-            className="relative w-full max-w-[760px] mx-auto lg:mx-0 lg:justify-self-end lg:pt-2"
-          >
-            <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-4">
-              {HERO_KPIS.map((kpi) => (
-                <div key={kpi.label} className="rounded-xl border border-white/12 bg-white/[0.08] px-4 py-3.5 text-center">
-                  {isKitchen ? (
-                    <>
-                      <p className="text-[1.05rem] sm:text-[1.2rem] font-bold text-white leading-tight">{kpi.label}</p>
-                      <p className="text-xs sm:text-sm text-white/72 mt-1.5">{kpi.value}</p>
-                    </>
-                  ) : (
+          {isKitchen && (
+            <div className="hidden lg:grid grid-cols-1 gap-4">
+              <div className="relative w-full max-w-[540px] overflow-hidden rounded-[2rem] border border-white/10 shadow-[0_45px_110px_rgba(0,0,0,0.35)] h-[280px]">
+                <img
+                  src={kitchenHeroImage}
+                  alt="Cozinha CarpiMater"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30" />
+              </div>
+              <div className="relative w-full max-w-[540px] overflow-hidden rounded-[2rem] border border-white/10 shadow-[0_45px_110px_rgba(0,0,0,0.2)] h-[280px]">
+                <img
+                  src={kitchenHeroImageSecondary}
+                  alt="Cozinha CarpiMater"
+                  className="w-full h-full object-cover"
+                />
+                <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/20" />
+              </div>
+            </div>
+          )}
+          {!isKitchen && (
+            <motion.aside
+              initial={{ opacity: 0, x: 20, y: 18 }}
+              animate={{ opacity: 1, x: 0, y: 0 }}
+              transition={{ duration: 0.6, delay: 0.12 }}
+              className="relative w-full max-w-[760px] mx-auto lg:mx-0 lg:justify-self-end lg:pt-2"
+            >
+              <div className="w-full grid grid-cols-1 sm:grid-cols-3 gap-3.5 mb-4">
+                {HERO_KPIS.map((kpi) => (
+                  <div key={kpi.label} className="rounded-xl border border-white/12 bg-white/[0.08] px-4 py-3.5 text-center">
                     <>
                       <p className="text-[1.35rem] sm:text-[1.55rem] font-bold text-white leading-none">{kpi.value}</p>
                       <p className="text-xs sm:text-sm text-white/72 mt-1.5">{kpi.label}</p>
                     </>
-                  )}
-                </div>
-              ))}
-            </div>
-
-            {isKitchen ? (
-              <div className="rounded-[30px] border border-white/14 bg-white/[0.09] backdrop-blur-xl p-4 sm:p-5 lg:p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
-                <CompareSlider before={beforeAfterPairs[0].before} after={beforeAfterPairs[0].after} />
-                <p className="text-center text-xs text-white/45 mt-3 font-medium tracking-wide">
-                  Arraste o divisor — Antes &amp; Depois
-                </p>
+                  </div>
+                ))}
               </div>
-            ) : (
+
               <div className="rounded-[30px] border border-white/14 bg-white/[0.09] backdrop-blur-xl p-4 sm:p-5 lg:p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 h-56 sm:h-64 lg:h-[22rem]">
                   <img
@@ -287,8 +299,8 @@ export default function Hero() {
                   ))}
                 </div>
               </div>
-            )}
-          </motion.aside>
+            </motion.aside>
+          )}
         </div>
       </div>
       {/*

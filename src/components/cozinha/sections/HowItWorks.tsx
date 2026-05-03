@@ -49,7 +49,7 @@ export default function HowItWorks() {
             Como funciona
           </h2>
           <p className="mt-3 text-sm max-w-md mx-auto text-muted-foreground">
-            Tratamos de tudo — do primeiro contacto à última dobradiça.
+            Tratamos de tudo — do primeiro contacto ao último pormenor.
           </p>
         </motion.div>
 

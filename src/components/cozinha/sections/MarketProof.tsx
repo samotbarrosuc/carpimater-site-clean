@@ -39,7 +39,7 @@ export default function MarketProof() {
           className="text-center mb-10"
         >
           <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
-            Porquê CarpiMater
+            Porquê a CarpiMater
           </p>
           <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-white">
             O que nos distingue

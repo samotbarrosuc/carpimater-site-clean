@@ -62,19 +62,11 @@ export default function Hero() {
             Carpintaria de Excelência — Paços de Ferreira
           </motion.span>
 
-          <motion.h1
-            variants={item}
-            className="font-title font-black leading-tight mb-6"
-            style={{
-              fontSize: "clamp(2.4rem, 5vw, 4rem)",
-              color: "#3D2A28",
-              lineHeight: 1.08,
-            }}
-          >
-            Cozinhas por Medida
-            <br />
-            <span style={{ color: "#C9880D" }}>& Soluções Completas</span>
-          </motion.h1>
+            <h1 className="font-title font-black leading-tight mb-6">
+              Cozinhas por Medida
+              <br />
+              <span style={{ color: "#C9880D" }}>& Soluções Completas</span>
+            </h1>
 
           <motion.p
             variants={item}
