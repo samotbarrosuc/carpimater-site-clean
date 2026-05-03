@@ -498,8 +498,9 @@ export default function Navbar() {
                       <button
                         key={link.sectionId}
                         onClick={() => {
-                          setIsMobileMenuOpen(false)
                           scrollToSection(link.sectionId)
+                          // Close menu after scroll starts
+                          setTimeout(() => setIsMobileMenuOpen(false), 50)
                         }}
                         className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                           isScrolled
