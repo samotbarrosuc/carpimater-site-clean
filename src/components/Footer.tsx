@@ -94,7 +94,13 @@ export default function Footer() {
           <div>
             <h4 className="font-bold text-slate-900 mb-4">Serviços</h4>
             <ul className="space-y-2">
-              {serviceLinks.map((link) => (
+              {[
+                { label: 'Cozinhas à medida', href: '/cozinha' },
+                { label: 'Pavimento flutuante', href: '/flutuante' },
+                { label: 'Pavimento vinílico', href: '/vinilico' },
+                { label: 'Carpintaria para Obras', href: '/empreiteiros' },
+                { label: 'Sobre Nós', href: '/' },
+              ].map((link) => (
                 <li key={link.href}>
                   <a
                     href={link.href}
@@ -111,7 +117,7 @@ export default function Footer() {
 
           {/* Contact */}
           <div>
-            <h4 className="font-bold text-slate-900 mb-4">Contacto &amp; Zona</h4>
+            <h4 className="font-bold text-slate-900 mb-4">Contactos</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-sm text-slate-600">
                 <MapPin className="w-4 h-4 shrink-0 mt-0.5 text-primary" />
@@ -153,7 +159,7 @@ export default function Footer() {
                   <a
                     key={p.href}
                     href={p.href}
-                    className="rounded-full border border-slate-300 px-3 py-1 text-xs text-slate-600 hover:text-slate-900 hover:border-slate-400 transition-colors"
+                    className="rounded-full border border-primary px-3 py-1 text-xs text-slate-600 hover:text-slate-900 hover:border-primary/80 transition-colors"
                   >
                     {p.label}
                   </a>

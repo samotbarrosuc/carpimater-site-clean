@@ -17,10 +17,7 @@ export default function FinalCTA() {
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.55 }}
         >
-          <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-4">
-            Orçamento Gratuito
-          </p>
-
+          
           <h2 className="font-display font-bold mb-4 leading-snug text-white text-[clamp(1.5rem,3vw,2.2rem)]">
             Pronto para começar o seu projecto?
           </h2>
