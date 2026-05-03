@@ -114,6 +114,8 @@ export default function Navbar() {
     ? 'Construção & Obra'
     : activeContent?.subtitle ?? 'Serviços'
 
+  const ctaLabel = isVinilico || isFlutuante ? 'Simulador' : 'Pedir Orçamento'
+
   const navLinks = isHomePage
     ? [
         { label: 'Início', sectionId: 'home-hero' },
@@ -622,7 +624,7 @@ export default function Navbar() {
                       }}
                       className="w-full bg-primary text-primary-foreground px-5 py-3 rounded-full text-sm font-semibold hover:bg-primary/90 transition-colors"
                     >
-                      Pedir Orçamento
+                      {ctaLabel}
                     </button>
                   )}
 
