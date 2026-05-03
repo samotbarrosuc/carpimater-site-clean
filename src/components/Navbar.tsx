@@ -42,7 +42,6 @@ export default function Navbar() {
   const [pathname] = useLocation()
 
   const isHomePage = pathname === '/'
-  const isSobreNos = pathname === '/sobre-nos'
   const isEmpreiteiros = pathname.startsWith('/empreiteiros')
   const isPavimentosLanding = pathname === '/pavimentos'
   const isPavimentos =
@@ -50,7 +49,7 @@ export default function Navbar() {
     pathname.startsWith('/flutuante') ||
     isPavimentosLanding
   const activeVariant: SiteVariant | null =
-    isHomePage || isEmpreiteiros || isPavimentosLanding || isSobreNos
+    isHomePage || isEmpreiteiros || isPavimentosLanding
       ? null
       : getSiteVariantFromPath(pathname)
   const isKitchen = activeVariant === 'cozinha'
@@ -61,8 +60,6 @@ export default function Navbar() {
     ? '/empreiteiros'
     : isPavimentosLanding
     ? '/pavimentos'
-    : isSobreNos
-    ? '/sobre-nos'
     : `/${activeVariant}`
   const budgetSectionId = isKitchen ? 'final-cta' : 'simulador'
 
@@ -90,40 +87,29 @@ export default function Navbar() {
     ? [
         { label: 'Início', sectionId: 'home-hero' },
         { label: 'Serviços', sectionId: 'home-servicos' },
-        { label: 'Sobre Nós', sectionId: 'sobre-nos' },
       ]
     : isEmpreiteiros
     ? [
         { label: 'Serviços', sectionId: 'servicos' },
         { label: 'Projectos', sectionId: 'projectos' },
-        { label: 'Sobre Nós', sectionId: 'sobre-nos' },
       ]
     : isPavimentosLanding
     ? [
         { label: 'Vinílico SPC', sectionId: '_vinilico' },
         { label: 'Flutuante', sectionId: '_flutuante' },
-        { label: 'Sobre Nós', sectionId: 'sobre-nos' },
-      ]
-    : isSobreNos
-    ? [
-        { label: 'Início', sectionId: 'home-hero' },
-        { label: 'Serviços', sectionId: 'home-servicos' },
       ]
     : isKitchen
     ? [
         { label: 'FAQ', sectionId: 'faq' },
-        { label: 'Sobre Nós', sectionId: 'sobre-nos' },
       ]
     : [
         { label: 'Catálogo', sectionId: 'catalogo' },
         { label: 'FAQ', sectionId: 'faq' },
-        { label: 'Sobre Nós', sectionId: 'sobre-nos' },
       ]
 
   const switchPills = ALL_SERVICE_PILLS.filter((p) => p.key !== activePillKey)
 
   const getSectionHref = (sectionId: string) => {
-    if (sectionId === 'sobre-nos' || sectionId === 'sobre-nos-home') return '/sobre-nos'
     if (sectionId === '_vinilico') return '/vinilico'
     if (sectionId === '_flutuante') return '/flutuante'
     if (sectionId.startsWith('home-')) return `/#${sectionId}`
@@ -131,9 +117,6 @@ export default function Navbar() {
   }
 
   const handleSectionClick = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    // Don't handle "Sobre Nós" page links
-    if (sectionId === 'sobre-nos' || sectionId === 'sobre-nos-home') return
-    // Don't handle special pavimento links
     if (sectionId === '_vinilico' || sectionId === '_flutuante') return
     
     // Only prevent default if we're on the same page
@@ -153,12 +136,6 @@ export default function Navbar() {
     window.addEventListener('scroll', handleScroll)
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
-
-  useEffect(() => {
-    if (window.location.hash === '#sobre-nos') {
-      setTimeout(() => scrollToSection('sobre-nos'), 100)
-    }
-  }, [pathname])
 
   useEffect(() => {
     const handleScrollClose = () => {
@@ -397,20 +374,6 @@ export default function Navbar() {
             {/* Desktop nav links */}
             <div className="hidden lg:flex items-center gap-6">
               {navLinks.map((link) => {
-                // For "Sobre Nós", always use link to navigate to /sobre-nos
-                if (link.sectionId === 'sobre-nos' || link.sectionId === 'sobre-nos-home') {
-                  return (
-                    <a
-                      key={link.sectionId}
-                      href="/sobre-nos"
-                      className={`text-sm font-medium transition-colors hover:text-primary ${
-                        isScrolled ? 'text-foreground' : 'text-white/90'
-                      }`}
-                    >
-                      {link.label}
-                    </a>
-                  )
-                }
                 // For internal sections on same page, use button with scroll
                 if (pathname === basePath) {
                   return (
@@ -506,23 +469,6 @@ export default function Navbar() {
             >
               <div className="py-4 space-y-1">
                 {navLinks.map((link) => {
-                  // For "Sobre Nós", always use link to navigate to /sobre-nos
-                  if (link.sectionId === 'sobre-nos' || link.sectionId === 'sobre-nos-home') {
-                    return (
-                      <a
-                        key={link.sectionId}
-                        href="/sobre-nos"
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                          isScrolled
-                            ? 'text-foreground hover:bg-muted'
-                            : 'text-white/90 hover:bg-white/10'
-                        }`}
-                      >
-                        {link.label}
-                      </a>
-                    )
-                  }
                   // For internal sections on same page, use button with scroll
                   if (pathname === basePath) {
                     return (

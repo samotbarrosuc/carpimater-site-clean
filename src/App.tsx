@@ -9,7 +9,6 @@ import PavimentosLanding from "@/pages/PavimentosLanding";
 import VinilicoPage from "@/pages/VinilicoPage";
 import FlutuantePage from "@/pages/FlutuantePage";
 import CozinhaPage from "@/pages/CozinhaPage";
-import SobreNosPage from "@/pages/SobreNosPage";
 import EmpreiteirosPage from "@/pages/EmpreiteirosPage";
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
 
@@ -23,7 +22,6 @@ function Router() {
       <Route path="/flutuante" component={FlutuantePage} />
       <Route path="/pavimentos" component={PavimentosLanding} />
       <Route path="/cozinha" component={CozinhaPage} />
-      <Route path="/sobre-nos" component={SobreNosPage} />
       <Route path="/empreiteiros" component={EmpreiteirosPage} />
       <Route path="/politica-de-privacidade" component={PrivacyPolicyPage} />
       <Route component={NotFound} />
