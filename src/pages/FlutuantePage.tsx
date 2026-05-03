@@ -13,12 +13,12 @@ import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 
 export default function FlutuantePage() {
   useEffect(() => {
-    document.title = 'Preço Pavimento Flutuante Coimbra, Aveiro, Leiria, Portugal — CarpiMater'
+    document.title = 'CarpiMater | Flutuante'
     const meta = document.querySelector('meta[name="description"]')
     if (meta) {
       meta.setAttribute(
         'content',
-        'Escolha o pavimento flutuante, simule o preço em segundos e peça o nosso serviço de aplicação. Preços em Coimbra, Aveiro, Leiria e Portugal. Garantia de 20 anos — CarpiMater.'
+        'Saiba o custo em segundos, sem sair do sofá. Simule o preço do pavimento flutuante e peça o nosso serviço de aplicação. Preços em Coimbra, Aveiro, Leiria e Portugal. Garantia de 20 anos — CarpiMater.'
       )
     }
     const keywords = document.querySelector('meta[name="keywords"]')
