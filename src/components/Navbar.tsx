@@ -471,7 +471,7 @@ export default function Navbar() {
                   onClick={(e) => { e.preventDefault(); scrollToSection('home-contacto') }}
                   className={ctaButtonClasses}
                 >
-                  Pedir Orçamento
+                  {ctaLabel}
                 </a>
               ) : isEmpreiteiros ? (
                 <a
@@ -480,7 +480,7 @@ export default function Navbar() {
                   rel="noopener noreferrer"
                   className={ctaButtonClasses}
                 >
-                  Pedir Orçamento
+                  {ctaLabel}
                 </a>
               ) : isKitchen ? (
                 <a
@@ -489,7 +489,7 @@ export default function Navbar() {
                   rel="noopener noreferrer"
                   className={ctaButtonClasses}
                 >
-                  Pedir Orçamento
+                  {ctaLabel}
                 </a>
               ) : (
                 <button
@@ -597,7 +597,7 @@ export default function Navbar() {
                       }}
                       className={`block w-full text-center ${ctaButtonClasses}`}
                     >
-                      Pedir Orçamento
+                      {ctaLabel}
                     </a>
                   ) : isEmpreiteiros ? (
                     <a
@@ -607,7 +607,7 @@ export default function Navbar() {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`block w-full text-center ${ctaButtonClasses}`}
                     >
-                      Pedir Orçamento
+                      {ctaLabel}
                     </a>
                   ) : isKitchen ? (
                     <a
@@ -617,7 +617,7 @@ export default function Navbar() {
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`block w-full text-center ${ctaButtonClasses}`}
                     >
-                      Pedir Orçamento
+                      {ctaLabel}
                     </a>
                   ) : (
                     <button
