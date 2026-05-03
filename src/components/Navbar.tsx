@@ -108,11 +108,6 @@ export default function Navbar() {
         { label: 'Início', sectionId: 'home-hero' },
         { label: 'Serviços', sectionId: 'home-servicos' },
       ]
-    : isKitchen
-    ? [
-        { label: 'FAQ', sectionId: 'faq' },
-        { label: 'Sobre Nós', sectionId: 'sobre-nos' },
-      ]
     : [
         { label: 'Catálogo', sectionId: 'catalogo' },
         { label: 'FAQ', sectionId: 'faq' },
@@ -396,8 +391,22 @@ export default function Navbar() {
             {/* Desktop nav links */}
             <div className="hidden lg:flex items-center gap-6">
               {navLinks.map((link) => {
-                // Use button for internal homepage sections
-                if (isHomePage && link.sectionId.startsWith('home-')) {
+                // For "Sobre Nós", always use link to navigate to /sobre-nos
+                if (link.sectionId === 'sobre-nos' || link.sectionId === 'sobre-nos-home') {
+                  return (
+                    <a
+                      key={link.sectionId}
+                      href="/sobre-nos"
+                      className={`text-sm font-medium transition-colors hover:text-primary ${
+                        isScrolled ? 'text-foreground' : 'text-white/90'
+                      }`}
+                    >
+                      {link.label}
+                    </a>
+                  )
+                }
+                // For internal sections on same page, use button with scroll
+                if (pathname === basePath) {
                   return (
                     <button
                       key={link.sectionId}
@@ -410,12 +419,11 @@ export default function Navbar() {
                     </button>
                   )
                 }
-                // Use link for external navigation
+                // For external page navigation
                 return (
                   <a
                     key={link.sectionId}
                     href={getSectionHref(link.sectionId)}
-                    onClick={(e) => handleSectionClick(e, link.sectionId)}
                     className={`text-sm font-medium transition-colors hover:text-primary ${
                       isScrolled ? 'text-foreground' : 'text-white/90'
                     }`}
@@ -492,14 +500,30 @@ export default function Navbar() {
             >
               <div className="py-4 space-y-1">
                 {navLinks.map((link) => {
-                  // Use button for internal homepage sections
-                  if (isHomePage && link.sectionId.startsWith('home-')) {
+                  // For "Sobre Nós", always use link to navigate to /sobre-nos
+                  if (link.sectionId === 'sobre-nos' || link.sectionId === 'sobre-nos-home') {
+                    return (
+                      <a
+                        key={link.sectionId}
+                        href="/sobre-nos"
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
+                          isScrolled
+                            ? 'text-foreground hover:bg-muted'
+                            : 'text-white/90 hover:bg-white/10'
+                        }`}
+                      >
+                        {link.label}
+                      </a>
+                    )
+                  }
+                  // For internal sections on same page, use button with scroll
+                  if (pathname === basePath) {
                     return (
                       <button
                         key={link.sectionId}
                         onClick={() => {
                           scrollToSection(link.sectionId)
-                          // Close menu after scroll starts
                           setTimeout(() => setIsMobileMenuOpen(false), 50)
                         }}
                         className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
@@ -512,15 +536,12 @@ export default function Navbar() {
                       </button>
                     )
                   }
-                  // Use link for external navigation
+                  // For external page navigation
                   return (
                     <a
                       key={link.sectionId}
                       href={getSectionHref(link.sectionId)}
-                      onClick={(e) => {
-                        setIsMobileMenuOpen(false)
-                        handleSectionClick(e, link.sectionId)
-                      }}
+                      onClick={() => setIsMobileMenuOpen(false)}
                       className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                         isScrolled
                           ? 'text-foreground hover:bg-muted'
