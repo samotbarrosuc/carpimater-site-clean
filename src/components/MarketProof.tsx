@@ -78,9 +78,7 @@ export default function MarketProof() {
                 Facilitamos a decisão. Garantimos a execução.
               </h2>
               <p className="text-muted-foreground text-base sm:text-lg leading-relaxed mb-6">
-                {isKitchen
-                  ? 'Da conversa inicial ao desenho técnico, tratamos o processo completo com transparência, rigor e acompanhamento próximo.'
-                  : 'Simplificamos tudo para que avance com confiança — escolha rápida, validação técnica e contacto direto sem complicações.'}
+                Simplificamos tudo para que avance com confiança. Escolha rápida, validação técnica e contacto direto.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-3">

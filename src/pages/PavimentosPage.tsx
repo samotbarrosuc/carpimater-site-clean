@@ -18,10 +18,10 @@ function PavimentoTypeSwitcher() {
   const isVinilico = pathname.startsWith('/vinilico')
 
   return (
-    <section className="bg-secondary border-b border-white/10 py-5">
+    <section className="bg-background border-b border-white/10 py-5">
       <div className="container mx-auto px-4">
         <div className="max-w-md mx-auto">
-          <p className="text-center text-[11px] uppercase tracking-[0.22em] text-white/40 font-semibold mb-3">
+          <p className="text-center text-[11px] uppercase tracking-[0.22em] text-muted-foreground font-semibold mb-3">
             Escolha o tipo de pavimento
           </p>
           <div className="grid grid-cols-2 gap-3">
@@ -45,7 +45,7 @@ function PavimentoTypeSwitcher() {
                 className={`flex flex-col items-center gap-1 rounded-2xl border px-4 py-4 transition-all ${
                   t.active
                     ? 'border-primary bg-primary/16 text-primary shadow-[0_0_0_2px_hsl(var(--primary)/0.20)]'
-                    : 'border-white/15 bg-white/5 text-white/55 hover:text-white hover:border-white/30 hover:bg-white/10'
+                    : 'border-border bg-card text-muted-foreground hover:text-foreground hover:border-primary/30 hover:bg-primary/5'
                 }`}
               >
                 {t.active && (

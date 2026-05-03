@@ -9,11 +9,11 @@ export default function TrustBadges() {
   ]
 
   return (
-    <section className="py-12 bg-secondary/50 border-b border-white/10">
+    <section className="py-12 bg-background border-b border-border/70">
       <div className="container mx-auto px-4">
         <div className="flex flex-wrap justify-center gap-6 md:gap-8">
           {badges.map((badge, index) => (
-            <div key={index} className="flex items-center gap-2 text-white/90">
+            <div key={index} className="flex items-center gap-2 text-foreground">
               <badge.icon className="w-5 h-5 text-primary shrink-0" />
               <span className="text-sm font-medium">{badge.text}</span>
             </div>

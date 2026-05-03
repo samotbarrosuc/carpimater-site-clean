@@ -84,7 +84,7 @@ export default function Home() {
                 <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
                   CarpiMater · Coimbra, Aveiro &amp; Leiria
                 </p>
-                <h1 className="text-[1.75rem] sm:text-[2.1rem] lg:text-[2.5rem] font-display font-bold text-white leading-[1.08] mb-4">
+                <h1 className="text-[2rem] sm:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] font-display font-bold text-white leading-[1.08] mb-4">
                   Carpintarias
                   <span className="block text-primary">que transformam espaços.</span>
                 </h1>
@@ -105,14 +105,14 @@ export default function Home() {
                   <a
                     href="/#home-contacto"
                     onClick={(e) => { e.preventDefault(); document.getElementById('home-contacto')?.scrollIntoView({ behavior: 'smooth' }) }}
-                    className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-3.5 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors shadow-[0_8px_30px_rgba(201,136,13,0.35)]"
+                    className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors shadow-[0_8px_30px_rgba(201,136,13,0.35)]"
                   >
                     <MessageCircle className="w-4 h-4" />
                     Pedir Orçamento Gratuito
                   </a>
                   <a
                     href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`}
-                    className="inline-flex items-center justify-center gap-2 px-8 py-3.5 rounded-full text-sm font-bold border border-white/25 text-white hover:bg-white/10 transition-colors"
+                    className="inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full text-sm font-bold border border-white/25 text-white hover:bg-white/10 transition-colors"
                   >
                     <Phone className="w-4 h-4" />
                     {PHONE_NUMBER}

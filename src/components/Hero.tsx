@@ -107,13 +107,10 @@ export default function Hero() {
                 <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">Fabrico em Paços de Ferreira e montagem profissional incluída. Qualidade superior à das grandes superfícies a preços semelhantes.</p>
               </div>)
             ) : (
-              <h1 className="w-full max-w-[13ch] sm:max-w-[14ch] lg:max-w-none text-[1.75rem] sm:text-[2.25rem] md:text-[2.6rem] lg:text-[2.75rem] xl:text-[3rem] font-display font-bold leading-[1.08] tracking-[-0.015em] mb-5">
+              <h1 className="w-full max-w-[13ch] sm:max-w-[14ch] lg:max-w-none text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] 2xl:text-[4rem] font-display font-bold leading-[1.08] tracking-[-0.015em] mb-5">
                 <span className="block text-white">{siteContent.heroTitle}</span>
                 <span className="block text-primary text-[0.62em] sm:text-[0.56em] font-semibold tracking-[0.01em] mt-2">
                   {siteContent.heroServiceLine}
-                </span>
-                <span className="block text-white/72 text-[0.38em] sm:text-[0.35em] font-medium tracking-[0.06em] uppercase mt-2">
-                  Coimbra · Leiria · Aveiro
                 </span>
               </h1>
             )}
@@ -135,7 +132,7 @@ export default function Hero() {
                 </p>
               </div>
               <p className="text-sm sm:text-base md:text-[1.05rem] text-white/62 leading-relaxed mb-8">
-                Deixe connosco. Tratamos de tudo. Sem complicações, sem surpresas, sem stress.
+                Tratamos de tudo por si. Sem complicações, sem surpresas.
               </p>
             </div>
             )}
