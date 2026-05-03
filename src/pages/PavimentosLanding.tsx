@@ -67,7 +67,7 @@ export default function PavimentosLanding() {
               Qual pavimento é o certo para si?
             </h1>
             <p className="text-white/55 text-sm max-w-md mx-auto">
-              Escolha abaixo, veja o catálogo e calcule o orçamento em segundos.
+              Clique abaixo para escolher, veja o catálogo e calcule o orçamento em segundos.
             </p>
           </div>
 
@@ -95,8 +95,12 @@ export default function PavimentosLanding() {
           <div className="flex flex-col md:flex-row h-auto md:h-[580px]">
 
             {/* ── Vinílico SPC ── */}
+            <a
+              href="/vinilico"
+              className="relative flex-1 group overflow-hidden flex flex-col justify-end min-h-[480px] md:min-h-0 cursor-pointer hover:opacity-90 transition-opacity"
+            >
             <motion.div
-              className="relative flex-1 group overflow-hidden flex flex-col justify-end min-h-[480px] md:min-h-0"
+              className="absolute inset-0 flex flex-col justify-end"
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5 }}
@@ -109,7 +113,7 @@ export default function PavimentosLanding() {
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/5" />
               <div className="hidden md:block absolute right-0 top-0 bottom-0 w-px bg-white/15 z-10" />
 
-              <div className="relative z-10 p-7 sm:p-9">
+              <div className="relative z-10 p-7 sm:p-9 h-full flex flex-col justify-end">
                 {/* Badge */}
                 <div className="flex items-center gap-2 mb-3">
                   <span className="inline-flex items-center gap-1.5 rounded-full bg-primary/90 text-white px-3 py-1 text-[10px] uppercase tracking-[0.16em] font-bold">
@@ -139,7 +143,7 @@ export default function PavimentosLanding() {
                   ))}
                 </ul>
 
-                <div className="flex flex-col sm:flex-row gap-2.5">
+                <div className="flex flex-col sm:flex-row gap-2.5" onClick={(e) => e.stopPropagation()}>
                   <a
                     href="/vinilico#simulador"
                     className="inline-flex items-center justify-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors shadow-[0_6px_20px_rgba(201,136,13,0.4)]"
@@ -157,10 +161,15 @@ export default function PavimentosLanding() {
                 </div>
               </div>
             </motion.div>
+            </a>
 
             {/* ── Flutuante Tradicional ── */}
+            <a
+              href="/flutuante"
+              className="relative flex-1 group overflow-hidden flex flex-col justify-end min-h-[480px] md:min-h-0 cursor-pointer hover:opacity-90 transition-opacity"
+            >
             <motion.div
-              className="relative flex-1 group overflow-hidden flex flex-col justify-end min-h-[480px] md:min-h-0"
+              className="absolute inset-0 flex flex-col justify-end"
               initial={{ opacity: 0, x: 20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: 0.08 }}
@@ -171,7 +180,7 @@ export default function PavimentosLanding() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/25 to-black/5" />
 
-              <div className="relative z-10 p-7 sm:p-9">
+              <div className="relative z-10 p-7 sm:p-9 h-full flex flex-col justify-end">
                 <div className="flex items-center gap-2 mb-3">
                   <span className="inline-flex items-center rounded-full border border-white/35 bg-white/12 px-3 py-1 text-[10px] uppercase tracking-[0.16em] text-white/80 font-bold">
                     Clássico & elegante
@@ -198,7 +207,7 @@ export default function PavimentosLanding() {
                   ))}
                 </ul>
 
-                <div className="flex flex-col sm:flex-row gap-2.5">
+                <div className="flex flex-col sm:flex-row gap-2.5" onClick={(e) => e.stopPropagation()}>
                   <a
                     href="/flutuante#simulador"
                     className="inline-flex items-center justify-center gap-2 bg-primary text-white px-5 py-2.5 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors shadow-[0_6px_20px_rgba(201,136,13,0.4)]"
@@ -216,6 +225,7 @@ export default function PavimentosLanding() {
                 </div>
               </div>
             </motion.div>
+            </a>
           </div>
 
           {/* Dúvidas? bar */}
