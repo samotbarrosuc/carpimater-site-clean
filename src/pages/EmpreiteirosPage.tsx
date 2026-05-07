@@ -7,7 +7,7 @@ import HowItWorks from '@/components/cozinha/sections/HowItWorks'
 import FabricoPrazoAdjudicacao from '@/components/cozinha/sections/FabricoPrazoAdjudicacao'
 import { SimulatorProvider } from '@/context/SimulatorContext'
 
-const WA_NUMBER = '351919528638'
+const WA_NUMBER = '351910093635'
 const WA_MSG_PROPOSTA = encodeURIComponent('Olá CarpiMater! Sou empreiteiro/investidor e quero uma proposta de carpintaria para obra.')
 const WA_MSG_PROJETO = encodeURIComponent('Olá! Quero iniciar o meu projecto de carpintaria com a CarpiMater.')
 const WA_LINK_PROPOSTA = `/whatsapp-redirect.html?url=${encodeURIComponent(`https://wa.me/${WA_NUMBER}?text=${WA_MSG_PROPOSTA}`)}`
