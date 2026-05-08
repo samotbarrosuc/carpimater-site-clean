@@ -157,10 +157,10 @@ export default function Home() {
               <div className="max-w-lg lg:max-w-2xl">
                 <div className="w-10 lg:w-16 h-px bg-primary mb-6 lg:mb-8" />
                 <p className="text-white font-display font-bold text-2xl sm:text-[1.85rem] lg:text-[3.25rem] leading-tight mb-3 lg:mb-5">
-                  Mais de 40 anos<br />a transformar espaços.
+                  Carpintaria por medida<br />para a sua casa.
                 </p>
                 <p className="text-white/60 text-sm lg:text-base leading-relaxed max-w-xs lg:max-w-md">
-                  Do pavimento à cozinha, cada obra é tratada com a atenção de quem trabalha para durar décadas.
+                  Do pavimento à cozinha, cada obra é tratada com atenção ao detalhe, desde o desenho à montagem final.
                 </p>
                 <div className="mt-7 lg:mt-10 flex items-center gap-6 sm:gap-8 lg:gap-14">
                   <div>
@@ -169,7 +169,7 @@ export default function Home() {
                   </div>
                   <div className="w-px h-7 lg:h-12 bg-white/18" />
                   <div>
-                    <p className="text-xl sm:text-2xl lg:text-5xl font-display font-bold text-primary">30</p>
+                    <p className="text-xl sm:text-2xl lg:text-5xl font-display font-bold text-primary">40</p>
                     <p className="text-[10px] lg:text-xs text-white/45 mt-0.5 lg:mt-2 uppercase tracking-[0.12em]">anos de exp.</p>
                   </div>
                   <div className="w-px h-7 lg:h-12 bg-white/18" />
