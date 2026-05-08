@@ -43,6 +43,11 @@ const ZONES = [
   'Coimbra', 'Aveiro', 'Leiria', 'Condeixa-a-Nova', 'Figueira da Foz',
   'Cantanhede', 'Montemor-o-Velho', 'Miranda do Corvo', 'Penacova', 'Mealhada',
   'Anadia', 'Batalha', 'Nazaré', 'Tomar', 'Pombal',
+  'Alcobaça', 'Caldas da Rainha', 'Marinha Grande', 'Óbidos', 'Peniche',
+  'Águeda', 'Albergaria-a-Velha', 'Arouca', 'Ílhavo', 'Ovar',
+  'Vila Nova de Gaia', 'Matosinhos', 'Maia', 'Gondomar', 'Vila do Conde',
+  'Braga', 'Guimarães', 'Barcelos', 'Fafe', 'Vila Verde',
+  'Viseu', 'Lamego', 'Tondela', 'Nelas', 'Mangualde',
 ]
 
 export default function Home() {
@@ -377,12 +382,12 @@ export default function Home() {
             <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
                 <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Onde atuamos</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Onde actuamos</p>
                   <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-4">
                     Coimbra, Aveiro, Leiria e toda a região centro
                   </h2>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                    A CarpiMater opera em toda a zona centro de Portugal. Fazemos instalação de pavimentos vinílicos e flutuantes, cozinhas por medida e carpintaria de obra em Coimbra, Aveiro, Leiria, Figueira da Foz, Cantanhede, Condeixa-a-Nova, Mealhada, Anadia, Montemor-o-Velho, Miranda do Corvo, Penacova, Pombal, Batalha, Nazaré e concelhos adjacentes.
+                    A CarpiMater opera em toda a zona centro de Portugal. Fazemos instalação de pavimentos vinílicos e flutuantes, cozinhas por medida e carpintaria de obra em Coimbra, Aveiro, Leiria, Figueira da Foz, Cantanhede, Condeixa-a-Nova, Mealhada, Anadia, Batalha, Nazaré, Tomar, Pombal, Alcobaça, Caldas da Rainha, Peniche, Águeda, Ílhavo, Ovar, Matosinhos, Vila Nova de Gaia, Braga, Guimarães, Viseu e concelhos adjacentes.
                   </p>
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     Para projectos fora desta zona, contacte-nos — avaliamos caso a caso com deslocação acordada.
