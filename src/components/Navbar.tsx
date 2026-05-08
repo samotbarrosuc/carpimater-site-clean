@@ -161,6 +161,7 @@ export default function Navbar() {
   const getSectionHref = (sectionId: string) => {
     if (sectionId === '_vinilico') return '/vinilico'
     if (sectionId === '_flutuante') return '/flutuante'
+    if (sectionId === 'home-contacto') return '/#home-contacto'
     if (sectionId.startsWith('home-')) return `/#${sectionId}`
     return basePath === '/' ? `/#${sectionId}` : `${basePath}#${sectionId}`
   }
@@ -439,7 +440,7 @@ export default function Navbar() {
                 }
 
                 // For internal sections on same page, use button with scroll
-                if (pathname === basePath) {
+                if (pathname === basePath && link.sectionId !== 'home-contacto') {
                   return (
                     <button
                       key={link.sectionId}
@@ -552,7 +553,7 @@ export default function Navbar() {
                   }
 
                   // For internal sections on same page, use button with scroll
-                  if (pathname === basePath) {
+                  if (pathname === basePath && link.sectionId !== 'home-contacto') {
                     return (
                       <button
                         key={link.sectionId}

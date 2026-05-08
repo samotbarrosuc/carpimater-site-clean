@@ -6,7 +6,7 @@ import AboutUs from '@/components/AboutUs'
 import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 import { WHATSAPP_NUMBER, EMAIL } from '@/content/site'
-import { Star, ShieldCheck, Clock3, Layers, Wrench, ChevronRight, Mail, MessageCircle } from 'lucide-react'
+import { Star, ShieldCheck, Clock3, Layers, Wrench, ChevronRight, Mail, MessageCircle, Phone } from 'lucide-react'
 
 const WA_HOME = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá CarpiMater! Gostaria de saber mais sobre os vossos serviços.')}`
 
@@ -450,6 +450,19 @@ export default function Home() {
                       <div>
                         <p className="font-semibold text-foreground text-sm">{EMAIL}</p>
                         <p className="text-muted-foreground text-xs">Para orçamentos e questões gerais</p>
+                      </div>
+                      <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:translate-x-0.5 transition-transform" />
+                    </a>
+                    <a
+                      href={`tel:+351910093635`}
+                      className="flex items-center gap-3 p-4 rounded-xl border border-border bg-card hover:border-primary/40 transition-all group"
+                    >
+                      <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+                        <Phone className="w-5 h-5 text-primary" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-foreground text-sm">910 093 635</p>
+                        <p className="text-muted-foreground text-xs">Ligue diretamente</p>
                       </div>
                       <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:translate-x-0.5 transition-transform" />
                     </a>
