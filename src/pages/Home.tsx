@@ -387,7 +387,7 @@ export default function Home() {
                     Coimbra, Aveiro, Leiria e toda a região centro
                   </h2>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                    A CarpiMater opera em toda a zona centro de Portugal. Fazemos instalação de pavimentos vinílicos e flutuantes, cozinhas por medida e carpintaria de obra em Coimbra, Aveiro, Leiria, Figueira da Foz, Cantanhede, Condeixa-a-Nova, Mealhada, Anadia, Batalha, Nazaré, Tomar, Pombal, Alcobaça, Caldas da Rainha, Peniche, Águeda, Ílhavo, Ovar, Matosinhos, Vila Nova de Gaia, Braga, Guimarães, Viseu e concelhos adjacentes.
+                    A CarpiMater opera em toda a zona centro de Portugal. Fazemos instalação de pavimentos vinílicos e flutuantes, cozinhas por medida e carpintaria de obra em Coimbra, Aveiro, Leiria, Porto, Braga e Viseu, e concelhos adjacentes.
                   </p>
                   <p className="text-muted-foreground text-sm leading-relaxed">
                     Para projectos fora desta zona, contacte-nos — avaliamos caso a caso com deslocação acordada.

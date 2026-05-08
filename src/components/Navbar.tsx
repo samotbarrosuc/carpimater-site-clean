@@ -124,27 +124,36 @@ export default function Navbar() {
     ? [
         { label: 'Início', sectionId: 'home-hero' },
         { label: 'Serviços', sectionId: 'home-servicos' },
+        { label: 'Contactos', sectionId: 'home-contacto' },
       ]
     : isEmpreiteiros
-    ? []
+    ? [
+        { label: 'Contactos', sectionId: 'home-contacto' },
+      ]
     : isVinilico
     ? [
         { label: 'Flutuante', sectionId: '_flutuante' },
+        { label: 'Contactos', sectionId: 'home-contacto' },
       ]
     : isFlutuante
     ? [
         { label: 'SPC Vinílico', sectionId: '_vinilico' },
+        { label: 'Contactos', sectionId: 'home-contacto' },
       ]
     : isPavimentosLanding
     ? [
         { label: 'Vinílico SPC', sectionId: '_vinilico' },
         { label: 'Flutuante', sectionId: '_flutuante' },
+        { label: 'Contactos', sectionId: 'home-contacto' },
       ]
     : isKitchen
-    ? []
+    ? [
+        { label: 'Contactos', sectionId: 'home-contacto' },
+      ]
     : [
         { label: 'Catálogo', sectionId: 'catalogo' },
         { label: 'FAQ', sectionId: 'faq' },
+        { label: 'Contactos', sectionId: 'home-contacto' },
       ]
 
   const switchPills = servicePills.filter((p) => p.key !== activePillKey)
