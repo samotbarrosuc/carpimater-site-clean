@@ -113,7 +113,7 @@ function buildEmailContent(data: z.infer<typeof bodySchema>): {
     : "";
 
   const comentarios = data.comentarios?.trim();
-  const subject = `Pedido de orcamento - ${contact.nome} (Ref. ${quoteReference})`;
+  const subject = `Pedido de orçamento - ${contact.nome} (Ref. ${quoteReference})`;
   const row = (label: string, value: string) =>
     `<tr><td style="padding:3px 8px 3px 0;color:#555;white-space:nowrap">${label}</td><td style="padding:3px 0">${value}</td></tr>`;
 
@@ -150,7 +150,7 @@ function buildEmailContent(data: z.infer<typeof bodySchema>): {
 </body></html>`;
 
   const text = [
-    `Pedido de orcamento de ${contact.nome} — Ref. ${quoteReference}`,
+    `Pedido de orçamento de ${contact.nome} — Ref. ${quoteReference}`,
     "",
     `Telemovel: ${contact.telemovel}`,
     `Email: ${contact.email || "Nao indicado"}`,
