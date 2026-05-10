@@ -22,8 +22,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: "Email service not configured" });
     }
 
-    const to = "info@carpimater.pt"; // Seu email
-    const from = "CarpiMater <info@carpimater.pt>";
+    const to = process.env.NOTIFICATION_EMAIL || "info@carpimater.pt";
+    const from = process.env.RESEND_FROM || "CarpiMater <noreply@carpimater.pt>";
     const replyTo = data.contacto.includes("@") ? data.contacto : undefined;
 
     const subject = `Nova mensagem de contacto - ${data.nome}`;
