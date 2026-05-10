@@ -60,6 +60,12 @@ export default function Home() {
     window.open(`/whatsapp-redirect.html?url=${encodeURIComponent(url)}`, '_blank')
   }
 
+  const scrollToContactSection = (target: HTMLElement) => {
+    const offset = window.innerWidth < 768 ? 60 : 70
+    const top = target.getBoundingClientRect().top + window.scrollY - offset
+    window.scrollTo({ top, behavior: 'smooth' })
+  }
+
   useEffect(() => {
     document.title = 'CarpiMater — Pavimentos, Cozinhas e Carpintaria em Coimbra, Aveiro e Leiria'
     const meta = document.querySelector('meta[name="description"]')
@@ -73,7 +79,7 @@ export default function Home() {
         const target = document.getElementById(hash)
         if (target) {
           setTimeout(() => {
-            target.scrollIntoView({ behavior: 'smooth' })
+            scrollToContactSection(target)
           }, 120)
         }
       }
@@ -125,7 +131,11 @@ export default function Home() {
                 <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8 sm:mb-10">
                   <a
                     href="/#home-contactos"
-                    onClick={(e) => { e.preventDefault(); document.getElementById('home-contactos')?.scrollIntoView({ behavior: 'smooth' }) }}
+                    onClick={(e) => {
+                      e.preventDefault()
+                      const target = document.getElementById('home-contactos')
+                      if (target) scrollToContactSection(target)
+                    }}
                     className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors shadow-[0_8px_30px_rgba(201,136,13,0.35)]"
                   >
                     <MessageCircle className="w-4 h-4" />
@@ -181,7 +191,7 @@ export default function Home() {
                   Carpintaria por medida<br />para a sua casa.
                 </p>
                 <p className="text-white/60 text-sm lg:text-base leading-relaxed max-w-xs lg:max-w-md">
-                  Do pavimento à cozinha, cada obra é tratada com atenção ao detalhe, desde o desenho à montagem final.
+                  Cada obra é tratada com exigência e detalhe, em constante trabalho de equipa com os nossos parceiros de Paços de Ferreira. 
                 </p>
                 <div className="mt-7 lg:mt-10 flex items-center gap-6 sm:gap-8 lg:gap-14">
                   <div>
@@ -431,7 +441,7 @@ export default function Home() {
         <section
           id="home-contactos"
           className="py-20 bg-background border-t border-border"
-          style={{ scrollMarginTop: '8rem' }}
+          style={{ scrollMarginTop: '4rem' }}
         >
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
@@ -489,7 +499,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div id="home-contacto" style={{ scrollMarginTop: '8rem' }} className="bg-card border border-border rounded-2xl p-6 sm:p-8">
+                <div id="home-contacto" style={{ scrollMarginTop: '4rem' }} className="bg-card border border-border rounded-2xl p-6 sm:p-8">
                   <h3 className="font-display font-bold text-foreground text-lg mb-1">Enviar mensagem</h3>
                   <p className="text-muted-foreground text-sm mb-6">Preencha e abrimos o WhatsApp com a sua mensagem pronta a enviar.</p>
                   <form onSubmit={handleContactSubmit} className="flex flex-col gap-3">

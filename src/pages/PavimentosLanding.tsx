@@ -85,13 +85,13 @@ export default function PavimentosLanding() {
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <a
                 href="/vinilico"
-                className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-3 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primary/90"
+                className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primary/90"
               >
                 Ver Pavimento Vinílico
               </a>
               <a
                 href="/flutuante"
-                className="inline-flex items-center justify-center rounded-full border border-white/20 bg-white/10 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/20"
+                className="inline-flex items-center justify-center rounded-full bg-blue-600 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-blue-600/20 transition hover:bg-blue-500"
               >
                 Ver Pavimento Flutuante
               </a>
@@ -197,13 +197,13 @@ export default function PavimentosLanding() {
             <div className="flex flex-col gap-4 sm:flex-row justify-center">
               <a
                 href="/vinilico"
-                className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-4 text-sm font-semibold text-white transition hover:bg-primary/90"
+                className="inline-flex items-center justify-center rounded-full bg-primary px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-primary/20 transition hover:bg-primary/90"
               >
                 Ver Vinílico SPC
               </a>
               <a
                 href="/flutuante"
-                className="inline-flex items-center justify-center rounded-full border border-border bg-background px-6 py-4 text-sm font-semibold text-foreground transition hover:bg-muted"
+                className="inline-flex items-center justify-center rounded-full bg-slate-800 px-6 py-4 text-sm font-semibold text-white shadow-lg shadow-slate-800/20 transition hover:bg-slate-700"
               >
                 Ver Flutuante Tradicional
               </a>

@@ -30,7 +30,7 @@ function scrollToSection(id: string) {
       element.scrollIntoView({ behavior: 'smooth', block: 'start' })
       return
     }
-    const offset = window.innerWidth < 768 ? 80 : 120 // Menos offset em mobile
+    const offset = window.innerWidth < 768 ? 60 : 70 // Menos offset em mobile
     const top = element.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({ top, behavior: 'smooth' })
   }
@@ -480,6 +480,8 @@ export default function Navbar() {
                   onClick={() => {
                     if (isHomePage) {
                       scrollToSection('home-contactos')
+                    } else if (isPavimentosLanding && window.location.pathname === basePath) {
+                      scrollToSection('pavimentos-orcamento')
                     } else {
                       window.location.href = isPavimentosLanding
                         ? getSectionHref('pavimentos-orcamento')
@@ -626,7 +628,13 @@ export default function Navbar() {
                     ) : (
                       <a
                         href={isPavimentosLanding ? getSectionHref('pavimentos-orcamento') : getSectionHref('home-contactos')}
-                        onClick={() => setIsMobileMenuOpen(false)}
+                        onClick={(e) => {
+                          setIsMobileMenuOpen(false)
+                          if (isPavimentosLanding && window.location.pathname === basePath) {
+                            e.preventDefault()
+                            scrollToSection('pavimentos-orcamento')
+                          }
+                        }}
                         className={`block w-full text-center ${ctaButtonClasses}`}
                       >
                         {ctaLabel}
