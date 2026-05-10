@@ -186,7 +186,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const data = parsed.data;
-  const to = "samotbarros@hotmail.com";
+  const to = "tomas.a.barros@hotmail.com";
   const from = "CarpiMater <info@carpimater.pt>";
   const replyTo = data.contact.email?.trim() || to;
 
