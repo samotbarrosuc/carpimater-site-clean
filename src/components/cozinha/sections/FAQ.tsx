@@ -48,7 +48,7 @@ export default function FAQ() {
           className="text-center mb-10"
         >
           <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
-            Dúvidas Frequentes
+            FAQ
           </p>
           <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-foreground">
             Perguntas Frequentes
