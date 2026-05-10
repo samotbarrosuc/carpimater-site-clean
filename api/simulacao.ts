@@ -2,6 +2,7 @@ import type { VercelRequest, VercelResponse } from "@vercel/node";
 import { Resend } from "resend";
 import { z } from "zod";
 
+// Validation schemas (unchanged)
 const estimateSchema = z
   .object({
     areaTotalM2: z.number(),
@@ -83,7 +84,7 @@ function escapeHtml(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
-function buildEmailHtml(data: z.infer<typeof bodySchema>): {
+function buildEmailContent(data: z.infer<typeof bodySchema>): {
   subject: string;
   html: string;
   text: string;
@@ -98,6 +99,7 @@ function buildEmailHtml(data: z.infer<typeof bodySchema>): {
     rodapeReferencia,
     quoteReference,
   } = data;
+  
   const materialLabel =
     data.materialLabel ||
     (data.siteVariant === "flutuante"
@@ -105,10 +107,12 @@ function buildEmailHtml(data: z.infer<typeof bodySchema>): {
       : data.siteVariant === "cozinha"
         ? "Cozinha"
         : "Vinílico");
+  
   const local = `${step1.freguesia}, ${step1.concelho}, ${step1.distrito}`;
   const moradaLine = step1.morada?.trim()
     ? `<tr><td style="padding:3px 8px 3px 0;color:#555;white-space:nowrap">Morada</td><td style="padding:3px 0">${escapeHtml(step1.morada)}</td></tr>`
     : "";
+  
   const comentarios = data.comentarios?.trim();
   const subject = `Pedido de orcamento - ${contact.nome} (Ref. ${quoteReference})`;
   const row = (label: string, value: string) =>
@@ -163,20 +167,27 @@ function buildEmailHtml(data: z.infer<typeof bodySchema>): {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
+  // Detailed logging for debugging
+  console.log("=== SIMULACAO API DEBUG ===");
+  console.log("Method:", req.method);
+  console.log("API Key exists:", !!process.env.RESEND_API_KEY);
+  console.log("Notification email:", process.env.NOTIFICATION_EMAIL);
+  console.log("From email:", process.env.RESEND_FROM);
+
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
   }
 
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) {
-    return res.status(503).json({
-      error:
-        "Envio de email nao configurado. Defina RESEND_API_KEY nas variaveis de ambiente.",
-    });
+    const errorMsg = "RESEND_API_KEY não configurada nas variáveis de ambiente da Vercel";
+    console.error("ERROR:", errorMsg);
+    return res.status(503).json({ error: errorMsg });
   }
 
   const parsed = bodySchema.safeParse(req.body);
   if (!parsed.success) {
+    console.error("Validation error:", parsed.error.flatten());
     return res
       .status(400)
       .json({ error: "Dados invalidos", details: parsed.error.flatten() });
@@ -185,14 +196,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const data = parsed.data;
   const DEFAULT_NOTIFICATION_EMAIL = "tomas.a.barros@hotmail.com";
   const to = process.env.NOTIFICATION_EMAIL?.trim() || DEFAULT_NOTIFICATION_EMAIL;
-  const from =
-    process.env.RESEND_FROM?.trim() || "CarpiMater <onboarding@resend.dev>";
+  
+  // IMPORTANT: Must use verified sender email, not onboarding@resend.dev
+  const from = process.env.RESEND_FROM?.trim();
+  if (!from) {
+    const errorMsg = "RESEND_FROM não configurada. Use um email verificado no Resend.";
+    console.error("ERROR:", errorMsg);
+    return res.status(503).json({ error: errorMsg });
+  }
+
   const replyTo = data.contact.email?.trim() || to;
 
   try {
-    const { subject, html, text } = buildEmailHtml(data);
+    console.log("Building email for:", to);
+    const { subject, html, text } = buildEmailContent(data);
+    
+    console.log("Creating Resend client with key:", apiKey.substring(0, 10) + "...");
     const resend = new Resend(apiKey);
-    const { error } = await resend.emails.send({
+    
+    console.log("Sending email:", { from, to, subject: subject.substring(0, 50) });
+    const result = await resend.emails.send({
       from,
       to: [to],
       replyTo,
@@ -205,16 +228,26 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       })),
     });
 
-    if (error) {
-      console.error("Resend error", error);
-      return res
-        .status(502)
-        .json({ error: error.message || "Falha ao enviar email" });
+    console.log("Resend result:", result);
+
+    if (result.error) {
+      const errorMsg = result.error.message || "Falha ao enviar email";
+      console.error("RESEND ERROR:", errorMsg);
+      return res.status(502).json({ 
+        error: errorMsg,
+        details: result.error 
+      });
     }
 
-    return res.json({ ok: true });
-  } catch (e) {
-    console.error("simulacao unexpected error", e);
-    return res.status(500).json({ error: "Erro ao enviar email" });
+    console.log("SUCCESS: Email sent with ID:", result.data?.id);
+    return res.json({ ok: true, messageId: result.data?.id });
+    
+  } catch (e: any) {
+    const errorMsg = e?.message || String(e);
+    console.error("UNEXPECTED ERROR:", errorMsg);
+    return res.status(500).json({ 
+      error: "Erro ao enviar email",
+      details: errorMsg 
+    });
   }
 }
