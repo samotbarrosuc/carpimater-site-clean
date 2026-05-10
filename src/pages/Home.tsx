@@ -53,11 +53,36 @@ const ZONES = [
 export default function Home() {
   const [contactForm, setContactForm] = useState({ nome: '', contacto: '', mensagem: '' })
 
-  const handleContactSubmit = (e: FormEvent) => {
+  const [isSubmitting, setIsSubmitting] = useState(false)
+  const [submitMessage, setSubmitMessage] = useState<string | null>(null)
+
+  const handleContactSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    const msg = `Olá CarpiMater! Sou ${contactForm.nome}.\n\nContacto: ${contactForm.contacto}${contactForm.mensagem ? `\n\nMensagem: ${contactForm.mensagem}` : '\n\nGostaria de saber mais sobre os vossos serviços.'}`
-    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`
-    window.open(`/whatsapp-redirect.html?url=${encodeURIComponent(url)}`, '_blank')
+    setIsSubmitting(true)
+    setSubmitMessage(null)
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(contactForm),
+      })
+
+      const data = await response.json()
+
+      if (response.ok) {
+        setSubmitMessage('Mensagem enviada com sucesso! Responderemos em breve.')
+        setContactForm({ nome: '', contacto: '', mensagem: '' })
+      } else {
+        setSubmitMessage(`Erro ao enviar mensagem: ${data.error}`)
+      }
+    } catch (error) {
+      setSubmitMessage('Erro ao enviar mensagem. Tente novamente.')
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   const scrollToContactSection = (target: HTMLElement) => {
@@ -492,7 +517,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="font-semibold text-foreground text-sm">910 093 635</p>
-                        <p className="text-muted-foreground text-xs">Ligue diretamente</p>
+                        <p className="text-muted-foreground text-xs">Ligue directamente</p>
                       </div>
                       <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:translate-x-0.5 transition-transform" />
                     </a>
@@ -501,7 +526,7 @@ export default function Home() {
 
                 <div id="home-contacto" style={{ scrollMarginTop: '4rem' }} className="bg-card border border-border rounded-2xl p-6 sm:p-8">
                   <h3 className="font-display font-bold text-foreground text-lg mb-1">Enviar mensagem</h3>
-                  <p className="text-muted-foreground text-sm mb-6">Preencha e abrimos o WhatsApp com a sua mensagem pronta a enviar.</p>
+                  <p className="text-muted-foreground text-sm mb-6">Preencha o formulário e enviaremos um email com a sua mensagem.</p>
                   <form onSubmit={handleContactSubmit} className="flex flex-col gap-3">
                     <input
                       value={contactForm.nome}
@@ -526,13 +551,19 @@ export default function Home() {
                     />
                     <button
                       type="submit"
-                      className="flex items-center justify-center gap-2 bg-[#25D366] text-white px-6 py-3.5 rounded-full text-sm font-bold hover:bg-[#1ebe5d] transition-colors mt-1"
+                      disabled={isSubmitting}
+                      className="flex items-center justify-center gap-2 bg-primary text-white px-6 py-3.5 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors mt-1 disabled:opacity-50 disabled:cursor-not-allowed"
                     >
                       <MessageCircle className="w-4 h-4" />
-                      Continuar no WhatsApp
+                      {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
                     </button>
+                    {submitMessage && (
+                      <p className={`text-xs text-center ${submitMessage.includes('sucesso') ? 'text-green-600' : 'text-red-600'}`}>
+                        {submitMessage}
+                      </p>
+                    )}
                     <p className="text-xs text-muted-foreground text-center">
-                      Sem compromisso. Respondemos em menos de 24 horas.
+                      Sem compromisso. Responderemos em menos de 24 horas.
                     </p>
                   </form>
                 </div>

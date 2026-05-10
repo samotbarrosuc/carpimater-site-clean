@@ -117,6 +117,59 @@ const handlers = {
 
     return new MockResponse(res).json({ ok: true });
   },
+
+  '/api/contact': async (req, res) => {
+    if (req.method !== 'POST') {
+      return new MockResponse(res).status(405).json({ error: 'Method not allowed' });
+    }
+
+    const body = JSON.parse(req.body || '{}');
+    console.log('📧 Contacto enviado:', {
+      nome: body.nome,
+      contacto: body.contacto,
+      mensagem: body.mensagem,
+    });
+
+    // Use real Resend in development
+    try {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+
+      const DEFAULT_NOTIFICATION_EMAIL = "info@carpimater.pt";
+      const to = process.env.NOTIFICATION_EMAIL?.trim() || DEFAULT_NOTIFICATION_EMAIL;
+      const from = process.env.RESEND_FROM?.trim() || "CarpiMater <onboarding@resend.dev>";
+      const replyTo = body.contacto?.trim() || to;
+
+      // Build email content
+      const subject = `Nova mensagem de contacto de ${body.nome || 'Cliente'}`;
+      const html = `
+        <h2>Nova mensagem de contacto</h2>
+        <p><strong>Nome:</strong> ${body.nome || 'N/A'}</p>
+        <p><strong>Contacto:</strong> ${body.contacto || 'N/A'}</p>
+        ${body.mensagem ? `<p><strong>Mensagem:</strong> ${body.mensagem.replace(/\n/g, '<br>')}</p>` : ''}
+      `;
+      const text = `Nova mensagem de contacto de ${body.nome || 'Cliente'}`;
+
+      const { error } = await resend.emails.send({
+        from,
+        to: [to],
+        replyTo,
+        subject,
+        html,
+        text,
+      });
+
+      if (error) {
+        console.error('❌ Resend error:', error);
+        return new MockResponse(res).status(502).json({ error: error.message || 'Falha ao enviar email' });
+      }
+
+      console.log('✅ Email enviado com sucesso para:', to);
+      return new MockResponse(res).json({ ok: true });
+    } catch (e) {
+      console.error('❌ Erro ao enviar email:', e.message);
+      return new MockResponse(res).status(500).json({ error: 'Erro ao enviar email' });
+    }
+  },
 };
 
 // Create server
@@ -165,5 +218,6 @@ server.listen(PORT, () => {
   console.log(`\n🚀 API Server rodando em http://localhost:${PORT}\n`);
   console.log('Endpoints disponíveis:');
   console.log('  - POST /api/simulacao');
-  console.log('  - POST /api/error-report\n');
+  console.log('  - POST /api/error-report');
+  console.log('  - POST /api/contact\n');
 });
