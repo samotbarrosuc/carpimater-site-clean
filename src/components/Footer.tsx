@@ -29,7 +29,6 @@ export default function Footer() {
         { label: 'Pavimentos (Vinílico & Flutuante)', href: '/pavimentos' },
         { label: 'Cozinhas por Medida', href: '/cozinha' },
         { label: 'Construção & Empreiteiros', href: '/construção' },
-        { label: 'Sobre Nós', href: '/sobre-nos' },
       ]
     : isEmpreiteiros
     ? [
@@ -37,7 +36,6 @@ export default function Footer() {
         { label: 'Galeria de Projectos', href: '/construção#projectos' },
         { label: 'Pavimentos', href: '/pavimentos' },
         { label: 'Cozinhas por Medida', href: '/cozinha' },
-        { label: 'Sobre Nós', href: '/sobre-nos' },
       ]
     : isPavimentos
     ? [
@@ -46,7 +44,6 @@ export default function Footer() {
         { label: 'Como Funciona', href: `${basePath}#como-funciona` },
         { label: 'Cozinhas por Medida', href: '/cozinha' },
         { label: 'Construção & Empreiteiros', href: '/construção' },
-        { label: 'Sobre Nós', href: '/sobre-nos' },
       ]
     : isKitchen
     ? [
@@ -55,7 +52,6 @@ export default function Footer() {
         { label: 'Como Funciona', href: `${basePath}#como-funciona` },
         { label: 'Pavimentos', href: '/pavimentos' },
         { label: 'Construção & Empreiteiros', href: '/construção' },
-        { label: 'Sobre Nós', href: '/sobre-nos' },
       ]
     : [
         { label: 'Catálogo de Pavimentos', href: `${basePath}#catalogo` },
@@ -63,7 +59,6 @@ export default function Footer() {
         { label: 'Simulador de Orçamento', href: `${basePath}#simulador` },
         { label: 'Como Funciona', href: `${basePath}#como-funciona` },
         { label: 'Construção & Empreiteiros', href: '/construção' },
-        { label: 'Sobre Nós', href: '/sobre-nos' },
       ]
 
   const companyDesc = isEmpreiteiros
@@ -99,7 +94,6 @@ export default function Footer() {
                 { label: 'Pavimento flutuante', href: '/flutuante' },
                 { label: 'Pavimento vinílico', href: '/vinilico' },
                 { label: 'Carpintaria para Obras', href: '/construção' },
-                { label: 'Sobre Nós', href: '/' },
               ].map((link) => (
                 <li key={link.href}>
                   <a
