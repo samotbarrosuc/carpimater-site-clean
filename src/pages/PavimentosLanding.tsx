@@ -185,7 +185,7 @@ export default function PavimentosLanding() {
           </div>
         </section>
 
-        <section className="py-16 bg-white">
+        <section id="pavimentos-orcamento" style={{ scrollMarginTop: '8rem' }} className="py-16 bg-white">
           <div className="container mx-auto px-4 text-center">
             <div className="max-w-3xl mx-auto mb-8">
               <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">Pronto para começar?</p>

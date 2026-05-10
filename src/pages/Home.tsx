@@ -69,7 +69,7 @@ export default function Home() {
 
     const scrollToHashSection = () => {
       const hash = window.location.hash.slice(1)
-      if (hash === 'home-contacto' || hash === 'home-contactos') {
+      if (hash === 'home-contacto' || hash === 'home-contactos' || hash === 'footer-contactos') {
         const target = document.getElementById(hash)
         if (target) {
           setTimeout(() => {
@@ -428,7 +428,11 @@ export default function Home() {
         </section>
 
         {/* ── CONTACTOS ── */}
-        <section id="home-contactos" className="py-20 bg-background border-t border-border">
+        <section
+          id="home-contactos"
+          className="py-20 bg-background border-t border-border"
+          style={{ scrollMarginTop: '8rem' }}
+        >
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">

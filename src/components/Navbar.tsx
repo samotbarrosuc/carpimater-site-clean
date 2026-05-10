@@ -26,6 +26,10 @@ const ALL_SERVICE_PILLS: Array<{ label: string; href: string; key: string; previ
 function scrollToSection(id: string) {
   const element = document.getElementById(id)
   if (element) {
+    if (id === 'home-contactos' || id === 'home-contacto' || id === 'footer-contactos') {
+      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
+      return
+    }
     const offset = window.innerWidth < 768 ? 80 : 120 // Menos offset em mobile
     const top = element.getBoundingClientRect().top + window.scrollY - offset
     window.scrollTo({ top, behavior: 'smooth' })
@@ -124,36 +128,36 @@ export default function Navbar() {
     ? [
         { label: 'Início', sectionId: 'home-hero' },
         { label: 'Serviços', sectionId: 'home-servicos' },
-        { label: 'Contactos', sectionId: 'home-contactos' },
+        { label: 'Contactos', sectionId: 'footer-contactos' },
       ]
     : isEmpreiteiros
     ? [
-        { label: 'Contactos', sectionId: 'home-contactos' },
+        { label: 'Contactos', sectionId: 'footer-contactos' },
       ]
     : isVinilico
     ? [
         { label: 'Flutuante', sectionId: '_flutuante' },
-        { label: 'Contactos', sectionId: 'home-contactos' },
+        { label: 'Contactos', sectionId: 'footer-contactos' },
       ]
     : isFlutuante
     ? [
         { label: 'SPC Vinílico', sectionId: '_vinilico' },
-        { label: 'Contactos', sectionId: 'home-contactos' },
+        { label: 'Contactos', sectionId: 'footer-contactos' },
       ]
     : isPavimentosLanding
     ? [
         { label: 'Vinílico SPC', sectionId: '_vinilico' },
         { label: 'Flutuante', sectionId: '_flutuante' },
-        { label: 'Contactos', sectionId: 'home-contactos' },
+        { label: 'Contactos', sectionId: 'footer-contactos' },
       ]
     : isKitchen
     ? [
-        { label: 'Contactos', sectionId: 'home-contactos' },
+        { label: 'Contactos', sectionId: 'footer-contactos' },
       ]
     : [
         { label: 'Catálogo', sectionId: 'catalogo' },
         { label: 'FAQ', sectionId: 'faq' },
-        { label: 'Contactos', sectionId: 'home-contactos' },
+        { label: 'Contactos', sectionId: 'footer-contactos' },
       ]
 
   const switchPills = servicePills.filter((p) => p.key !== activePillKey)
@@ -163,6 +167,8 @@ export default function Navbar() {
     if (sectionId === '_flutuante') return '/flutuante'
     if (sectionId === 'home-contacto') return '/#home-contacto'
     if (sectionId === 'home-contactos') return '/#home-contactos'
+    if (sectionId === 'footer-contactos') return basePath === '/' ? '/#footer-contactos' : `${basePath}#footer-contactos`
+    if (sectionId === 'pavimentos-orcamento') return basePath === '/' ? '/#pavimentos-orcamento' : `${basePath}#pavimentos-orcamento`
     if (sectionId.startsWith('home-')) return `/#${sectionId}`
     return basePath === '/' ? `/#${sectionId}` : `${basePath}#${sectionId}`
   }
@@ -471,8 +477,8 @@ export default function Navbar() {
               {/* CTA */}
               {isHomePage ? (
                 <a
-                  href="/#home-contacto"
-                  onClick={(e) => { e.preventDefault(); scrollToSection('home-contacto') }}
+                  href="/#footer-contactos"
+                  onClick={(e) => { e.preventDefault(); scrollToSection('footer-contactos') }}
                   className={ctaButtonClasses}
                 >
                   {ctaLabel}
@@ -480,7 +486,9 @@ export default function Navbar() {
               ) : ctaLabel === 'Pedir Orçamento' ? (
                 <button
                   onClick={() => {
-                    window.location.href = '/#home-contacto'
+                    window.location.href = isPavimentosLanding
+                      ? getSectionHref('pavimentos-orcamento')
+                      : getSectionHref('footer-contactos')
                   }}
                   className={ctaButtonClasses}
                 >
@@ -563,7 +571,7 @@ export default function Navbar() {
                   }
 
                   // For internal sections on same page, use button with scroll
-                  if (pathname === basePath && link.sectionId.startsWith('home-')) {
+                  if (pathname === basePath && (link.sectionId.startsWith('home-') || link.sectionId.startsWith('footer-'))) {
                     return (
                       <button
                         key={link.sectionId}
@@ -602,11 +610,11 @@ export default function Navbar() {
                   {/* CTA */}
                   {isHomePage ? (
                     <a
-                      href="/#home-contacto"
+                      href="/#footer-contactos"
                       onClick={(e) => { 
                         e.preventDefault()
                         setIsMobileMenuOpen(false)
-                        setTimeout(() => scrollToSection('home-contacto'), 100)
+                        setTimeout(() => scrollToSection('footer-contactos'), 100)
                       }}
                       className={`block w-full text-center ${ctaButtonClasses}`}
                     >
@@ -614,7 +622,7 @@ export default function Navbar() {
                     </a>
                   ) : ctaLabel === 'Pedir Orçamento' ? (
                     <a
-                      href="/#home-contacto"
+                      href={isPavimentosLanding ? getSectionHref('pavimentos-orcamento') : getSectionHref('footer-contactos')}
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`block w-full text-center ${ctaButtonClasses}`}
                     >

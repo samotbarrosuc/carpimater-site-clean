@@ -116,7 +116,7 @@ export default function Footer() {
           </div>
 
           {/* Contact */}
-          <div>
+          <div id="footer-contactos" style={{ scrollMarginTop: '6rem' }}>
             <h4 className="font-bold text-slate-900 mb-4">Contactos</h4>
             <ul className="space-y-3">
               <li className="flex items-start gap-3 text-sm text-slate-600">
