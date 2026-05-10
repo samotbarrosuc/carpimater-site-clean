@@ -134,10 +134,10 @@ const handlers = {
     try {
       const resend = new Resend(process.env.RESEND_API_KEY);
 
-      const DEFAULT_NOTIFICATION_EMAIL = "info@carpimater.pt";
+      const DEFAULT_NOTIFICATION_EMAIL = "samotbarros@hotmail.com";
       const to = process.env.NOTIFICATION_EMAIL?.trim() || DEFAULT_NOTIFICATION_EMAIL;
       const from = process.env.RESEND_FROM?.trim() || "CarpiMater <onboarding@resend.dev>";
-      const replyTo = body.contacto?.trim() || to;
+      const replyTo = undefined; // Não usar reply-to para telefones
 
       // Build email content
       const subject = `Nova mensagem de contacto de ${body.nome || 'Cliente'}`;
@@ -149,14 +149,15 @@ const handlers = {
       `;
       const text = `Nova mensagem de contacto de ${body.nome || 'Cliente'}`;
 
-      const { error } = await resend.emails.send({
+      const emailData = {
         from,
         to: [to],
-        replyTo,
         subject,
         html,
         text,
-      });
+      };
+
+      const { error } = await resend.emails.send(emailData);
 
       if (error) {
         console.error('❌ Resend error:', error);
