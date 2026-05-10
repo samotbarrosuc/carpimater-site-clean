@@ -1,11 +1,11 @@
-import { useState } from 'react'
 import { motion } from 'framer-motion'
-import { MapPin, ChevronDown, CheckCircle2, Shield, Clock, Gem, Star, Wrench, Package, DoorOpen, UtensilsCrossed, Layers, Maximize2, BookOpen, Tv, Droplets, Briefcase, BedDouble, Archive, LayoutGrid, Ruler, LayoutDashboard, Shirt, MessageCircle } from 'lucide-react'
+import { MapPin, CheckCircle2, Shield, Clock, Gem, Star, Wrench, Package, DoorOpen, UtensilsCrossed, Layers, Maximize2, BookOpen, Tv, Droplets, Briefcase, BedDouble, Archive, LayoutGrid, Ruler, LayoutDashboard, Shirt, MessageCircle } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import HowItWorks from '@/components/cozinha/sections/HowItWorks'
 import FabricoPrazoAdjudicacao from '@/components/cozinha/sections/FabricoPrazoAdjudicacao'
 import { SimulatorProvider } from '@/context/SimulatorContext'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
 const WA_NUMBER = '351910093635'
 const WA_MSG_PROPOSTA = encodeURIComponent('Olá CarpiMater! Sou empreiteiro/investidor e quero uma proposta de carpintaria para obra.')
@@ -72,26 +72,6 @@ const PROJECTS = [
   { category: 'Interiores', units: '200 m²', title: 'Escritórios corporativos Porto', location: 'Porto', date: 'Agosto 2024', img: '/images/cozinha-faia.jpg' },
   { category: 'Obra Completa', units: 'Obra total', title: 'Construção nova em Cantanhede', location: 'Cantanhede', date: 'Julho 2024', img: '/images/card-obras.png' },
 ]
-
-function FaqItem({ q, a }: { q: string; a: string }) {
-  const [open, setOpen] = useState(false)
-  return (
-    <div className="border border-border rounded-2xl overflow-hidden bg-white">
-      <button
-        onClick={() => setOpen(!open)}
-        className="w-full flex items-center justify-between px-6 py-5 text-left font-semibold text-foreground hover:bg-muted/40 transition-colors gap-4"
-      >
-        <span>{q}</span>
-        <ChevronDown className={`w-5 h-5 text-primary shrink-0 transition-transform duration-300 ${open ? 'rotate-180' : ''}`} />
-      </button>
-      {open && (
-        <div className="px-6 pb-5 text-muted-foreground leading-7 text-sm border-t border-border pt-4">
-          {a}
-        </div>
-      )}
-    </div>
-  )
-}
 
 export default function EmpreiteirosPage() {
   return (
@@ -343,29 +323,55 @@ export default function EmpreiteirosPage() {
         </section>
 
         {/* ── FAQ ── */}
-        <section id="faq" className="py-12 sm:py-20 bg-muted/30">
-          <div className="container mx-auto px-4">
-            <div className="max-w-3xl mx-auto">
-              <div className="text-center mb-14">
-                <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">FAQ</p>
-                <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground">Perguntas Frequentes</h2>
-              </div>
-              <div className="space-y-3">
-                {FAQS.map((faq) => (
-                  <FaqItem key={faq.q} q={faq.q} a={faq.a} />
+        <section id="faq" className="py-16 lg:py-24 bg-muted/30">
+          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5 }}
+              className="text-center mb-10"
+            >
+              <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
+                FAQ
+              </p>
+              <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-foreground">
+                Perguntas Frequentes
+              </h2>
+            </motion.div>
+
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.5, delay: 0.15 }}
+            >
+              <Accordion type="single" collapsible className="flex flex-col gap-2">
+                {FAQS.map((faq, i) => (
+                  <AccordionItem
+                    key={i}
+                    value={`item-${i}`}
+                    className="rounded-xl border px-5 bg-white shadow-sm data-[state=open]:border-primary"
+                  >
+                    <AccordionTrigger className="font-medium text-sm text-left py-4 hover:no-underline text-foreground">
+                      {faq.q}
+                    </AccordionTrigger>
+                    <AccordionContent className="text-sm leading-relaxed pb-4 text-muted-foreground">
+                      {faq.a}
+                    </AccordionContent>
+                  </AccordionItem>
                 ))}
-              </div>
-              <div className="mt-10 rounded-2xl bg-primary/8 border border-primary/20 p-8 text-center">
-                <p className="font-semibold text-foreground mb-4">Tem outra questão? Fale directamente connosco.</p>
-                <a
-                  href={WA_LINK_PROPOSTA}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="inline-flex items-center gap-2 bg-primary text-white font-bold px-7 py-3.5 rounded-full hover:bg-primary/90 transition-colors"
-                >
-                  Pedir Orçamento Gratuito
-                </a>
-              </div>
+              </Accordion>
+            </motion.div>
+
+            <div className="mt-10 rounded-2xl bg-primary/8 border border-primary/20 p-8 text-center">
+              <p className="font-semibold text-foreground mb-4">Tem outra questão? Fale directamente connosco.</p>
+              <a
+                href={WA_LINK_PROPOSTA}
+                target="_blank"
+                rel="noreferrer"
+                className="inline-flex items-center gap-2 bg-primary text-white font-bold px-7 py-3.5 rounded-full hover:bg-primary/90 transition-colors"
+              >
+                Pedir Orçamento Gratuito
+              </a>
             </div>
           </div>
         </section>
