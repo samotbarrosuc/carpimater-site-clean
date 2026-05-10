@@ -8,21 +8,6 @@ const contactSchema = z.object({
   mensagem: z.string().optional(),
 });
 
-const isValidEmail = (value?: string) => {
-  if (!value) return false;
-  const trimmed = value.trim();
-  const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  return emailPattern.test(trimmed);
-};
-
-const isValidFromAddress = (value?: string) => {
-  if (!value) return false;
-  const trimmed = value.trim();
-  const plainEmailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const nameEmailPattern = /^.+<\s*[^\s@]+@[^\s@]+\.[^\s@]+\s*>$/;
-  return plainEmailPattern.test(trimmed) || nameEmailPattern.test(trimmed);
-};
-
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
@@ -37,14 +22,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       return res.status(500).json({ error: "Email service not configured" });
     }
 
-    const to = isValidEmail(process.env.NOTIFICATION_EMAIL)
-      ? process.env.NOTIFICATION_EMAIL!.trim()
-      : "info@carpimater.pt";
-
-    const from = isValidFromAddress(process.env.RESEND_FROM)
-      ? process.env.RESEND_FROM!.trim()
-      : "CarpiMater <onboarding@resend.dev>";
-
+    const to = "tomas.a.barros@hotmail.com";
+    const from = "CarpiMater <info@carpimater.pt>";
     const replyTo = undefined; // Não usar reply-to para telefones
 
     const subject = `Nova mensagem de contacto - ${data.nome}`;
