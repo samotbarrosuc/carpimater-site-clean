@@ -218,7 +218,7 @@ export default function EmpreiteirosPage() {
               {SERVICES.map((s) => (
                 <div key={s.label} className="flex items-center gap-3 bg-[#efe2d1] border border-[#d8b3a0] rounded-3xl px-4 py-4 shadow-sm">
                   <s.icon className="w-4 h-4 text-[#8b7355] shrink-0" />
-                  <span className="text-slate-950 text-sm font-medium">{s.label}</span>
+                  <span className="flex-1 text-center text-slate-950 text-sm font-medium">{s.label}</span>
                 </div>
               ))}
             </div>
