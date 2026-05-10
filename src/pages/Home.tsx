@@ -273,7 +273,7 @@ export default function Home() {
                 Três serviços, uma equipa de confiança
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Cozinhas e toda a carpintaria para a sua casa — fornecimento, instalação e acabamentos geridos por nós de início ao fim.
+                Mobiliário e toda a carpintaria para sua casa — fornecimento, instalação e acabamentos geridos por nós de início ao fim.
               </p>
             </div>
 
