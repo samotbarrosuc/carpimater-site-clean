@@ -23,7 +23,7 @@ function PavimentoTypeSwitcher() {
         {
           href: '/flutuante',
           label: 'Flutuante Tradicional',
-          detail: 'Aspeto madeira · Garantia 20 anos',
+          detail: 'Aspecto madeira · Garantia 20 anos',
         },
       ]
     : [
