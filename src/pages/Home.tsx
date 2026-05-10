@@ -273,7 +273,7 @@ export default function Home() {
                 Três serviços, uma equipa de confiança
               </h2>
               <p className="text-muted-foreground max-w-2xl mx-auto">
-                Do pavimento à carpintaria de obra — fornecimento, instalação e acabamentos geridos por nós de início ao fim.
+                Cozinhas e toda a carpintaria para a sua casa — fornecimento, instalação e acabamentos geridos por nós de início ao fim.
               </p>
             </div>
 
