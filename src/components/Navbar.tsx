@@ -477,6 +477,15 @@ export default function Navbar() {
                 >
                   {ctaLabel}
                 </a>
+              ) : ctaLabel === 'Pedir Orçamento' ? (
+                <button
+                  onClick={() => {
+                    window.location.href = '/#home-contacto'
+                  }}
+                  className={ctaButtonClasses}
+                >
+                  {ctaLabel}
+                </button>
               ) : isEmpreiteiros ? (
                 <a
                   href={WA_EMPREITEIROS}
@@ -495,15 +504,6 @@ export default function Navbar() {
                 >
                   {ctaLabel}
                 </a>
-              ) : ctaLabel === 'Pedir Orçamento' ? (
-                <button
-                  onClick={() => {
-                    window.location.href = '/#home-contacto'
-                  }}
-                  className={ctaButtonClasses}
-                >
-                  {ctaLabel}
-                </button>
               ) : (
                 <button
                   onClick={() => {
@@ -612,6 +612,14 @@ export default function Navbar() {
                     >
                       {ctaLabel}
                     </a>
+                  ) : ctaLabel === 'Pedir Orçamento' ? (
+                    <a
+                      href="/#home-contacto"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block w-full text-center ${ctaButtonClasses}`}
+                    >
+                      {ctaLabel}
+                    </a>
                   ) : isEmpreiteiros ? (
                     <a
                       href={WA_EMPREITEIROS}
@@ -627,14 +635,6 @@ export default function Navbar() {
                       href={getWhatsAppUrl(undefined, activeVariant ?? 'cozinha')}
                       target="_blank"
                       rel="noopener noreferrer"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block w-full text-center ${ctaButtonClasses}`}
-                    >
-                      {ctaLabel}
-                    </a>
-                  ) : ctaLabel === 'Pedir Orçamento' ? (
-                    <a
-                      href="/#home-contacto"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`block w-full text-center ${ctaButtonClasses}`}
                     >
