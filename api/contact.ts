@@ -4,7 +4,7 @@ import { z } from "zod";
 
 const contactSchema = z.object({
   nome: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
-  contacto: z.string().min(9, "Contacto deve ter pelo menos 9 caracteres"),
+  contacto: z.string().min(9, "Telefone deve ter pelo menos 9 caracteres").regex(/^[\d\s\-\+\(\)]+$/, "Telefone deve conter apenas números e caracteres válidos"),
   mensagem: z.string().optional(),
 });
 
@@ -24,7 +24,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 
     const to = process.env.NOTIFICATION_EMAIL || "info@carpimater.pt";
     const from = process.env.RESEND_FROM || "CarpiMater <onboarding@resend.dev>";
-    const replyTo = data.contacto.includes("@") ? data.contacto : undefined;
+    const replyTo = undefined; // Não usar reply-to para telefones
 
     const subject = `Nova mensagem de contacto - ${data.nome}`;
     const html = `
@@ -32,7 +32,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
         <h2 style="color: #1f2937;">Nova mensagem de contacto</h2>
         <div style="background: #f9fafb; padding: 20px; border-radius: 8px; margin: 20px 0;">
           <p><strong>Nome:</strong> ${data.nome}</p>
-          <p><strong>Contacto:</strong> ${data.contacto}</p>
+          <p><strong>Telefone:</strong> ${data.contacto}</p>
           ${data.mensagem ? `<p><strong>Mensagem:</strong></p><p style="white-space: pre-wrap;">${data.mensagem}</p>` : ''}
         </div>
         <p style="color: #6b7280; font-size: 14px;">
@@ -45,7 +45,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
 Nova mensagem de contacto
 
 Nome: ${data.nome}
-Contacto: ${data.contacto}
+Telefone: ${data.contacto}
 ${data.mensagem ? `Mensagem:\n${data.mensagem}` : ''}
 
 Esta mensagem foi enviada através do formulário de contacto do site CarpiMater.

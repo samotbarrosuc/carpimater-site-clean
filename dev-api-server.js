@@ -126,7 +126,7 @@ const handlers = {
     const body = JSON.parse(req.body || '{}');
     console.log('📧 Contacto enviado:', {
       nome: body.nome,
-      contacto: body.contacto,
+      telefone: body.contacto,
       mensagem: body.mensagem,
     });
 

@@ -538,7 +538,7 @@ export default function Home() {
                     <input
                       value={contactForm.contacto}
                       onChange={(e) => setContactForm(f => ({ ...f, contacto: e.target.value }))}
-                      placeholder="Telefone ou e-mail *"
+                      placeholder="Telefone *"
                       required
                       className="rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary transition-colors placeholder:text-muted-foreground w-full"
                     />
