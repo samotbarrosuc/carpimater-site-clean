@@ -1,5 +1,5 @@
 import type { VercelRequest, VercelResponse } from "@vercel/node";
-import * as nodemailer from "nodemailer";
+import { Resend } from "resend";
 import { z } from "zod";
 
 const estimateSchema = z
@@ -166,11 +166,17 @@ function buildEmailContent(data: z.infer<typeof bodySchema>): {
 }
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
-  console.log("=== SIMULACAO API SMTP DEBUG ===");
+  console.log("=== SIMULACAO API DEBUG ===");
   console.log("Method:", req.method);
 
   if (req.method !== "POST") {
     return res.status(405).json({ error: "Method not allowed" });
+  }
+
+  const apiKey = process.env.RESEND_API_KEY;
+  if (!apiKey) {
+    console.error("ERROR: RESEND_API_KEY not configured");
+    return res.status(503).json({ error: "API key not configured" });
   }
 
   const parsed = bodySchema.safeParse(req.body);
@@ -180,64 +186,41 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const data = parsed.data;
-  const DEFAULT_NOTIFICATION_EMAIL = "tomas.a.barros@hotmail.com";
-  const to = process.env.NOTIFICATION_EMAIL?.trim() || DEFAULT_NOTIFICATION_EMAIL;
-  const from = process.env.RESEND_FROM?.trim() || "CarpiMater <onboarding@resend.dev>";
+  const to = "tomas.a.barros@hotmail.com";
+  const from = "CarpiMater <onboarding@resend.dev>";
   const replyTo = data.contact.email?.trim() || to;
 
-  const smtpHost = process.env.RESEND_SMTP_HOST?.trim() || "smtp.resend.com";
-  const smtpPort = Number(process.env.RESEND_SMTP_PORT ?? "465");
-  const smtpUser = process.env.RESEND_SMTP_USER?.trim() || "resend";
-  const smtpPass = process.env.RESEND_SMTP_PASSWORD?.trim() || process.env.RESEND_API_KEY?.trim();
-
-  if (!smtpPass) {
-    const errorMsg = "RESEND_SMTP_PASSWORD ou RESEND_API_KEY não configurado.";
-    console.error("ERROR:", errorMsg);
-    return res.status(503).json({ error: errorMsg });
-  }
-
-  const transporter = nodemailer.createTransport({
-    host: smtpHost,
-    port: smtpPort,
-    secure: smtpPort === 465,
-    auth: {
-      user: smtpUser,
-      pass: smtpPass,
-    },
-  });
-
-  let mailOptions: any = {
-    from,
-    to,
-    replyTo,
-    subject: "",
-    text: "",
-    html: "",
-  };
-
   try {
+    console.log("Building email content...");
     const { subject, html, text } = buildEmailContent(data);
-    mailOptions = {
-      ...mailOptions,
+    
+    console.log("Creating Resend client...");
+    const resend = new Resend(apiKey);
+    
+    console.log("Sending email to:", to);
+    const result = await resend.emails.send({
+      from,
+      to: [to],
+      replyTo,
       subject,
-      text,
       html,
-      attachments: data.attachments?.map((attachment) => ({
-        filename: attachment.name,
-        content: Buffer.from(attachment.base64, "base64"),
-        contentType: attachment.type,
-      })),
-    };
+      text,
+    });
 
-    console.log("SMTP transport:", { smtpHost, smtpPort, smtpUser, from, to });
-    console.log("Sending mail to:", to);
+    console.log("Resend result:", result);
 
-    const info = await transporter.sendMail(mailOptions);
+    if (result.error) {
+      const errorMsg = result.error.message || "Unknown error";
+      console.error("RESEND ERROR:", errorMsg);
+      return res.status(502).json({ error: errorMsg });
+    }
 
-    console.log("Email sent:", info.messageId);
-    return res.json({ ok: true, messageId: info.messageId, accepted: info.accepted });
-  } catch (error: any) {
-    console.error("SMTP send error:", error?.message || error);
-    return res.status(500).json({ error: "Erro ao enviar email via SMTP", details: error?.message || String(error) });
+    console.log("SUCCESS: Email sent with ID:", result.data?.id);
+    return res.json({ ok: true, messageId: result.data?.id });
+    
+  } catch (e: any) {
+    const errorMsg = e?.message || String(e);
+    console.error("UNEXPECTED ERROR:", errorMsg);
+    return res.status(500).json({ error: "Erro ao enviar email", details: errorMsg });
   }
 }
