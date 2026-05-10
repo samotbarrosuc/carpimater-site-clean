@@ -67,8 +67,9 @@ export default function Home() {
       meta.setAttribute('content', 'Especialistas em pavimento vinílico, pavimento flutuante e cozinhas por medida. Fornecimento e instalação profissional em Coimbra, Aveiro e Leiria. Orçamento rápido e sem compromisso.')
     }
 
-    if (window.location.hash === '#home-contacto') {
-      const target = document.getElementById('home-contacto')
+    if (window.location.hash === '#home-contacto' || window.location.hash === '#home-contactos') {
+      const hash = window.location.hash.slice(1)
+      const target = document.getElementById(hash)
       if (target) {
         setTimeout(() => {
           target.scrollIntoView({ behavior: 'smooth' })
@@ -420,8 +421,8 @@ export default function Home() {
           </div>
         </section>
 
-        {/* ── CONTACTO ── */}
-        <section id="home-contacto" className="py-20 bg-background border-t border-border">
+        {/* ── CONTACTOS ── */}
+        <section id="home-contactos" className="py-20 bg-background border-t border-border">
           <div className="container mx-auto px-4">
             <div className="max-w-4xl mx-auto">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-start">
@@ -478,7 +479,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className="bg-card border border-border rounded-2xl p-6 sm:p-8">
+                <div id="home-contacto" className="bg-card border border-border rounded-2xl p-6 sm:p-8">
                   <h3 className="font-display font-bold text-foreground text-lg mb-1">Enviar mensagem</h3>
                   <p className="text-muted-foreground text-sm mb-6">Preencha e abrimos o WhatsApp com a sua mensagem pronta a enviar.</p>
                   <form onSubmit={handleContactSubmit} className="flex flex-col gap-3">

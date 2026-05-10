@@ -124,36 +124,36 @@ export default function Navbar() {
     ? [
         { label: 'Início', sectionId: 'home-hero' },
         { label: 'Serviços', sectionId: 'home-servicos' },
-        { label: 'Contactos', sectionId: 'home-contacto' },
+        { label: 'Contactos', sectionId: 'home-contactos' },
       ]
     : isEmpreiteiros
     ? [
-        { label: 'Contactos', sectionId: 'home-contacto' },
+        { label: 'Contactos', sectionId: 'home-contactos' },
       ]
     : isVinilico
     ? [
         { label: 'Flutuante', sectionId: '_flutuante' },
-        { label: 'Contactos', sectionId: 'home-contacto' },
+        { label: 'Contactos', sectionId: 'home-contactos' },
       ]
     : isFlutuante
     ? [
         { label: 'SPC Vinílico', sectionId: '_vinilico' },
-        { label: 'Contactos', sectionId: 'home-contacto' },
+        { label: 'Contactos', sectionId: 'home-contactos' },
       ]
     : isPavimentosLanding
     ? [
         { label: 'Vinílico SPC', sectionId: '_vinilico' },
         { label: 'Flutuante', sectionId: '_flutuante' },
-        { label: 'Contactos', sectionId: 'home-contacto' },
+        { label: 'Contactos', sectionId: 'home-contactos' },
       ]
     : isKitchen
     ? [
-        { label: 'Contactos', sectionId: 'home-contacto' },
+        { label: 'Contactos', sectionId: 'home-contactos' },
       ]
     : [
         { label: 'Catálogo', sectionId: 'catalogo' },
         { label: 'FAQ', sectionId: 'faq' },
-        { label: 'Contactos', sectionId: 'home-contacto' },
+        { label: 'Contactos', sectionId: 'home-contactos' },
       ]
 
   const switchPills = servicePills.filter((p) => p.key !== activePillKey)
@@ -162,6 +162,7 @@ export default function Navbar() {
     if (sectionId === '_vinilico') return '/vinilico'
     if (sectionId === '_flutuante') return '/flutuante'
     if (sectionId === 'home-contacto') return '/#home-contacto'
+    if (sectionId === 'home-contactos') return '/#home-contactos'
     if (sectionId.startsWith('home-')) return `/#${sectionId}`
     return basePath === '/' ? `/#${sectionId}` : `${basePath}#${sectionId}`
   }
@@ -494,6 +495,15 @@ export default function Navbar() {
                 >
                   {ctaLabel}
                 </a>
+              ) : ctaLabel === 'Pedir Orçamento' ? (
+                <button
+                  onClick={() => {
+                    window.location.href = '/#home-contacto'
+                  }}
+                  className={ctaButtonClasses}
+                >
+                  {ctaLabel}
+                </button>
               ) : (
                 <button
                   onClick={() => {
@@ -617,6 +627,14 @@ export default function Navbar() {
                       href={getWhatsAppUrl(undefined, activeVariant ?? 'cozinha')}
                       target="_blank"
                       rel="noopener noreferrer"
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      className={`block w-full text-center ${ctaButtonClasses}`}
+                    >
+                      {ctaLabel}
+                    </a>
+                  ) : ctaLabel === 'Pedir Orçamento' ? (
+                    <a
+                      href="/#home-contacto"
                       onClick={() => setIsMobileMenuOpen(false)}
                       className={`block w-full text-center ${ctaButtonClasses}`}
                     >
