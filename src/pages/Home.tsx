@@ -67,15 +67,21 @@ export default function Home() {
       meta.setAttribute('content', 'Especialistas em pavimento vinílico, pavimento flutuante e cozinhas por medida. Fornecimento e instalação profissional em Coimbra, Aveiro e Leiria. Orçamento rápido e sem compromisso.')
     }
 
-    if (window.location.hash === '#home-contacto' || window.location.hash === '#home-contactos') {
+    const scrollToHashSection = () => {
       const hash = window.location.hash.slice(1)
-      const target = document.getElementById(hash)
-      if (target) {
-        setTimeout(() => {
-          target.scrollIntoView({ behavior: 'smooth' })
-        }, 80)
+      if (hash === 'home-contacto' || hash === 'home-contactos') {
+        const target = document.getElementById(hash)
+        if (target) {
+          setTimeout(() => {
+            target.scrollIntoView({ behavior: 'smooth' })
+          }, 120)
+        }
       }
     }
+
+    scrollToHashSection()
+    window.addEventListener('hashchange', scrollToHashSection)
+    return () => window.removeEventListener('hashchange', scrollToHashSection)
   }, [])
 
   return (

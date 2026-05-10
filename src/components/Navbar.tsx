@@ -441,7 +441,7 @@ export default function Navbar() {
                 }
 
                 // For internal sections on same page, use button with scroll
-                if (pathname === basePath && link.sectionId !== 'home-contacto') {
+                if (pathname === basePath && link.sectionId.startsWith('home-')) {
                   return (
                     <button
                       key={link.sectionId}
@@ -563,7 +563,7 @@ export default function Navbar() {
                   }
 
                   // For internal sections on same page, use button with scroll
-                  if (pathname === basePath && link.sectionId !== 'home-contacto') {
+                  if (pathname === basePath && link.sectionId.startsWith('home-')) {
                     return (
                       <button
                         key={link.sectionId}
