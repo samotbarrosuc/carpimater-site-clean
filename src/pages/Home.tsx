@@ -124,8 +124,8 @@ export default function Home() {
 
                 <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8 sm:mb-10">
                   <a
-                    href="/#home-contacto"
-                    onClick={(e) => { e.preventDefault(); document.getElementById('home-contacto')?.scrollIntoView({ behavior: 'smooth' }) }}
+                    href="/#home-contactos"
+                    onClick={(e) => { e.preventDefault(); document.getElementById('home-contactos')?.scrollIntoView({ behavior: 'smooth' }) }}
                     className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors shadow-[0_8px_30px_rgba(201,136,13,0.35)]"
                   >
                     <MessageCircle className="w-4 h-4" />
@@ -489,7 +489,7 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div id="home-contacto" className="bg-card border border-border rounded-2xl p-6 sm:p-8">
+                <div id="home-contacto" style={{ scrollMarginTop: '8rem' }} className="bg-card border border-border rounded-2xl p-6 sm:p-8">
                   <h3 className="font-display font-bold text-foreground text-lg mb-1">Enviar mensagem</h3>
                   <p className="text-muted-foreground text-sm mb-6">Preencha e abrimos o WhatsApp com a sua mensagem pronta a enviar.</p>
                   <form onSubmit={handleContactSubmit} className="flex flex-col gap-3">

@@ -475,7 +475,22 @@ export default function Navbar() {
               })}
 
               {/* CTA */}
-              {isHomePage ? (
+              {ctaLabel === 'Pedir Orçamento' ? (
+                <button
+                  onClick={() => {
+                    if (isHomePage) {
+                      scrollToSection('home-contactos')
+                    } else {
+                      window.location.href = isPavimentosLanding
+                        ? getSectionHref('pavimentos-orcamento')
+                        : getSectionHref('home-contactos')
+                    }
+                  }}
+                  className={ctaButtonClasses}
+                >
+                  {ctaLabel}
+                </button>
+              ) : isHomePage ? (
                 <a
                   href="/#footer-contactos"
                   onClick={(e) => { e.preventDefault(); scrollToSection('footer-contactos') }}
@@ -483,17 +498,6 @@ export default function Navbar() {
                 >
                   {ctaLabel}
                 </a>
-              ) : ctaLabel === 'Pedir Orçamento' ? (
-                <button
-                  onClick={() => {
-                    window.location.href = isPavimentosLanding
-                      ? getSectionHref('pavimentos-orcamento')
-                      : getSectionHref('footer-contactos')
-                  }}
-                  className={ctaButtonClasses}
-                >
-                  {ctaLabel}
-                </button>
               ) : isEmpreiteiros ? (
                 <a
                   href={WA_EMPREITEIROS}
@@ -608,7 +612,27 @@ export default function Navbar() {
 
                 <div className="pt-2 px-4">
                   {/* CTA */}
-                  {isHomePage ? (
+                  {ctaLabel === 'Pedir Orçamento' ? (
+                    isHomePage ? (
+                      <button
+                        onClick={() => {
+                          setIsMobileMenuOpen(false)
+                          setTimeout(() => scrollToSection('home-contactos'), 100)
+                        }}
+                        className={`block w-full text-center ${ctaButtonClasses}`}
+                      >
+                        {ctaLabel}
+                      </button>
+                    ) : (
+                      <a
+                        href={isPavimentosLanding ? getSectionHref('pavimentos-orcamento') : getSectionHref('home-contactos')}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className={`block w-full text-center ${ctaButtonClasses}`}
+                      >
+                        {ctaLabel}
+                      </a>
+                    )
+                  ) : isHomePage ? (
                     <a
                       href="/#footer-contactos"
                       onClick={(e) => { 
@@ -616,14 +640,6 @@ export default function Navbar() {
                         setIsMobileMenuOpen(false)
                         setTimeout(() => scrollToSection('footer-contactos'), 100)
                       }}
-                      className={`block w-full text-center ${ctaButtonClasses}`}
-                    >
-                      {ctaLabel}
-                    </a>
-                  ) : ctaLabel === 'Pedir Orçamento' ? (
-                    <a
-                      href={isPavimentosLanding ? getSectionHref('pavimentos-orcamento') : getSectionHref('footer-contactos')}
-                      onClick={() => setIsMobileMenuOpen(false)}
                       className={`block w-full text-center ${ctaButtonClasses}`}
                     >
                       {ctaLabel}

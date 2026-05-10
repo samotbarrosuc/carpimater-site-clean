@@ -8,17 +8,25 @@ npm install
 
 ## Desenvolvimento
 
+### Terminal 1 — Frontend (Vite)
+
 ```bash
 npm run dev
 ```
 
-O site abre em http://localhost:5173 e inclui as rotas serverless de `/api`.
+Abre o site em http://localhost:5173
 
-Se quiser correr apenas o frontend sem as rotas de API locais, use:
+### Terminal 2 — API Local
 
 ```bash
-npm run dev:web
+npm run dev:api
 ```
+
+Serve as APIs em http://localhost:3001
+
+O Vite faz automaticamente proxy de `/api/*` para o servidor local na porta 3001.
+
+**Nota:** Para testar a funcionalidade completa de envio de emails, precisa de ter o `.env` configurado com `RESEND_API_KEY`, `NOTIFICATION_EMAIL` e `RESEND_FROM`.
 
 ## Build de Produção
 
