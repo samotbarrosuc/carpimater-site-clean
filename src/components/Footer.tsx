@@ -169,7 +169,7 @@ export default function Footer() {
           <div className="border-t border-slate-800 pt-8 pb-6 mb-2">
             <p className="text-[10px] uppercase tracking-[0.22em] text-white/50 font-semibold mb-5 text-center">Marcas e parceiros de material</p>
             <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-3">
-              {['Quick·Step', 'Egger', 'Tarkett', 'Kronoflooring', 'Blum', 'Häfele'].map((brand) => (
+              {['Egger', 'Tarkett', 'Kronoflooring', 'Blum', 'Häfele'].map((brand) => (
                 <span key={brand} className="text-white/60 text-sm font-semibold tracking-wide hover:text-white/80 transition-colors cursor-default select-none">
                   {brand}
                 </span>
