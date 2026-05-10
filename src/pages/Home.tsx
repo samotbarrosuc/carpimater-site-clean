@@ -563,7 +563,7 @@ export default function Home() {
                       </p>
                     )}
                     <p className="text-xs text-muted-foreground text-center">
-                      Sem compromisso. Responderemos em menos de 24 horas.
+                      Responderemos em menos de 24 horas.
                     </p>
                   </form>
                 </div>
