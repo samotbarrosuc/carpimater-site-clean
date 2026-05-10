@@ -147,7 +147,7 @@ export default function Home() {
                   {[
                     { label: 'Cozinhas', sub: 'Cozinhas por medida', href: '/cozinha', icon: Wrench, img: '/images/card-cozinhas.png' },
                     { label: 'Pavimentos', sub: 'Vinílico SPC & Flutuante', href: '/pavimentos', icon: Layers, img: '/images/pavimento-vinilico-sala-coimbra.png' },
-                    { label: 'Construção & Obra', sub: 'Para empreiteiros e investidores imobiliários', href: '/construção', icon: ShieldCheck, img: '/images/card-obras.png' },
+                    { label: 'Construção & Obra', sub: 'Roupeiros, escadas, portas, etc.', href: '/construção', icon: ShieldCheck, img: '/images/card-obras.png' },
                   ].map(({ label, sub, href, icon: Icon, img }) => (
                     <a
                       key={href}
