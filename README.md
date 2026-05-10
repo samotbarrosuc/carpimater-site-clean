@@ -12,7 +12,13 @@ npm install
 npm run dev
 ```
 
-O site abre em http://localhost:5173
+O site abre em http://localhost:5173 e inclui as rotas serverless de `/api`.
+
+Se quiser correr apenas o frontend sem as rotas de API locais, use:
+
+```bash
+npm run dev:web
+```
 
 ## Build de Produção
 

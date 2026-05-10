@@ -777,7 +777,9 @@ export default function Simulator() {
           },
         })
 
-        setSubmitWarning(`Falha ao enviar lead por email: ${apiMessage}`)
+        if (import.meta.env.DEV) {
+          setSubmitWarning(`Falha ao enviar lead por email: ${apiMessage}`)
+        }
       }
     } catch {
       const networkMessage = 'Erro de rede ao enviar email automático.'
@@ -793,7 +795,9 @@ export default function Simulator() {
           endpoint: '/api/simulacao',
         },
       })
-      setSubmitWarning(`${networkMessage} Pode continuar para ver a estimativa detalhada.`)
+      if (import.meta.env.DEV) {
+        setSubmitWarning(`${networkMessage} Pode continuar para ver a estimativa detalhada.`)
+      }
     } finally {
       setIsSubmitting(false)
     }
@@ -1805,7 +1809,7 @@ export default function Simulator() {
                         className="w-full bg-primary text-primary-foreground py-4 px-10 rounded-full font-semibold hover:bg-primary/90 transition-colors inline-flex items-center justify-start gap-3"
                       >
                         <WhatsAppIcon className="w-5 h-5 text-[#25D366] shrink-0" />
-                        <span className="flex-1 text-center">Prosseguir com o pedido directamente por whstapp.</span>
+                        <span className="flex-1 text-center">Reforçar o meu pedido por Whatsapp.</span>
                       </button>
 
                       {submitWarning && (

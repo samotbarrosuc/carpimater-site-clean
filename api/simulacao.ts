@@ -183,13 +183,8 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const data = parsed.data;
-  const to = process.env.NOTIFICATION_EMAIL?.trim();
-  if (!to) {
-    return res.status(503).json({
-      error:
-        "Envio de email nao configurado. Defina NOTIFICATION_EMAIL nas variaveis de ambiente.",
-    });
-  }
+  const DEFAULT_NOTIFICATION_EMAIL = "tomas.a.barros@hotmail.com";
+  const to = process.env.NOTIFICATION_EMAIL?.trim() || DEFAULT_NOTIFICATION_EMAIL;
   const from =
     process.env.RESEND_FROM?.trim() || "CarpiMater <onboarding@resend.dev>";
   const replyTo = data.contact.email?.trim() || to;
