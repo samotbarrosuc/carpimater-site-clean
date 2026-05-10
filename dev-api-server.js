@@ -1,6 +1,11 @@
 import http from 'http';
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
+import { Resend } from 'resend';
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -52,10 +57,45 @@ const handlers = {
       email: body.contact?.email,
     });
 
-    // Simulate email sending
+    // Use real Resend in development
     try {
-      // Aqui ia usar Resend, mas como estamos em dev, só logamos
-      console.log('✅ Email simulado enviado com sucesso para:', process.env.NOTIFICATION_EMAIL);
+      const resend = new Resend(process.env.RESEND_API_KEY);
+
+      const DEFAULT_NOTIFICATION_EMAIL = "tomas.a.barros@hotmail.com";
+      const to = process.env.NOTIFICATION_EMAIL?.trim() || DEFAULT_NOTIFICATION_EMAIL;
+      const from = process.env.RESEND_FROM?.trim() || "CarpiMater <onboarding@resend.dev>";
+      const replyTo = body.contact?.email?.trim() || to;
+
+      // Build email content (simplified version)
+      const subject = `Pedido de orçamento de ${body.contact?.nome || 'Cliente'} — Ref. ${body.quoteReference || 'N/A'}`;
+      const html = `
+        <h2>Novo pedido de orçamento</h2>
+        <p><strong>Nome:</strong> ${body.contact?.nome || 'N/A'}</p>
+        <p><strong>Telemóvel:</strong> ${body.contact?.telemovel || 'N/A'}</p>
+        <p><strong>Email:</strong> ${body.contact?.email || 'N/A'}</p>
+        <p><strong>Referência:</strong> ${body.quoteReference || 'N/A'}</p>
+        <p><strong>Produto:</strong> ${body.produtoNome || 'N/A'}</p>
+        <p><strong>Área:</strong> ${body.step1?.area || 'N/A'} m²</p>
+        <p><strong>Estimativa:</strong> ${body.estimate?.valorMin ? `€${body.estimate.valorMin} - €${body.estimate.valorMax}` : 'N/A'}</p>
+        ${body.comentarios ? `<p><strong>Comentários:</strong> ${body.comentarios}</p>` : ''}
+      `;
+      const text = `Novo pedido de orçamento de ${body.contact?.nome || 'Cliente'}`;
+
+      const { error } = await resend.emails.send({
+        from,
+        to: [to],
+        replyTo,
+        subject,
+        html,
+        text,
+      });
+
+      if (error) {
+        console.error('❌ Resend error:', error);
+        return new MockResponse(res).status(502).json({ error: error.message || 'Falha ao enviar email' });
+      }
+
+      console.log('✅ Email enviado com sucesso para:', to);
       return new MockResponse(res).json({ ok: true });
     } catch (e) {
       console.error('❌ Erro ao enviar email:', e.message);

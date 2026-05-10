@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
+    "dotenv": "^17.4.2",
     "react-helmet-async": "^3.0.0",
     "resend": "^6.12.3",
     "zod": "^3.25.23"
