@@ -5,7 +5,8 @@ import { BUSINESS_NAME, getWhatsAppUrl } from '@/content/site'
 
 const SERVICES = [
   { label: 'Cozinhas por medida', description: 'Projeto, fabrico e montagem', href: '/cozinha' },
-  { label: 'Pavimentos', description: 'Vinílico SPC e flutuante', href: '/pavimentos' },
+  { label: 'Pavimento vinílico', description: 'Conheça o vinílico SPC', href: '/vinilico' },
+  { label: 'Pavimento flutuante', description: 'Laminado e efeito madeira', href: '/flutuante' },
   { label: 'Carpintaria para obra', description: 'Soluções para construção', href: '/construcao' },
 ]
 

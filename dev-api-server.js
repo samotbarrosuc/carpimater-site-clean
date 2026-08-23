@@ -57,8 +57,8 @@ const handlers = {
 
     try {
       const resend = new Resend(process.env.RESEND_API_KEY);
-      const to = process.env.NOTIFICATION_EMAIL?.trim() || 'tomas.a.barros@hotmail.com';
-      const from = process.env.RESEND_FROM?.trim() || 'CarpiMater <onboarding@resend.dev>';
+      const to = 'tomas.a.barros@hotmail.com';
+      const from = 'CarpiMater <info@carpimater.pt>';
       const items = Array.isArray(body.items) ? body.items : [];
       const itemLines = items.map((item) => `${item.name} - ${item.units} ${item.kind === 'flooring' ? 'caixas' : 'barras'} - ${item.suppliedAmount} ${item.kind === 'flooring' ? 'm²' : 'm'}`).join('\n');
       if (!body.comprovativo?.name || !body.comprovativo?.base64) {
@@ -79,64 +79,6 @@ const handlers = {
       return new MockResponse(res).status(500).json({ error: error.message || 'Erro ao enviar email' });
     }
   },
-  '/api/simulacao': async (req, res) => {
-    if (req.method !== 'POST') {
-      return new MockResponse(res).status(405).json({ error: 'Method not allowed' });
-    }
-
-    const body = JSON.parse(req.body || '{}');
-    console.log('📧 Simulação enviada:', {
-      nome: body.contact?.nome,
-      telemovel: body.contact?.telemovel,
-      email: body.contact?.email,
-    });
-
-    // Use real Resend in development
-    try {
-      const resend = new Resend(process.env.RESEND_API_KEY);
-
-      const DEFAULT_NOTIFICATION_EMAIL = "tomas.a.barros@hotmail.com";
-      const to = process.env.NOTIFICATION_EMAIL?.trim() || DEFAULT_NOTIFICATION_EMAIL;
-      const from = process.env.RESEND_FROM?.trim() || "CarpiMater <onboarding@resend.dev>";
-      const replyTo = body.contact?.email?.trim() || to;
-
-      // Build email content (simplified version)
-      const subject = `Pedido de orçamento de ${body.contact?.nome || 'Cliente'} — Ref. ${body.quoteReference || 'N/A'}`;
-      const html = `
-        <h2>Novo pedido de orçamento</h2>
-        <p><strong>Nome:</strong> ${body.contact?.nome || 'N/A'}</p>
-        <p><strong>Telemóvel:</strong> ${body.contact?.telemovel || 'N/A'}</p>
-        <p><strong>Email:</strong> ${body.contact?.email || 'N/A'}</p>
-        <p><strong>Referência:</strong> ${body.quoteReference || 'N/A'}</p>
-        <p><strong>Produto:</strong> ${body.produtoNome || 'N/A'}</p>
-        <p><strong>Área:</strong> ${body.step1?.area || 'N/A'} m²</p>
-        <p><strong>Estimativa:</strong> ${body.estimate?.valorMin ? `€${body.estimate.valorMin} - €${body.estimate.valorMax}` : 'N/A'}</p>
-        ${body.comentarios ? `<p><strong>Comentários:</strong> ${body.comentarios}</p>` : ''}
-      `;
-      const text = `Novo pedido de orçamento de ${body.contact?.nome || 'Cliente'}`;
-
-      const { error } = await resend.emails.send({
-        from,
-        to: [to],
-        replyTo,
-        subject,
-        html,
-        text,
-      });
-
-      if (error) {
-        console.error('❌ Resend error:', error);
-        return new MockResponse(res).status(502).json({ error: error.message || 'Falha ao enviar email' });
-      }
-
-      console.log('✅ Email enviado com sucesso para:', to);
-      return new MockResponse(res).json({ ok: true });
-    } catch (e) {
-      console.error('❌ Erro ao enviar email:', e.message);
-      return new MockResponse(res).status(500).json({ error: 'Erro ao enviar email' });
-    }
-  },
-
   '/api/error-report': async (req, res) => {
     if (req.method !== 'POST') {
       return new MockResponse(res).status(405).json({ error: 'Method not allowed' });
@@ -259,7 +201,6 @@ const PORT = 3001;
 server.listen(PORT, () => {
   console.log(`\n🚀 API Server rodando em http://localhost:${PORT}\n`);
   console.log('Endpoints disponíveis:');
-  console.log('  - POST /api/simulacao');
   console.log('  - POST /api/error-report');
   console.log('  - POST /api/contact\n');
 });

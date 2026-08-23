@@ -28,11 +28,6 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
     description: 'Compre pavimentos vinílicos SPC e rodapés PVC online, com preços publicados e IVA incluído. Entrega e aplicação em Coimbra, Aveiro, Leiria e região Centro.',
     pageType: 'CollectionPage',
   },
-  '/pavimentos': {
-    title: 'Pavimentos Vinílicos, Flutuantes e Madeira | Coimbra',
-    description: 'Compare pavimentos vinílicos, flutuantes, laminados e soluções com acabamento de madeira. Loja online e aplicação profissional em Coimbra, Aveiro e Leiria.',
-    serviceType: 'Venda e aplicação de pavimentos',
-  },
   '/vinilico': {
     title: 'Pavimento Vinílico em Coimbra | Loja e Aplicação',
     description: 'Pavimento vinílico SPC com preços online, compra por caixas e aplicação profissional. Serviço em Coimbra, Aveiro, Leiria, Condeixa e Figueira da Foz.',

@@ -78,7 +78,7 @@ export default function LojaPage() {
           <div className="rounded-2xl border border-[#ded8cf] bg-[#f8f5ef] p-6 sm:p-7">
             <h3 className="font-display text-xl font-bold">Coimbra, Aveiro, Leiria e arredores</h3>
             <p className="mt-3 text-sm leading-6 text-slate-600">Entregamos materiais e prestamos serviços de aplicação na região Centro. A equipa reúne experiência de carpintaria para preparar, rematar e instalar cada pavimento com cuidado.</p>
-            <div className="mt-5 flex flex-wrap gap-3"><a href="/pavimentos" className="text-sm font-bold text-primary hover:text-[#d94d0d]">Conhecer os pavimentos</a><span className="text-slate-300">·</span><a href="/rodapes" className="text-sm font-bold text-primary hover:text-[#d94d0d]">Ver rodapés PVC</a></div>
+            <div className="mt-5 flex flex-wrap gap-3"><a href="/loja?categoria=vinilico#catalogo-loja" className="text-sm font-bold text-primary hover:text-[#d94d0d]">Ver pavimentos vinílicos</a><span className="text-slate-300">·</span><a href="/rodapes" className="text-sm font-bold text-primary hover:text-[#d94d0d]">Ver rodapés PVC</a></div>
           </div>
         </div>
       </section>

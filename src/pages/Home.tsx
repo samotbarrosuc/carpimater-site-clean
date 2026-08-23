@@ -225,7 +225,7 @@ export default function Home() {
               </a>
 
               {/* Pavimentos — merged Vinílico + Flutuante */}
-              <a href="/pavimentos" className="group clean-card flex flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]">
+              <a href="/loja?categoria=vinilico" className="group clean-card flex flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]">
                 <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
                   <img
                     src="/images/pavimento-vinilico-sala-coimbra.png"

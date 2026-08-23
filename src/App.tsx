@@ -4,8 +4,6 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/Home";
-import PavimentosPage from "@/pages/PavimentosPage";
-import PavimentosLanding from "@/pages/PavimentosLanding";
 import VinilicoPage from "@/pages/VinilicoPage";
 import FlutuantePage from "@/pages/FlutuantePage";
 import CozinhaPage from "@/pages/CozinhaPage";
@@ -26,7 +24,7 @@ function Router() {
       <Route path="/" component={Home} />
       <Route path="/vinilico" component={VinilicoPage} />
       <Route path="/flutuante" component={FlutuantePage} />
-      <Route path="/pavimentos" component={PavimentosLanding} />
+      <Route path="/pavimentos" component={() => <Redirect to="/loja" />} />
       <Route path="/loja" component={LojaPage} />
       <Route path="/rodapes" component={RodapesPage} />
       <Route path="/encomenda" component={CheckoutPage} />
