@@ -12,6 +12,7 @@ const WEBSITE_ID = `${SITE_URL}/#website`
 type SeoEntry = {
   title: string
   description: string
+  searchTopics?: string[]
   image?: string
   index?: boolean
   pageType?: 'WebPage' | 'CollectionPage' | 'AboutPage' | 'ContactPage' | 'CheckoutPage'
@@ -20,43 +21,51 @@ type SeoEntry = {
 
 const SEO_BY_PATH: Record<string, SeoEntry> = {
   '/': {
-    title: 'Pavimentos, Rodapés e Carpintaria em Coimbra | CarpiMater',
-    description: 'Loja online CarpiMater com preços de pavimentos vinílicos e rodapés. Encomende materiais ou peça aplicação por carpinteiros em Coimbra, Aveiro, Leiria e arredores.',
+    title: 'CarpiMater | Carpintaria por medida em Coimbra',
+    description: 'Carpintaria por medida e loja online de pavimentos vinílicos SPC, flutuantes, laminados e rodapés PVC, com preços publicados e aplicação em Coimbra e Região Centro.',
+    searchTopics: ['carpintaria por medida em Coimbra', 'pavimentos em Coimbra', 'pavimento vinílico SPC', 'pavimento flutuante', 'pavimento laminado', 'pavimento em madeira', 'rodapé PVC'],
   },
   '/loja': {
-    title: 'Loja de Pavimentos Vinílicos e Rodapés | Preços Online',
+    title: 'Loja de Pavimentos e Rodapés PVC em Coimbra | CarpiMater',
     description: 'Compre pavimentos vinílicos SPC e rodapés PVC online, com preços publicados e IVA incluído. Entrega e aplicação em Coimbra, Aveiro, Leiria e região Centro.',
+    searchTopics: ['loja de pavimentos online', 'pavimentos vinílicos SPC', 'pavimentos flutuantes', 'pavimentos laminados', 'rodapés PVC', 'preços de pavimentos'],
     pageType: 'CollectionPage',
   },
   '/vinilico': {
     title: 'Pavimento Vinílico em Coimbra | Loja e Aplicação',
     description: 'Pavimento vinílico SPC com preços online, compra por caixas e aplicação profissional. Serviço em Coimbra, Aveiro, Leiria, Condeixa e Figueira da Foz.',
+    searchTopics: ['pavimento vinílico', 'pavimento vinílico SPC', 'pavimento impermeável', 'aplicação de pavimento vinílico em Coimbra'],
     serviceType: 'Venda e aplicação de pavimento vinílico SPC',
   },
   '/flutuante': {
     title: 'Pavimento Flutuante, Laminado e Madeira | Coimbra',
     description: 'Pavimentos flutuantes, laminados e com acabamento de madeira para salas e quartos. Fornecimento e aplicação em Coimbra, Aveiro, Leiria e arredores.',
+    searchTopics: ['pavimento flutuante', 'pavimento laminado', 'pavimento em madeira', 'aplicação de pavimento em Coimbra'],
     serviceType: 'Venda e aplicação de pavimento flutuante e laminado',
   },
   '/rodapes': {
     title: 'Rodapés PVC em Coimbra | Preços e Compra Online',
     description: 'Rodapés PVC com preços publicados, vários acabamentos e compra online por barras. Entrega ou aplicação profissional em Coimbra, Aveiro, Leiria e arredores.',
+    searchTopics: ['rodapé', 'rodapés', 'rodapé PVC', 'rodapé branco', 'aplicação de rodapés em Coimbra'],
     pageType: 'CollectionPage',
     serviceType: 'Venda e aplicação de rodapés PVC',
   },
   '/cozinha': {
     title: 'Cozinhas por Medida em Coimbra | Carpinteiros CarpiMater',
     description: 'Projeto, fabrico e montagem de cozinhas por medida por profissionais de carpintaria. Atuação regular em Coimbra, Aveiro, Leiria e na Região Centro.',
+    searchTopics: ['cozinhas por medida em Coimbra', 'carpinteiro em Coimbra', 'fabrico de cozinhas', 'montagem de cozinhas'],
     serviceType: 'Projeto, fabrico e montagem de cozinhas por medida',
   },
   '/construcao': {
     title: 'Carpintaria para Obras em Coimbra e Região Centro',
     description: 'Carpinteiros para obras, remodelações e empreiteiros: pavimentos, cozinhas, roupeiros, portas e marcenaria em Coimbra, Aveiro, Leiria e arredores.',
+    searchTopics: ['carpintaria em Coimbra', 'carpinteiros para obras', 'carpintaria por medida', 'marcenaria', 'remodelações'],
     serviceType: 'Carpintaria para construção e remodelação',
   },
   '/contactos': {
     title: 'Pavimentos e Carpintaria em Coimbra | Contactos',
     description: 'Contacte a CarpiMater para comprar pavimentos e rodapés ou pedir aplicação e trabalhos de carpintaria em Coimbra, Aveiro, Leiria e arredores.',
+    searchTopics: ['carpinteiro em Coimbra', 'loja de pavimentos', 'aplicação de pavimentos', 'rodapés PVC'],
     pageType: 'ContactPage',
   },
   '/encomenda': {
@@ -98,7 +107,7 @@ const businessSchema = {
   url: SITE_URL,
   logo: `${SITE_URL}/images/logo-carpimater-v2.png`,
   image: DEFAULT_IMAGE,
-  description: 'Loja online de pavimentos e rodapés, com carpintaria e aplicação profissional na região Centro de Portugal.',
+  description: 'Carpintaria por medida e loja online de pavimentos vinílicos SPC, flutuantes, laminados, em madeira e rodapés PVC, com aplicação profissional na Região Centro.',
   telephone: PHONE_NUMBER,
   email: EMAIL,
   address: {
@@ -115,9 +124,13 @@ const businessSchema = {
     'pavimento flutuante',
     'pavimento laminado',
     'pavimento em madeira',
+    'pavimento híbrido',
     'rodapé PVC',
+    'rodapés em PVC',
     'aplicação de pavimentos',
-    'carpintaria',
+    'loja online de pavimentos',
+    'carpintaria por medida em Coimbra',
+    'carpinteiros em Coimbra',
     'cozinhas por medida',
   ],
   hasOfferCatalog: {
@@ -126,9 +139,10 @@ const businessSchema = {
     itemListElement: [
       { '@type': 'OfferCatalog', name: 'Pavimentos vinílicos SPC' },
       { '@type': 'OfferCatalog', name: 'Pavimentos flutuantes e laminados' },
+      { '@type': 'OfferCatalog', name: 'Pavimentos em madeira e híbridos' },
       { '@type': 'OfferCatalog', name: 'Rodapés PVC' },
       { '@type': 'OfferCatalog', name: 'Aplicação de pavimentos e rodapés' },
-      { '@type': 'OfferCatalog', name: 'Carpintaria e cozinhas por medida' },
+      { '@type': 'OfferCatalog', name: 'Carpintaria por medida e cozinhas' },
     ],
   },
 }
@@ -231,7 +245,11 @@ function routeSchema(pathname: string, seo: SeoEntry, canonical: string) {
     description: seo.description,
     inLanguage: 'pt-PT',
     isPartOf: { '@id': WEBSITE_ID },
-    about: { '@id': BUSINESS_ID },
+    keywords: seo.searchTopics?.join(', '),
+    about: [
+      { '@id': BUSINESS_ID },
+      ...(seo.searchTopics || []).map((name) => ({ '@type': 'Thing', name })),
+    ],
   }
 
   if (pathname === '/loja') {
@@ -258,6 +276,7 @@ function routeSchema(pathname: string, seo: SeoEntry, canonical: string) {
       '@id': `${canonical}#service`,
       name: seo.serviceType,
       serviceType: seo.serviceType,
+      category: seo.searchTopics,
       provider: { '@id': BUSINESS_ID },
       areaServed: placeNames.map((name) => ({ '@type': 'City', name })),
       availableChannel: {

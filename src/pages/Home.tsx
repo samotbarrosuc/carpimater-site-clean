@@ -339,10 +339,10 @@ export default function Home() {
                 <div className="max-w-xl">
                   <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Onde actuamos</p>
                   <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-4">
-                    Pavimentos e carpintaria em Coimbra, Aveiro e Leiria
+                    Carpintaria por medida, pavimentos e rodapés em Coimbra, Aveiro e Leiria
                   </h2>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    A CarpiMater é uma loja online de pavimentos e rodapés com preços publicados, apoiada por profissionais de carpintaria. Entregamos e aplicamos pavimentos vinílicos, flutuantes, laminados e rodapés regularmente na Região Centro.
+                    A CarpiMater reúne carpintaria por medida e uma loja online de pavimentos e rodapés PVC com preços publicados. Entregamos e aplicamos pavimentos vinílicos SPC, flutuantes, laminados, híbridos e soluções com acabamento de madeira regularmente na Região Centro.
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Trabalhamos regularmente em Coimbra e arredores, Condeixa-a-Nova, Figueira da Foz, Cantanhede, Mealhada, Lousã, Aveiro, Leiria, Pombal e Marinha Grande. Para outras zonas do país, contacte-nos para confirmarmos disponibilidade.</p>
                   <a href="/loja" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">Ver preços na loja <ChevronRight className="h-4 w-4" /></a>

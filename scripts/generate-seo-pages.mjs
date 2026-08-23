@@ -7,34 +7,41 @@ const template = await readFile(join(outputDir, 'index.html'), 'utf8')
 
 const pages = {
   loja: {
-    title: 'Loja de Pavimentos Vinílicos e Rodapés | Preços Online',
+    title: 'Loja de Pavimentos e Rodapés PVC em Coimbra | CarpiMater',
     description: 'Compre pavimentos vinílicos SPC e rodapés PVC online, com preços publicados e IVA incluído. Entrega e aplicação em Coimbra, Aveiro, Leiria e região Centro.',
+    topics: ['loja de pavimentos online', 'pavimentos vinílicos SPC', 'pavimentos flutuantes', 'pavimentos laminados', 'rodapés PVC', 'preços de pavimentos'],
     type: 'CollectionPage',
   },
   vinilico: {
     title: 'Pavimento Vinílico em Coimbra | Loja e Aplicação',
     description: 'Pavimento vinílico SPC com preços online, compra por caixas e aplicação profissional. Serviço em Coimbra, Aveiro, Leiria, Condeixa e Figueira da Foz.',
+    topics: ['pavimento vinílico', 'pavimento vinílico SPC', 'pavimento impermeável', 'aplicação de pavimento vinílico em Coimbra'],
   },
   flutuante: {
     title: 'Pavimento Flutuante, Laminado e Madeira | Coimbra',
     description: 'Pavimentos flutuantes, laminados e com acabamento de madeira para salas e quartos. Fornecimento e aplicação em Coimbra, Aveiro, Leiria e arredores.',
+    topics: ['pavimento flutuante', 'pavimento laminado', 'pavimento em madeira', 'aplicação de pavimento em Coimbra'],
   },
   rodapes: {
     title: 'Rodapés PVC em Coimbra | Preços e Compra Online',
     description: 'Rodapés PVC com preços publicados, vários acabamentos e compra online por barras. Entrega ou aplicação profissional em Coimbra, Aveiro, Leiria e arredores.',
+    topics: ['rodapé', 'rodapés', 'rodapé PVC', 'rodapé branco', 'aplicação de rodapés em Coimbra'],
     type: 'CollectionPage',
   },
   cozinha: {
     title: 'Cozinhas por Medida em Coimbra | Carpinteiros CarpiMater',
     description: 'Projeto, fabrico e montagem de cozinhas por medida por profissionais de carpintaria. Atuação regular em Coimbra, Aveiro, Leiria e na Região Centro.',
+    topics: ['cozinhas por medida em Coimbra', 'carpinteiro em Coimbra', 'fabrico de cozinhas', 'montagem de cozinhas'],
   },
   construcao: {
     title: 'Carpintaria para Obras em Coimbra e Região Centro',
     description: 'Carpinteiros para obras, remodelações e empreiteiros: pavimentos, cozinhas, roupeiros, portas e marcenaria em Coimbra, Aveiro, Leiria e arredores.',
+    topics: ['carpintaria em Coimbra', 'carpinteiros para obras', 'carpintaria por medida', 'marcenaria', 'remodelações'],
   },
   contactos: {
     title: 'Pavimentos e Carpintaria em Coimbra | Contactos',
     description: 'Contacte a CarpiMater para comprar pavimentos e rodapés ou pedir aplicação e trabalhos de carpintaria em Coimbra, Aveiro, Leiria e arredores.',
+    topics: ['carpinteiro em Coimbra', 'loja de pavimentos', 'aplicação de pavimentos', 'rodapés PVC'],
     type: 'ContactPage',
   },
   encomenda: {
@@ -78,9 +85,15 @@ for (const [slug, page] of Object.entries(pages)) {
         url: canonical,
         name: page.title,
         description: page.description,
+        ...(page.topics ? {
+          keywords: page.topics.join(', '),
+          about: [
+            { '@id': `${siteUrl}/#business` },
+            ...page.topics.map((name) => ({ '@type': 'Thing', name })),
+          ],
+        } : { about: { '@id': `${siteUrl}/#business` } }),
         inLanguage: 'pt-PT',
         isPartOf: { '@id': `${siteUrl}/#website` },
-        about: { '@id': `${siteUrl}/#business` },
       },
       {
         '@type': 'BreadcrumbList',
