@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react'
+import { Droplets, House, Info, Layers3, Minus, Plus, Ruler, ShoppingBag, Sparkles, Trash2, X } from 'lucide-react'
 import { getProdutosByVariant, type Produto } from '@/content/vinil'
 import { RODAPES, type RodapeProduto } from '@/content/rodapes'
 import { BASEBOARD_BAR_LENGTH_M, FLOORING_BOX_AREA_M2, calcBaseboardPurchase, calcFlooringPurchase, formatEur, formatQuantity, parseQuantityInput, sanitizeQuantityInput } from '@/lib/calculations'
@@ -24,6 +24,61 @@ function ProductMedia({ image, color, name, kind }: { image?: string; color: str
         }}
       />
       {kind === 'baseboard' && <div className="absolute inset-x-5 bottom-[26px] h-px bg-black/15" />}
+    </div>
+  )
+}
+
+function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void }) {
+  const flooring = choice.kind === 'flooring'
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => event.key === 'Escape' && close()
+    window.addEventListener('keydown', onKeyDown)
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = previous
+    }
+  }, [close])
+
+  return (
+    <div className="fixed inset-0 z-[80] flex items-end justify-center bg-[#19242e]/65 p-0 backdrop-blur-sm sm:items-center sm:p-4" role="dialog" aria-modal="true" aria-labelledby="product-info-title" onClick={close}>
+      <div className="max-h-[86dvh] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-[1.75rem] bg-white p-5 shadow-2xl sm:rounded-[1.75rem] sm:p-6" onClick={(event) => event.stopPropagation()}>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="section-kicker">Informação do produto</p>
+            <h2 id="product-info-title" className="mt-2 font-display text-2xl font-bold tracking-[-0.02em] text-[#19242e]">{choice.product.nome}</h2>
+            <p className="mt-1 text-xs font-semibold uppercase tracking-[0.12em] text-slate-400">{choice.product.referencia}</p>
+          </div>
+          <button type="button" onClick={close} aria-label="Fechar informação" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition hover:bg-slate-200"><X className="h-4 w-4" /></button>
+        </div>
+
+        {flooring ? (
+          <>
+            <div className="mt-5 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-primary" />Pavimento vinílico SPC</div>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Ideal para todas as zonas da casa, incluindo cozinhas e casas de banho. É impermeável, resistente ao uso diário e fácil de limpar, aliando estabilidade a um acabamento confortável com aspeto de madeira.</p>
+            </div>
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[0.68rem] font-bold text-slate-600">
+              <div className="rounded-xl border border-slate-200 p-3"><House className="mx-auto mb-2 h-4 w-4 text-primary" />Toda a casa</div>
+              <div className="rounded-xl border border-slate-200 p-3"><Droplets className="mx-auto mb-2 h-4 w-4 text-primary" />Impermeável</div>
+              <div className="rounded-xl border border-slate-200 p-3"><Sparkles className="mx-auto mb-2 h-4 w-4 text-primary" />Fácil limpeza</div>
+            </div>
+          </>
+        ) : (
+          <>
+            <p className="mt-5 text-sm leading-6 text-slate-600">Rodapé em PVC resistente à humidade e simples de limpar, pensado para proteger a base da parede e criar um acabamento uniforme.</p>
+            <dl className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4 text-sm">
+              <div><dt className="text-xs text-slate-500">Material</dt><dd className="mt-1 font-bold text-[#19242e]">{choice.product.material}</dd></div>
+              <div><dt className="text-xs text-slate-500">Altura</dt><dd className="mt-1 font-bold text-[#19242e]">{choice.product.altura}</dd></div>
+              <div><dt className="text-xs text-slate-500">Espessura</dt><dd className="mt-1 font-bold text-[#19242e]">{choice.product.espessura}</dd></div>
+              <div><dt className="text-xs text-slate-500">Comprimento</dt><dd className="mt-1 font-bold text-[#19242e]">{formatQuantity(BASEBOARD_BAR_LENGTH_M, 2)} m/barra</dd></div>
+            </dl>
+            <div className="mt-4 flex items-center gap-2 text-xs text-slate-500"><Ruler className="h-4 w-4 shrink-0 text-primary" />Confirme as medidas antes de concluir a encomenda.</div>
+          </>
+        )}
+      </div>
     </div>
   )
 }
@@ -117,16 +172,24 @@ function PurchaseModal({ choice, close }: { choice: Choice; close: () => void })
 
 export function CartDrawer() {
   const { items, isOpen, setIsOpen, removeItem, changeUnits, subtotal } = useCart()
+
+  useEffect(() => {
+    if (!isOpen) return
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => { document.body.style.overflow = previous }
+  }, [isOpen])
+
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-[60] bg-[#19242e]/55 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
-      <aside role="dialog" aria-modal="true" aria-labelledby="cart-title" className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-[#fbfaf7] shadow-2xl" onClick={(event) => event.stopPropagation()}>
-        <header className="flex items-center justify-between border-b border-slate-200 bg-white p-5">
+    <div className="fixed inset-0 z-[60] overflow-hidden bg-[#19242e]/55 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
+      <aside role="dialog" aria-modal="true" aria-labelledby="cart-title" className="absolute inset-y-0 right-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-[#fbfaf7] shadow-2xl" onClick={(event) => event.stopPropagation()}>
+        <header className="flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 py-3 sm:p-5">
           <div><p className="section-kicker">A sua encomenda</p><h2 id="cart-title" className="mt-1 font-display text-2xl font-bold text-[#19242e]">Carrinho</h2></div>
           <button type="button" onClick={() => setIsOpen(false)} aria-label="Fechar carrinho" className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600"><X className="h-4 w-4" /></button>
         </header>
-        <div className="flex-1 space-y-3 overflow-y-auto p-4 sm:p-5">
+        <div className="min-h-0 flex-1 space-y-3 overflow-y-auto overscroll-contain p-3 [WebkitOverflowScrolling:touch] sm:p-5">
           {items.length === 0 ? (
             <div className="py-20 text-center"><ShoppingBag className="mx-auto h-8 w-8 text-slate-300" /><p className="mt-3 text-sm text-slate-500">O carrinho está vazio.</p></div>
           ) : items.map((item) => (
@@ -143,18 +206,19 @@ export function CartDrawer() {
             </div>
           ))}
         </div>
-        <footer className="border-t border-slate-200 bg-white p-5"><div className="flex items-end justify-between"><span className="text-sm text-slate-500">Subtotal</span><span className="text-xl font-bold text-[#19242e]">{formatEur(subtotal)}</span></div><p className="mt-1 text-right text-xs text-slate-400">IVA incluído</p><a href="/encomenda" onClick={() => setIsOpen(false)} className="mt-4 block rounded-xl bg-primary px-5 py-3.5 text-center text-sm font-bold text-white transition hover:bg-[#d94d0d]">Continuar encomenda</a></footer>
+        <footer className="shrink-0 border-t border-slate-200 bg-white px-4 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 sm:p-5"><div className="flex items-end justify-between"><span className="text-sm text-slate-500">Subtotal</span><span className="text-xl font-bold text-[#19242e]">{formatEur(subtotal)}</span></div><p className="mt-1 text-right text-xs text-slate-400">IVA incluído</p><a href="/encomenda" onClick={() => setIsOpen(false)} className="mt-3 block rounded-xl bg-primary px-5 py-3 text-center text-sm font-bold text-white transition hover:bg-[#d94d0d] sm:mt-4 sm:py-3.5">Continuar encomenda</a></footer>
       </aside>
     </div>
   )
 }
 
-function FlooringCard({ product, floorLabel, onAdd }: { product: Produto; floorLabel: string; onAdd: () => void }) {
+function FlooringCard({ product, floorLabel, onAdd, onInfo }: { product: Produto; floorLabel: string; onAdd: () => void; onInfo: () => void }) {
   return (
     <article id={`produto-${product.referencia.toLowerCase()}`} className="group min-w-0 scroll-mt-28 overflow-hidden rounded-2xl border border-[#e2ddd5] bg-white shadow-[0_1px_2px_rgba(25,36,46,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_14px_32px_rgba(25,36,46,0.09)]">
       <div className="relative aspect-[4/3] overflow-hidden bg-[#eee9e1]">
         <ProductMedia image={product.imagem} color={product.cor} name={product.nome} kind="flooring" />
         <span className="absolute left-2.5 top-2.5 rounded-lg bg-[#19242e]/88 px-2 py-1 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm">Vinílico</span>
+        <button type="button" onClick={onInfo} aria-label={`Ver informação de ${product.nome}`} className="absolute right-2.5 top-2.5 flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/95 text-[#19242e] shadow-md backdrop-blur-sm transition hover:bg-primary hover:text-white"><Info className="h-4 w-4" /></button>
       </div>
       <div className="p-3 sm:p-4">
         <p className="truncate text-[0.6rem] font-bold uppercase tracking-[0.14em] text-slate-400">{product.referencia} · {floorLabel}</p>
@@ -169,12 +233,13 @@ function FlooringCard({ product, floorLabel, onAdd }: { product: Produto; floorL
   )
 }
 
-function BaseboardCard({ product, onAdd }: { product: RodapeProduto; onAdd: () => void }) {
+function BaseboardCard({ product, onAdd, onInfo }: { product: RodapeProduto; onAdd: () => void; onInfo: () => void }) {
   return (
     <article id={`produto-${product.referencia.toLowerCase()}`} className="group min-w-0 scroll-mt-28 overflow-hidden rounded-2xl border border-[#e2ddd5] bg-white shadow-[0_1px_2px_rgba(25,36,46,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_14px_32px_rgba(25,36,46,0.09)]">
       <div className="relative aspect-[4/3] overflow-hidden bg-[#eee9e1]">
         <ProductMedia image={product.imagem} color={product.cor} name={product.nome} kind="baseboard" />
         <span className="absolute left-2.5 top-2.5 rounded-lg bg-white/90 px-2 py-1 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-[#19242e] shadow-sm backdrop-blur-sm">Rodapé</span>
+        <button type="button" onClick={onInfo} aria-label={`Ver informação de ${product.nome}`} className="absolute right-2.5 top-2.5 flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/95 text-[#19242e] shadow-md backdrop-blur-sm transition hover:bg-primary hover:text-white"><Info className="h-4 w-4" /></button>
       </div>
       <div className="p-3 sm:p-4">
         <p className="truncate text-[0.6rem] font-bold uppercase tracking-[0.14em] text-slate-400">{product.referencia} · {product.material}</p>
@@ -196,6 +261,7 @@ export default function StoreCatalog() {
   }
   const [category, setCategory] = useState<StoreCategory>(getCategoryFromUrl)
   const [choice, setChoice] = useState<Choice | null>(null)
+  const [infoChoice, setInfoChoice] = useState<Choice | null>(null)
   const { itemCount, setIsOpen } = useCart()
   const products = getProdutosByVariant(category === 'flutuante' ? 'flutuante' : 'vinilico')
 
@@ -225,13 +291,14 @@ export default function StoreCatalog() {
         <div className="mt-8 rounded-2xl border border-dashed border-[#cfc5b8] bg-white p-8 text-center sm:p-12"><p className="section-kicker">Disponibilidade sob consulta</p><h2 className="mt-3 font-display text-2xl font-bold text-[#19242e]">Estamos a atualizar o catálogo flutuante.</h2><p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-600">Fale connosco para confirmar modelos, preços e disponibilidade antes de encomendar.</p><a href="https://wa.me/351910093635?text=Ol%C3%A1!%20Gostaria%20de%20saber%20que%20pavimentos%20flutuantes%20est%C3%A3o%20dispon%C3%ADveis." target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white">Falar sobre flutuante</a></div>
       ) : (
         <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
-          {showFloors && products.map((product) => <FlooringCard key={`floor-${product.id}`} product={product} floorLabel={floorLabel} onAdd={() => setChoice({ kind: 'flooring', product })} />)}
-          {showBases && RODAPES.map((product) => <BaseboardCard key={`base-${product.id}`} product={product} onAdd={() => setChoice({ kind: 'baseboard', product })} />)}
+          {showFloors && products.map((product) => <FlooringCard key={`floor-${product.id}`} product={product} floorLabel={floorLabel} onAdd={() => setChoice({ kind: 'flooring', product })} onInfo={() => setInfoChoice({ kind: 'flooring', product })} />)}
+          {showBases && RODAPES.map((product) => <BaseboardCard key={`base-${product.id}`} product={product} onAdd={() => setChoice({ kind: 'baseboard', product })} onInfo={() => setInfoChoice({ kind: 'baseboard', product })} />)}
         </div>
       )}
 
       <button type="button" onClick={() => setIsOpen(true)} className="fixed bottom-4 right-4 z-40 flex h-12 items-center justify-center gap-2 rounded-xl bg-[#19242e] px-3.5 text-sm font-bold text-white shadow-[0_14px_35px_rgba(25,36,46,0.25)] transition hover:bg-[#f05b13] sm:bottom-5 sm:right-5 sm:px-5"><ShoppingBag className="h-4 w-4" /><span className="hidden sm:inline">Carrinho</span><span className="rounded-md bg-white/12 px-1.5 py-0.5 text-xs">{itemCount}</span></button>
       {choice && <PurchaseModal choice={choice} close={() => setChoice(null)} />}
+      {infoChoice && <ProductInfoModal choice={infoChoice} close={() => setInfoChoice(null)} />}
       <CartDrawer />
     </>
   )
