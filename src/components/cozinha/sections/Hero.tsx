@@ -1,6 +1,6 @@
 "use client"
 
-import { motion } from "framer-motion";
+import { motion, type Variants } from "framer-motion";
 import { getWhatsAppUrl } from "@/content/site";
 import { MessageCircle, ChevronDown, ArrowRight } from "lucide-react";
 
@@ -16,11 +16,11 @@ const kpis = [
   { value: "100%", unit: "Incluído", desc: "Montagem profissional" },
 ];
 
-const container = {
+const container: Variants = {
   hidden: {},
   show: { transition: { staggerChildren: 0.12 } },
 };
-const item = {
+const item: Variants = {
   hidden: { opacity: 0, y: 24 },
   show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } },
 };
@@ -74,9 +74,8 @@ export default function Hero() {
             style={{ color: "#5a3e3b" }}
           >
             Fabricamos na nossa fábrica em Paços de Ferreira e fazemos montagem
-            em todo o país — com especial cobertura em Coimbra, Leiria, Viseu,
-            Aveiro e região centro. Qualidade superior ao IKEA, a preços
-            surpreendentemente competitivos.
+            regularmente na Região Centro. Para outras zonas do país, confirme
+            primeiro a nossa disponibilidade. Qualidade superior, a preço direto de fábrica.
           </motion.p>
 
           <motion.div

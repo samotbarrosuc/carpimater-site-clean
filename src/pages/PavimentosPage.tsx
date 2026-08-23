@@ -74,15 +74,15 @@ export default function PavimentosPage() {
 
   useEffect(() => {
     document.title = isVinilico
-      ? 'Pavimento Vinílico em Coimbra, Aveiro e Leiria — CarpiMater'
-      : 'Pavimento Flutuante em Coimbra, Aveiro e Leiria — CarpiMater'
+      ? 'Pavimento Vinílico SPC — Loja e Instalação | CarpiMater'
+      : 'Pavimento Flutuante — Loja e Instalação | CarpiMater'
     const meta = document.querySelector('meta[name="description"]')
     if (meta) {
       meta.setAttribute(
         'content',
         isVinilico
-          ? 'Fornecimento e instalação profissional de pavimento vinílico SPC em Coimbra, Aveiro e Leiria. Garantia de 25 anos. Orçamento rápido e sem compromisso — CarpiMater.'
-          : 'Fornecimento e instalação profissional de pavimento flutuante em Coimbra, Aveiro e Leiria. Garantia de 20 anos. Acabamento premium com rodapés incluídos — CarpiMater.'
+          ? 'Compre pavimento vinílico SPC na loja online ou peça fornecimento e instalação profissional na Região Centro. Para outras zonas, confirme disponibilidade — CarpiMater.'
+          : 'Compre pavimento flutuante na loja online ou peça fornecimento e instalação profissional na Região Centro. Para outras zonas, confirme disponibilidade — CarpiMater.'
       )
     }
   }, [pathname, isVinilico])

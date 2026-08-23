@@ -1,16 +1,9 @@
-import { useEffect } from 'react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import { SimulatorProvider } from '@/context/SimulatorContext'
 import { Shield } from 'lucide-react'
 
 export default function PrivacyPolicyPage() {
-  useEffect(() => {
-    document.title = 'Política de Privacidade — CarpiMater'
-    const meta = document.querySelector('meta[name="description"]')
-    if (meta) meta.setAttribute('content', 'Política de privacidade e protecção de dados da CarpiMater, em conformidade com o RGPD.')
-  }, [])
-
   return (
     <SimulatorProvider>
       <main>

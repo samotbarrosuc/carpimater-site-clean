@@ -3,8 +3,8 @@ import { Resend } from "resend";
 import { z } from "zod";
 
 const contactSchema = z.object({
-  nome: z.string().min(2, "Nome deve ter pelo menos 2 caracteres"),
-  contacto: z.string().min(9, "Telefone deve ter pelo menos 9 caracteres").regex(/^[\d\s\-\+\(\)]+$/, "Telefone deve conter apenas números e caracteres válidos"),
+  nome: z.string().trim().min(2, "Introduza o seu nome"),
+  contacto: z.string().regex(/^9\d{8}$/, "O telemóvel deve ter 9 algarismos e começar por 9"),
   mensagem: z.string().optional(),
 });
 
@@ -77,7 +77,7 @@ Esta mensagem foi enviada através do formulário de contacto do site CarpiMater
 
   } catch (e: any) {
     if (e instanceof z.ZodError) {
-      return res.status(400).json({ error: "Dados inválidos", details: e.errors });
+      return res.status(400).json({ error: e.errors[0]?.message || "Dados inválidos", details: e.errors });
     }
 
     const errorMsg = e?.message || String(e);

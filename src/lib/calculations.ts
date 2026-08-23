@@ -6,7 +6,7 @@
  * Este ficheiro contém todas as fórmulas de cálculo de orçamento.
  * Os valores base são importados de /content/precos.ts
  * 
- * TODOS OS PREÇOS SÃO SEM IVA
+ * TODOS OS PREÇOS SÃO COM IVA INCLUÍDO
  */
 
 import {
@@ -63,9 +63,8 @@ export function calcRodapeNecessario(metros: number): number {
  * Calcula o número de deslocações necessárias
  */
 export function calcNumeroDeslocacoes(area: number, rodape: number): number {
-  const deslocacoesArea = Math.ceil(area / M2_POR_DESLOCACAO)
-  const deslocacoesRodape = Math.ceil(rodape / RODAPE_ML_POR_DESLOCACAO)
-  return deslocacoesArea + deslocacoesRodape
+  const cargaDiaria = (Math.max(0, area) / M2_POR_DESLOCACAO) + (Math.max(0, rodape) / RODAPE_ML_POR_DESLOCACAO)
+  return Math.ceil(cargaDiaria)
 }
 
 /**
@@ -181,4 +180,53 @@ export function formatEur(value: number): string {
     minimumFractionDigits: 2, 
     maximumFractionDigits: 2 
   }) + ' €'
+}
+
+/** Mantém apenas algarismos e uma vírgula decimal nos campos de medidas. */
+export function sanitizeQuantityInput(value: string): string {
+  const normalized = value.replace(/\./g, ',').replace(/[^\d,]/g, '')
+  const commaIndex = normalized.indexOf(',')
+  if (commaIndex < 0) return normalized
+  return normalized.slice(0, commaIndex + 1) + normalized.slice(commaIndex + 1).replace(/,/g, '')
+}
+
+/** Converte uma medida escrita no formato português para número. */
+export function parseQuantityInput(value: string | number): number {
+  if (typeof value === 'number') return Number.isFinite(value) ? value : 0
+  const parsed = Number(value.replace(',', '.'))
+  return Number.isFinite(parsed) ? parsed : 0
+}
+
+/** Apresenta medidas com vírgula decimal, sem separador de milhares. */
+export function formatQuantity(value: number, minimumFractionDigits = 0): string {
+  return value.toLocaleString('pt-PT', {
+    useGrouping: false,
+    minimumFractionDigits,
+    maximumFractionDigits: 2,
+  })
+}
+
+export const FLOORING_BOX_AREA_M2 = 1.76
+export const BASEBOARD_BAR_LENGTH_M = 2.25
+
+export interface UnitPurchaseResult {
+  requestedAmount: number
+  amountWithWaste: number
+  units: number
+  suppliedAmount: number
+  totalPrice: number
+}
+
+export function calcFlooringPurchase(areaM2: number, pricePerM2: number, includeWaste = true): UnitPurchaseResult {
+  const requestedAmount = Math.max(0, Number(areaM2) || 0)
+  const amountWithWaste = requestedAmount * (includeWaste ? 1.1 : 1)
+  const units = Math.ceil(amountWithWaste / FLOORING_BOX_AREA_M2)
+  return { requestedAmount, amountWithWaste, units, suppliedAmount: units * FLOORING_BOX_AREA_M2, totalPrice: units * FLOORING_BOX_AREA_M2 * pricePerM2 }
+}
+
+export function calcBaseboardPurchase(meters: number, pricePerMeter: number, includeWaste = true): UnitPurchaseResult {
+  const requestedAmount = Math.max(0, Number(meters) || 0)
+  const amountWithWaste = requestedAmount * (includeWaste ? 1.1 : 1)
+  const units = Math.ceil(amountWithWaste / BASEBOARD_BAR_LENGTH_M)
+  return { requestedAmount, amountWithWaste, units, suppliedAmount: units * BASEBOARD_BAR_LENGTH_M, totalPrice: units * BASEBOARD_BAR_LENGTH_M * pricePerMeter }
 }

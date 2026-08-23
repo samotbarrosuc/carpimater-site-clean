@@ -9,7 +9,7 @@ export default function FinalCTA() {
 
   return (
     <section id="final-cta" ref={ref} className="py-20 lg:py-28 relative overflow-hidden bg-secondary">
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_0%,rgba(201,136,13,0.10),transparent_55%)]" />
+      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_0%,rgba(240,91,19,0.10),transparent_55%)]" />
 
       <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
         <motion.div
@@ -32,14 +32,14 @@ export default function FinalCTA() {
               href={getWhatsAppUrl(undefined, "cozinha")}
               target="_blank"
               rel="noopener noreferrer"
-              className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-bold text-white bg-primary hover:bg-primary/90 transition-all shadow-[0_6px_20px_rgba(201,136,13,0.3)]"
+              className="flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-white shadow-[0_6px_20px_rgba(240,91,19,0.22)] transition hover:bg-primary/90"
             >
               <MessageCircle size={16} />
               Pedir Orçamento por WhatsApp
             </a>
             <a
               href="tel:+351910093635"
-              className="flex items-center justify-center gap-2 px-7 py-3.5 rounded-full text-sm font-semibold border border-white/20 text-white/70 hover:text-white hover:border-white/35 transition-all"
+              className="flex items-center justify-center gap-2 rounded-xl border border-white/20 px-7 py-3.5 text-sm font-semibold text-white/70 transition hover:border-white/35 hover:text-white"
             >
               <Phone size={16} />
               Ligar Agora

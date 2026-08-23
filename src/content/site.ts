@@ -133,13 +133,13 @@ export const PHONE_NUMBER = '+351 910 093 635'
 export const EMAIL = 'tomas.a.barros@hotmail.com'
 
 /** Texto da área de serviço (exibido no hero e no rodapé) */
-export const SERVICE_AREA_TEXT = 'Localizados em Coimbra, servimos clientes em toda a região centro, incluindo Coimbra, Leiria e Aveiro.'
+export const SERVICE_AREA_TEXT = 'Atuamos regularmente na Região Centro. Pedidos para outras zonas do país estão sujeitos a contacto prévio e confirmação de disponibilidade.'
 
 /** Descrição curta da empresa (exibida no rodapé) */
 export const COMPANY_DESCRIPTION = SITE_VARIANT_CONTENT.vinilico.companyDescription
 
 /** Texto legal exibido no fundo do rodapé */
-export const FOOTER_LEGAL_TEXT = 'Os preços apresentados não incluem IVA.'
+export const FOOTER_LEGAL_TEXT = 'Preços com IVA incluído à taxa legal em vigor.'
 
 export function getSiteVariantFromPath(pathname?: string | null): SiteVariant {
   if (!pathname) return 'vinilico'
@@ -177,9 +177,9 @@ export function getWhatsAppUrlWithQuote(
   const message =
     `Olá! Sou o/a ${nome} e gostaria de formalizar o meu pedido de orçamento:\n\n` +
     `Produto: ${produto}\n` +
-    `Área: ${area} m²\n` +
+    `Área: ${area.toLocaleString('pt-PT', { useGrouping: false, maximumFractionDigits: 2 })} m²\n` +
     `Local: ${concelho}\n` +
-    `Estimativa: ${valorMin.toFixed(2)}€ - ${valorMax.toFixed(2)}€\n\n` +
+    `Estimativa: ${valorMin.toFixed(2)}€ - ${valorMax.toFixed(2)}€ (IVA inc.)\n\n` +
     `Aguardo o vosso contacto. Obrigado!`
 
   return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`

@@ -36,7 +36,7 @@ export const BENEFITS_DATA: BenefitData[] = [
   },
   {
     title: 'Transparência.',
-    description: 'Preços que competem com os das grandes superfícies.',
+    description: 'Preços diretos de fábrica, com IVA incluído.\nSem intermediários nem surpresas.',
     linkText: 'Simule já',
     linkHref: '#simulador',
     linkSuffix: 'e saiba quanto vai pagar, sem surpresas.',

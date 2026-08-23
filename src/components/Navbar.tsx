@@ -1,727 +1,180 @@
-// client component
-
-import { useState, useEffect, useRef } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, ChevronDown } from 'lucide-react'
+import { useEffect, useRef, useState } from 'react'
+import { ChevronDown, Menu, MessageCircle, ShoppingBag, X } from 'lucide-react'
 import { useLocation } from 'wouter'
-import {
-  BUSINESS_NAME,
-  PHONE_NUMBER,
-  getSiteVariantContent,
-  getSiteVariantFromPath,
-  getWhatsAppUrl,
-  type SiteVariant,
-} from '@/content/site'
+import { BUSINESS_NAME, getWhatsAppUrl } from '@/content/site'
 
-const WA_HOME = `https://wa.me/351910093635?text=${encodeURIComponent('Olá CarpiMater! Gostava de pedir um orçamento.')}`
-const WA_EMPREITEIROS = `https://wa.me/351919528638?text=${encodeURIComponent('Olá CarpiMater! Tenho interesse numa proposta de carpintaria para obra. Podemos conversar?')}`
-
-// 3 service pills — Vinílico + Flutuante merged into "Pavimentos"
-const ALL_SERVICE_PILLS: Array<{ label: string; href: string; key: string; preview: string }> = [
-  { label: 'Cozinhas', href: '/cozinha', key: 'cozinha', preview: '/images/card-cozinhas.png' },
-  { label: 'Pavimentos', href: '/pavimentos', key: 'pavimentos', preview: '/images/card-pavimentos.png' },
-  { label: 'Construção', href: '/construção', key: 'empreiteiros', preview: '/images/card-obras.png' },
+const SERVICES = [
+  { label: 'Cozinhas por medida', description: 'Projeto, fabrico e montagem', href: '/cozinha' },
+  { label: 'Pavimentos', description: 'Vinílico SPC e flutuante', href: '/pavimentos' },
+  { label: 'Carpintaria para obra', description: 'Soluções para construção', href: '/construcao' },
 ]
 
-function scrollToSection(id: string) {
-  const element = document.getElementById(id)
-  if (element) {
-    if (id === 'home-contactos' || id === 'home-contacto' || id === 'footer-contactos') {
-      element.scrollIntoView({ behavior: 'smooth', block: 'start' })
-      return
-    }
-    const offset = window.innerWidth < 768 ? 60 : 70 // Menos offset em mobile
-    const top = element.getBoundingClientRect().top + window.scrollY - offset
-    window.scrollTo({ top, behavior: 'smooth' })
-  }
-}
+const MAIN_LINKS = [
+  { label: 'Contactos', href: '/contactos' },
+]
 
 export default function Navbar() {
-  const [isScrolled, setIsScrolled] = useState(false)
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
-  const [isServiceDropdownOpen, setIsServiceDropdownOpen] = useState(false)
-  const [hoveredPill, setHoveredPill] = useState<string | null>(null)
-  const mobileMenuRef = useRef<HTMLDivElement | null>(null)
-  const serviceDropdownRef = useRef<HTMLDivElement | null>(null)
-  const [pathname] = useLocation()
+  const [pathname, setLocation] = useLocation()
+  const [isMobileOpen, setIsMobileOpen] = useState(false)
+  const [isServicesOpen, setIsServicesOpen] = useState(false)
+  const servicesRef = useRef<HTMLDivElement | null>(null)
 
-  const isHomePage = pathname === '/'
-  const isEmpreiteiros = pathname.startsWith('/construção')
-  const isPavimentosLanding = pathname === '/pavimentos'
-  const isPavimentos =
-    pathname.startsWith('/vinilico') ||
-    pathname.startsWith('/flutuante') ||
-    isPavimentosLanding
-  const isVinilico = pathname.startsWith('/vinilico')
-  const isFlutuante = pathname.startsWith('/flutuante')
-  const activeVariant: SiteVariant | null =
-    isHomePage || isEmpreiteiros || isPavimentosLanding
-      ? null
-      : getSiteVariantFromPath(pathname)
-  const isKitchen = activeVariant === 'cozinha'
-  const activeContent = activeVariant ? getSiteVariantContent(activeVariant) : null
-  const basePath = isHomePage
-    ? '/'
-    : isEmpreiteiros
-    ? '/construção'
-    : isPavimentosLanding
-    ? '/pavimentos'
-    : `/${activeVariant}`
-  const budgetSectionId = isKitchen ? 'final-cta' : 'simulador'
-
-  // Which pill is active
-  const activePillKey = isEmpreiteiros
-    ? 'empreiteiros'
-    : isPavimentos
-    ? 'pavimentos'
-    : !isHomePage && activeVariant
-    ? (activeVariant as string)
-    : null
-
-  const pavimentosPillLabel = isPavimentosLanding
-    ? 'Pavimentos'
-    : isVinilico
-    ? 'SPC Vinílico'
-    : isFlutuante
-    ? 'Flutuante'
-    : 'Pavimentos'
-
-  const pavimentosPillHref = isPavimentosLanding
-    ? '/pavimentos'
-    : isVinilico
-    ? '/vinilico'
-    : isFlutuante
-    ? '/flutuante'
-    : '/pavimentos'
-
-  const servicePills = ALL_SERVICE_PILLS.map((pill) =>
-    pill.key === 'pavimentos'
-      ? {
-          ...pill,
-          key: 'pavimentos',
-          label: pavimentosPillLabel,
-          href: pavimentosPillHref,
-        }
-      : pill
-  )
-
-  // Mobile chip label
-  const activeChipLabel = isPavimentosLanding
-    ? 'Pavimentos'
-    : isPavimentos
-    ? isFlutuante
-      ? 'Flutuante'
-      : 'SPC Vinílico'
-    : activePillKey === 'empreiteiros'
-    ? 'Construção'
-    : activeContent?.subtitle ?? 'Serviços'
-
-  const ctaLabel = isVinilico || isFlutuante ? 'Simulador' : 'Pedir Orçamento'
-  const ctaIsPrimary = isVinilico || isFlutuante
-  const ctaButtonClasses = `px-5 py-2.5 rounded-full text-sm font-semibold transition-colors ${
-    ctaIsPrimary
-      ? 'bg-primary text-primary-foreground hover:bg-primary/90'
-      : 'bg-muted text-foreground/90 hover:bg-muted/80'
-  }`
-
-  const navLinks = isHomePage
-    ? [
-        { label: 'Início', sectionId: 'home-hero' },
-        { label: 'Serviços', sectionId: 'home-servicos' },
-        { label: 'Contactos', sectionId: 'footer-contactos' },
-      ]
-    : isEmpreiteiros
-    ? [
-        { label: 'Contactos', sectionId: 'footer-contactos' },
-      ]
-    : isVinilico
-    ? [
-        { label: 'Flutuante', sectionId: '_flutuante' },
-        { label: 'Contactos', sectionId: 'footer-contactos' },
-      ]
-    : isFlutuante
-    ? [
-        { label: 'SPC Vinílico', sectionId: '_vinilico' },
-        { label: 'Contactos', sectionId: 'footer-contactos' },
-      ]
-    : isPavimentosLanding
-    ? [
-        { label: 'Vinílico SPC', sectionId: '_vinilico' },
-        { label: 'Flutuante', sectionId: '_flutuante' },
-        { label: 'Contactos', sectionId: 'footer-contactos' },
-      ]
-    : isKitchen
-    ? [
-        { label: 'Contactos', sectionId: 'footer-contactos' },
-      ]
-    : [
-        { label: 'Catálogo', sectionId: 'catalogo' },
-        { label: 'FAQ', sectionId: 'faq' },
-        { label: 'Contactos', sectionId: 'footer-contactos' },
-      ]
-
-  const switchPills = servicePills.filter((p) => p.key !== activePillKey)
-
-  const getSectionHref = (sectionId: string) => {
-    if (sectionId === '_vinilico') return '/vinilico'
-    if (sectionId === '_flutuante') return '/flutuante'
-    if (sectionId === 'home-contacto') return '/#home-contacto'
-    if (sectionId === 'home-contactos') return '/#home-contactos'
-    if (sectionId === 'footer-contactos') return basePath === '/' ? '/#footer-contactos' : `${basePath}#footer-contactos`
-    if (sectionId === 'pavimentos-orcamento') return basePath === '/' ? '/#pavimentos-orcamento' : `${basePath}#pavimentos-orcamento`
-    if (sectionId.startsWith('home-')) return `/#${sectionId}`
-    return basePath === '/' ? `/#${sectionId}` : `${basePath}#${sectionId}`
-  }
-
-  const handleSectionClick = (event: React.MouseEvent<HTMLAnchorElement>, sectionId: string) => {
-    if (sectionId === '_vinilico' || sectionId === '_flutuante') return
-    
-    // Only prevent default if we're on the same page
-    if (pathname === basePath && !sectionId.startsWith('home-')) {
-      event.preventDefault()
-      scrollToSection(sectionId)
-    }
-    // Handle home-* sections on homepage
-    if (pathname === '/' && sectionId.startsWith('home-')) {
-      event.preventDefault()
-      scrollToSection(sectionId)
-    }
-  }
+  const isStore = pathname.startsWith('/loja')
+  const isCheckout = pathname.startsWith('/encomenda')
+  const isKitchen = pathname.startsWith('/cozinha')
+  const isConstruction = pathname.startsWith('/construcao')
 
   useEffect(() => {
-    const handleScroll = () => setIsScrolled(window.scrollY > 20)
-    window.addEventListener('scroll', handleScroll)
-    return () => window.removeEventListener('scroll', handleScroll)
+    setIsMobileOpen(false)
+    setIsServicesOpen(false)
+  }, [pathname])
+
+  useEffect(() => {
+    const closeDropdown = (event: MouseEvent) => {
+      if (!servicesRef.current?.contains(event.target as Node)) setIsServicesOpen(false)
+    }
+    document.addEventListener('mousedown', closeDropdown)
+    return () => document.removeEventListener('mousedown', closeDropdown)
   }, [])
 
   useEffect(() => {
-    const handleScrollClose = () => {
-      if (isMobileMenuOpen) setIsMobileMenuOpen(false)
+    const previous = document.body.style.overflow
+    if (isMobileOpen) document.body.style.overflow = 'hidden'
+    return () => {
+      document.body.style.overflow = previous
     }
-    window.addEventListener('scroll', handleScrollClose)
-    return () => window.removeEventListener('scroll', handleScrollClose)
-  }, [isMobileMenuOpen])
+  }, [isMobileOpen])
 
-  useEffect(() => {
-    const handleEscape = (e: KeyboardEvent) => {
-      if (e.key === 'Escape') setIsMobileMenuOpen(false)
-    }
-    window.addEventListener('keydown', handleEscape)
-    return () => window.removeEventListener('keydown', handleEscape)
-  }, [])
+  const navigate = (event: React.MouseEvent<HTMLAnchorElement>, href: string) => {
+    if (!href.startsWith('/') || href.startsWith('/whatsapp-redirect')) return
+    event.preventDefault()
+    setLocation(href)
+    setIsMobileOpen(false)
+    setIsServicesOpen(false)
+    window.scrollTo({ top: 0, behavior: 'auto' })
+  }
 
-  useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
-      if (
-        isMobileMenuOpen &&
-        mobileMenuRef.current &&
-        !mobileMenuRef.current.contains(e.target as Node)
-      ) {
-        setIsMobileMenuOpen(false)
-      }
-      if (
-        isServiceDropdownOpen &&
-        serviceDropdownRef.current &&
-        !serviceDropdownRef.current.contains(e.target as Node)
-      ) {
-        setIsServiceDropdownOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [isMobileMenuOpen, isServiceDropdownOpen])
+  const cta = isStore || isCheckout
+    ? { label: isCheckout ? 'Continuar na loja' : 'Ver encomenda', href: isCheckout ? '/loja' : '/encomenda', external: false }
+    : isKitchen || isConstruction
+      ? { label: 'Pedir orçamento', href: getWhatsAppUrl(undefined, isKitchen ? 'cozinha' : undefined), external: true }
+      : { label: 'Pedir orçamento', href: '/contactos', external: false }
 
-  const pillCls = (isActive: boolean) =>
-    `flex items-center gap-1.5 rounded-xl px-3 py-1.5 border text-sm font-semibold transition-all ${
-      isActive
-        ? isScrolled
-          ? 'border-primary bg-primary/12 text-primary shadow-[0_0_0_2px_hsl(var(--primary)/0.18)]'
-          : 'border-primary bg-primary/18 text-primary shadow-[0_0_0_2px_hsl(var(--primary)/0.22)]'
-        : isScrolled
-        ? 'border-border/50 bg-transparent text-foreground/60 hover:text-foreground hover:bg-muted/60'
-        : 'border-white/18 bg-white/5 text-white/55 hover:text-white hover:bg-white/10'
-    }`
+  const linkClass = (href: string) => {
+    const active = pathname === href || (href !== '/' && pathname.startsWith(href))
+    return `relative py-2 text-sm font-semibold transition-colors ${active ? 'text-white' : 'text-white/66 hover:text-white'}`
+  }
 
   return (
-    <nav
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-background/95 backdrop-blur-md border-b border-border shadow-sm py-3'
-          : 'bg-secondary/95 backdrop-blur-md py-4'
-      }`}
-    >
-      <div className="container mx-auto px-4">
-        <div className="flex items-center justify-between">
+    <nav className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#19242e]/96 text-white shadow-[0_8px_30px_rgba(10,20,28,0.08)] backdrop-blur-xl">
+      <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
+        <div className="flex shrink-0 items-center gap-2.5 sm:gap-3">
+          <a href="/" onClick={(event) => navigate(event, '/')} className="flex shrink-0 items-center gap-2.5" aria-label={`${BUSINESS_NAME} — página inicial`}>
+            <span className="flex h-10 w-10 items-center justify-center overflow-hidden rounded-xl bg-white shadow-sm">
+              <img src="/images/logo-carpimater-v2.png" alt="" className="h-9 w-9 object-contain" />
+            </span>
+            <span className="hidden font-display text-xl font-bold tracking-[-0.025em] min-[390px]:inline">
+              Carpi<span className="text-[#f08a45]">Mater</span>
+            </span>
+          </a>
+          <span className="h-7 w-px bg-white/15" aria-hidden="true" />
+          <a
+            href="/loja"
+            onClick={(event) => navigate(event, '/loja')}
+            aria-label="Abrir a loja CarpiMater"
+            className={`flex h-11 min-w-[106px] items-center justify-center gap-2.5 rounded-xl px-4 text-sm font-extrabold uppercase tracking-[0.07em] shadow-[0_7px_20px_rgba(0,0,0,0.14)] transition sm:min-w-[128px] sm:px-6 ${isStore || isCheckout ? 'bg-[#f05b13] text-white' : 'bg-white text-[#19242e] hover:bg-[#f7f3ea] hover:shadow-[0_9px_24px_rgba(0,0,0,0.18)]'}`}
+          >
+            <ShoppingBag className={`h-4 w-4 ${isStore || isCheckout ? 'text-white' : 'text-[#f05b13]'}`} />
+            <span>Loja</span>
+          </a>
+        </div>
 
-          {/* ── Left: Logo + Pills ── */}
-          <div className="flex items-center gap-2 sm:gap-3">
-
-            {/* Logo → Home */}
-            <a
-              href="/"
-              className={`flex items-center gap-3 rounded-xl px-2.5 py-1.5 border transition-colors ${
-                isScrolled ? 'border-primary/40 bg-primary/10' : 'border-primary/45 bg-primary/16'
-              }`}
+        <div className="hidden items-center gap-7 lg:flex">
+          <div ref={servicesRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setIsServicesOpen((open) => !open)}
+              className="flex items-center gap-1.5 py-2 text-sm font-semibold text-white/66 transition-colors hover:text-white"
+              aria-expanded={isServicesOpen}
             >
-              <img
-                src="/images/logo-carpimater.png"
-                alt="Logotipo CarpiMater"
-                className="w-10 h-10 rounded-lg object-cover bg-white"
-              />
-              <span className={`font-display font-bold text-lg ${isScrolled ? 'text-foreground' : 'text-white'}`}>
-                {BUSINESS_NAME}
-              </span>
-            </a>
-
-            {/* Desktop pills — non-home pages */}
-            {!isHomePage && (
-              <>
-                <div className="hidden lg:flex items-center gap-1.5">
-                  {servicePills.map((pill) => {
-                    const isActive = pill.key === activePillKey
-                    return (
-                      <div
-                        key={pill.key}
-                        className="relative"
-                        onMouseEnter={() => setHoveredPill(pill.key)}
-                        onMouseLeave={() => setHoveredPill(null)}
-                      >
-                        <a href={pill.href} className={pillCls(isActive)}>
-                          {isActive && <span className="w-1.5 h-1.5 rounded-full bg-primary shrink-0" />}
-                          {pill.label}
-                        </a>
-                        <AnimatePresence>
-                          {hoveredPill === pill.key && (
-                            <motion.div
-                              initial={{ opacity: 0, y: 6, scale: 0.97 }}
-                              animate={{ opacity: 1, y: 0, scale: 1 }}
-                              exit={{ opacity: 0, y: 6, scale: 0.97 }}
-                              transition={{ duration: 0.18 }}
-                              className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-52 rounded-xl overflow-hidden shadow-2xl border border-white/10 z-50 pointer-events-none"
-                            >
-                              <img src={pill.preview} alt={pill.label} className="w-full h-32 object-cover" />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                              <p className="absolute bottom-2 left-3 text-xs font-bold text-white">{pill.label}</p>
-                            </motion.div>
-                          )}
-                        </AnimatePresence>
-                      </div>
-                    )
-                  })}
-                </div>
-
-                {/* Mobile chip + dropdown */}
-                <div ref={serviceDropdownRef} className="relative lg:hidden">
-                  <button
-                    type="button"
-                    onClick={() => setIsServiceDropdownOpen((v) => !v)}
-                    className={`flex items-center gap-1.5 rounded-xl px-2.5 py-1.5 border transition-colors ${
-                      isScrolled
-                        ? 'border-border/60 bg-muted/50 hover:bg-muted'
-                        : 'border-white/24 bg-white/8 hover:bg-white/14'
-                    }`}
-                  >
-                    <span className={`text-xs font-semibold ${isScrolled ? 'text-foreground' : 'text-white'}`}>
-                      {activeChipLabel}
-                    </span>
-                    <ChevronDown
-                      className={`w-3.5 h-3.5 transition-transform duration-200 ${
-                        isServiceDropdownOpen ? 'rotate-180' : ''
-                      } ${isScrolled ? 'text-foreground/60' : 'text-white/70'}`}
-                    />
-                  </button>
-
-                  <AnimatePresence>
-                    {isServiceDropdownOpen && (
-                      <motion.div
-                        initial={{ opacity: 0, y: -6, scale: 0.97 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: -6, scale: 0.97 }}
-                        transition={{ duration: 0.15 }}
-                        className="absolute left-0 top-full mt-2 min-w-[200px] rounded-2xl border border-border bg-card shadow-xl overflow-hidden z-50"
-                      >
-                        <div className="p-1.5">
-                          {isVinilico || isFlutuante ? (
-                            <a
-                              href={pathname.startsWith('/flutuante') ? '/vinilico' : '/flutuante'}
-                              onClick={() => setIsServiceDropdownOpen(false)}
-                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors group"
-                            >
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors shrink-0" />
-                              <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                                {pathname.startsWith('/flutuante') ? 'Pavimento Vinílico SPC' : 'Pavimento Flutuante'}
-                              </span>
-                            </a>
-                          ) : null}
-
-                          <p className="px-3 py-1.5 text-[10px] uppercase tracking-[0.16em] text-muted-foreground font-semibold">
-                            Outros serviços
-                          </p>
-                          {switchPills.map((pill) => (
-                            <a
-                              key={pill.key}
-                              href={pill.href}
-                              onClick={() => setIsServiceDropdownOpen(false)}
-                              className="flex items-center gap-3 px-3 py-2.5 rounded-xl hover:bg-muted transition-colors group"
-                            >
-                              <div className="w-1.5 h-1.5 rounded-full bg-primary/50 group-hover:bg-primary transition-colors shrink-0" />
-                              <span className="text-sm font-medium text-foreground group-hover:text-primary transition-colors">
-                                {pill.label}
-                              </span>
-                            </a>
-                          ))}
-                        </div>
-                      </motion.div>
-                    )}
-                  </AnimatePresence>
-                </div>
-              </>
-            )}
-
-            {/* Desktop pills on Home (none active) */}
-            {isHomePage && (
-              <div className="hidden lg:flex items-center gap-1.5">
-                {ALL_SERVICE_PILLS.map((pill) => (
-                  <div
-                    key={pill.key}
-                    className="relative"
-                    onMouseEnter={() => setHoveredPill(pill.key)}
-                    onMouseLeave={() => setHoveredPill(null)}
-                  >
-                    <a href={pill.href} className={pillCls(false)}>
-                      {pill.label}
-                    </a>
-                    <AnimatePresence>
-                      {hoveredPill === pill.key && (
-                        <motion.div
-                          initial={{ opacity: 0, y: 6, scale: 0.97 }}
-                          animate={{ opacity: 1, y: 0, scale: 1 }}
-                          exit={{ opacity: 0, y: 6, scale: 0.97 }}
-                          transition={{ duration: 0.18 }}
-                          className="absolute left-1/2 -translate-x-1/2 top-full mt-2 w-52 rounded-xl overflow-hidden shadow-2xl border border-white/10 z-50 pointer-events-none"
-                        >
-                          <img src={pill.preview} alt={pill.label} className="w-full h-32 object-cover" />
-                          <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                          <p className="absolute bottom-2 left-3 text-xs font-bold text-white">{pill.label}</p>
-                        </motion.div>
-                      )}
-                    </AnimatePresence>
-                  </div>
+              Serviços
+              <ChevronDown className={`h-4 w-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
+            </button>
+            {isServicesOpen && (
+              <div className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 text-[#19242e] shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
+                {SERVICES.map((item) => (
+                  <a key={item.href} href={item.href} onClick={(event) => navigate(event, item.href)} className="block rounded-xl px-4 py-3 transition-colors hover:bg-[#f7f3ea]">
+                    <span className="block text-sm font-bold">{item.label}</span>
+                    <span className="mt-0.5 block text-xs text-slate-500">{item.description}</span>
+                  </a>
                 ))}
               </div>
             )}
           </div>
 
-          {/* ── Right: Phone + Nav + CTA + Mobile Btn ── */}
-          <div className="flex items-center gap-3">
-
-            {/* WhatsApp icon */}
-            <button
-              onClick={() => {
-                window.open(`/whatsapp-redirect.html?url=${encodeURIComponent(WA_HOME)}`, '_blank')
-              }}
-              aria-label="WhatsApp"
-              className={`hidden lg:flex items-center justify-center w-9 h-9 rounded-full transition-colors cursor-pointer ${isScrolled ? 'text-foreground/60 hover:text-[#25D366]' : 'text-white/70 hover:text-[#25D366]'}`}
-            >
-              <svg viewBox="0 0 24 24" fill="currentColor" className="w-5 h-5">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
-              </svg>
-            </button>
-
-            {/* Desktop nav links */}
-            <div className="hidden lg:flex items-center gap-6">
-              {navLinks.map((link) => {
-                const isPavimentosPageLink = link.sectionId === '_vinilico' || link.sectionId === '_flutuante'
-                if (isPavimentosPageLink) {
-                  return (
-                    <a
-                      key={link.sectionId}
-                      href={getSectionHref(link.sectionId)}
-                      className={`text-sm font-medium transition-colors hover:text-primary ${
-                        isScrolled ? 'text-foreground' : 'text-white/90'
-                      }`}
-                    >
-                      {link.label}
-                    </a>
-                  )
-                }
-
-                // For internal sections on same page, use button with scroll
-                if (pathname === basePath && link.sectionId.startsWith('home-')) {
-                  return (
-                    <button
-                      key={link.sectionId}
-                      onClick={() => scrollToSection(link.sectionId)}
-                      className={`text-sm font-medium transition-colors hover:text-primary ${
-                        isScrolled ? 'text-foreground' : 'text-white/90'
-                      }`}
-                    >
-                      {link.label}
-                    </button>
-                  )
-                }
-                // For external page navigation
-                return (
-                  <a
-                    key={link.sectionId}
-                    href={getSectionHref(link.sectionId)}
-                    className={`text-sm font-medium transition-colors hover:text-primary ${
-                      isScrolled ? 'text-foreground' : 'text-white/90'
-                    }`}
-                  >
-                    {link.label}
-                  </a>
-                )
-              })}
-
-              {/* CTA */}
-              {ctaLabel === 'Pedir Orçamento' ? (
-                <button
-                  onClick={() => {
-                    if (isHomePage) {
-                      scrollToSection('home-contactos')
-                    } else if (isPavimentosLanding && window.location.pathname === basePath) {
-                      scrollToSection('pavimentos-orcamento')
-                    } else {
-                      window.location.href = isPavimentosLanding
-                        ? getSectionHref('pavimentos-orcamento')
-                        : getSectionHref('home-contactos')
-                    }
-                  }}
-                  className={ctaButtonClasses}
-                >
-                  {ctaLabel}
-                </button>
-              ) : isHomePage ? (
-                <a
-                  href="/#footer-contactos"
-                  onClick={(e) => { e.preventDefault(); scrollToSection('footer-contactos') }}
-                  className={ctaButtonClasses}
-                >
-                  {ctaLabel}
-                </a>
-              ) : isEmpreiteiros ? (
-                <a
-                  href={WA_EMPREITEIROS}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={ctaButtonClasses}
-                >
-                  {ctaLabel}
-                </a>
-              ) : isKitchen ? (
-                <a
-                  href={getWhatsAppUrl(undefined, activeVariant ?? 'cozinha')}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className={ctaButtonClasses}
-                >
-                  {ctaLabel}
-                </a>
-              ) : (
-                <button
-                  onClick={() => {
-                    if (window.location.pathname === basePath) {
-                      scrollToSection(budgetSectionId)
-                      return
-                    }
-                    window.location.href = getSectionHref(budgetSectionId)
-                  }}
-                  className={ctaButtonClasses}
-                >
-                  {ctaLabel}
-                </button>
-              )}
-            </div>
-
-            {/* Mobile menu button */}
-            <button
-              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className={`lg:hidden p-2 ${isScrolled ? 'text-foreground' : 'text-white'}`}
-              aria-label={isMobileMenuOpen ? 'Fechar menu' : 'Abrir menu'}
-            >
-              {isMobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
-            </button>
-          </div>
+          {MAIN_LINKS.map((link) => (
+            <a key={link.href} href={link.href} onClick={(event) => navigate(event, link.href)} className={linkClass(link.href)}>
+              {link.label}
+            </a>
+          ))}
         </div>
 
-        {/* ── Mobile Menu ── */}
-        <AnimatePresence>
-          {isMobileMenuOpen && (
-            <motion.div
-              ref={mobileMenuRef}
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              transition={{ duration: 0.2 }}
-              className="lg:hidden overflow-hidden"
-            >
-              <div className="py-4 space-y-1">
-                {navLinks.map((link) => {
-                  const isPavimentosPageLink = link.sectionId === '_vinilico' || link.sectionId === '_flutuante'
-                  if (isPavimentosPageLink) {
-                    return (
-                      <a
-                        key={link.sectionId}
-                        href={getSectionHref(link.sectionId)}
-                        onClick={() => setIsMobileMenuOpen(false)}
-                        className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                          isScrolled
-                            ? 'text-foreground hover:bg-muted'
-                            : 'text-white/90 hover:bg-white/10'
-                        }`}
-                      >
-                        {link.label}
-                      </a>
-                    )
-                  }
-
-                  // For internal sections on same page, use button with scroll
-                  if (pathname === basePath && (link.sectionId.startsWith('home-') || link.sectionId.startsWith('footer-'))) {
-                    return (
-                      <button
-                        key={link.sectionId}
-                        onClick={() => {
-                          setIsMobileMenuOpen(false)
-                          setTimeout(() => scrollToSection(link.sectionId), 100)
-                        }}
-                        className={`block w-full text-left px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                          isScrolled
-                            ? 'text-foreground hover:bg-muted'
-                            : 'text-white/90 hover:bg-white/10'
-                        }`}
-                      >
-                        {link.label}
-                      </button>
-                    )
-                  }
-                  // For external page navigation
-                  return (
-                    <a
-                      key={link.sectionId}
-                      href={getSectionHref(link.sectionId)}
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                        isScrolled
-                          ? 'text-foreground hover:bg-muted'
-                          : 'text-white/90 hover:bg-white/10'
-                      }`}
-                    >
-                      {link.label}
-                    </a>
-                  )
-                })}
-
-                <div className="pt-2 px-4">
-                  {/* CTA */}
-                  {ctaLabel === 'Pedir Orçamento' ? (
-                    isHomePage ? (
-                      <button
-                        onClick={() => {
-                          setIsMobileMenuOpen(false)
-                          setTimeout(() => scrollToSection('home-contactos'), 100)
-                        }}
-                        className={`block w-full text-center ${ctaButtonClasses}`}
-                      >
-                        {ctaLabel}
-                      </button>
-                    ) : (
-                      <a
-                        href={isPavimentosLanding ? getSectionHref('pavimentos-orcamento') : getSectionHref('home-contactos')}
-                        onClick={(e) => {
-                          setIsMobileMenuOpen(false)
-                          if (isPavimentosLanding && window.location.pathname === basePath) {
-                            e.preventDefault()
-                            scrollToSection('pavimentos-orcamento')
-                          }
-                        }}
-                        className={`block w-full text-center ${ctaButtonClasses}`}
-                      >
-                        {ctaLabel}
-                      </a>
-                    )
-                  ) : isHomePage ? (
-                    <a
-                      href="/#footer-contactos"
-                      onClick={(e) => { 
-                        e.preventDefault()
-                        setIsMobileMenuOpen(false)
-                        setTimeout(() => scrollToSection('footer-contactos'), 100)
-                      }}
-                      className={`block w-full text-center ${ctaButtonClasses}`}
-                    >
-                      {ctaLabel}
-                    </a>
-                  ) : isEmpreiteiros ? (
-                    <a
-                      href={WA_EMPREITEIROS}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block w-full text-center ${ctaButtonClasses}`}
-                    >
-                      {ctaLabel}
-                    </a>
-                  ) : isKitchen ? (
-                    <a
-                      href={getWhatsAppUrl(undefined, activeVariant ?? 'cozinha')}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setIsMobileMenuOpen(false)}
-                      className={`block w-full text-center ${ctaButtonClasses}`}
-                    >
-                      {ctaLabel}
-                    </a>
-                  ) : (
-                    <button
-                      onClick={() => {
-                        setIsMobileMenuOpen(false)
-                        setTimeout(() => {
-                          if (window.location.pathname === basePath) scrollToSection(budgetSectionId)
-                          else window.location.href = getSectionHref(budgetSectionId)
-                        }, 100)
-                      }}
-                      className={`block w-full ${ctaButtonClasses}`}
-                    >
-                      {ctaLabel}
-                    </button>
-                  )}
-
-                  {/* Switch links */}
-                  <div className="mt-3 space-y-1.5">
-                    {switchPills.map((pill) => (
-                      <a
-                        key={pill.key}
-                        href={pill.href}
-                        className={`block w-full text-center py-1 text-sm font-semibold underline underline-offset-4 decoration-2 transition-colors ${
-                          isScrolled
-                            ? 'text-foreground hover:text-primary'
-                            : 'text-white hover:text-primary'
-                        }`}
-                      >
-                        {pill.label}
-                      </a>
-                    ))}
-                    {/* On pavimentos pages, show the other type */}
-                    {isPavimentos && (
-                      <a
-                        href={pathname.startsWith('/flutuante') ? '/vinilico' : '/flutuante'}
-                        className={`block w-full text-center py-1 text-sm font-semibold underline underline-offset-4 decoration-2 transition-colors ${
-                          isScrolled
-                            ? 'text-foreground hover:text-primary'
-                            : 'text-white hover:text-primary'
-                        }`}
-                      >
-                        {pathname.startsWith('/flutuante') ? 'Vinílico SPC' : 'Flutuante Tradicional'}
-                      </a>
-                    )}
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <div className="flex items-center gap-2.5">
+          <a
+            href={cta.href}
+            onClick={cta.external ? undefined : (event) => navigate(event, cta.href)}
+            target={cta.external ? '_blank' : undefined}
+            rel={cta.external ? 'noopener noreferrer' : undefined}
+            className="hidden min-h-11 items-center justify-center gap-2 rounded-xl bg-[#f05b13] px-5 text-sm font-bold text-white shadow-[0_8px_24px_rgba(240,91,19,0.22)] transition hover:bg-[#d94d0d] sm:inline-flex"
+          >
+            {isStore || isCheckout ? <ShoppingBag className="h-4 w-4" /> : <MessageCircle className="h-4 w-4" />}
+            {cta.label}
+          </a>
+          <button
+            type="button"
+            onClick={() => setIsMobileOpen((open) => !open)}
+            className="flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-white lg:hidden"
+            aria-label={isMobileOpen ? 'Fechar menu' : 'Abrir menu'}
+            aria-expanded={isMobileOpen}
+          >
+            {isMobileOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+          </button>
+        </div>
       </div>
+
+      {isMobileOpen && (
+        <div className="fixed inset-x-0 top-[76px] h-[calc(100dvh-76px)] overflow-y-auto border-t border-white/10 bg-[#19242e] px-4 pb-8 pt-5 lg:hidden">
+          <a href="/loja" onClick={(event) => navigate(event, '/loja')} className="mb-5 flex items-center justify-between rounded-2xl bg-white p-4 text-[#19242e] shadow-sm">
+            <span><span className="block text-[0.62rem] font-bold uppercase tracking-[0.16em] text-primary">Loja CarpiMater</span><span className="mt-1 block font-display text-lg font-bold">Pavimentos e rodapés</span></span>
+            <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f7f3ea] text-primary"><ShoppingBag className="h-5 w-5" /></span>
+          </a>
+          <p className="px-2 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-white/40">Serviços</p>
+          <div className="mt-2 space-y-1">
+            {SERVICES.map((item) => (
+              <a key={item.href} href={item.href} onClick={(event) => navigate(event, item.href)} className="block rounded-xl px-3 py-3.5 hover:bg-white/7">
+                <span className="block text-sm font-bold text-white">{item.label}</span>
+                <span className="mt-0.5 block text-xs text-white/45">{item.description}</span>
+              </a>
+            ))}
+          </div>
+          <div className="my-4 h-px bg-white/10" />
+          {MAIN_LINKS.map((link) => (
+            <a key={link.href} href={link.href} onClick={(event) => navigate(event, link.href)} className="flex items-center rounded-xl px-3 py-3.5 text-sm font-semibold text-white/80 hover:bg-white/7 hover:text-white">
+              {link.label}
+            </a>
+          ))}
+          <a
+            href={cta.href}
+            onClick={cta.external ? () => setIsMobileOpen(false) : (event) => navigate(event, cta.href)}
+            target={cta.external ? '_blank' : undefined}
+            rel={cta.external ? 'noopener noreferrer' : undefined}
+            className="mt-5 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#f05b13] px-5 text-sm font-bold text-white"
+          >
+            {isStore || isCheckout ? <ShoppingBag className="h-4 w-4" /> : <MessageCircle className="h-4 w-4" />}
+            {cta.label}
+          </a>
+        </div>
+      )}
     </nav>
   )
 }

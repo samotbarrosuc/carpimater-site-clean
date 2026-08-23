@@ -1,0 +1,238 @@
+import { useEffect, useState } from 'react'
+import { Minus, Plus, ShoppingBag, Trash2, X } from 'lucide-react'
+import { getProdutosByVariant, type Produto } from '@/content/vinil'
+import { RODAPES, type RodapeProduto } from '@/content/rodapes'
+import { BASEBOARD_BAR_LENGTH_M, FLOORING_BOX_AREA_M2, calcBaseboardPurchase, calcFlooringPurchase, formatEur, formatQuantity, parseQuantityInput, sanitizeQuantityInput } from '@/lib/calculations'
+import { createBaseboardCartItem, createFlooringCartItem, getCartItemPrice } from '@/lib/cart'
+import { useCart } from '@/context/CartContext'
+
+type Choice = { kind: 'flooring'; product: Produto } | { kind: 'baseboard'; product: RodapeProduto }
+type StoreCategory = 'all' | 'vinilico' | 'flutuante' | 'rodape'
+
+function ProductMedia({ image, color, name, kind }: { image?: string; color: string; name: string; kind: 'flooring' | 'baseboard' }) {
+  if (image) {
+    return <img src={image} alt={name} className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.035]" />
+  }
+
+  return (
+    <div className="relative h-full w-full overflow-hidden bg-[#eee9e1]" aria-label={`Amostra de cor ${name}`}>
+      <div
+        className={`absolute shadow-[0_14px_24px_rgba(25,36,46,0.16)] ${kind === 'baseboard' ? 'inset-x-5 bottom-7 h-11 rounded-[3px]' : 'inset-5 rounded-lg'}`}
+        style={{
+          backgroundColor: color,
+          backgroundImage: 'linear-gradient(105deg, transparent 0%, rgba(255,255,255,.22) 42%, transparent 65%), repeating-linear-gradient(0deg, rgba(25,36,46,.035) 0 1px, transparent 1px 8px)',
+        }}
+      />
+      {kind === 'baseboard' && <div className="absolute inset-x-5 bottom-[26px] h-px bg-black/15" />}
+    </div>
+  )
+}
+
+function PurchaseModal({ choice, close }: { choice: Choice; close: () => void }) {
+  const [amount, setAmount] = useState('10')
+  const [waste, setWaste] = useState(true)
+  const { addItem } = useCart()
+  const flooring = choice.kind === 'flooring'
+  const price = flooring ? choice.product.precoM2 : choice.product.precoMl
+  const numericAmount = parseQuantityInput(amount)
+  const result = flooring ? calcFlooringPurchase(numericAmount, price, waste) : calcBaseboardPurchase(numericAmount, price, waste)
+
+  const adjustAmount = (delta: number) => {
+    const nextValue = Math.max(0, Math.round((parseQuantityInput(amount) + delta) * 100) / 100)
+    setAmount(formatQuantity(nextValue))
+  }
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => event.key === 'Escape' && close()
+    window.addEventListener('keydown', onKeyDown)
+    const previous = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    return () => {
+      window.removeEventListener('keydown', onKeyDown)
+      document.body.style.overflow = previous
+    }
+  }, [close])
+
+  const add = () => {
+    if (result.units < 1) return
+    addItem(flooring ? createFlooringCartItem(choice.product, numericAmount, waste) : createBaseboardCartItem(choice.product, numericAmount, waste))
+    close()
+  }
+
+  return (
+    <div className="fixed inset-0 z-[70] flex items-end justify-center bg-[#19242e]/72 p-0 backdrop-blur-sm sm:items-center sm:p-4" role="dialog" aria-modal="true" aria-labelledby="purchase-title" onClick={close}>
+      <div className="max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-t-[1.75rem] bg-white p-5 shadow-2xl sm:rounded-[1.75rem] sm:p-7" onClick={(event) => event.stopPropagation()}>
+        <div className="flex items-start justify-between gap-4">
+          <div>
+            <p className="section-kicker">{flooring ? 'Compra por caixas' : 'RODAPÉ - PVC'}</p>
+            <h2 id="purchase-title" className="mt-2 font-display text-2xl font-bold tracking-[-0.02em] text-[#19242e]">{choice.product.nome}</h2>
+            <p className="mt-1 text-sm text-slate-500">{formatEur(price)}/{flooring ? 'm²' : 'm'} · IVA incluído</p>
+          </div>
+          <button type="button" onClick={close} aria-label="Fechar" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition hover:bg-slate-200"><X className="h-4 w-4" /></button>
+        </div>
+
+        <label htmlFor="purchase-amount" className="mt-6 block text-sm font-semibold text-slate-800">Quantos {flooring ? 'm² precisa' : 'metros precisa'}?</label>
+        <input
+          id="purchase-amount"
+          type="text"
+          inputMode="decimal"
+          pattern="[0-9]*,?[0-9]*"
+          value={amount}
+          onChange={(event) => setAmount(sanitizeQuantityInput(event.target.value))}
+          onKeyDown={(event) => {
+            if (event.key === 'ArrowUp') {
+              event.preventDefault()
+              adjustAmount(0.5)
+            }
+            if (event.key === 'ArrowDown') {
+              event.preventDefault()
+              adjustAmount(-0.5)
+            }
+          }}
+          className="mt-2 w-full rounded-xl border border-slate-300 bg-[#fbfaf7] px-4 py-3 text-lg outline-none transition focus:border-primary focus:ring-2 focus:ring-primary/15"
+        />
+        <p className="mt-1.5 text-xs leading-5 text-slate-400">Insira a quantidade que pretende</p>
+
+        <label className="mt-4 flex cursor-pointer gap-3 rounded-xl border border-[#e4ded5] bg-[#f7f3ea] p-4 text-sm text-slate-700">
+          <input type="checkbox" checked={waste} onChange={(event) => setWaste(event.target.checked)} className="mt-0.5 h-4 w-4 accent-orange-600" />
+          <span><strong>Adicionar 10% para desperdícios</strong><span className="ml-2 text-xs font-bold text-primary">Recomendado</span><span className="mt-1 block text-xs leading-5 text-slate-500">A quantidade e o preço atualizam automaticamente.</span></span>
+        </label>
+
+        <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
+          <div className="grid grid-cols-2 gap-4 text-sm">
+            <div><p className="text-xs text-slate-500">Embalagens</p><p className="mt-1 text-lg font-bold text-[#19242e]">{result.units} {flooring ? 'caixas' : 'barras'}</p></div>
+            <div><p className="text-xs text-slate-500">Total fornecido</p><p className="mt-1 text-lg font-bold text-[#19242e]">{formatQuantity(result.suppliedAmount, 2)} {flooring ? 'm²' : 'm'}</p></div>
+          </div>
+          <div className="mt-4 flex items-end justify-between border-t border-slate-200 pt-4">
+            <div><p className="text-xs text-slate-500">Total</p><p className="mt-1 text-2xl font-bold text-primary">{formatEur(result.totalPrice)}</p></div>
+            <span className="pb-1 text-xs font-medium text-slate-400">IVA incluído</span>
+          </div>
+        </div>
+
+        <button type="button" onClick={add} disabled={result.units < 1} className="mt-5 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#19242e] px-5 font-bold text-white transition hover:bg-[#f05b13] disabled:cursor-not-allowed disabled:opacity-50"><ShoppingBag className="h-4 w-4" />Adicionar ao carrinho</button>
+      </div>
+    </div>
+  )
+}
+
+export function CartDrawer() {
+  const { items, isOpen, setIsOpen, removeItem, changeUnits, subtotal } = useCart()
+  if (!isOpen) return null
+
+  return (
+    <div className="fixed inset-0 z-[60] bg-[#19242e]/55 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
+      <aside role="dialog" aria-modal="true" aria-labelledby="cart-title" className="absolute right-0 top-0 flex h-full w-full max-w-md flex-col bg-[#fbfaf7] shadow-2xl" onClick={(event) => event.stopPropagation()}>
+        <header className="flex items-center justify-between border-b border-slate-200 bg-white p-5">
+          <div><p className="section-kicker">A sua encomenda</p><h2 id="cart-title" className="mt-1 font-display text-2xl font-bold text-[#19242e]">Carrinho</h2></div>
+          <button type="button" onClick={() => setIsOpen(false)} aria-label="Fechar carrinho" className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600"><X className="h-4 w-4" /></button>
+        </header>
+        <div className="flex-1 space-y-3 overflow-y-auto p-4 sm:p-5">
+          {items.length === 0 ? (
+            <div className="py-20 text-center"><ShoppingBag className="mx-auto h-8 w-8 text-slate-300" /><p className="mt-3 text-sm text-slate-500">O carrinho está vazio.</p></div>
+          ) : items.map((item) => (
+            <div key={`${item.id}-${item.includeWaste}`} className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
+              <div className="flex gap-3">
+                <div className="h-14 w-14 shrink-0 overflow-hidden rounded-lg bg-slate-100">{item.image && <img src={item.image} alt="" className="h-full w-full object-cover" />}</div>
+                <div className="min-w-0 flex-1"><p className="truncate text-sm font-bold text-[#19242e]">{item.name}</p><p className="mt-1 text-xs leading-5 text-slate-500">{item.kind === 'flooring' ? `${item.units} caixas · ${formatQuantity(FLOORING_BOX_AREA_M2, 2)} m²/caixa` : `${item.units} barras · ${formatQuantity(BASEBOARD_BAR_LENGTH_M, 2)} m/barra`}<br />Fornecido: {formatQuantity(item.suppliedAmount, 2)} {item.kind === 'flooring' ? 'm²' : 'm'}</p></div>
+                <button type="button" onClick={() => removeItem(`${item.id}-${item.includeWaste}`)} aria-label={`Remover ${item.name}`} className="h-fit rounded-lg p-2 text-slate-400 transition hover:bg-red-50 hover:text-red-600"><Trash2 className="h-4 w-4" /></button>
+              </div>
+              <div className="mt-3 flex items-center justify-between border-t border-slate-100 pt-3">
+                <div className="flex items-center overflow-hidden rounded-lg border border-slate-200"><button type="button" onClick={() => changeUnits(`${item.id}-${item.includeWaste}`, item.units - 1)} aria-label="Diminuir quantidade" className="p-1.5 hover:bg-slate-50"><Minus className="h-3.5 w-3.5" /></button><span className="w-8 text-center text-sm font-bold">{item.units}</span><button type="button" onClick={() => changeUnits(`${item.id}-${item.includeWaste}`, item.units + 1)} aria-label="Aumentar quantidade" className="p-1.5 hover:bg-slate-50"><Plus className="h-3.5 w-3.5" /></button></div>
+                <strong className="text-sm text-primary">{formatEur(getCartItemPrice(item))}</strong>
+              </div>
+            </div>
+          ))}
+        </div>
+        <footer className="border-t border-slate-200 bg-white p-5"><div className="flex items-end justify-between"><span className="text-sm text-slate-500">Subtotal</span><span className="text-xl font-bold text-[#19242e]">{formatEur(subtotal)}</span></div><p className="mt-1 text-right text-xs text-slate-400">IVA incluído</p><a href="/encomenda" onClick={() => setIsOpen(false)} className="mt-4 block rounded-xl bg-primary px-5 py-3.5 text-center text-sm font-bold text-white transition hover:bg-[#d94d0d]">Continuar encomenda</a></footer>
+      </aside>
+    </div>
+  )
+}
+
+function FlooringCard({ product, floorLabel, onAdd }: { product: Produto; floorLabel: string; onAdd: () => void }) {
+  return (
+    <article id={`produto-${product.referencia.toLowerCase()}`} className="group min-w-0 scroll-mt-28 overflow-hidden rounded-2xl border border-[#e2ddd5] bg-white shadow-[0_1px_2px_rgba(25,36,46,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_14px_32px_rgba(25,36,46,0.09)]">
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#eee9e1]">
+        <ProductMedia image={product.imagem} color={product.cor} name={product.nome} kind="flooring" />
+        <span className="absolute left-2.5 top-2.5 rounded-lg bg-[#19242e]/88 px-2 py-1 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm">Vinílico</span>
+      </div>
+      <div className="p-3 sm:p-4">
+        <p className="truncate text-[0.6rem] font-bold uppercase tracking-[0.14em] text-slate-400">{product.referencia} · {floorLabel}</p>
+        <h3 className="mt-1.5 truncate font-display text-[0.95rem] font-bold text-[#19242e] sm:text-base">{product.nome}</h3>
+        <p className="mt-1 hidden min-h-9 text-xs leading-[1.15rem] text-slate-500 sm:block">{product.useCase || 'Pavimento resistente para interiores'}</p>
+        <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
+          <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">{formatEur(product.precoM2)}<span className="text-xs font-semibold text-slate-400">/m²</span></strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">IVA incluído</span></div>
+          <button type="button" onClick={onAdd} aria-label={`Adicionar ${product.nome}`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f05b13] text-white transition hover:bg-[#d94d0d] sm:w-auto sm:px-3"><Plus className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Adicionar</span></button>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+function BaseboardCard({ product, onAdd }: { product: RodapeProduto; onAdd: () => void }) {
+  return (
+    <article id={`produto-${product.referencia.toLowerCase()}`} className="group min-w-0 scroll-mt-28 overflow-hidden rounded-2xl border border-[#e2ddd5] bg-white shadow-[0_1px_2px_rgba(25,36,46,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_14px_32px_rgba(25,36,46,0.09)]">
+      <div className="relative aspect-[4/3] overflow-hidden bg-[#eee9e1]">
+        <ProductMedia image={product.imagem} color={product.cor} name={product.nome} kind="baseboard" />
+        <span className="absolute left-2.5 top-2.5 rounded-lg bg-white/90 px-2 py-1 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-[#19242e] shadow-sm backdrop-blur-sm">Rodapé</span>
+      </div>
+      <div className="p-3 sm:p-4">
+        <p className="truncate text-[0.6rem] font-bold uppercase tracking-[0.14em] text-slate-400">{product.referencia} · {product.material}</p>
+        <h3 className="mt-1.5 truncate font-display text-[0.95rem] font-bold text-[#19242e] sm:text-base">{product.nome}</h3>
+        <p className="mt-1 hidden min-h-9 text-xs leading-[1.15rem] text-slate-500 sm:block">{product.altura} de altura · barra de {formatQuantity(BASEBOARD_BAR_LENGTH_M, 2)} m</p>
+        <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
+          <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">{formatEur(product.precoMl)}<span className="text-xs font-semibold text-slate-400">/m</span></strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">IVA incluído</span></div>
+          <button type="button" onClick={onAdd} aria-label={`Adicionar ${product.nome}`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f05b13] text-white transition hover:bg-[#d94d0d] sm:w-auto sm:px-3"><Plus className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Adicionar</span></button>
+        </div>
+      </div>
+    </article>
+  )
+}
+
+export default function StoreCatalog() {
+  const getCategoryFromUrl = (): StoreCategory => {
+    const value = new URLSearchParams(window.location.search).get('categoria')
+    return value === 'rodape' || value === 'flutuante' || value === 'vinilico' ? value : 'all'
+  }
+  const [category, setCategory] = useState<StoreCategory>(getCategoryFromUrl)
+  const [choice, setChoice] = useState<Choice | null>(null)
+  const { itemCount, setIsOpen } = useCart()
+  const products = getProdutosByVariant(category === 'flutuante' ? 'flutuante' : 'vinilico')
+
+  useEffect(() => {
+    const updateCategory = () => setCategory(getCategoryFromUrl())
+    window.addEventListener('popstate', updateCategory)
+    return () => window.removeEventListener('popstate', updateCategory)
+  }, [])
+
+  const showFloors = category !== 'rodape'
+  const showBases = category === 'all' || category === 'rodape'
+  const floorLabel = category === 'flutuante' ? 'Flutuante / laminado' : 'SPC vinílico'
+  const isFlutuanteUnavailable = category === 'flutuante' && products.length === 0
+  const tabs: Array<[StoreCategory, string]> = [['all', 'Todos'], ['vinilico', 'Vinílico SPC'], ['flutuante', 'Flutuante'], ['rodape', 'Rodapés']]
+
+  return (
+    <>
+      <div className="-mx-4 overflow-x-auto px-4 pb-1" role="tablist" aria-label="Categorias da loja">
+        <div className="flex w-max gap-1 rounded-xl border border-[#ded8cf] bg-white p-1 shadow-sm">
+          {tabs.map(([value, label]) => (
+            <button key={value} type="button" role="tab" aria-selected={category === value} onClick={() => { setCategory(value); window.history.replaceState({}, '', value === 'all' ? '/loja' : `/loja?categoria=${value}`) }} className={`whitespace-nowrap rounded-lg px-3.5 py-2 text-xs font-bold transition sm:text-sm ${category === value ? 'bg-[#19242e] text-white shadow-sm' : 'text-slate-500 hover:bg-[#f7f3ea] hover:text-[#19242e]'}`}>{label}</button>
+          ))}
+        </div>
+      </div>
+
+      {isFlutuanteUnavailable ? (
+        <div className="mt-8 rounded-2xl border border-dashed border-[#cfc5b8] bg-white p-8 text-center sm:p-12"><p className="section-kicker">Disponibilidade sob consulta</p><h2 className="mt-3 font-display text-2xl font-bold text-[#19242e]">Estamos a atualizar o catálogo flutuante.</h2><p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-600">Fale connosco para confirmar modelos, preços e disponibilidade antes de encomendar.</p><a href="https://wa.me/351910093635?text=Ol%C3%A1!%20Gostaria%20de%20saber%20que%20pavimentos%20flutuantes%20est%C3%A3o%20dispon%C3%ADveis." target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white">Falar sobre flutuante</a></div>
+      ) : (
+        <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
+          {showFloors && products.map((product) => <FlooringCard key={`floor-${product.id}`} product={product} floorLabel={floorLabel} onAdd={() => setChoice({ kind: 'flooring', product })} />)}
+          {showBases && RODAPES.map((product) => <BaseboardCard key={`base-${product.id}`} product={product} onAdd={() => setChoice({ kind: 'baseboard', product })} />)}
+        </div>
+      )}
+
+      <button type="button" onClick={() => setIsOpen(true)} className="fixed bottom-4 right-4 z-40 flex h-12 items-center justify-center gap-2 rounded-xl bg-[#19242e] px-3.5 text-sm font-bold text-white shadow-[0_14px_35px_rgba(25,36,46,0.25)] transition hover:bg-[#f05b13] sm:bottom-5 sm:right-5 sm:px-5"><ShoppingBag className="h-4 w-4" /><span className="hidden sm:inline">Carrinho</span><span className="rounded-md bg-white/12 px-1.5 py-0.5 text-xs">{itemCount}</span></button>
+      {choice && <PurchaseModal choice={choice} close={() => setChoice(null)} />}
+      <CartDrawer />
+    </>
+  )
+}

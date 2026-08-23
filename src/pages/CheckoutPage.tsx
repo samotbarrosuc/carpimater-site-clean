@@ -1,0 +1,206 @@
+import { FormEvent, useState } from 'react'
+import { Link } from 'wouter'
+import { ArrowLeft, CheckCircle2, CreditCard, MessageCircle, ReceiptText, Smartphone, Upload } from 'lucide-react'
+import Navbar from '@/components/Navbar'
+import Footer from '@/components/Footer'
+import { useCart } from '@/context/CartContext'
+import { formatEur, formatQuantity } from '@/lib/calculations'
+import { getCartItemPrice } from '@/lib/cart'
+import ApplicationQuote, { type ApplicationQuoteData } from '@/components/ApplicationQuote'
+import { EMAIL, PHONE_NUMBER, getWhatsAppUrl } from '@/content/site'
+
+type PaymentMethod = 'mbway' | 'iban'
+const BANK_IBAN = 'PT50 0018 0003 5127 2706 0200 6'
+const MAX_PROOF_SIZE_BYTES = 3 * 1024 * 1024
+
+function getProofContentType(selectedFile: File) {
+  if (['application/pdf', 'image/jpeg', 'image/png'].includes(selectedFile.type)) return selectedFile.type
+  const extension = selectedFile.name.split('.').pop()?.toLowerCase()
+  if (extension === 'pdf') return 'application/pdf'
+  if (extension === 'jpg' || extension === 'jpeg') return 'image/jpeg'
+  if (extension === 'png') return 'image/png'
+  return ''
+}
+
+function MaterialSummary({ items, subtotal }: { items: ReturnType<typeof useCart>['items']; subtotal: number }) {
+  return (
+    <section className="mt-7 overflow-hidden rounded-2xl border border-[#d8d0c4] bg-white shadow-[0_10px_30px_rgba(25,36,46,0.06)]">
+      <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4 sm:px-6">
+        <div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f7f3ea] text-primary"><ReceiptText className="h-5 w-5" /></span><div><p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Antes de continuar</p><h2 className="font-display text-xl font-bold text-[#19242e]">Resumo da encomenda</h2></div></div>
+        <span className="rounded-lg bg-[#19242e] px-3 py-2 text-xs font-bold text-white">Valor a pagar agora</span>
+      </header>
+      <div className="divide-y divide-slate-100 px-5 sm:px-6">
+        {items.map((item) => (
+          <div key={`${item.id}-${item.includeWaste}`} className="flex items-start justify-between gap-4 py-4">
+            <div className="min-w-0"><p className="truncate text-sm font-bold text-[#19242e]">{item.name}</p><p className="mt-1 text-xs leading-5 text-slate-500">{item.units} {item.kind === 'flooring' ? 'caixas' : 'barras'} · {formatQuantity(item.suppliedAmount, 2)} {item.kind === 'flooring' ? 'm²' : 'm'} fornecidos{item.includeWaste ? ' · com desperdício' : ''}</p></div>
+            <strong className="shrink-0 text-sm text-[#19242e]">{formatEur(getCartItemPrice(item))}</strong>
+          </div>
+        ))}
+      </div>
+      <footer className="bg-[#19242e] px-5 py-5 text-white sm:px-6">
+        <div className="flex items-center justify-between gap-4"><div><p className="text-xs text-white/55">Total dos materiais</p><p className="mt-1 text-xs text-emerald-300">Transporte gratuito · IVA incluído</p></div><strong className="font-display text-2xl text-[#f08a45]">{formatEur(subtotal)}</strong></div>
+      </footer>
+    </section>
+  )
+}
+
+export default function CheckoutPage() {
+  const { items, subtotal, clear } = useCart()
+  const [delivery, setDelivery] = useState<'material' | 'installation'>('material')
+  const [payment, setPayment] = useState<PaymentMethod>('mbway')
+  const [file, setFile] = useState<File | null>(null)
+  const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
+  const [applicationQuote, setApplicationQuote] = useState<ApplicationQuoteData | null>(null)
+  const [reference, setReference] = useState('')
+  const [formError, setFormError] = useState('')
+
+  const fileToBase64 = (selectedFile: File) => new Promise<string>((resolve, reject) => {
+    const reader = new FileReader()
+    reader.onload = () => resolve(typeof reader.result === 'string' ? reader.result.split(',')[1] || '' : '')
+    reader.onerror = () => reject(reader.error)
+    reader.readAsDataURL(selectedFile)
+  })
+
+  const submit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+    if (!file) {
+      setFormError('Anexe o comprovativo de pagamento (PDF, JPG ou PNG) para podermos confirmar a encomenda.')
+      return
+    }
+    const proofContentType = getProofContentType(file)
+    if (!proofContentType) {
+      setFormError('O comprovativo tem de ser um PDF ou uma imagem (JPG/PNG). Escolha outro ficheiro.')
+      return
+    }
+    if (file.size > MAX_PROOF_SIZE_BYTES) {
+      setFormError('O comprovativo não pode ultrapassar 3 MB. Escolha um ficheiro mais pequeno.')
+      return
+    }
+    if (!items.length || (delivery === 'installation' && !applicationQuote)) return
+    setFormError('')
+    setStatus('sending')
+    const form = new FormData(event.currentTarget)
+    const now = new Date()
+    const pad = (n: number) => String(n).padStart(2, '0')
+    const ref = `CM-${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`
+    try {
+      const comprovativo = { name: file.name, type: proofContentType, size: file.size, base64: await fileToBase64(file) }
+      const payload = Object.fromEntries(form.entries())
+      const response = await fetch('/api/encomenda', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, items, subtotal, delivery, paymentMethod: payment, reference: ref, applicationQuote, comprovativo }) })
+      if (!response.ok) throw new Error('Pedido não enviado')
+      setReference(ref)
+      setStatus('success')
+      clear()
+    } catch {
+      setStatus('error')
+    }
+  }
+
+  if (status === 'success') {
+    return (
+      <main className="min-h-screen bg-[#f7f1e8] text-slate-950">
+        <Navbar />
+        <section className="mx-auto max-w-2xl px-4 pb-24 pt-40">
+          <div className="rounded-3xl bg-white p-8 text-center shadow-sm sm:p-10">
+            <CheckCircle2 className="mx-auto h-16 w-16 text-emerald-600" />
+            <h1 className="mt-6 text-4xl font-display font-bold">Pedido recebido</h1>
+            {reference && <p className="mt-4 inline-block rounded-full bg-slate-100 px-4 py-2 font-mono text-sm font-bold text-slate-700">Referência: {reference}</p>}
+            <p className="mt-5 leading-7 text-slate-600">Obrigado! Vamos confirmar o pagamento e os detalhes de entrega. Receberá o nosso contacto para validar tudo antes do envio.</p>
+            <div className="mt-6 space-y-2 rounded-2xl bg-emerald-50 p-5 text-left text-sm leading-6 text-emerald-900">
+              <p className="font-bold text-emerald-700">O que acontece a seguir</p>
+              <p>1. Confirmamos o seu comprovativo de pagamento.</p>
+              <p>2. Ligamos ou enviamos mensagem para validar a morada e a entrega.</p>
+              <p>3. O material é enviado e chega em até 10 dias úteis.</p>
+            </div>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
+              <Link href="/loja" className="inline-block rounded-xl bg-primary px-6 py-4 font-bold text-white">Voltar à loja</Link>
+              <a href={getWhatsAppUrl(`Olá! Acabei de fazer a encomenda ${reference}. Gostaria de confirmar os detalhes.`)} target="_blank" rel="noopener noreferrer" className="inline-flex items-center justify-center gap-2 rounded-xl border border-slate-300 px-6 py-4 font-bold text-slate-700 hover:border-primary hover:text-primary"><MessageCircle className="h-5 w-5" />Falar no WhatsApp</a>
+            </div>
+          </div>
+        </section>
+        <Footer />
+      </main>
+    )
+  }
+
+  return (
+    <main className="min-h-screen bg-[#f7f1e8] text-slate-950">
+      <Navbar />
+      <div className="mx-auto max-w-6xl px-4 pb-20 pt-32">
+        <Link href="/loja" className="inline-flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-primary"><ArrowLeft className="h-4 w-4" />Voltar à loja</Link>
+        <div className="mt-6 max-w-4xl">
+          <section>
+            <p className="text-xs font-bold uppercase tracking-[0.2em] text-primary">Finalizar encomenda</p>
+            <h1 className="mt-2 text-4xl font-display font-bold">Finalize a sua encomenda</h1>
+            {!items.length ? (
+              <p className="mt-6 rounded-2xl bg-white p-6 text-slate-600">O carrinho está vazio. <Link href="/loja" className="font-bold text-primary">Escolher materiais</Link></p>
+            ) : (
+              <>
+              <MaterialSummary items={items} subtotal={subtotal} />
+              <form onSubmit={submit} className="mt-6 space-y-6">
+                <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
+                  <h2 className="text-lg font-bold">1. Como pretende avançar?</h2>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">{[['material', 'Só material', 'Recebe o material e faz a aplicação por sua conta.'], ['installation', 'Solicitar aplicação', 'Peça também um orçamento previsto para aplicação pela nossa equipa.']].map(([value, label, hint]) => <label key={value} className={`cursor-pointer rounded-xl border p-4 transition-colors ${delivery === value ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="tipo" value={value} checked={delivery === value} onChange={() => { setDelivery(value as typeof delivery); if (value === 'material') setApplicationQuote(null) }} className="mr-2 accent-orange-600" /><span className="font-semibold">{label}</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">{hint}</span></label>)}</div>
+                  {delivery === 'installation' && <div className="mt-4"><ApplicationQuote items={items} onChange={setApplicationQuote} /></div>}
+                </section>
+
+                <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
+                  <h2 className="text-lg font-bold">2. Como quer pagar?</h2>
+                  <p className="mt-1 text-sm text-slate-500">Paga apenas o material. A aplicação é uma estimativa e não é cobrada agora.</p>
+                  <div className="mt-4 grid gap-3 sm:grid-cols-2">
+                    <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'mbway' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="mbway" checked={payment === 'mbway'} onChange={() => setPayment('mbway')} className="mr-2 accent-orange-600" /><span className="font-semibold">MB Way</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Rápido e sem custos. Recebe o pedido de pagamento na app.</span></label>
+                    <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'iban' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="iban" checked={payment === 'iban'} onChange={() => setPayment('iban')} className="mr-2 accent-orange-600" /><span className="font-semibold">Transferência bancária</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Transferência tradicional por IBAN.</span></label>
+                  </div>
+                  <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
+                    <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">Dados de pagamento</p>
+                    {payment === 'mbway' ? (
+                      <div className="mt-3">
+                        <p className="flex items-center gap-2 text-sm font-semibold text-emerald-900"><Smartphone className="h-4 w-4" />MB Way: <span className="font-mono">{PHONE_NUMBER}</span></p>
+                        <ol className="mt-2 list-decimal space-y-1 pl-5 text-sm leading-6 text-emerald-800">
+                          <li>Abra a app MB Way e escolha <strong>Enviar dinheiro</strong>.</li>
+                          <li>Envie {formatEur(subtotal)} (IVA inc.) para <strong>{PHONE_NUMBER}</strong> (Tomás Barros).</li>
+                          <li>No descritivo, escreva o <strong>seu nome e a sua localidade</strong>.</li>
+                          <li>Anexe o comprovativo (printscreen) no passo 4.</li>
+                        </ol>
+                      </div>
+                    ) : (
+                      <div className="mt-3">
+                        <p className="flex items-center gap-2 text-sm font-semibold text-emerald-900"><CreditCard className="h-4 w-4" />IBAN: <span className="font-mono">{BANK_IBAN}</span></p>
+                        <p className="mt-2 text-sm leading-6 text-emerald-800">Transfira {formatEur(subtotal)} (IVA inc.) para o IBAN indicado e anexe o comprovativo no passo 4.</p>
+                      </div>
+                    )}
+                    <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-emerald-200 pt-3"><span className="text-sm text-emerald-800">Valor a pagar</span><span className="text-lg font-bold text-emerald-700">{formatEur(subtotal)} <span className="text-xs font-semibold text-emerald-600">(IVA inc.)</span></span></div>
+                    <p className="mt-2 text-xs leading-5 text-emerald-800">Transporte gratuito na Região Centro. Para entregas noutras zonas do país, <a href="/contactos" className="font-bold underline underline-offset-2">contacte-nos primeiro</a> para confirmarmos disponibilidade e condições.</p>
+                  </div>
+                </section>
+
+                <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
+                  <h2 className="text-lg font-bold">3. Os seus dados</h2>
+                  <div className="mt-4 grid gap-4 sm:grid-cols-2">{[['nome', 'Nome completo', 'text'], ['telefone', 'Telefone', 'tel'], ['email', 'Email', 'email'], ['morada', 'Morada de entrega', 'text']].map(([name, label, type]) => <label key={name} className="block text-sm font-semibold"><span className="mb-2 block">{label}</span><input required name={name} type={type} className="w-full rounded-xl border border-slate-300 px-4 py-3 font-normal outline-none focus:border-primary" /></label>)}</div>
+                  <label className="mt-4 block text-sm font-semibold"><span className="mb-2 block">Observações (opcional)</span><textarea name="observacoes" rows={3} className="w-full rounded-xl border border-slate-300 px-4 py-3 font-normal outline-none focus:border-primary" placeholder="Alguma nota sobre a entrega ou o pedido?" /></label>
+                </section>
+
+                <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
+                  <h2 className="text-lg font-bold">4. Comprovativo de pagamento</h2>
+                  <p className="mt-1 text-sm text-slate-500">Anexe o comprovativo {payment === 'mbway' ? 'da app MB Way' : 'da transferência'} para confirmarmos a encomenda. O ficheiro será enviado em anexo no email de alerta recebido pela CarpiMater.</p>
+                  <label className="mt-4 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-slate-300 p-4 text-sm font-semibold hover:border-primary"><Upload className="h-5 w-5 text-primary" />{file ? file.name : 'Escolher ficheiro (PDF, JPG ou PNG · máximo 3 MB)'}<input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={(event) => { setFile(event.target.files?.[0] || null); setFormError('') }} className="sr-only" /></label>
+                  {formError && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">{formError}</p>}
+                  {status === 'error' && (
+                    <div className="mt-4 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+                      <p className="font-semibold">Não foi possível enviar o pedido. Tente novamente.</p>
+                      <p className="mt-1">Se o problema continuar, pode enviar o comprovativo diretamente por <a href={`mailto:${EMAIL}?subject=Comprovativo de encomenda`} className="font-bold underline">email</a> ou <a href={getWhatsAppUrl('Olá! Quero enviar o comprovativo de pagamento da minha encomenda.')} target="_blank" rel="noopener noreferrer" className="font-bold underline">WhatsApp</a>.</p>
+                    </div>
+                  )}
+                  <button type="submit" disabled={status === 'sending' || (delivery === 'installation' && !applicationQuote)} className="mt-5 w-full rounded-xl bg-primary px-5 py-4 font-bold text-white disabled:opacity-50">{status === 'sending' ? 'A enviar...' : 'Confirmar encomenda'}</button>
+                  <p className="mt-3 text-center text-xs text-slate-400">Ao confirmar, enviamos o seu pedido para a equipa CarpiMater. Não é feito nenhum pagamento automático.</p>
+                </section>
+              </form>
+              </>
+            )}
+          </section>
+        </div>
+      </div>
+      <Footer />
+    </main>
+  )
+}

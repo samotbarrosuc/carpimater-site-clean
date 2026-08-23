@@ -107,7 +107,7 @@ function ProductCard({ product, isSelected, onSelect, onOpenInfo, materialSingul
             <p className="text-[11px] text-muted-foreground mt-1">Indique a referência na mensagem.</p>
           </>
         ) : (
-          <p className="text-sm text-primary font-semibold mt-1">{formatEur(product.precoM2)}/m²</p>
+          <p className="text-sm text-primary font-semibold mt-1">{formatEur(product.precoM2)}/m² <span className="font-medium text-muted-foreground">(IVA inc.)</span></p>
         )}
         <button
           type="button"
@@ -179,7 +179,7 @@ function BaseboardCard({ baseboard, isSelected, isRecommended, onSelect, onOpenI
         </p>
         <h3 className="font-semibold text-foreground text-sm sm:text-base">{baseboard.nome}</h3>
         <p className="text-sm text-primary font-semibold mt-1">
-          {formatEur(baseboard.precoMl)}/ml
+          {formatEur(baseboard.precoMl)}/ml <span className="font-medium text-muted-foreground">(IVA inc.)</span>
         </p>
         <button
           type="button"

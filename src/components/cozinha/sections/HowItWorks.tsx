@@ -57,7 +57,7 @@ export default function HowItWorks() {
           <div
             className="hidden lg:block absolute top-9 h-px"
             style={{
-              background: "linear-gradient(to right, transparent 5%, rgba(201,136,13,0.3) 25%, rgba(201,136,13,0.3) 75%, transparent 95%)",
+              background: "linear-gradient(to right, transparent 5%, rgba(240,91,19,0.3) 25%, rgba(240,91,19,0.3) 75%, transparent 95%)",
               left: "12.5%",
               width: "75%",
             }}

@@ -7,7 +7,7 @@
     "dev": "vite",
     "dev:api": "node dev-api-server.js",
     "dev:full": "concurrently \"npm run dev:api\" \"npm run dev\"",
-    "build": "vite build",
+    "build": "vite build && node scripts/generate-seo-pages.mjs",
     "preview": "vite preview",
     "typecheck": "tsc --noEmit"
   },

@@ -10,7 +10,7 @@ const testimonials = [
     name: "Maria S.",
     location: "Coimbra",
     rating: 5,
-    text: "A CarpiMater superou todas as expectativas. A cozinha ficou exatamente como eu tinha imaginado, com uma qualidade que não se compara ao IKEA. O preço foi uma surpresa muito agradável.",
+    text: "A CarpiMater superou todas as expectativas. A cozinha ficou exatamente como eu tinha imaginado, com uma qualidade que não se compara ao standard do mercado. O preço foi uma surpresa muito agradável.",
   },
   {
     name: "João F.",

@@ -28,12 +28,12 @@ export const FAQS: FaqItem[] = [
     answer: 'Não. A simulação automática é uma estimativa precisa baseada nas medidas fornecidas. O orçamento final é fechado apenas após validação presencial do local ou análise detalhada de fotografias.',
   },
   {
-    question: 'Trabalham em todo o distrito de Coimbra?',
-    answer: 'Sim, prestamos serviço exclusivamente e em todos os concelhos do distrito de Coimbra, bem como em concelhos limítrofes dos distritos de Aveiro e Leiria. Consulte o simulador para verificar a cobertura na sua zona.',
+    question: 'Trabalham fora da Região Centro?',
+    answer: 'A nossa área de atuação regular é a Região Centro. Para pedidos noutras zonas do país, contacte-nos primeiro para confirmarmos a disponibilidade e as condições do serviço.',
   },
   {
     question: 'O preço inclui a aplicação?',
-    answer: 'Sim. Todos os nossos preços e estimativas incluem o fornecimento do material (pavimento, rodapés, perfis) e a mão de obra de aplicação profissional.',
+    answer: 'Não. Os preços apresentados na loja referem-se apenas aos materiais e não incluem a aplicação. Para evitar surpresas, disponibilizamos um simulador que apresenta uma estimativa separada do serviço de aplicação antes de finalizar a encomenda. O valor final é confirmado após avaliarmos as condições da obra.',
   },
   {
     question: 'É possível aplicar sobre cerâmica?',

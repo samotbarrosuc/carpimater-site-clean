@@ -4,7 +4,7 @@ import { Check, X } from "lucide-react";
 
 const rows = [
   { label: "Projecto 100% Personalizado", carpi: true, grande: false },
-  { label: "Materiais de Grau Profissional", carpi: true, grande: false },
+  { label: "Materiais de Qualidade Superior", carpi: true, grande: false },
   { label: "Montagem Incluída no Preço", carpi: true, grande: false },
   { label: "Carpinteiro Disponível Pós-Entrega", carpi: true, grande: false },
   { label: "Sem Custos Ocultos", carpi: true, grande: false },
@@ -49,7 +49,7 @@ export default function ComparisonBanner() {
               CarpiMater
             </div>
             <div className="px-5 py-4 text-center text-white/45">
-              IKEA / Leroy Merlin
+              Soluções standard
             </div>
           </div>
 

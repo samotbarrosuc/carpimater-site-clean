@@ -1,6 +1,6 @@
 // client component
 
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, type KeyboardEvent as ReactKeyboardEvent } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -20,7 +20,7 @@ import { getProdutosByVariant, getProdutoById } from '@/content/vinil'
 import { RODAPES, getRodapeById } from '@/content/rodapes'
 import { DISTRITOS, getConcelhosByDistrito, getTravelEntry } from '@/content/viagens'
 import { useSimulator } from '@/context/SimulatorContext'
-import { calcEstimate, formatEur, EstimateResult } from '@/lib/calculations'
+import { calcEstimate, formatEur, formatQuantity, parseQuantityInput, sanitizeQuantityInput, EstimateResult } from '@/lib/calculations'
 import { reportWebsiteError } from '@/lib/error-report'
 import { WHATSAPP_NUMBER, getSiteVariantContent, getSiteVariantFromPath, getWhatsAppUrl } from '@/content/site'
 
@@ -491,15 +491,15 @@ export default function Simulator() {
 
   const concelhos = watchedDistrito ? getConcelhosByDistrito(watchedDistrito) : []
 
-  const adjustNumericField = (field: 'area' | 'rodape' | 'portas', delta: number) => {
-    const currentValue = Number(getValues1(field) || 0)
-    let nextValue = currentValue + delta
+  const handleMeasureArrows = (event: ReactKeyboardEvent<HTMLInputElement>, field: 'area' | 'rodape') => {
+    if (event.key !== 'ArrowUp' && event.key !== 'ArrowDown') return
 
-    if (nextValue < 0) nextValue = 0
-    if (field === 'portas' && nextValue > 99) nextValue = 99
-
-    setValue1(field, nextValue)
-    clearErrors1(field as any)
+    event.preventDefault()
+    const delta = event.key === 'ArrowUp' ? 0.5 : -0.5
+    const nextValue = Math.max(0, Math.round((parseQuantityInput(event.currentTarget.value) + delta) * 100) / 100)
+    event.currentTarget.value = formatQuantity(nextValue)
+    setValue1(field, nextValue, { shouldDirty: true, shouldValidate: true })
+    clearErrors1(field)
   }
 
   const clearStep1Form = () => {
@@ -832,8 +832,8 @@ export default function Simulator() {
       `Modo: ${formData.soMaoDeObra ? 'Apenas mão de obra' : 'Simulador completo'}`,
       `${isKitchen ? 'Estado atual da cozinha' : 'Pavimento atual'}: ${formData.pavimentoAtual}`,
       `${isKitchen ? 'Estado da cozinha' : 'Estado pavimento'}: ${formData.estadoPavimento}`,
-      `Área: ${formData.area} m²`,
-      ...(!isKitchen ? [`Rodapé: ${formData.rodape} m`] : []),
+      `Área: ${formatQuantity(formData.area, 2)} m²`,
+      ...(!isKitchen ? [`Rodapé: ${formatQuantity(formData.rodape, 2)} m`] : []),
       `Perfis/portas: ${formData.portas} un`,
       '',
       `*Materiais selecionados*`,
@@ -845,7 +845,7 @@ export default function Simulator() {
       `*Estimativa apresentada*`,
       produto?.sobConsulta && !formData.soMaoDeObra
         ? `${formatEur(estimate.custoMaoObra)} (mão de obra, material sob orçamento)`
-        : `${formatEur(estimate.valorMin)} — ${formatEur(estimate.valorMax)} (sem IVA)`,
+        : `${formatEur(estimate.valorMin)} — ${formatEur(estimate.valorMax)} (IVA inc.)`,
     ].join('\n')
 
     const webUrl = getWhatsAppUrl(whatsappMessage, siteVariant)
@@ -994,7 +994,7 @@ export default function Simulator() {
         </div>
 
         {/* Card */}
-        <div className={`max-w-4xl mx-auto bg-card rounded-3xl shadow-xl border p-6 md:p-10 transition-colors ${
+        <div className={`mx-auto max-w-4xl rounded-2xl border bg-card p-5 shadow-[0_14px_38px_rgba(25,36,46,0.08)] transition-colors sm:p-6 md:p-9 ${
           soMaoDeObraMode
             ? 'border-emerald-300 bg-emerald-50/30'
             : 'border-border'
@@ -1015,7 +1015,7 @@ export default function Simulator() {
                   <button
                     type="button"
                     onClick={() => scrollToSection('catalogo')}
-                    className="inline-flex items-center justify-center min-h-[50px] px-7 py-3 rounded-full text-[0.95rem] font-semibold whitespace-nowrap bg-primary text-primary-foreground hover:bg-primary/90 transition-all shadow-[0_12px_30px_rgba(201,136,13,0.28)]"
+                    className="inline-flex min-h-[50px] items-center justify-center whitespace-nowrap rounded-xl bg-primary px-7 text-[0.95rem] font-semibold text-primary-foreground shadow-[0_8px_24px_rgba(240,91,19,0.2)] transition hover:bg-primary/90"
                   >
                     Ver catálogos
                   </button>
@@ -1329,6 +1329,12 @@ export default function Simulator() {
                       />
                     </div>
                   </div>
+                  <p className="mt-4 text-xs leading-5 text-muted-foreground">
+                    O simulador abrange a Região Centro. Para obras noutras zonas do país,{' '}
+                    <a href="/contactos" className="font-semibold text-primary hover:underline">
+                      contacte-nos para confirmar disponibilidade
+                    </a>.
+                  </p>
                 </fieldset>
 
                 <hr className="border-border" />
@@ -1345,13 +1351,15 @@ export default function Simulator() {
                         {isKitchen ? 'Área útil da cozinha (m²) *' : 'Área total a pavimentar (m²) *'}
                       </label>
                       <input
-                        type="number"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        step="1"
-                        min="0"
+                        type="text"
+                        inputMode="decimal"
+                        pattern="[0-9]*,?[0-9]*"
                         placeholder="Ex: 45"
-                        {...register1('area')}
+                        {...register1('area', { setValueAs: (value) => parseQuantityInput(String(value)) })}
+                        onInput={(event) => {
+                          event.currentTarget.value = sanitizeQuantityInput(event.currentTarget.value)
+                        }}
+                        onKeyDown={(event) => handleMeasureArrows(event, 'area')}
                         disabled={!soMaoDeObraMode && !watchedIncludeVinilico}
                         className={`${inputCls(!!errors1.area)} ${disabledNeutralCls(!soMaoDeObraMode && !watchedIncludeVinilico)}`}
                       />
@@ -1369,13 +1377,15 @@ export default function Simulator() {
                         Metros de rodapé *
                       </label>
                       <input
-                        type="number"
-                        inputMode="numeric"
-                        pattern="[0-9]*"
-                        step="1"
-                        min="0"
+                        type="text"
+                        inputMode="decimal"
+                        pattern="[0-9]*,?[0-9]*"
                         placeholder="Ex: 32"
-                        {...register1('rodape')}
+                        {...register1('rodape', { setValueAs: (value) => parseQuantityInput(String(value)) })}
+                        onInput={(event) => {
+                          event.currentTarget.value = sanitizeQuantityInput(event.currentTarget.value)
+                        }}
+                        onKeyDown={(event) => handleMeasureArrows(event, 'rodape')}
                         disabled={!soMaoDeObraMode && !watchedIncludeRodape}
                         className={`${inputCls(!!errors1.rodape)} ${disabledNeutralCls(!soMaoDeObraMode && !watchedIncludeRodape)}`}
                       />
@@ -1454,7 +1464,7 @@ export default function Simulator() {
                     {/* Portas */}
                     <div>
                       <label className="block text-sm font-medium text-foreground mb-2">
-                        Portas / passagens {watchedArea ? `no espaço de ${watchedArea} m²` : ''} *
+                        Portas / passagens {watchedArea ? `no espaço de ${formatQuantity(Number(watchedArea))} m²` : ''} *
                       </label>
                       <input
                         type="number"
@@ -1501,7 +1511,7 @@ export default function Simulator() {
                   <button
                     type="submit"
                     disabled={bothMaterialsOff}
-                    className="group w-full bg-primary text-primary-foreground py-4 rounded-full font-semibold hover:bg-primary/90 transition-colors flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="group flex w-full items-center justify-center gap-2 rounded-xl bg-primary py-4 font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                   >
                     Ver a minha estimativa
                     <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -1576,7 +1586,7 @@ export default function Simulator() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="w-full bg-primary text-primary-foreground py-4 rounded-full font-semibold hover:bg-primary/90 transition-colors disabled:opacity-50"
+                      className="w-full rounded-xl bg-primary py-4 font-semibold text-primary-foreground transition-colors hover:bg-primary/90 disabled:opacity-50"
                     >
                       {isSubmitting ? 'A guardar...' : 'Seguir para o orçamento detalhado'}
                     </button>
@@ -1638,12 +1648,12 @@ export default function Simulator() {
                         </div>
                         <div className="flex justify-between">
                           <span className="text-muted-foreground">Área total a pavimentar</span>
-                          <span className="text-foreground">{formData.area} m²</span>
+                          <span className="text-foreground">{formatQuantity(formData.area, 2)} m²</span>
                         </div>
                         {!isKitchen && (
                           <div className="flex justify-between">
                             <span className="text-muted-foreground">Metros totais de rodapé</span>
-                            <span className="text-foreground">{formData.rodape} m</span>
+                            <span className="text-foreground">{formatQuantity(formData.rodape, 2)} m</span>
                           </div>
                         )}
                       </>
@@ -1659,14 +1669,14 @@ export default function Simulator() {
                         <p className="text-sm font-bold text-foreground">Materiais</p>
                         <div className="space-y-1 mt-2">
                           <div className="flex justify-between">
-                            <span className="text-muted-foreground">{materialLabelCap} ({estimate.materialNecessario.toFixed(0)} m²)</span>
+                            <span className="text-muted-foreground">{materialLabelCap} ({formatQuantity(estimate.materialNecessario, 2)} m²)</span>
                             <span className="text-foreground">
                               {selectedProduto?.sobConsulta ? 'Sob consulta' : formatEur(estimate.custoMaterial)}
                             </span>
                           </div>
                           {!isKitchen && (
                             <div className="flex justify-between">
-                              <span className="text-muted-foreground">Rodapé ({estimate.rodapeNecessario.toFixed(0)} m)</span>
+                              <span className="text-muted-foreground">Rodapé ({formatQuantity(estimate.rodapeNecessario, 2)} m)</span>
                               <span className="text-foreground">{formatEur(estimate.custoRodape)}</span>
                             </div>
                           )}
@@ -1715,7 +1725,7 @@ export default function Simulator() {
                         ? `${formatEur(estimate.custoMaoObra)} (material sob orçamento)`
                         : `${formatEur(estimate.valorMin)} — ${formatEur(estimate.valorMax)}`}
                     </p>
-                    <p className="text-xs text-muted-foreground mt-1">(preço não inclui IVA)</p>
+                    <p className="text-xs text-muted-foreground mt-1">(IVA inc.)</p>
                   </div>
 
                   {/* Warning */}
@@ -1732,7 +1742,7 @@ export default function Simulator() {
                   <button
                     type="button"
                     onClick={resetSimulator}
-                    className="w-full mt-4 border border-border py-3 rounded-full text-sm font-medium text-muted-foreground hover:bg-muted transition-colors flex items-center justify-center gap-2"
+                    className="mt-4 flex w-full items-center justify-center gap-2 rounded-xl border border-border py-3 text-sm font-medium text-muted-foreground transition-colors hover:bg-muted"
                   >
                     <RotateCcw className="w-4 h-4" />
                     Refazer cálculo
@@ -1806,7 +1816,7 @@ export default function Simulator() {
                       <button
                         type="button"
                         onClick={proceedToWhatsApp}
-                        className="w-full bg-primary text-primary-foreground py-4 px-10 rounded-full font-semibold hover:bg-primary/90 transition-colors inline-flex items-center justify-start gap-3"
+                        className="inline-flex w-full items-center justify-start gap-3 rounded-xl bg-primary px-10 py-4 font-semibold text-primary-foreground transition-colors hover:bg-primary/90"
                       >
                         <WhatsAppIcon className="w-5 h-5 text-[#25D366] shrink-0" />
                         <span className="flex-1 text-center">Reforçar o meu pedido por Whatsapp.</span>

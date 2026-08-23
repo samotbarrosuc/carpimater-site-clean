@@ -11,6 +11,12 @@ import FlutuantePage from "@/pages/FlutuantePage";
 import CozinhaPage from "@/pages/CozinhaPage";
 import EmpreiteirosPage from "@/pages/EmpreiteirosPage";
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
+import LojaPage from "@/pages/LojaPage";
+import CheckoutPage from "@/pages/CheckoutPage";
+import ContactosPage from "@/pages/ContactosPage";
+import RodapesPage from "@/pages/RodapesPage";
+import SeoManager from "@/components/SeoManager";
+import { CartProvider } from "@/context/CartContext";
 
 const queryClient = new QueryClient();
 
@@ -21,9 +27,14 @@ function Router() {
       <Route path="/vinilico" component={VinilicoPage} />
       <Route path="/flutuante" component={FlutuantePage} />
       <Route path="/pavimentos" component={PavimentosLanding} />
+      <Route path="/loja" component={LojaPage} />
+      <Route path="/rodapes" component={RodapesPage} />
+      <Route path="/encomenda" component={CheckoutPage} />
+      <Route path="/contactos" component={ContactosPage} />
       <Route path="/cozinha" component={CozinhaPage} />
-      <Route path="/construção" component={EmpreiteirosPage} />
-      <Route path="/empreiteiros" component={() => <Redirect to="/construção" />} />
+      <Route path="/construcao" component={EmpreiteirosPage} />
+      <Route path="/construção" component={() => <Redirect to="/construcao" />} />
+      <Route path="/empreiteiros" component={() => <Redirect to="/construcao" />} />
       <Route path="/politica-de-privacidade" component={PrivacyPolicyPage} />
       <Route component={NotFound} />
     </Switch>
@@ -34,10 +45,13 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <TooltipProvider>
-        <WouterRouter>
-          <Router />
-        </WouterRouter>
-        <Toaster />
+        <CartProvider>
+          <WouterRouter>
+            <Router />
+            <SeoManager />
+          </WouterRouter>
+          <Toaster />
+        </CartProvider>
       </TooltipProvider>
     </QueryClientProvider>
   );

@@ -14,7 +14,7 @@ export default function FabricoPrazoAdjudicacao() {
   const inView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section id="fabrico-prazo-adjudicacao" ref={ref} className="py-16 lg:py-24 bg-slate-950">
+    <section id="fabrico-prazo-adjudicacao" ref={ref} className="py-16 lg:py-24 bg-secondary">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
@@ -34,7 +34,7 @@ export default function FabricoPrazoAdjudicacao() {
             {kpis.map((kpi) => (
               <div
                 key={kpi.label}
-                className="rounded-3xl border border-white/10 bg-white/5 p-6 text-center shadow-[0_20px_40px_rgba(0,0,0,0.14)]"
+                className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center shadow-[0_14px_32px_rgba(0,0,0,0.10)]"
               >
                 <p className="text-[1.6rem] font-bold text-white">{kpi.value}</p>
                 <p className="text-xs uppercase tracking-[0.18em] mt-3 text-slate-300">

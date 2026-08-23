@@ -39,7 +39,7 @@ const FAQS = [
     a: 'Planificamos cada fase — projecto, fabrico e instalação — com datas concretas. A nossa produção CNC própria em Paços de Ferreira elimina dependência de fornecedores externos e mantém o controlo do prazo nas nossas mãos.',
   },
   {
-    q: 'A qualidade é comparável ao IKEA ou Leroy Merlin?',
+    q: 'A qualidade é comparável à das grandes superfícies?',
     a: 'É muito superior. Usamos materiais de qualidade por defeito, com acabamentos e resistência que as grandes superfícies não oferecem a este preço. Fabricamos à medida — não há peças standard que "encaixam mais ou menos".',
   },
   {
@@ -56,21 +56,12 @@ const FAQS = [
   },
   {
     q: 'Qual é a área geográfica de cobertura?',
-    a: 'Fabricamos em Paços de Ferreira e instalamos em todo o país. Temos cobertura especial no centro de Portugal: Coimbra, Aveiro, Leiria, Viseu e região.',
+    a: 'A nossa área de instalação regular é a Região Centro. Para outras zonas do país, contacte-nos primeiro para confirmarmos disponibilidade.',
   },
   {
     q: 'O orçamento tem custo?',
     a: 'Não. O orçamento é sempre gratuito e sem compromisso. Fazemos uma análise detalhada do projecto e entregamos proposta com preço fixo em 48 horas.',
   },
-]
-
-const PROJECTS = [
-  { category: 'Cozinhas', units: '12 unidades', title: 'Promoção residencial em Coimbra', location: 'Coimbra', date: 'Março 2025', img: '/images/cozinha-branca-lacada.jpg' },
-  { category: 'Cozinhas', units: '8 unidades', title: 'Condomínio em Aveiro', location: 'Aveiro', date: 'Janeiro 2025', img: '/images/cozinha-carvalho.jpg' },
-  { category: 'Carpintaria', units: '45 peças', title: 'Moradia unifamiliar Leiria', location: 'Leiria', date: 'Novembro 2024', img: '/images/cozinha-open-space.png' },
-  { category: 'Carpintaria', units: '6 unidades', title: 'Apartamentos T3 em Viseu', location: 'Viseu', date: 'Outubro 2024', img: '/images/cozinha-branca-2.jpg' },
-  { category: 'Interiores', units: '200 m²', title: 'Escritórios corporativos Porto', location: 'Porto', date: 'Agosto 2024', img: '/images/cozinha-faia.jpg' },
-  { category: 'Obra Completa', units: 'Obra total', title: 'Construção nova em Cantanhede', location: 'Cantanhede', date: 'Julho 2024', img: '/images/card-obras.png' },
 ]
 
 export default function EmpreiteirosPage() {
@@ -80,7 +71,7 @@ export default function EmpreiteirosPage() {
         <Navbar />
 
         {/* ── HERO ── */}
-        <section id="hero" className="relative min-h-[88vh] sm:min-h-screen bg-secondary flex items-center overflow-hidden pt-28 pb-12 sm:pt-32 sm:pb-20 lg:pt-32 lg:pb-20">
+        <section id="hero" className="relative flex items-center overflow-hidden bg-secondary pb-16 pt-28 sm:pb-20 sm:pt-32">
           <div className="absolute inset-0 bg-[linear-gradient(135deg,#1f2427_0%,#2a3034_35%,#15191c_100%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(236,156,72,0.22),transparent_38%)]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_76%,rgba(96,126,142,0.24),transparent_36%)]" />
@@ -95,16 +86,16 @@ export default function EmpreiteirosPage() {
               >
                 <div className="mb-6">
                   <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
-                    <span className="block text-primary">Toda a carpintaria</span>
-                    <span className="block text-primary">para a sua obra,</span>
-                    <span className="block text-white text-[0.95em] italic">sem atrasos!</span>
+                    <span className="block text-white">Toda a carpintaria</span>
+                    <span className="block text-white">para a sua obra,</span>
+                    <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">sem atrasos.</span>
                   </h1>
                   <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">
                     <span className="sm:hidden">Carpintaria sob medida para obras.<br />Tratamos de tudo: das medidas à instalação.</span>
                     <span className="hidden sm:inline">Roupeiros, cozinhas, portas interiores, closets e painéis, etc.<br />Materiais de qualidade, preços mais baixos que as outras carpintarias, prazos cumpridos.</span>
                   </p>
 
-                  <div className="sm:hidden rounded-[30px] border border-white/14 bg-white/[0.09] p-4 shadow-[0_24px_70px_rgba(0,0,0,0.22)] mb-6">
+                  <div className="mb-6 rounded-2xl border border-white/12 bg-white/[0.06] p-2 shadow-[0_20px_55px_rgba(0,0,0,0.18)] sm:hidden">
                     <div className="relative rounded-2xl overflow-hidden border border-white/10 h-[22rem]">
                       <img
                         src="/images/card-obras.png"
@@ -127,7 +118,7 @@ export default function EmpreiteirosPage() {
                   ))}
                 </div>
 
-                <div className="rounded-[2rem] border border-primary/20 bg-primary/10 p-5 mb-6 max-w-xl">
+                <div className="mb-6 max-w-xl border-l-2 border-primary pl-4">
                   <p className="text-base sm:text-lg font-semibold text-white leading-6">
                     Qualidade de topo, aos preços mais baixos do mercado.
                   </p>
@@ -141,14 +132,14 @@ export default function EmpreiteirosPage() {
                     href={WA_LINK_PROPOSTA}
                     target="_blank"
                     rel="noreferrer"
-                    className="inline-flex items-center justify-center gap-3 min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
+                    className="inline-flex min-h-[52px] items-center justify-center gap-3 whitespace-nowrap rounded-xl bg-primary px-7 text-[0.9rem] font-bold text-white shadow-[0_8px_24px_rgba(240,91,19,0.25)] transition hover:bg-primary/90"
                   >
                     <MessageCircle className="w-4 h-4 shrink-0" />
                     Pedir Orçamento Gratuito
                   </a>
                   <a
                     href={TEL_LINK}
-                    className="inline-flex items-center justify-center gap-3 min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-semibold whitespace-nowrap border border-white/25 text-white bg-white/[0.04] hover:bg-white/[0.09] transition-colors"
+                    className="inline-flex min-h-[52px] items-center justify-center gap-3 whitespace-nowrap rounded-xl border border-white/20 bg-white/[0.04] px-7 text-[0.9rem] font-semibold text-white transition-colors hover:bg-white/[0.09]"
                   >
                     Ligar Agora
                   </a>
@@ -165,7 +156,7 @@ export default function EmpreiteirosPage() {
                 transition={{ duration: 0.6, delay: 0.12 }}
                 className="hidden lg:block relative w-full max-w-[760px] mx-auto lg:mx-0 lg:justify-self-end lg:pt-2"
               >
-                <div className="rounded-[30px] border border-white/14 bg-white/[0.09] backdrop-blur-xl p-4 sm:p-5 lg:p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
+                <div className="rounded-2xl border border-white/12 bg-white/[0.06] p-2 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
                   <div className="relative rounded-2xl overflow-hidden border border-white/10 h-[22rem]">
                     <img
                       src="/images/card-obras.png"
@@ -186,18 +177,19 @@ export default function EmpreiteirosPage() {
         </section>
 
         {/* ── SERVICES GRID ── */}
-        <section id="servicos" className="py-12 sm:py-20 bg-[#f7f1e8]">
+        <section id="servicos" className="bg-[#f8f5ef] py-16 sm:py-20">
           <div className="container mx-auto px-4">
-            <div className="text-center mb-14 rounded-[2rem] bg-white px-8 py-10 shadow-sm">
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-slate-950">
+            <div className="mx-auto mb-10 max-w-5xl">
+              <p className="section-kicker mb-3">Serviço completo</p>
+              <h2 className="font-display text-3xl font-bold tracking-[-0.025em] text-slate-950 sm:text-4xl">
                 Tudo o que a sua obra precisa
               </h2>
               
             </div>
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 max-w-5xl mx-auto">
+            <div className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {SERVICES.map((s) => (
-                <div key={s.label} className="flex items-center gap-3 bg-[#efe2d1] border border-[#d8b3a0] rounded-3xl px-4 py-4 shadow-sm">
-                  <s.icon className="w-4 h-4 text-[#8b7355] shrink-0" />
+                <div key={s.label} className="clean-card flex min-h-16 items-center gap-3 rounded-xl px-3.5 py-3.5 sm:px-4">
+                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f7f3ea]"><s.icon className="h-4 w-4 text-primary" /></span>
                   <span className="text-slate-950 text-sm font-medium">{s.label}</span>
                 </div>
               ))}
@@ -228,43 +220,6 @@ export default function EmpreiteirosPage() {
         {/* ── HOW IT WORKS ── */}
         <HowItWorks />
         <FabricoPrazoAdjudicacao />
-
-        {/* ── PROJECTS GALLERY ── */}
-        <section id="projectos" className="py-12 sm:py-20 bg-background">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-14">
-              <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-3">Portfolio</p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold">Projectos Realizados</h2>
-            </div>
-            <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3 max-w-6xl mx-auto">
-              {PROJECTS.map((p) => (
-                <div key={p.title} className="group relative rounded-2xl overflow-hidden border border-border bg-card hover:border-primary/40 hover:shadow-xl transition-all duration-300">
-                  <div className="relative h-56 overflow-hidden">
-                    <img src={p.img} alt={p.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent" />
-                    <span className="absolute top-4 left-4 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">{p.category}</span>
-                    <span className="absolute top-4 right-4 bg-black/60 text-white text-xs px-3 py-1 rounded-full">{p.units}</span>
-                    <div className="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                      <a
-                        href={WA_LINK_PROPOSTA}
-                        target="_blank"
-                        rel="noreferrer"
-                        className="bg-primary text-white font-bold px-5 py-3 rounded-full text-sm hover:bg-primary/90 transition-colors"
-                      >
-                        Projecto Similar
-                      </a>
-                    </div>
-                  </div>
-                  <div className="p-5">
-                    <h3 className="font-bold text-foreground mb-1">{p.title}</h3>
-                    <p className="text-sm text-muted-foreground">{p.location}</p>
-                    <p className="text-xs text-primary font-semibold mt-2">{p.date}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-        </section>
 
         {/* ── MARKET PROOF ── */}
         <section className="py-16 lg:py-20 bg-secondary">
@@ -297,7 +252,7 @@ export default function EmpreiteirosPage() {
                 {
                   icon: Wrench,
                   title: 'Montagem Incluída',
-                  desc: 'As nossas equipas instalam tudo. Do centro ao norte do país, sem custos adicionais.',
+                  desc: 'As nossas equipas fazem a montagem na Região Centro. Outras zonas estão sujeitas a confirmação prévia de disponibilidade.',
                 },
               ].map((card, i) => {
                 const Icon = card.icon
@@ -378,7 +333,7 @@ export default function EmpreiteirosPage() {
 
         {/* ── FINAL CTA ── */}
         <section className="py-20 lg:py-28 relative overflow-hidden bg-secondary">
-          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_0%,rgba(201,136,13,0.10),transparent_55%)]" />
+          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_0%,rgba(240,91,19,0.10),transparent_55%)]" />
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
             <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">Pronto para começar?</p>
@@ -402,7 +357,7 @@ export default function EmpreiteirosPage() {
                 href={WA_LINK_PROPOSTA}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:bg-primary/90 transition-colors text-base shadow-[0_8px_30px_rgba(201,136,13,0.5)]"
+                className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:bg-primary/90 transition-colors text-base shadow-[0_8px_30px_rgba(240,91,19,0.5)]"
               >
                 Pedir Orçamento Gratuito
               </a>

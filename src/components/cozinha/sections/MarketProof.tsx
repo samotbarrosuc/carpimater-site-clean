@@ -21,7 +21,7 @@ const cards = [
   {
     icon: Wrench,
     title: "Montagem Incluída",
-    desc: "As nossas equipas instalam tudo. Do centro ao norte do país, sem custos adicionais.",
+    desc: "As nossas equipas fazem a montagem na Região Centro. Outras zonas estão sujeitas a confirmação prévia de disponibilidade.",
   },
 ];
 

@@ -2,64 +2,49 @@ import { useEffect, useState, type FormEvent } from 'react'
 import { motion } from 'framer-motion'
 import { SimulatorProvider } from '@/context/SimulatorContext'
 import Navbar from '@/components/Navbar'
-import AboutUs from '@/components/AboutUs'
 import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+import TrustBadges from '@/components/TrustBadges'
+import MaterialTicker from '@/components/MaterialTicker'
+import Gallery from '@/components/Gallery'
+import Testimonials from '@/components/Testimonials'
+import { CompareSlider, pairs as beforeAfterPairs } from '@/components/cozinha/sections/BeforeAfter'
+import { getProdutosByVariant } from '@/content/vinil'
+import { formatEur } from '@/lib/calculations'
+import { FAQS } from '@/content/faq'
 import { WHATSAPP_NUMBER, EMAIL } from '@/content/site'
-import { Star, ShieldCheck, Clock3, Layers, Wrench, ChevronRight, Mail, MessageCircle, Phone } from 'lucide-react'
+import { CONTACT_MOBILE_ERROR, sanitizePortugueseMobile, validateContactDetails } from '@/lib/contact-validation'
+import { ShoppingBag, Store, ChevronDown, ChevronRight, Mail, MessageCircle, Phone } from 'lucide-react'
 
 const WA_HOME = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá CarpiMater! Gostaria de saber mais sobre os vossos serviços.')}`
 
-const WHY_CARDS = [
-  {
-    icon: Layers,
-    title: 'Ao preço das grandes superfícies.',
-    desc: 'Sem intermediários desnecessários, os nossos preços são mais competitivos que a média do mercado. O transporte dos materiais é feito por nós e é gratuito. Orçamento claro, sem surpresas no final.',
-  },
-  {
-    icon: ShieldCheck,
-    title: 'Materiais com garantia.',
-    desc: 'Trabalhamos apenas com fornecedores estabelecidos no mercado há décadas. Cada material é escolhido por nós com critério — não existe linha económica na CarpiMater.',
-  },
-  {
-    icon: Wrench,
-    title: 'Feito à medida.',
-    desc: 'Cada projeto é concebido ao gosto e necessidades do cliente, com fornecimento, instalação e acabamentos num único contacto. Sem coordenações complicadas, sem soluções de prateleira.',
-  },
-  {
-    icon: Clock3,
-    title: 'Palavra cumprida.',
-    desc: 'Entregamos em 3 meses após adjudicação — fabrico e entrega incluídos. Não é uma estimativa — é o prazo a que nos comprometemos e que cumprimos obra após obra.',
-  },
-]
-
 const STEPS = [
-  { num: '01', title: 'Simule ou contacte', desc: 'Use o simulador de orçamento ou envie mensagem por WhatsApp. Tentamos sempre dar resposta no próprio dia.' },
-  { num: '02', title: 'Confirmamos os detalhes', desc: 'Acertamos medidas, materiais e datas. O valor do orçamento é o que paga — sem acréscimos no final.' },
-  { num: '03', title: 'Instalação profissional', desc: 'Execução limpa e rápida. Entregamos o espaço pronto a usar com toda a coordenação a nosso cargo.' },
-]
-
-const ZONES = [
-  'Coimbra', 'Aveiro', 'Leiria', 'Condeixa-a-Nova', 'Figueira da Foz',
-  'Cantanhede', 'Montemor-o-Velho', 'Miranda do Corvo', 'Penacova', 'Mealhada',
-  'Anadia', 'Batalha', 'Nazaré', 'Tomar', 'Pombal',
-  'Alcobaça', 'Caldas da Rainha', 'Marinha Grande', 'Óbidos', 'Peniche',
-  'Águeda', 'Albergaria-a-Velha', 'Arouca', 'Ílhavo', 'Ovar',
-  'Vila Nova de Gaia', 'Matosinhos', 'Maia', 'Gondomar', 'Vila do Conde',
-  'Braga', 'Guimarães', 'Barcelos', 'Fafe', 'Vila Verde',
-  'Viseu', 'Lamego', 'Tondela', 'Nelas', 'Mangualde',
+  { num: '01', title: 'Ouvir', desc: 'Perceber o espaço, as medidas e o que precisa de resolver.' },
+  { num: '02', title: 'Decidir', desc: 'Escolher materiais, prioridades e datas com informação clara.' },
+  { num: '03', title: 'Fazer', desc: 'Executar com cuidado e entregar como prometido.' },
 ]
 
 export default function Home() {
   const [contactForm, setContactForm] = useState({ nome: '', contacto: '', mensagem: '' })
+  const featuredProducts = getProdutosByVariant('vinilico').slice(0, 3)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitMessage, setSubmitMessage] = useState<string | null>(null)
+  const [showWhatsAppFallback, setShowWhatsAppFallback] = useState(false)
+  const [openFaq, setOpenFaq] = useState(0)
 
   const handleContactSubmit = async (e: FormEvent) => {
     e.preventDefault()
-    setIsSubmitting(true)
     setSubmitMessage(null)
+    setShowWhatsAppFallback(false)
+
+    const validationError = validateContactDetails(contactForm.nome, contactForm.contacto)
+    if (validationError) {
+      setSubmitMessage(validationError)
+      return
+    }
+
+    setIsSubmitting(true)
 
     try {
       const response = await fetch('/api/contact', {
@@ -67,19 +52,21 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(contactForm),
+        body: JSON.stringify({ ...contactForm, nome: contactForm.nome.trim() }),
       })
 
-      const data = await response.json()
+      await response.json()
 
       if (response.ok) {
         setSubmitMessage('Mensagem enviada com sucesso! Responderemos em breve.')
         setContactForm({ nome: '', contacto: '', mensagem: '' })
       } else {
-        setSubmitMessage(`Erro ao enviar mensagem: ${data.error}`)
+        setSubmitMessage('Não foi possível enviar a mensagem. Contacte-nos através do WhatsApp.')
+        setShowWhatsAppFallback(true)
       }
     } catch (error) {
-      setSubmitMessage('Erro ao enviar mensagem. Tente novamente.')
+      setSubmitMessage('Não foi possível enviar a mensagem. Contacte-nos através do WhatsApp.')
+      setShowWhatsAppFallback(true)
     } finally {
       setIsSubmitting(false)
     }
@@ -92,12 +79,6 @@ export default function Home() {
   }
 
   useEffect(() => {
-    document.title = 'CarpiMater — Pavimentos, Cozinhas e Carpintaria em Coimbra, Aveiro e Leiria'
-    const meta = document.querySelector('meta[name="description"]')
-    if (meta) {
-      meta.setAttribute('content', 'Especialistas em pavimento vinílico, pavimento flutuante e cozinhas por medida. Fornecimento e instalação profissional em Coimbra, Aveiro e Leiria. Orçamento rápido e sem compromisso.')
-    }
-
     const scrollToHashSection = () => {
       const hash = window.location.hash.slice(1)
       if (hash === 'home-contacto' || hash === 'home-contactos' || hash === 'footer-contactos') {
@@ -119,41 +100,37 @@ export default function Home() {
     <SimulatorProvider>
       <main>
         <Navbar />
+        <div className="pt-[76px]">
+          <MaterialTicker />
+        </div>
 
         {/* ── HERO ── */}
-        <section id="home-hero" className="pt-28 pb-12 sm:pt-32 sm:pb-20 bg-secondary text-secondary-foreground relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(201,136,13,0.22),transparent_42%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_80%_75%,rgba(255,255,255,0.07),transparent_38%)]" />
-          <div className="absolute bottom-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
-
-          <div className="container mx-auto px-4 relative">
-            <div className="max-w-5xl mx-auto text-center">
+        <section id="home-hero" className="relative overflow-hidden bg-[#f8f5ef] pt-12 text-slate-950 sm:pt-20">
+          <div className="mx-auto max-w-7xl px-4 pb-14 sm:px-6 sm:pb-20 lg:px-8">
+            <div className="grid items-center gap-10 lg:grid-cols-[0.92fr_1.08fr] lg:gap-16">
+              <div className="relative z-10">
               <motion.div
                 initial={{ opacity: 0, y: 16 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
-                  CarpiMater · Coimbra, Aveiro &amp; Leiria
+                <p className="section-kicker mb-5 flex items-center gap-3">
+                  <span className="h-px w-7 bg-[#f05b13]" /> Carpintaria · Interiores · Pavimentos
                 </p>
-                <h1 className="text-[2rem] sm:text-[2.5rem] lg:text-[3rem] xl:text-[3.5rem] font-display font-bold text-white leading-[1.08] mb-4">
-                  Carpintarias
-                  <span className="block text-primary">que transformam espaços.</span>
+                <h1 className="mb-5 max-w-xl font-display text-[3.25rem] font-bold leading-[0.94] tracking-[-0.045em] text-[#19242e] sm:text-6xl lg:text-7xl">
+                  Carpintaria que <em className="font-serif font-normal italic tracking-[-0.02em] text-[#f05b13]">fica.</em>
                 </h1>
-                <p className="text-white/65 text-sm sm:text-base max-w-2xl mx-auto mb-4 leading-relaxed">
-                  <span className="sm:hidden">Especialistas em cozinhas, pavimentos, roupeiros e móveis.</span>
-                  <span className="hidden sm:inline">Especialistas em cozinhas, pavimentos, roupeiros e móveis. Fabrico e instalação profissional de carpintarias de obra, em toda a região centro de Portugal.</span>
+                <p className="mb-7 max-w-lg text-base leading-7 text-[#40505b] sm:text-lg">
+                  Qualidade e preço, sem compromissos desnecessários. Espaços bem pensados e uma equipa que aparece quando diz que aparece.
                 </p>
-
-                <div className="grid grid-cols-2 sm:flex sm:flex-wrap gap-2 justify-center mb-6 text-xs">
-                  {['Resposta em 24h', 'Orçamento sem compromisso', 'Transporte gratuito', 'Materiais certificados', 'Instalação profissional'].map((b, i) => (
-                    <span key={b} className={`inline-flex items-center gap-1.5 rounded-full border border-white/18 bg-white/8 px-3 py-1.5 text-white/72 font-medium justify-center${i === 4 ? ' col-span-2 sm:col-span-auto' : ''}`}>
-                      <span className="text-primary">✓</span>{b}
-                    </span>
-                  ))}
-                </div>
-
-                <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8 sm:mb-10">
+                <div className="mb-9 flex flex-col gap-3 sm:flex-row">
+                  <a
+                    href="/loja"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#f05b13] px-6 text-sm font-bold text-white shadow-[0_10px_26px_rgba(240,91,19,0.18)] transition hover:bg-[#d94d0d]"
+                  >
+                    <ShoppingBag className="w-4 h-4" />
+                    Ver loja
+                  </a>
                   <a
                     href="/#home-contactos"
                     onClick={(e) => {
@@ -161,220 +138,157 @@ export default function Home() {
                       const target = document.getElementById('home-contactos')
                       if (target) scrollToContactSection(target)
                     }}
-                    className="inline-flex items-center justify-center gap-2 bg-primary text-white px-8 py-4 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors shadow-[0_8px_30px_rgba(201,136,13,0.35)]"
+                    className="inline-flex min-h-12 items-center justify-center gap-2 rounded-xl border border-[#c9c0b4] bg-white/60 px-6 text-sm font-bold text-[#19242e] transition hover:border-[#19242e] hover:bg-white"
                   >
                     <MessageCircle className="w-4 h-4" />
-                    Pedir Orçamento Gratuito
+                    Pedir orçamento
                   </a>
                 </div>
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 max-w-3xl mx-auto w-full">
-                  {[
-                    { label: 'Cozinhas', sub: 'Cozinhas por medida', href: '/cozinha', icon: Wrench, img: '/images/card-cozinhas.png' },
-                    { label: 'Pavimentos', sub: 'Vinílico SPC & Flutuante', href: '/pavimentos', icon: Layers, img: '/images/pavimento-vinilico-sala-coimbra.png' },
-                    { label: 'Construção & Obra', sub: 'Roupeiros, escadas, portas, etc.', href: '/construção', icon: ShieldCheck, img: '/images/card-obras.png' },
-                  ].map(({ label, sub, href, icon: Icon, img }) => (
-                    <a
-                      key={href}
-                      href={href}
-                      className="group relative flex flex-col justify-end rounded-2xl overflow-hidden min-h-[280px] border border-white/10 hover:border-primary/60 transition-all duration-500 shadow-xl hover:shadow-[0_24px_60px_rgba(0,0,0,0.5)]"
-                    >
-                      <img src={img} alt={label} className="absolute inset-0 w-full h-full object-cover scale-105 transition-all duration-700 group-hover:scale-112 group-hover:blur-[2px]" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-black/10" />
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/40 transition-colors duration-500" />
-                      <div className="absolute bottom-0 left-0 right-0 h-0.5 bg-primary scale-x-0 group-hover:scale-x-100 transition-transform duration-500 origin-left" />
-                      <div className="relative z-10 p-6 transition-transform duration-400 group-hover:-translate-y-1">
-                        <div className="mb-2">
-                          <span className="text-white/50 text-xs font-medium uppercase tracking-widest group-hover:text-white/80 transition-colors duration-300">{sub}</span>
-                        </div>
-                        <p className="font-display font-bold text-white leading-tight mb-5 text-xl transition-all duration-300 group-hover:text-[1.45rem]">{label}</p>
-                        <span className="inline-flex items-center gap-1.5 bg-white/0 group-hover:bg-white/15 border border-transparent group-hover:border-white/25 rounded-full px-0 group-hover:px-4 py-0 group-hover:py-2 text-white/60 group-hover:text-white text-xs font-bold transition-all duration-400">
-                          Ver mais <ChevronRight className="w-3.5 h-3.5 transition-transform duration-300 group-hover:translate-x-1" />
-                        </span>
-                      </div>
-                    </a>
-                  ))}
+                <div className="grid max-w-lg grid-cols-3 gap-4 border-t border-[#dcd5ca] pt-5">
+                  <div><strong className="block font-display text-xl text-[#19242e]">40 anos</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">de experiência</span></div>
+                  <div><strong className="block font-display text-xl text-[#19242e]">400+</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">projetos entregues</span></div>
+                  <div><strong className="block font-display text-xl text-[#19242e]">5,0 ★</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">avaliação Google</span></div>
                 </div>
               </motion.div>
-            </div>
-          </div>
-        </section>
-
-        {/* ── EDITORIAL LIFESTYLE ── */}
-        <section className="relative h-[340px] sm:h-[420px] lg:h-[580px] overflow-hidden">
-          <img
-            src="/images/cozinha-renovacao.jpg"
-            alt="Transformação de espaço realizada pela CarpiMater"
-            className="w-full h-full object-cover object-center"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/85 via-black/55 to-black/10" />
-          <div className="absolute inset-0 flex items-center">
-            <div className="container mx-auto px-4">
-              <div className="max-w-lg lg:max-w-2xl">
-                <div className="w-10 lg:w-16 h-px bg-primary mb-6 lg:mb-8" />
-                <p className="text-white font-display font-bold text-2xl sm:text-[1.85rem] lg:text-[3.25rem] leading-tight mb-3 lg:mb-5">
-                  Carpintaria por medida<br />para a sua casa.
-                </p>
-                <p className="text-white/60 text-sm lg:text-base leading-relaxed max-w-xs lg:max-w-md">
-                  Cada obra é tratada com exigência e detalhe, em constante trabalho de equipa com os nossos parceiros de Paços de Ferreira. 
-                </p>
-                <div className="mt-7 lg:mt-10 flex items-center gap-6 sm:gap-8 lg:gap-14">
-                  <div>
-                    <p className="text-xl sm:text-2xl lg:text-5xl font-display font-bold text-primary">400+</p>
-                    <p className="text-[10px] lg:text-xs text-white/45 mt-0.5 lg:mt-2 uppercase tracking-[0.12em]">obras realizadas</p>
-                  </div>
-                  <div className="w-px h-7 lg:h-12 bg-white/18" />
-                  <div>
-                    <p className="text-xl sm:text-2xl lg:text-5xl font-display font-bold text-primary">40</p>
-                    <p className="text-[10px] lg:text-xs text-white/45 mt-0.5 lg:mt-2 uppercase tracking-[0.12em]">anos de exp.</p>
-                  </div>
-                  <div className="w-px h-7 lg:h-12 bg-white/18" />
-                  <div>
-                    <p className="text-xl sm:text-2xl lg:text-5xl font-display font-bold text-primary">5,0</p>
-                    <p className="text-[10px] lg:text-xs text-white/45 mt-0.5 lg:mt-2 uppercase tracking-[0.12em]">no Google</p>
-                  </div>
-                </div>
+              </div>
+              <div className="relative overflow-hidden rounded-[1.75rem] border border-[#d8d0c4] bg-[#19242e] p-2 shadow-[0_24px_70px_rgba(25,36,46,0.16)]">
+                <CompareSlider before={beforeAfterPairs[0].before} after={beforeAfterPairs[0].after} aspectRatio="4/3" />
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── GOOGLE BADGE ── */}
-        <div className="flex justify-center py-8 bg-background">
-          <a href="https://www.google.com/search?q=CarpiMater+Coimbra" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-border bg-card px-5 py-2.5 text-sm shadow-sm hover:border-primary/40 hover:shadow-md transition-all cursor-pointer">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
-            <span className="font-semibold text-foreground">5,0</span>
-            <div className="flex gap-0.5">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-3.5 h-3.5 fill-primary text-primary" />
-              ))}
+        <TrustBadges />
+
+        <section className="bg-[#f8f5ef] px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="max-w-2xl">
+              <p className="section-kicker">O caminho certo começa aqui</p>
+              <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">Escolha como quer <em className="font-serif font-normal italic text-[#f05b13]">avançar.</em></h2>
+              <p className="mt-4 max-w-xl leading-7 text-[#40505b]">Há quem chegue com uma planta. Há quem chegue com uma divisão vazia. Começamos sempre por ouvir.</p>
             </div>
-            <span className="text-muted-foreground">no Google</span>
-          </a>
-        </div>
-
-        {/* ── POR QUE CARPIMATER ── */}
-        <section className="py-20 bg-muted/40 border-y border-border">
-          <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="text-center mb-12">
-                <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Por que nos escolher</p>
-                <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-3">
-                  A decisão mais simples é a certa.
-                </h2>
-                <p className="text-muted-foreground max-w-2xl mx-auto">
-                  Da primeira visita ao acabamento final, gerimos cada detalhe para que não tenha de se preocupar com nada.
-                </p>
-              </div>
-
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-                {WHY_CARDS.map(({ icon: Icon, title, desc }) => (
-                  <motion.div
-                    key={title}
-                    initial={{ opacity: 0, y: 16 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.4 }}
-                    viewport={{ once: true }}
-                    className="bg-card border border-border rounded-2xl p-6 hover:border-primary/40 hover:shadow-md transition-all"
-                  >
-                    <div className="w-10 h-10 rounded-xl bg-primary/12 flex items-center justify-center mb-4">
-                      <Icon className="w-5 h-5 text-primary" />
-                    </div>
-                    <h3 className="font-display font-bold text-foreground mb-2">{title}</h3>
-                    <p className="text-muted-foreground text-sm leading-relaxed">{desc}</p>
-                  </motion.div>
-                ))}
-              </div>
+            <div className="mt-9 grid gap-4 lg:grid-cols-3">
+              <a href="/#home-contactos" className="group clean-card flex min-h-[250px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)] sm:p-7">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f05b13] text-xs font-bold text-white">01</span>
+                <h3 className="mt-8 font-display text-xl font-bold text-[#19242e]">Um projeto à sua medida</h3>
+                <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Cozinhas, roupeiros, escadas e carpintaria pensados para o seu espaço e forma de viver.</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#f05b13]">Pedir orçamento <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
+              </a>
+              <a href="/loja" className="group clean-card flex min-h-[250px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)] sm:p-7">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#19242e] text-xs font-bold text-white">02</span>
+                <h3 className="mt-8 font-display text-xl font-bold text-[#19242e]">Escolher os materiais</h3>
+                <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Pavimentos e rodapés do catálogo original, vendidos por caixas e barras inteiras.</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#f05b13]">Visitar loja <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
+              </a>
+              <a href="/loja" className="group clean-card flex min-h-[250px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)] sm:p-7">
+                <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#e8ded1] text-xs font-bold text-[#19242e]">03</span>
+                <h3 className="mt-8 font-display text-xl font-bold text-[#19242e]">Solicitar aplicação</h3>
+                <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Escolha o material, adicione-o ao carrinho e peça um orçamento previsto para aplicação antes de confirmar a encomenda.</p>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#f05b13]">Pedir instalação <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
+              </a>
             </div>
           </div>
         </section>
 
         {/* ── 3 SERVICE CARDS ── */}
-        <section id="home-servicos" className="py-20 bg-background">
+        <section id="home-servicos" className="bg-white py-16 sm:py-20">
           <div className="container mx-auto px-4">
-            <div className="max-w-4xl mx-auto text-center mb-10">
-              <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">O que fazemos</p>
-              <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-3">
-                Três serviços, uma equipa de confiança
+            <div className="mx-auto mb-9 max-w-6xl">
+              <p className="section-kicker mb-3">Serviços especializados</p>
+              <h2 className="font-display text-3xl font-bold tracking-[-0.025em] text-foreground sm:text-4xl">
+                O que fazemos, com método
               </h2>
-              <p className="text-muted-foreground max-w-2xl mx-auto">
+              <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
                 Mobiliário e toda a carpintaria para sua casa — fornecimento, instalação e acabamentos geridos por nós de início ao fim.
               </p>
             </div>
 
-            <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6">
+            <div className="mx-auto grid max-w-6xl grid-cols-1 gap-4 md:grid-cols-3">
 
               {/* Cozinhas */}
-              <a href="/cozinha" className="group flex flex-col rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/60 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] transition-all duration-300">
-                <div className="relative h-56 overflow-hidden shrink-0">
+              <a href="/cozinha" className="group clean-card flex flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]">
+                <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
                   <img
                     src="/images/cozinha-open-space.png"
                     alt="Cozinha por medida projectada e montada pela CarpiMater"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
                 </div>
-                <div className="p-7 flex flex-col flex-1 items-center text-center">
-                  <h3 className="text-xl font-display font-bold text-foreground mb-2">Cozinhas por Medida</h3>
-                  
-                  
-                  <span className="inline-flex items-center gap-1 text-primary font-semibold text-sm group-hover:gap-2 transition-all">
-                    Ver projetos e pedir proposta <ChevronRight className="w-4 h-4" />
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <p className="section-kicker">Projeto completo</p>
+                  <h3 className="mt-2 font-display text-xl font-bold text-foreground">Cozinhas por medida</h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Desenho, fabrico e montagem adaptados ao espaço e à forma como vive.</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
+                    Ver cozinhas <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </span>
                 </div>
               </a>
 
               {/* Pavimentos — merged Vinílico + Flutuante */}
-              <a href="/pavimentos" className="group flex flex-col rounded-2xl border border-border bg-card overflow-hidden hover:border-primary/60 hover:shadow-[0_12px_40px_rgba(0,0,0,0.12)] transition-all duration-300">
-                <div className="relative h-56 overflow-hidden shrink-0">
+              <a href="/pavimentos" className="group clean-card flex flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]">
+                <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
                   <img
                     src="/images/pavimento-vinilico-sala-coimbra.png"
                     alt="Pavimento vinílico e flutuante instalado pela CarpiMater em Coimbra"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
                 </div>
-                <div className="p-7 flex flex-col flex-1 items-center text-center">
-                  <h3 className="text-xl font-display font-bold text-foreground mb-2">Pavimentos</h3>
-                  
-                  <div className="flex flex-wrap gap-2 mb-4 justify-center">
-                    <span className="rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">Vinílico SPC</span>
-                    <span className="rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">Flutuante</span>
-                  </div>
-                  <span className="inline-flex items-center gap-1 text-primary font-semibold text-sm group-hover:gap-2 transition-all">
-                    Catálogo e Simulador Online <ChevronRight className="w-4 h-4" />
-                  </span>
-                  <div className="flex justify-center mt-6">
-                    <span className="rounded-full border border-emerald-300 bg-emerald-100 px-3 py-1 text-xs font-semibold text-emerald-700">Simulador Online</span>
-                  </div>
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <p className="section-kicker">Vinílico e flutuante</p>
+                  <h3 className="mt-2 font-display text-xl font-bold text-foreground">Pavimentos</h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Materiais resistentes, compra online e aplicação profissional quando precisar.</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary">Ver pavimentos <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
                 </div>
               </a>
 
               {/* Empreiteiros */}
-              <a href="/construção" className="group flex flex-col rounded-2xl border border-primary/30 bg-card overflow-hidden hover:border-primary hover:shadow-[0_12px_40px_rgba(201,136,13,0.15)] transition-all duration-300 relative">
-                <div className="absolute top-3 right-3 z-10 bg-primary text-white text-[10px] font-bold uppercase tracking-widest px-2.5 py-1 rounded-full shadow-md">
-                  Para Obras
-                </div>
-                <div className="relative h-56 overflow-hidden shrink-0">
+              <a href="/construcao" className="group clean-card flex flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]">
+                <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
                   <img
-                    src="/images/cozinha-branca-lacada.jpg"
-                    alt="Carpintaria para empreiteiros e investidores imobiliários — CarpiMater"
+                    src="/images/card-obras.png"
+                    alt="Carpintaria para obras e interiores — CarpiMater"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/15 to-transparent" />
                 </div>
-                <div className="p-7 flex flex-col flex-1 items-center text-center">
-                  <h3 className="text-xl font-display font-bold text-foreground mb-2">Construção &amp; Empreiteiros</h3>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4 flex-1">
-                    Carpintaria completa para obra: roupeiros, cozinhas, portas, closets e painéis. Resposta rápida para empreiteiros e promotores.
-                  </p>
-                  <div className="flex gap-2 mb-5 justify-center">
-                    <span className="rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">Preços de fábrica</span>
-                    <span className="rounded-full border border-primary/30 bg-primary/8 px-3 py-1 text-xs font-semibold text-primary">Prazos garantidos</span>
-                  </div>
-                  <span className="inline-flex items-center gap-1 text-primary font-semibold text-sm group-hover:gap-2 transition-all">
-                    Ver soluções para obra <ChevronRight className="w-4 h-4" />
-                  </span>
+                <div className="flex flex-1 flex-col p-5 sm:p-6">
+                  <p className="section-kicker">Construção e remodelação</p>
+                  <h3 className="mt-2 font-display text-xl font-bold text-foreground">Carpintaria e obra</h3>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Roupeiros, portas, cozinhas e soluções completas para empreiteiros e particulares.</p>
+                  <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary">Ver soluções <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
+                </div>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#eee7dc] px-4 py-16 sm:py-20">
+          <div className="mx-auto max-w-6xl">
+            <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
+              <div className="max-w-xl">
+                <p className="section-kicker">Materiais para durar</p>
+                <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">O pavimento muda <em className="font-serif font-normal italic text-[#f05b13]">tudo.</em></h2>
+                <p className="mt-4 leading-7 text-[#40505b]">Uma seleção pequena e bem escolhida, pronta para ir do ecrã para a sua casa.</p>
+                <p className="mt-1 leading-7 text-[#40505b] sm:mt-3">Compre só o material ou peça instalação.</p>
+              </div>
+              <a href="/loja" className="inline-flex items-center gap-2 font-bold text-[#19242e] transition hover:text-[#f05b13] sm:rounded-xl sm:bg-[#f05b13] sm:px-5 sm:py-3 sm:text-white sm:shadow-[0_8px_20px_rgba(240,91,19,0.22)] sm:hover:bg-[#d94d0d] sm:hover:text-white">Explorar loja <ChevronRight className="h-4 w-4" /></a>
+            </div>
+            <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
+              {featuredProducts.map((product) => (
+                <a href="/loja?categoria=vinilico" key={product.id} className="group overflow-hidden rounded-2xl border border-[#d8d0c4] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(25,36,46,0.08)]">
+                  <div className="aspect-[4/3] overflow-hidden bg-slate-200">{product.imagem && <img src={product.imagem} alt={product.nome} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />}</div>
+                  <div className="p-3.5 sm:p-4"><p className="text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#f05b13]">SPC vinílico</p><h3 className="mt-1.5 truncate font-display text-base font-bold text-[#19242e]">{product.nome}</h3><p className="mt-3 text-sm font-bold text-[#19242e] sm:text-base">{formatEur(product.precoM2)}<span className="text-xs font-medium text-[#19242e]/45">/m²</span></p></div>
+                </a>
+              ))}
+              <a href="/loja" aria-label="Ver mais materiais na loja" className="group relative isolate flex min-h-full flex-col overflow-hidden rounded-2xl border border-[#e4c8a3] bg-[linear-gradient(145deg,#fffdf9_0%,#faecd8_100%)] p-4 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#f05b13]/45 hover:shadow-[0_14px_32px_rgba(115,71,35,0.12)] sm:hidden">
+                <span aria-hidden="true" className="absolute -right-8 -top-8 -z-10 h-28 w-28 rounded-full bg-[#f3c98b]/25 transition-transform duration-500 group-hover:scale-125" />
+                <div className="flex items-start justify-between gap-2">
+                  <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#ead8c1] bg-white text-[#f05b13] shadow-[0_5px_16px_rgba(115,71,35,0.09)]"><Store className="h-5 w-5" /></span>
+                  <span className="rounded-full border border-[#e7ccb0] bg-white/75 px-2.5 py-1 text-[0.52rem] font-bold uppercase tracking-[0.12em] text-[#9a5a2b]">Loja online</span>
+                </div>
+                <div className="mt-auto pt-8">
+                  <p className="text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#b46b34]">Mais acabamentos</p>
+                  <h3 className="mt-1.5 font-display text-lg font-bold leading-tight text-[#3d2b1f]">Ver + na loja</h3>
+                  <span className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-[#f05b13] px-3 py-2 text-xs font-bold text-white shadow-[0_5px_12px_rgba(240,91,19,0.2)] transition-colors group-hover:bg-[#d94e0d]">Explorar catálogo <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" /></span>
                 </div>
               </a>
             </div>
@@ -382,14 +296,14 @@ export default function Home() {
         </section>
 
         {/* ── COMO FUNCIONA ── */}
-        <section className="py-20 bg-secondary text-secondary-foreground relative overflow-hidden">
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(201,136,13,0.12),transparent_55%)]" />
+        <section id="home-processo" className="py-20 bg-secondary text-secondary-foreground relative overflow-hidden">
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_50%,rgba(240,91,19,0.12),transparent_55%)]" />
           <div className="container mx-auto px-4 relative">
             <div className="max-w-5xl mx-auto">
               <div className="text-center mb-12">
                 <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Processo</p>
                 <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-3">
-                  Da ideia à obra em 3 passos
+                  Uma obra com cabeça.
                 </h2>
                 <p className="text-white/65 max-w-xl mx-auto">
                   Simples, rápido e sem surpresas. É assim que a CarpiMater trabalha.
@@ -413,59 +327,51 @@ export default function Home() {
                 ))}
               </div>
 
-              <div className="flex justify-center">
-                <a
-                  href={`/whatsapp-redirect.html?url=${encodeURIComponent(WA_HOME)}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 bg-[#25D366] text-white px-7 py-3.5 rounded-full text-sm font-bold hover:bg-[#1ebe5d] transition-colors"
-                >
-                  Falar por WhatsApp
-                </a>
+            </div>
+          </div>
+        </section>
+
+        {/* ── ZONA DE COBERTURA ── */}
+        <section className="py-16 bg-muted/40 border-y border-border">
+          <div className="container mx-auto px-4">
+            <div className="max-w-5xl mx-auto">
+              <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+                <div className="max-w-xl">
+                  <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Onde actuamos</p>
+                  <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-4">
+                    Pavimentos e carpintaria em Coimbra, Aveiro e Leiria
+                  </h2>
+                  <p className="text-muted-foreground text-sm leading-relaxed">
+                    A CarpiMater é uma loja online de pavimentos e rodapés com preços publicados, apoiada por profissionais de carpintaria. Entregamos e aplicamos pavimentos vinílicos, flutuantes, laminados e rodapés regularmente na Região Centro.
+                  </p>
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Trabalhamos regularmente em Coimbra e arredores, Condeixa-a-Nova, Figueira da Foz, Cantanhede, Mealhada, Lousã, Aveiro, Leiria, Pombal e Marinha Grande. Para outras zonas do país, contacte-nos para confirmarmos disponibilidade.</p>
+                  <a href="/loja" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">Ver preços na loja <ChevronRight className="h-4 w-4" /></a>
+                </div>
+                <div className="grid grid-cols-3 gap-2 sm:gap-3">
+                  {[
+                    ['Coimbra', 'Loja, entrega e aplicação'],
+                    ['Aveiro', 'Entrega e aplicação'],
+                    ['Leiria', 'Entrega e aplicação'],
+                  ].map(([city, detail]) => (
+                    <div key={city} className="clean-card rounded-2xl p-3.5 sm:p-5">
+                      <p className="section-kicker">Região Centro</p>
+                      <h3 className="mt-3 font-display text-lg font-bold text-foreground sm:text-2xl">{city}</h3>
+                      <p className="mt-2 text-xs leading-5 text-muted-foreground sm:text-sm sm:leading-6">{detail}</p>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
           </div>
         </section>
 
-        {/* ── ZONA DE COBERTURA (SEO) ── */}
-        <section className="py-16 bg-muted/40 border-y border-border">
-          <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
-                <div>
-                  <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Onde actuamos</p>
-                  <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-4">
-                    Coimbra, Aveiro, Leiria e toda a região centro
-                  </h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed mb-4">
-                    A CarpiMater opera em toda a zona centro de Portugal. Fazemos instalação de pavimentos vinílicos e flutuantes, cozinhas por medida e carpintaria de obra em Coimbra, Aveiro, Leiria, Porto, Braga e Viseu, e concelhos adjacentes.
-                  </p>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    Para projectos fora desta zona, contacte-nos — avaliamos caso a caso com deslocação acordada.
-                  </p>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {ZONES.map((zone) => (
-                    <span
-                      key={zone}
-                      className="rounded-full border border-border bg-card px-4 py-1.5 text-sm font-medium text-foreground/80 hover:border-primary/50 hover:text-foreground transition-colors cursor-default"
-                    >
-                      {zone}
-                    </span>
-                  ))}
-                  <span className="rounded-full border border-primary/30 bg-primary/8 px-4 py-1.5 text-sm font-medium text-primary cursor-default">
-                    + mais concelhos
-                  </span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
+        <Gallery />
+        <Testimonials />
 
         {/* ── CONTACTOS ── */}
         <section
           id="home-contactos"
-          className="py-20 bg-background border-t border-border"
+          className="border-t border-border bg-white py-16 sm:py-20"
           style={{ scrollMarginTop: '4rem' }}
         >
           <div className="container mx-auto px-4">
@@ -524,24 +430,38 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div id="home-contacto" style={{ scrollMarginTop: '4rem' }} className="bg-card border border-border rounded-2xl p-6 sm:p-8">
+                <div id="home-contacto" style={{ scrollMarginTop: '4rem' }} className="clean-card rounded-2xl p-6 sm:p-8">
                   <h3 className="font-display font-bold text-foreground text-lg mb-1">Enviar mensagem</h3>
                   <p className="text-muted-foreground text-sm mb-6">Preencha o formulário e enviaremos um email com a sua mensagem.</p>
                   <form onSubmit={handleContactSubmit} className="flex flex-col gap-3">
                     <input
+                      name="nome"
+                      autoComplete="name"
                       value={contactForm.nome}
                       onChange={(e) => setContactForm(f => ({ ...f, nome: e.target.value }))}
                       placeholder="O seu nome *"
                       required
+                      minLength={2}
                       className="rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary transition-colors placeholder:text-muted-foreground w-full"
                     />
                     <input
+                      name="telemovel"
+                      type="tel"
+                      inputMode="numeric"
+                      autoComplete="tel"
                       value={contactForm.contacto}
-                      onChange={(e) => setContactForm(f => ({ ...f, contacto: e.target.value }))}
-                      placeholder="Telefone *"
+                      onChange={(e) => setContactForm(f => ({ ...f, contacto: sanitizePortugueseMobile(e.target.value) }))}
+                      onInvalid={(event) => event.currentTarget.setCustomValidity(CONTACT_MOBILE_ERROR)}
+                      onInput={(event) => event.currentTarget.setCustomValidity('')}
+                      placeholder="Telemóvel *"
                       required
+                      minLength={9}
+                      maxLength={9}
+                      pattern="9[0-9]{8}"
+                      title={CONTACT_MOBILE_ERROR}
                       className="rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary transition-colors placeholder:text-muted-foreground w-full"
                     />
+                    <p className="-mt-1 px-1 text-xs text-muted-foreground">9 algarismos, começado por 9.</p>
                     <textarea
                       value={contactForm.mensagem}
                       onChange={(e) => setContactForm(f => ({ ...f, mensagem: e.target.value }))}
@@ -552,7 +472,7 @@ export default function Home() {
                     <button
                       type="submit"
                       disabled={isSubmitting}
-                      className="flex items-center justify-center gap-2 bg-primary text-white px-6 py-3.5 rounded-full text-sm font-bold hover:bg-primary/90 transition-colors mt-1 disabled:opacity-50 disabled:cursor-not-allowed"
+                      className="mt-1 flex items-center justify-center gap-2 rounded-xl bg-primary px-6 py-3.5 text-sm font-bold text-white transition-colors hover:bg-primary/90 disabled:cursor-not-allowed disabled:opacity-50"
                     >
                       <MessageCircle className="w-4 h-4" />
                       {isSubmitting ? 'Enviando...' : 'Enviar mensagem'}
@@ -561,6 +481,11 @@ export default function Home() {
                       <p className={`text-xs text-center ${submitMessage.includes('sucesso') ? 'text-green-600' : 'text-red-600'}`}>
                         {submitMessage}
                       </p>
+                    )}
+                    {showWhatsAppFallback && (
+                      <a href={WA_HOME} target="_blank" rel="noopener noreferrer" className="flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#25D366]/35 bg-[#25D366]/10 px-4 text-sm font-bold text-[#147a38] transition hover:bg-[#25D366]/15">
+                        <MessageCircle className="h-4 w-4" />Contactar via WhatsApp
+                      </a>
                     )}
                     <p className="text-xs text-muted-foreground text-center">
                       Responderemos em menos de 24 horas.
@@ -572,7 +497,12 @@ export default function Home() {
           </div>
         </section>
 
-        <AboutUs />
+        <section id="home-faq" className="bg-[#f7f3ea] px-4 py-16 sm:py-24">
+          <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+            <div><p className="section-kicker">Antes de começar</p><h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">Perguntas <em className="font-serif font-normal italic text-[#f05b13]">honestas.</em></h2><p className="mt-4 leading-7 text-[#40505b]">Se a sua dúvida não está aqui, fale connosco. Respondemos com clareza.</p></div>
+            <div className="divide-y divide-[#d8ccbc] border-y border-[#d8ccbc]">{FAQS.slice(0, 4).map((faq, index) => <div key={faq.question}><button type="button" aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? -1 : index)} className="flex w-full items-center justify-between gap-4 py-5 text-left font-semibold text-[#19242e]"><span>{faq.question}</span><ChevronDown className={`h-5 w-5 shrink-0 text-[#f05b13] transition-transform ${openFaq === index ? 'rotate-180' : ''}`} /></button>{openFaq === index && <p className="pb-5 text-sm leading-6 text-[#40505b]">{faq.answer}</p>}</div>)}</div>
+          </div>
+        </section>
         <Footer />
         <FloatingWhatsApp />
       </main>

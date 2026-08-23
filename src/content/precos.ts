@@ -4,7 +4,7 @@
  * ============================================================
  *
  * Edite aqui todos os valores usados no cálculo do orçamento.
- * TODOS OS VALORES SÃO SEM IVA.
+ * TODOS OS VALORES SÃO COM IVA INCLUÍDO.
  *
  *   MÃO DE OBRA
  *     PRECO_MAO_OBRA_M2          → custo de aplicação por m²
@@ -20,8 +20,8 @@
  *
  *   DESLOCAÇÃO
  *     CUSTO_KM                   → custo por km (ida + volta)
- *     M2_POR_DESLOCACAO          → m² máximos por viagem (define nº de deslocações)
- *     RODAPE_ML_POR_DESLOCACAO   → metros de rodapé máximos por viagem
+ *     M2_POR_DESLOCACAO          → m² máximos aplicados por dia
+ *     RODAPE_ML_POR_DESLOCACAO   → metros de rodapé máximos aplicados por dia
  *
  *   MARGEM DA ESTIMATIVA
  *     ESTIMATIVA_MIN_MULTIPLIER  → 0.98 = valor mínimo 2% abaixo do base
@@ -31,18 +31,18 @@
 
 // ── Mão de obra ────────────────────────────────────────────────────────────────
 
-/** Custo de aplicação por m² (sem IVA) */
+/** Custo de aplicação por m² (IVA incluído) */
 export const PRECO_MAO_OBRA_M2 = 9
 
-/** Custo de aplicação do rodapé por metro linear (sem IVA) */
+/** Custo de aplicação do rodapé por metro linear (IVA incluído) */
 export const PRECO_MAO_OBRA_RODAPE_ML = 3.2
 
 // ── Materiais ──────────────────────────────────────────────────────────────────
 
-/** Preço base do rodapé por metro linear (sem IVA) */
-export const PRECO_RODAPE_ML = 3.09
+/** Preço base do rodapé por metro linear (IVA incluído) */
+export const PRECO_RODAPE_ML = 4.00
 
-/** Preço de cada perfil de transição por unidade (sem IVA) */
+/** Preço de cada perfil de transição por unidade (IVA incluído) */
 export const PRECO_PERFIL_UN = 15
 
 // ── Desperdício ────────────────────────────────────────────────────────────────
@@ -56,12 +56,12 @@ export const DESPERDICIO_RODAPE = 1.10
 // ── Deslocação ─────────────────────────────────────────────────────────────────
 
 /** Custo por km de deslocação (ida + volta) */
-export const CUSTO_KM = 0.22
+export const CUSTO_KM = 0.35
 
-/** Área máxima (m²) transportada por viagem — define o número de deslocações */
-export const M2_POR_DESLOCACAO = 15
+/** Área máxima (m²) aplicada por dia */
+export const M2_POR_DESLOCACAO = 30
 
-/** Metros lineares de rodapé máximos por viagem */
+/** Metros lineares de rodapé máximos aplicados por dia */
 export const RODAPE_ML_POR_DESLOCACAO = 50
 
 // ── Margem da estimativa ───────────────────────────────────────────────────────

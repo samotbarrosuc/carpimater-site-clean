@@ -12,14 +12,6 @@ import { getSiteVariantContent, getSiteVariantFromPath, getWhatsAppUrl } from '@
 import { getGalleryItemsByVariant } from '@/content/galeria'
 import { CompareSlider, pairs as beforeAfterPairs } from '@/components/cozinha/sections/BeforeAfter'
 
-function scrollToSection(id: string) {
-  const element = document.getElementById(id)
-  if (element) {
-    const top = element.getBoundingClientRect().top + window.scrollY - 80
-    window.scrollTo({ top, behavior: 'smooth' })
-  }
-}
-
 export default function Hero() {
   const [pathname] = useLocation()
   const siteVariant = getSiteVariantFromPath(pathname)
@@ -80,10 +72,10 @@ export default function Hero() {
         <>
           <div
             className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-[1.02]"
-            style={{ backgroundImage: 'url("/images/ChatGPT Image 31_03_2026, 18_59_26.png")' }}
+            style={{ backgroundImage: 'url("/images/pavimento-vinilico-sala-coimbra.png")' }}
           />
           <div className="absolute inset-0 bg-gradient-to-br from-secondary/[0.97] via-secondary/80 to-secondary/32 sm:bg-gradient-to-r sm:from-secondary/[0.95] sm:via-secondary/72 sm:to-secondary/16" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,rgba(201,136,13,0.22),transparent_42%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,rgba(240,91,19,0.22),transparent_42%)]" />
           <div className="absolute inset-y-0 left-0 w-[54%] bg-gradient-to-r from-black/28 via-transparent to-transparent pointer-events-none" />
         </>
       )}
@@ -108,10 +100,10 @@ export default function Hero() {
                 <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
                   <span className="block text-white"></span>
                   <span className="block text-primary">Cozinhas à medida</span>
-                  <span className="block text-white">ao preço de Ikea.</span>
+                  <span className="block text-white">a preço direto de fábrica.</span>
                 </h1>
                 <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">
-                  Fabrico em Paços de Ferreira e montagem profissional incluída.<br />Qualidade superior à das grandes superfícies, a preços semelhantes.
+                  Fabrico em Paços de Ferreira e montagem profissional incluída.<br />Qualidade superior, a preço direto de fábrica.
                 </p>
                 <div className="w-full max-w-xl mx-auto mb-8 rounded-[1.75rem] overflow-hidden border border-white/10 bg-white/5 shadow-sm">
                   <CompareSlider before={beforeAfterPairs[0].before} after={beforeAfterPairs[0].after} aspectRatio="16/9" />
@@ -132,18 +124,7 @@ export default function Hero() {
             {!isKitchen && (
             <div className="w-full max-w-[760px]">
               <div className="text-sm sm:text-lg md:text-[1.3rem] text-white/90 leading-relaxed mb-3 text-left space-y-1">
-                <p className="flex items-start gap-2">
-                  <span className="shrink-0">①</span>
-                  <span>{siteContent.heroStepOneText}</span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <span className="shrink-0">②</span>
-                  <span>Receba o orçamento em segundos.</span>
-                </p>
-                <p className="flex items-start gap-2">
-                  <span className="shrink-0">③</span>
-                  <span>Avance com uma das nossas equipas especializadas.</span>
-                </p>
+                <p>{siteContent.heroStepOneText} Veja modelos, preços e condições na loja.</p>
               </div>
             </div>
             )}
@@ -173,29 +154,19 @@ export default function Hero() {
                     href={getWhatsAppUrl(undefined, siteVariant)}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full sm:w-auto inline-flex items-center justify-center gap-3 min-h-[56px] px-8 py-3.5 rounded-full text-[0.95rem] font-bold whitespace-nowrap transition-all bg-primary text-white hover:bg-primary/90 shadow-[0_8px_30px_rgba(201,136,13,0.45)]"
+                    className="inline-flex min-h-[52px] w-full items-center justify-center gap-3 whitespace-nowrap rounded-xl bg-primary px-7 text-[0.9rem] font-bold text-white shadow-[0_8px_24px_rgba(240,91,19,0.24)] transition hover:bg-primary/90 sm:w-auto"
                   >
                     <MessageCircle className="w-4 h-4 shrink-0" />
                     Pedir Orçamento Gratuito
                   </a>
                 ) : (
-                  <>
-                    <button
-                      type="button"
-                      onClick={() => { scrollToSection('catalogo') }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center min-h-[56px] px-7 lg:px-6 py-3 rounded-full text-[0.95rem] font-semibold whitespace-nowrap transition-all border border-white/20 bg-white/10 text-white hover:bg-white/20"
-                    >
-                      Ver catálogo
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() => { scrollToSection('simulador') }}
-                      className="w-full sm:w-auto inline-flex items-center justify-center min-h-[56px] px-7 lg:px-6 py-3 rounded-full text-[0.95rem] font-semibold whitespace-nowrap transition-all bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_12px_30px_rgba(201,136,13,0.28)]"
-                    >
-                      Simular orçamento
-                    </button>
-                  </>
+                  <a
+                    href={`/loja?categoria=${siteVariant}`}
+                    className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary px-7 text-[0.9rem] font-bold text-primary-foreground shadow-[0_8px_24px_rgba(240,91,19,0.22)] transition hover:bg-primary/90 sm:w-auto"
+                  >
+                    Ver {siteVariant === 'vinilico' ? 'vinílicos' : 'flutuantes'} na loja
+                    <ChevronRight className="h-4 w-4" />
+                  </a>
                 )}
               </div>
             </div>
@@ -271,7 +242,7 @@ export default function Hero() {
                 ))}
               </div>
 
-              <div className="rounded-[30px] border border-white/14 bg-white/[0.09] backdrop-blur-xl p-4 sm:p-5 lg:p-6 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
+              <div className="rounded-2xl border border-white/12 bg-white/[0.07] p-2 shadow-[0_24px_70px_rgba(0,0,0,0.22)] sm:p-3">
                 <div className="relative rounded-2xl overflow-hidden border border-white/10 h-56 sm:h-64 lg:h-[22rem]">
                   <img
                     src={galleryItems[currentProjectIndex]?.image}

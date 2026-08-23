@@ -1,4 +1,4 @@
-/**
+/*  *//**
  * ============================================================
  * CATÁLOGO DE RODAPÉS
  * ============================================================
@@ -6,7 +6,7 @@
  * Edite aqui toda a informação dos rodapés:
  *   - nome          → nome exibido no catálogo e no simulador
  *   - referencia    → referência interna (ex: ROD-001)
- *   - precoMl       → preço por metro linear SEM IVA
+ *   - precoMl       → preço por metro linear (IVA incluído)
  *   - cor           → cor hexadecimal do acabamento (ex: '#C9A96E')
  *   - imagem        → caminho da foto em /public/
  *                     Ex: '/images/produtos-rodape/foto.jpg'
@@ -25,7 +25,7 @@ export interface RodapeProduto {
   nome: string
   /** Referência interna */
   referencia: string
-  /** Preço por metro linear (sem IVA) */
+  /** Preço por metro linear (IVA incluído) */
   precoMl: number
   /** Cor hexadecimal para o swatch */
   cor: string
@@ -51,7 +51,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Branco Liso',
     referencia: 'ROD-001',
-    precoMl: 3.12,
+    precoMl: 4.00,
     cor: '#FFFFFF',
     imagem: '/images/produtos-rodape/rodape pvc branco liso.jpg',
     material: 'PVC',
@@ -61,7 +61,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Carvalho Mel',
     referencia: 'ROD-002',
-    precoMl: 4.29,
+    precoMl: 4.00,
     cor: '#C9A96E',
     // imagem: '/images/produtos-rodape/foto.jpg',   ← adicione quando tiver foto
     material: 'PVC',
@@ -71,7 +71,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Carvalho Nogal',
     referencia: 'ROD-003',
-    precoMl: 4.29,
+    precoMl: 4.00,
     cor: '#8B8680',
     // imagem: '/images/produtos-rodape/foto.jpg',
     material: 'PVC',
@@ -81,7 +81,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Eucalipto',
     referencia: 'ROD-004',
-    precoMl: 4.29,
+    precoMl: 4.00,
     cor: '#B5935A',
     // imagem: '/images/produtos-rodape/foto.jpg',
     material: 'PVC',
@@ -91,7 +91,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Oliveira',
     referencia: 'ROD-005',
-    precoMl: 4.29,
+    precoMl: 4.00,
     cor: '#D4C4A0',
     // imagem: '/images/produtos-rodape/foto.jpg',
     material: 'PVC',
@@ -101,7 +101,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Tanzânia Almond',
     referencia: 'ROD-006',
-    precoMl: 4.29,
+    precoMl: 4.00,
     cor: '#E8D5B0',
     // imagem: '/images/produtos-rodape/foto.jpg',
     material: 'PVC',
@@ -111,7 +111,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Tanzânia Coconut',
     referencia: 'ROD-007',
-    precoMl: 4.29,
+    precoMl: 4.00,
     cor: '#3D2B1F',
     // imagem: '/images/produtos-rodape/foto.jpg',
     material: 'PVC',
@@ -121,7 +121,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Tanzânia Grey',
     referencia: 'ROD-008',
-    precoMl: 4.29,
+    precoMl: 4.00,
     cor: '#6B3A2A',
     // imagem: '/images/produtos-rodape/foto.jpg',
     material: 'PVC',
@@ -131,7 +131,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Tanzânia Natural',
     referencia: 'ROD-009',
-    precoMl: 4.29,
+    precoMl: 4.00,
     cor: '#B0ADB0',
     // imagem: '/images/produtos-rodape/foto.jpg',
     material: 'PVC',
@@ -141,7 +141,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Tanzânia Silver',
     referencia: 'ROD-010',
-    precoMl: 4.29,
+    precoMl: 4.00,
     cor: '#F5F0E8',
     // imagem: '/images/produtos-rodape/foto.jpg',
     material: 'PVC',

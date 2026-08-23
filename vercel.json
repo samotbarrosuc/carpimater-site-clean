@@ -1,6 +1,11 @@
 {
+  "cleanUrls": true,
+  "redirects": [
+    { "source": "/construção", "destination": "/construcao", "permanent": true },
+    { "source": "/empreiteiros", "destination": "/construcao", "permanent": true }
+  ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/((?!api/|sitemap\\.xml|robots\\.txt).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|sitemap\\.xml|robots\\.txt|loja|pavimentos|vinilico|flutuante|rodapes|cozinha|construcao|contactos|encomenda|politica-de-privacidade).*)", "destination": "/index.html" }
   ]
 }

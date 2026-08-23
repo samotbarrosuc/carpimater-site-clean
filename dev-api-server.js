@@ -45,6 +45,40 @@ class MockResponse {
 
 // Simple API handlers
 const handlers = {
+  '/api/encomenda': async (req, res) => {
+    if (req.method !== 'POST') {
+      return new MockResponse(res).status(405).json({ error: 'Method not allowed' });
+    }
+
+    const body = JSON.parse(req.body || '{}');
+    if (!process.env.RESEND_API_KEY) {
+      return new MockResponse(res).status(503).json({ error: 'Email service not configured' });
+    }
+
+    try {
+      const resend = new Resend(process.env.RESEND_API_KEY);
+      const to = process.env.NOTIFICATION_EMAIL?.trim() || 'tomas.a.barros@hotmail.com';
+      const from = process.env.RESEND_FROM?.trim() || 'CarpiMater <onboarding@resend.dev>';
+      const items = Array.isArray(body.items) ? body.items : [];
+      const itemLines = items.map((item) => `${item.name} - ${item.units} ${item.kind === 'flooring' ? 'caixas' : 'barras'} - ${item.suppliedAmount} ${item.kind === 'flooring' ? 'm²' : 'm'}`).join('\n');
+      if (!body.comprovativo?.name || !body.comprovativo?.base64) {
+        return new MockResponse(res).status(400).json({ error: 'Comprovativo em falta' });
+      }
+      const { error } = await resend.emails.send({
+        from,
+        to: [to],
+        replyTo: body.email,
+        subject: `Nova encomenda ${body.reference ? `[${body.reference}] ` : ''}- ${body.nome || 'Cliente'}`,
+        html: `<h2>Nova encomenda CarpiMater</h2>${body.reference ? `<p><strong>Referência:</strong> ${body.reference}</p>` : ''}<p><strong>Cliente:</strong> ${body.nome || 'N/A'}</p><p><strong>Telefone:</strong> ${body.telefone || 'N/A'}</p><p><strong>Email:</strong> ${body.email || 'N/A'}</p><p><strong>Morada:</strong> ${body.morada || 'N/A'}</p><p><strong>Opção:</strong> ${body.delivery || 'N/A'}</p><p><strong>Pagamento:</strong> ${body.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}</p><p><strong>Comprovativo anexado:</strong> ${body.comprovativo.name}</p><pre>${itemLines}</pre><p>Total: ${body.subtotal || 0} €</p>`,
+        text: `Nova encomenda de ${body.nome || 'Cliente'}${body.reference ? ` (referência ${body.reference})` : ''}\n\nPagamento: ${body.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}\nComprovativo anexado: ${body.comprovativo.name}\n\n${itemLines}\n\nTotal: ${body.subtotal || 0} €`,
+        attachments: [{ filename: body.comprovativo.name, content: Buffer.from(body.comprovativo.base64, 'base64'), contentType: body.comprovativo.type }],
+      });
+      if (error) return new MockResponse(res).status(502).json({ error: error.message || 'Falha ao enviar email' });
+      return new MockResponse(res).json({ ok: true });
+    } catch (error) {
+      return new MockResponse(res).status(500).json({ error: error.message || 'Erro ao enviar email' });
+    }
+  },
   '/api/simulacao': async (req, res) => {
     if (req.method !== 'POST') {
       return new MockResponse(res).status(405).json({ error: 'Method not allowed' });
@@ -124,6 +158,13 @@ const handlers = {
     }
 
     const body = JSON.parse(req.body || '{}');
+    const nome = String(body.nome || '').trim();
+    const contacto = String(body.contacto || '');
+    if (nome.length < 2 || !/^9\d{8}$/.test(contacto)) {
+      return new MockResponse(res).status(400).json({ error: 'Indique o nome e um telemóvel com 9 algarismos, começado por 9.' });
+    }
+    body.nome = nome;
+    body.contacto = contacto;
     console.log('📧 Contacto enviado:', {
       nome: body.nome,
       telefone: body.contacto,

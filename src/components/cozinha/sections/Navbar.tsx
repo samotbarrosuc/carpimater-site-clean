@@ -20,7 +20,7 @@ const SERVICE_PILLS = [
   { label: "Vinílico", href: "/vinilico" },
   { label: "Flutuante", href: "/flutuante" },
   { label: "Cozinhas", href: "/cozinha", active: true },
-  { label: "Construção", href: "/construção" },
+  { label: "Construção", href: "/construcao" },
 ];
 
 export default function Navbar() {

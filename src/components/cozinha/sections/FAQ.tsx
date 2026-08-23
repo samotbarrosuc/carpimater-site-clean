@@ -9,16 +9,16 @@ import {
 
 const faqs = [
   {
-    q: "Os preços são competitivos em relação ao IKEA?",
-    a: "Sim. Os nossos preços são semelhantes ou até mais baixos que as grandes superfícies — com uma qualidade de materiais e acabamentos muito superior. A longo prazo, a diferença nota-se claramente.",
+    q: "Os preços são competitivos?",
+    a: "Sim. Preços diretos de fábrica, com uma qualidade de materiais e acabamentos muito superior. A longo prazo, a diferença nota-se claramente.",
   },
   {
     q: "Qual é o prazo habitual de entrega e montagem?",
     a: "Entre 8 a 10 semanas desde a aprovação final do projecto até à conclusão da montagem. Este prazo depende da complexidade e dimensão da cozinha. Cumprimos o que acordamos.",
   },
   {
-    q: "Fazem projectos e montagem em todo o país?",
-    a: "Fabricamos em Paços de Ferreira e fazemos montagem em toda a região centro — Coimbra, Leiria, Viseu, Aveiro, Porto e arredores. Também nos deslocamos a outras zonas do país consoante o projecto.",
+    q: "Fazem projetos e montagem fora da Região Centro?",
+    a: "A montagem regular abrange a Região Centro. Para projetos noutras zonas do país, contacte-nos primeiro para confirmarmos disponibilidade.",
   },
   {
     q: "A montagem está incluída no preço?",
