@@ -1,14 +1,25 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
 import { z } from 'zod'
-import { getProdutoById } from '../src/content/vinil'
-import { getRodapeById } from '../src/content/rodapes'
 
-// Keep the order function independent from browser-facing modules and their
-// Vite aliases. Importing calculations.ts here makes the serverless function
-// try to resolve "@/content/precos" at runtime.
+// Keep this serverless function self-contained. The Vercel runtime loads API
+// modules independently and cannot resolve the frontend's Vite aliases or its
+// extensionless TypeScript imports during invocation.
 const FLOORING_BOX_AREA_M2 = 1.76
 const BASEBOARD_BAR_LENGTH_M = 2.25
+const FLOORING_NAMES = ['Carvalho Mel', 'Carvalho Nogal', 'Eucalipto', 'Oliveira', 'Tanzânia Almond', 'Tanzânia Coconut', 'Tanzânia Grey', 'Tanzânia Natural', 'Tanzânia Silver']
+const BASEBOARD_NAMES = ['Branco Liso', 'Carvalho Mel', 'Carvalho Nogal', 'Eucalipto', 'Oliveira', 'Tanzânia Almond', 'Tanzânia Coconut', 'Tanzânia Grey', 'Tanzânia Natural', 'Tanzânia Silver']
+
+const getOrderProduct = (kind: 'flooring' | 'baseboard', productId: number) => {
+  const names = kind === 'flooring' ? FLOORING_NAMES : BASEBOARD_NAMES
+  const name = names[productId - 1]
+  if (!name) return null
+  return {
+    name,
+    reference: `${kind === 'flooring' ? 'VIN' : 'ROD'}-${String(productId).padStart(3, '0')}`,
+    unitPrice: kind === 'flooring' ? 21.5 : 4,
+  }
+}
 
 const itemSchema = z.object({
   productId: z.number().int().positive(), name: z.string(), reference: z.string(), kind: z.enum(['flooring', 'baseboard']), units: z.number().int().positive(),
@@ -33,15 +44,15 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const data = parsed.data
   const verifiedItems = []
   for (const item of data.items) {
-    if (item.kind === 'flooring') {
-      const product = getProdutoById(item.productId, 'vinilico')
-      if (!product || product.sobConsulta) return res.status(400).json({ error: 'Produto indisponível' })
-      verifiedItems.push({ ...item, name: product.nome, reference: product.referencia, unitPrice: product.precoM2, suppliedAmount: item.units * FLOORING_BOX_AREA_M2 })
-    } else {
-      const product = getRodapeById(item.productId)
-      if (!product) return res.status(400).json({ error: 'Produto indisponível' })
-      verifiedItems.push({ ...item, name: product.nome, reference: product.referencia, unitPrice: product.precoMl, suppliedAmount: item.units * BASEBOARD_BAR_LENGTH_M })
-    }
+    const product = getOrderProduct(item.kind, item.productId)
+    if (!product) return res.status(400).json({ error: 'Produto indisponível' })
+    verifiedItems.push({
+      ...item,
+      name: product.name,
+      reference: product.reference,
+      unitPrice: product.unitPrice,
+      suppliedAmount: item.units * (item.kind === 'flooring' ? FLOORING_BOX_AREA_M2 : BASEBOARD_BAR_LENGTH_M),
+    })
   }
   const verifiedSubtotal = verifiedItems.reduce((total, item) => total + item.units * (item.kind === 'flooring' ? FLOORING_BOX_AREA_M2 : BASEBOARD_BAR_LENGTH_M) * item.unitPrice, 0)
   const apiKey = process.env.RESEND_API_KEY
