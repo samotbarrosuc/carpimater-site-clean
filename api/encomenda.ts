@@ -36,6 +36,7 @@ const itemSchema = z.object({
 const applicationQuoteSchema = z.object({
   distrito: z.string().min(1),
   concelho: z.string().min(1),
+  preferredDate: z.string().trim().max(50).optional(),
   area: z.number().positive(),
   rodape: z.number().nonnegative(),
   applicationTotal: z.number().nonnegative(),
@@ -121,6 +122,7 @@ function buildEmailContent(data: OrderData, items: VerifiedItem[], verifiedSubto
     ? `<p style="margin:0 0 4px;font-weight:700;font-size:13px;text-transform:uppercase;color:#374151">Orçamento previsto de aplicação</p>
        <table style="border-collapse:collapse;margin-bottom:18px">
          ${row('Local', `${escapeHtml(data.applicationQuote.concelho)}, ${escapeHtml(data.applicationQuote.distrito)}`)}
+         ${data.applicationQuote.preferredDate ? row('Data pretendida', escapeHtml(data.applicationQuote.preferredDate)) : ''}
          ${row('Área a aplicar', `${formatQuantity(data.applicationQuote.area)} m²`)}
          ${row('Rodapé a aplicar', `${formatQuantity(data.applicationQuote.rodape)} m`)}
          ${row('Estimativa', `<strong>${formatEur(data.applicationQuote.applicationTotal)}</strong> — não incluída no pagamento`)}
@@ -174,6 +176,7 @@ ${applicationHtml}
         '',
         'ORÇAMENTO PREVISTO DE APLICAÇÃO (não incluído no pagamento)',
         `Local: ${data.applicationQuote.concelho}, ${data.applicationQuote.distrito}`,
+        ...(data.applicationQuote.preferredDate ? [`Data pretendida: ${data.applicationQuote.preferredDate}`] : []),
         `Área: ${formatQuantity(data.applicationQuote.area)} m²`,
         `Rodapé: ${formatQuantity(data.applicationQuote.rodape)} m`,
         `Estimativa: ${formatEur(data.applicationQuote.applicationTotal)}`,

@@ -7,6 +7,7 @@ import type { CartItem } from '@/lib/cart'
 export interface ApplicationQuoteData {
   distrito: string
   concelho: string
+  preferredDate?: string
   area: number
   rodape: number
   estimate: EstimateResult
@@ -88,6 +89,7 @@ function EditableApplicationAmount({
 export default function ApplicationQuote({ items, onChange }: { items: CartItem[]; onChange: (quote: ApplicationQuoteData | null) => void }) {
   const [distrito, setDistrito] = useState('')
   const [concelho, setConcelho] = useState('')
+  const [preferredDate, setPreferredDate] = useState('')
   const [areaOverride, setAreaOverride] = useState<number | null>(null)
   const [rodapeOverride, setRodapeOverride] = useState<number | null>(null)
   const [manualRodape, setManualRodape] = useState(false)
@@ -131,8 +133,8 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
     : 0
 
   useEffect(() => {
-    onChange(estimate && travel ? { distrito, concelho, area, rodape, estimate, applicationTotal } : null)
-  }, [applicationTotal, area, concelho, distrito, estimate, onChange, rodape, travel])
+    onChange(estimate && travel ? { distrito, concelho, preferredDate: preferredDate.trim() || undefined, area, rodape, estimate, applicationTotal } : null)
+  }, [applicationTotal, area, concelho, distrito, estimate, onChange, preferredDate, rodape, travel])
 
   return (
     <div className="mt-4 overflow-hidden rounded-2xl border border-[#d8d0c4] bg-[#f8f5ef]">
@@ -176,6 +178,11 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
           <label className="text-sm font-semibold text-slate-800">Distrito<select value={distrito} onChange={(event) => { setDistrito(event.target.value); setConcelho('') }} className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-primary"><option value="">Escolha o distrito</option>{DISTRITOS.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
           <label className="text-sm font-semibold text-slate-800">Concelho<select value={concelho} disabled={!distrito} onChange={(event) => setConcelho(event.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-primary disabled:bg-slate-100"><option value="">Escolha o concelho</option>{concelhos.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
         </div>
+        <label className="mt-4 block text-sm font-semibold text-slate-800">
+          Para que data pretende o serviço? <span className="font-normal text-slate-400">(opcional)</span>
+          <input type="text" value={preferredDate} maxLength={50} onChange={(event) => setPreferredDate(event.target.value)} placeholder="Ex.: setembro ou depois do dia 15" className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-primary" />
+          <span className="mt-1 block text-right text-[0.65rem] font-normal text-slate-400">{preferredDate.length}/50</span>
+        </label>
         <p className="mt-3 text-xs leading-5 text-slate-500">
           A aplicação regular abrange a Região Centro. Para uma obra noutra zona do país,{' '}
           <a href="/contactos" className="font-bold text-primary hover:underline">contacte-nos para confirmar disponibilidade</a>.
