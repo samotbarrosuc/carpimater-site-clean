@@ -9,8 +9,6 @@ import MaterialTicker from '@/components/MaterialTicker'
 import Gallery from '@/components/Gallery'
 import Testimonials from '@/components/Testimonials'
 import { CompareSlider, pairs as beforeAfterPairs } from '@/components/cozinha/sections/BeforeAfter'
-import { getProdutosByVariant } from '@/content/vinil'
-import { formatEur } from '@/lib/calculations'
 import { FAQS } from '@/content/faq'
 import { WHATSAPP_NUMBER, EMAIL } from '@/content/site'
 import { CONTACT_MOBILE_ERROR, sanitizePortugueseMobile, validateContactDetails } from '@/lib/contact-validation'
@@ -24,9 +22,32 @@ const STEPS = [
   { num: '03', title: 'Fazer', desc: 'Executar com cuidado e entregar como prometido.' },
 ]
 
+const FEATURED_MATERIALS = [
+  {
+    name: 'Vinílico SPC',
+    label: 'Pavimento impermeável',
+    description: 'Resistente, confortável e fácil de limpar.',
+    image: '/images/pavimento-vinilico-sala-coimbra.png',
+    href: '/loja?categoria=vinilico#catalogo-loja',
+  },
+  {
+    name: 'Flutuante híbrido H₂O',
+    label: 'Pavimento resistente à água',
+    description: 'Aspeto natural com elevada estabilidade.',
+    image: '/images/pavimento-flutuante-claro.png',
+    href: '/loja?categoria=flutuante#catalogo-loja',
+  },
+  {
+    name: 'Rodapé PVC',
+    label: 'Acabamento e proteção',
+    description: 'Resistente à humidade e simples de manter.',
+    image: '/images/produtos-rodape/rodape pvc branco liso.jpg',
+    href: '/loja?categoria=rodape#catalogo-loja',
+  },
+]
+
 export default function Home() {
   const [contactForm, setContactForm] = useState({ nome: '', contacto: '', mensagem: '' })
-  const featuredProducts = getProdutosByVariant('vinilico').slice(0, 3)
 
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [submitMessage, setSubmitMessage] = useState<string | null>(null)
@@ -273,10 +294,15 @@ export default function Home() {
               <a href="/loja" className="inline-flex items-center gap-2 font-bold text-[#19242e] transition hover:text-[#f05b13] sm:rounded-xl sm:bg-[#f05b13] sm:px-5 sm:py-3 sm:text-white sm:shadow-[0_8px_20px_rgba(240,91,19,0.22)] sm:hover:bg-[#d94d0d] sm:hover:text-white">Explorar loja <ChevronRight className="h-4 w-4" /></a>
             </div>
             <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
-              {featuredProducts.map((product) => (
-                <a href="/loja?categoria=vinilico" key={product.id} className="group overflow-hidden rounded-2xl border border-[#d8d0c4] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(25,36,46,0.08)]">
-                  <div className="aspect-[4/3] overflow-hidden bg-slate-200">{product.imagem && <img src={product.imagem} alt={product.nome} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />}</div>
-                  <div className="p-3.5 sm:p-4"><p className="text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#f05b13]">SPC vinílico</p><h3 className="mt-1.5 truncate font-display text-base font-bold text-[#19242e]">{product.nome}</h3><p className="mt-3 text-sm font-bold text-[#19242e] sm:text-base">{formatEur(product.precoM2)}<span className="text-xs font-medium text-[#19242e]/45">/m²</span></p></div>
+              {FEATURED_MATERIALS.map((material) => (
+                <a href={material.href} key={material.name} className="group overflow-hidden rounded-2xl border border-[#d8d0c4] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(25,36,46,0.08)]">
+                  <div className="aspect-[4/3] overflow-hidden bg-slate-200"><img src={material.image} alt={material.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" /></div>
+                  <div className="p-3.5 sm:p-4">
+                    <p className="text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#f05b13]">{material.label}</p>
+                    <h3 className="mt-1.5 font-display text-base font-bold leading-tight text-[#19242e]">{material.name}</h3>
+                    <p className="mt-2 hidden text-xs leading-5 text-[#40505b] sm:block">{material.description}</p>
+                    <span className="mt-3 inline-flex items-center gap-1 text-xs font-bold text-[#19242e] transition group-hover:text-[#f05b13]">Ver materiais <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" /></span>
+                  </div>
                 </a>
               ))}
               <a href="/loja" aria-label="Ver mais materiais na loja" className="group relative isolate flex min-h-full flex-col overflow-hidden rounded-2xl border border-[#e4c8a3] bg-[linear-gradient(145deg,#fffdf9_0%,#faecd8_100%)] p-4 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#f05b13]/45 hover:shadow-[0_14px_32px_rgba(115,71,35,0.12)] sm:hidden">
