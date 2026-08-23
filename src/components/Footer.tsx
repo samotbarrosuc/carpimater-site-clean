@@ -46,6 +46,14 @@ export default function Footer() {
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600">{companyDesc}</p>
             <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-primary">Região Centro · Outras zonas sob consulta</p>
+            <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold text-slate-500">
+              <a href="/termos-e-condicoes" className="transition-colors hover:text-primary">
+                Termos e Condições
+              </a>
+              <a href="/politica-de-privacidade" className="transition-colors hover:text-primary">
+                Política de Privacidade
+              </a>
+            </div>
           </div>
 
           {/* Services */}
@@ -111,14 +119,6 @@ export default function Footer() {
             © {currentYear} {BUSINESS_NAME}. {FOOTER_LEGAL_TEXT}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-white/60">
-            <a href="/termos-e-condicoes" className="hover:text-white transition-colors">
-              Termos e Condições
-            </a>
-            <span className="text-white/30">·</span>
-            <a href="/politica-de-privacidade" className="hover:text-white transition-colors">
-              Política de Privacidade
-            </a>
-            <span className="text-white/30">·</span>
             <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
               Livro de Reclamações
             </a>
