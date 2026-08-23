@@ -67,9 +67,9 @@ const handlers = {
       const { error } = await resend.emails.send({
         from,
         to: [to],
-        replyTo: body.email,
+        replyTo: body.email?.trim() || to,
         subject: `Nova encomenda ${body.reference ? `[${body.reference}] ` : ''}- ${body.nome || 'Cliente'}`,
-        html: `<h2>Nova encomenda CarpiMater</h2>${body.reference ? `<p><strong>Referência:</strong> ${body.reference}</p>` : ''}<p><strong>Cliente:</strong> ${body.nome || 'N/A'}</p><p><strong>Telefone:</strong> ${body.telefone || 'N/A'}</p><p><strong>Email:</strong> ${body.email || 'N/A'}</p><p><strong>Morada:</strong> ${body.morada || 'N/A'}</p><p><strong>Opção:</strong> ${body.delivery || 'N/A'}</p><p><strong>Pagamento:</strong> ${body.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}</p><p><strong>Comprovativo anexado:</strong> ${body.comprovativo.name}</p><pre>${itemLines}</pre><p>Total: ${body.subtotal || 0} €</p>`,
+        html: `<h2>Nova encomenda CarpiMater</h2>${body.reference ? `<p><strong>Referência:</strong> ${body.reference}</p>` : ''}<p><strong>Cliente:</strong> ${body.nome || 'N/A'}</p><p><strong>Telefone:</strong> ${body.telefone || 'N/A'}</p><p><strong>Email:</strong> ${body.email || 'Não indicado'}</p><p><strong>Local:</strong> ${[body.freguesia, body.concelho, body.distrito].filter(Boolean).join(', ') || 'N/A'}</p>${body.morada ? `<p><strong>Morada:</strong> ${body.morada}</p>` : ''}<p><strong>Opção:</strong> ${body.delivery || 'N/A'}</p><p><strong>Pagamento:</strong> ${body.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}</p><p><strong>Comprovativo anexado:</strong> ${body.comprovativo.name}</p><pre>${itemLines}</pre><p>Total: ${body.subtotal || 0} €</p>`,
         text: `Nova encomenda de ${body.nome || 'Cliente'}${body.reference ? ` (referência ${body.reference})` : ''}\n\nPagamento: ${body.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}\nComprovativo anexado: ${body.comprovativo.name}\n\n${itemLines}\n\nTotal: ${body.subtotal || 0} €`,
         attachments: [{ filename: body.comprovativo.name, content: Buffer.from(body.comprovativo.base64, 'base64'), contentType: body.comprovativo.type }],
       });

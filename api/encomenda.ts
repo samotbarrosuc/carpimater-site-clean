@@ -40,11 +40,24 @@ const applicationQuoteSchema = z.object({
   applicationTotal: z.number().nonnegative(),
 }).nullish()
 
+const optionalText = z.preprocess(
+  (value) => typeof value === 'string' && value.trim() === '' ? undefined : value,
+  z.string().optional(),
+)
+
+const optionalEmail = z.preprocess(
+  (value) => typeof value === 'string' && value.trim() === '' ? undefined : value,
+  z.string().email().optional(),
+)
+
 const orderSchema = z.object({
   nome: z.string().min(2),
-  telefone: z.string().min(9),
-  email: z.string().email(),
-  morada: z.string().min(5),
+  telefone: z.string().regex(/^9\d{8}$/),
+  email: optionalEmail,
+  distrito: z.string().min(1),
+  concelho: z.string().min(1),
+  freguesia: optionalText,
+  morada: optionalText,
   observacoes: z.string().optional(),
   tipo: z.string(),
   delivery: z.enum(['material', 'installation']),
@@ -113,6 +126,7 @@ function buildEmailContent(data: OrderData, items: VerifiedItem[], verifiedSubto
     : `<p style="margin:0 0 18px;font-size:13px;color:#6b7280">Transporte gratuito na Região Centro. Outras zonas sujeitas a contacto prévio e confirmação de disponibilidade.</p>`
 
   const observations = data.observacoes?.trim()
+  const location = [data.freguesia, data.concelho, data.distrito].filter(Boolean).join(', ')
   const subject = `Nova encomenda - ${data.nome} (Ref. ${reference})`
   const html = `<!DOCTYPE html><html lang="pt"><head><meta charset="utf-8"></head>
 <body style="margin:0;padding:20px;font-family:Arial,Helvetica,sans-serif;font-size:14px;line-height:1.6;color:#1a1a1a;background:#fff">
@@ -122,8 +136,9 @@ function buildEmailContent(data: OrderData, items: VerifiedItem[], verifiedSubto
 <table style="border-collapse:collapse;margin-bottom:18px">
   ${row('Nome', escapeHtml(data.nome))}
   ${row('Telemóvel', escapeHtml(data.telefone))}
-  ${row('Email', escapeHtml(data.email))}
-  ${row('Morada', escapeHtml(data.morada))}
+  ${row('Email', escapeHtml(data.email || 'Não indicado'))}
+  ${row('Local', escapeHtml(location))}
+  ${data.morada ? row('Morada', escapeHtml(data.morada)) : ''}
   ${observations ? row('Observações', escapeHtml(observations)) : ''}
 </table>
 <p style="margin:0 0 4px;font-weight:700;font-size:13px;text-transform:uppercase;color:#374151">Encomenda</p>
@@ -160,8 +175,9 @@ ${applicationHtml}
     `Nova encomenda de ${data.nome} — Ref. ${reference}`,
     '',
     `Telemóvel: ${data.telefone}`,
-    `Email: ${data.email}`,
-    `Morada: ${data.morada}`,
+    `Email: ${data.email || 'Não indicado'}`,
+    `Local: ${location}`,
+    ...(data.morada ? [`Morada: ${data.morada}`] : []),
     ...(observations ? [`Observações: ${observations}`] : []),
     '',
     `Opção: ${delivery}`,
@@ -214,7 +230,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
     const result = await resend.emails.send({
       from: RESEND_FROM,
       to: [NOTIFICATION_EMAIL],
-      replyTo: data.email,
+      replyTo: data.email?.trim() || NOTIFICATION_EMAIL,
       subject,
       html,
       text,
