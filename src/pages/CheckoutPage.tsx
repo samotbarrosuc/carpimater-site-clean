@@ -208,7 +208,7 @@ export default function CheckoutPage() {
 
                 <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
                   <h2 className="text-lg font-bold">4. Comprovativo de pagamento</h2>
-                  <p className="mt-1 text-sm text-slate-500">Anexe o comprovativo {payment === 'mbway' ? 'da app MB Way' : 'da transferência'} para confirmarmos a encomenda. O ficheiro será enviado em anexo no email de alerta recebido pela CarpiMater.</p>
+                  <p className="mt-1 text-sm text-slate-500">Anexe o comprovativo {payment === 'mbway' ? 'da app MB Way' : 'da transferência'} para confirmarmos a encomenda.</p>
                   <label className="mt-4 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-slate-300 p-4 text-sm font-semibold hover:border-primary"><Upload className="h-5 w-5 text-primary" />{file ? file.name : 'Escolher ficheiro (PDF, JPG ou PNG · máximo 3 MB)'}<input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={(event) => { setFile(event.target.files?.[0] || null); setFormError('') }} className="sr-only" /></label>
                   {formError && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">{formError}</p>}
                   {status === 'error' && (
@@ -221,7 +221,7 @@ export default function CheckoutPage() {
                     <input required name="termsAcceptedCheckbox" type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-orange-600" />
                     <span>Li e aceito os <a href="/termos-e-condicoes" target="_blank" rel="noopener noreferrer" className="font-bold text-primary underline underline-offset-2">Termos e Condições</a> para concluir a compra.</span>
                   </label>
-                  <button type="submit" disabled={status === 'sending' || !termsAccepted || (delivery === 'installation' && !applicationQuote)} className="mt-4 w-full rounded-xl bg-primary px-5 py-4 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">{status === 'sending' ? 'A enviar...' : 'Confirmar encomenda com obrigação de pagar'}</button>
+                  <button type="submit" disabled={status === 'sending' || !termsAccepted || (delivery === 'installation' && !applicationQuote)} className="mt-4 w-full rounded-xl bg-primary px-5 py-4 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">{status === 'sending' ? 'A enviar...' : 'Confirmar encomenda'}</button>
                   <p className="mt-3 text-center text-xs text-slate-400">Ao confirmar, enviamos o seu pedido para a equipa CarpiMater. Não é feito nenhum pagamento automático.</p>
                 </section>
               </form>
