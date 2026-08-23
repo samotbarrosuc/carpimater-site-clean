@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState, type CSSProperties } from 'react'
 import { Droplets, House, Info, Layers3, Minus, Plus, Ruler, ShoppingBag, Sparkles, Trash2, X } from 'lucide-react'
 import { getProdutosByVariant, type Produto } from '@/content/vinil'
 import { RODAPES, type RodapeProduto } from '@/content/rodapes'
@@ -8,6 +8,91 @@ import { useCart } from '@/context/CartContext'
 
 type Choice = { kind: 'flooring'; product: Produto } | { kind: 'baseboard'; product: RodapeProduto }
 type StoreCategory = 'all' | 'vinilico' | 'flutuante' | 'rodape'
+
+let dialogScrollLocks = 0
+let lockedScrollY = 0
+let savedBodyStyles: Pick<CSSStyleDeclaration, 'position' | 'top' | 'left' | 'right' | 'width' | 'overflow'> | null = null
+let savedHtmlOverflow = ''
+
+function lockPageScroll() {
+  if (dialogScrollLocks === 0) {
+    lockedScrollY = window.scrollY
+    savedBodyStyles = {
+      position: document.body.style.position,
+      top: document.body.style.top,
+      left: document.body.style.left,
+      right: document.body.style.right,
+      width: document.body.style.width,
+      overflow: document.body.style.overflow,
+    }
+    savedHtmlOverflow = document.documentElement.style.overflow
+    document.documentElement.style.overflow = 'hidden'
+    document.body.style.position = 'fixed'
+    document.body.style.top = `-${lockedScrollY}px`
+    document.body.style.left = '0'
+    document.body.style.right = '0'
+    document.body.style.width = '100%'
+    document.body.style.overflow = 'hidden'
+  }
+  dialogScrollLocks += 1
+
+  return () => {
+    dialogScrollLocks = Math.max(0, dialogScrollLocks - 1)
+    if (dialogScrollLocks !== 0 || !savedBodyStyles) return
+    document.documentElement.style.overflow = savedHtmlOverflow
+    document.body.style.position = savedBodyStyles.position
+    document.body.style.top = savedBodyStyles.top
+    document.body.style.left = savedBodyStyles.left
+    document.body.style.right = savedBodyStyles.right
+    document.body.style.width = savedBodyStyles.width
+    document.body.style.overflow = savedBodyStyles.overflow
+    savedBodyStyles = null
+    const scrollY = lockedScrollY
+    requestAnimationFrame(() => {
+      if (dialogScrollLocks === 0) window.scrollTo(0, scrollY)
+    })
+  }
+}
+
+function getVisibleViewportStyle(): CSSProperties {
+  const viewport = window.visualViewport
+  if (!viewport) return {}
+  return {
+    top: Math.round(viewport.offsetTop),
+    left: Math.round(viewport.offsetLeft),
+    width: Math.round(viewport.width),
+    height: Math.round(viewport.height),
+  }
+}
+
+function useDialogViewport(close: () => void, active = true) {
+  const closeRef = useRef(close)
+  closeRef.current = close
+  const [viewportStyle, setViewportStyle] = useState<CSSProperties>(getVisibleViewportStyle)
+
+  useEffect(() => {
+    if (!active) return
+    const releaseScroll = lockPageScroll()
+    const updateViewport = () => setViewportStyle(getVisibleViewportStyle())
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') closeRef.current()
+    }
+    updateViewport()
+    window.addEventListener('resize', updateViewport)
+    window.addEventListener('keydown', onKeyDown)
+    window.visualViewport?.addEventListener('resize', updateViewport)
+    window.visualViewport?.addEventListener('scroll', updateViewport)
+    return () => {
+      window.removeEventListener('resize', updateViewport)
+      window.removeEventListener('keydown', onKeyDown)
+      window.visualViewport?.removeEventListener('resize', updateViewport)
+      window.visualViewport?.removeEventListener('scroll', updateViewport)
+      releaseScroll()
+    }
+  }, [active])
+
+  return viewportStyle
+}
 
 function ProductMedia({ image, color, name, kind }: { image?: string; color: string; name: string; kind: 'flooring' | 'baseboard' }) {
   if (image) {
@@ -30,22 +115,12 @@ function ProductMedia({ image, color, name, kind }: { image?: string; color: str
 
 function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void }) {
   const flooring = choice.kind === 'flooring'
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => event.key === 'Escape' && close()
-    window.addEventListener('keydown', onKeyDown)
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', onKeyDown)
-      document.body.style.overflow = previous
-    }
-  }, [close])
+  const viewportStyle = useDialogViewport(close)
 
   return (
-    <div className="fixed inset-0 z-[80] flex items-end justify-center bg-[#19242e]/65 p-0 backdrop-blur-sm sm:items-center sm:p-4" role="dialog" aria-modal="true" aria-labelledby="product-info-title" onClick={close}>
-      <div className="max-h-[86dvh] w-full max-w-md overflow-y-auto overscroll-contain rounded-t-[1.75rem] bg-white p-5 shadow-2xl sm:rounded-[1.75rem] sm:p-6" onClick={(event) => event.stopPropagation()}>
-        <div className="flex items-start justify-between gap-4">
+    <div className="fixed left-0 top-0 z-[80] flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-[#19242e]/65 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-[max(0.5rem,env(safe-area-inset-top))] backdrop-blur-sm sm:p-4" style={viewportStyle} role="dialog" aria-modal="true" aria-labelledby="product-info-title" onClick={close}>
+      <div className="max-h-full w-full max-w-md touch-pan-y overflow-y-auto overscroll-contain rounded-2xl bg-white p-5 shadow-2xl [WebkitOverflowScrolling:touch] sm:p-6" onClick={(event) => event.stopPropagation()}>
+        <div className="sticky top-0 z-10 -mx-5 -mt-5 flex items-start justify-between gap-4 border-b border-slate-100 bg-white px-5 pb-4 pt-5 sm:-mx-6 sm:-mt-6 sm:px-6 sm:pt-6">
           <div>
             <p className="section-kicker">Informação do produto</p>
             <h2 id="product-info-title" className="mt-2 font-display text-2xl font-bold tracking-[-0.02em] text-[#19242e]">{choice.product.nome}</h2>
@@ -91,22 +166,12 @@ function PurchaseModal({ choice, close }: { choice: Choice; close: () => void })
   const price = flooring ? choice.product.precoM2 : choice.product.precoMl
   const numericAmount = parseQuantityInput(amount)
   const result = flooring ? calcFlooringPurchase(numericAmount, price, waste) : calcBaseboardPurchase(numericAmount, price, waste)
+  const viewportStyle = useDialogViewport(close)
 
   const adjustAmount = (delta: number) => {
     const nextValue = Math.max(0, Math.round((parseQuantityInput(amount) + delta) * 100) / 100)
     setAmount(formatQuantity(nextValue))
   }
-
-  useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => event.key === 'Escape' && close()
-    window.addEventListener('keydown', onKeyDown)
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => {
-      window.removeEventListener('keydown', onKeyDown)
-      document.body.style.overflow = previous
-    }
-  }, [close])
 
   const add = () => {
     if (result.units < 1) return
@@ -115,9 +180,9 @@ function PurchaseModal({ choice, close }: { choice: Choice; close: () => void })
   }
 
   return (
-    <div className="fixed inset-0 z-[70] flex items-end justify-center bg-[#19242e]/72 p-0 backdrop-blur-sm sm:items-center sm:p-4" role="dialog" aria-modal="true" aria-labelledby="purchase-title" onClick={close}>
-      <div className="max-h-[92dvh] w-full max-w-lg overflow-y-auto rounded-t-[1.75rem] bg-white p-5 shadow-2xl sm:rounded-[1.75rem] sm:p-7" onClick={(event) => event.stopPropagation()}>
-        <div className="flex items-start justify-between gap-4">
+    <div className="fixed left-0 top-0 z-[70] flex h-[100dvh] w-full items-center justify-center overflow-hidden bg-[#19242e]/72 p-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] pt-[max(0.5rem,env(safe-area-inset-top))] backdrop-blur-sm sm:p-4" style={viewportStyle} role="dialog" aria-modal="true" aria-labelledby="purchase-title" onClick={close}>
+      <div className="max-h-full w-full max-w-lg touch-pan-y overflow-y-auto overscroll-contain rounded-2xl bg-white p-5 shadow-2xl [WebkitOverflowScrolling:touch] sm:p-7" onClick={(event) => event.stopPropagation()}>
+        <div className="sticky top-0 z-10 -mx-5 -mt-5 flex items-start justify-between gap-4 border-b border-slate-100 bg-white px-5 pb-4 pt-5 sm:-mx-7 sm:-mt-7 sm:px-7 sm:pt-7">
           <div>
             <p className="section-kicker">{flooring ? 'Compra por caixas' : 'RODAPÉ - PVC'}</p>
             <h2 id="purchase-title" className="mt-2 font-display text-2xl font-bold tracking-[-0.02em] text-[#19242e]">{choice.product.nome}</h2>
@@ -164,7 +229,9 @@ function PurchaseModal({ choice, close }: { choice: Choice; close: () => void })
           </div>
         </div>
 
-        <button type="button" onClick={add} disabled={result.units < 1} className="mt-5 flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#19242e] px-5 font-bold text-white transition hover:bg-[#f05b13] disabled:cursor-not-allowed disabled:opacity-50"><ShoppingBag className="h-4 w-4" />Adicionar ao carrinho</button>
+        <div className="sticky bottom-0 z-10 -mx-5 -mb-5 mt-5 border-t border-slate-100 bg-white px-5 pb-[max(1rem,env(safe-area-inset-bottom))] pt-3 sm:-mx-7 sm:-mb-7 sm:px-7 sm:pb-7">
+          <button type="button" onClick={add} disabled={result.units < 1} className="flex min-h-12 w-full items-center justify-center gap-2 rounded-xl bg-[#19242e] px-5 font-bold text-white transition hover:bg-[#f05b13] disabled:cursor-not-allowed disabled:opacity-50"><ShoppingBag className="h-4 w-4" />Adicionar ao carrinho</button>
+        </div>
       </div>
     </div>
   )
@@ -172,19 +239,13 @@ function PurchaseModal({ choice, close }: { choice: Choice; close: () => void })
 
 export function CartDrawer() {
   const { items, isOpen, setIsOpen, removeItem, changeUnits, subtotal } = useCart()
-
-  useEffect(() => {
-    if (!isOpen) return
-    const previous = document.body.style.overflow
-    document.body.style.overflow = 'hidden'
-    return () => { document.body.style.overflow = previous }
-  }, [isOpen])
+  const viewportStyle = useDialogViewport(() => setIsOpen(false), isOpen)
 
   if (!isOpen) return null
 
   return (
-    <div className="fixed inset-0 z-[60] overflow-hidden bg-[#19242e]/55 backdrop-blur-sm" onClick={() => setIsOpen(false)}>
-      <aside role="dialog" aria-modal="true" aria-labelledby="cart-title" className="absolute inset-y-0 right-0 flex h-[100dvh] max-h-[100dvh] w-full max-w-md flex-col overflow-hidden bg-[#fbfaf7] shadow-2xl" onClick={(event) => event.stopPropagation()}>
+    <div className="fixed left-0 top-0 z-[60] h-[100dvh] w-full overflow-hidden bg-[#19242e]/55 backdrop-blur-sm" style={viewportStyle} onClick={() => setIsOpen(false)}>
+      <aside role="dialog" aria-modal="true" aria-labelledby="cart-title" className="absolute inset-y-0 right-0 flex h-full max-h-full w-full max-w-md flex-col overflow-hidden bg-[#fbfaf7] shadow-2xl" onClick={(event) => event.stopPropagation()}>
         <header className="flex shrink-0 items-center justify-between border-b border-slate-200 bg-white px-4 py-3 sm:p-5">
           <div><p className="section-kicker">A sua encomenda</p><h2 id="cart-title" className="mt-1 font-display text-2xl font-bold text-[#19242e]">Carrinho</h2></div>
           <button type="button" onClick={() => setIsOpen(false)} aria-label="Fechar carrinho" className="flex h-10 w-10 items-center justify-center rounded-xl bg-slate-100 text-slate-600"><X className="h-4 w-4" /></button>
