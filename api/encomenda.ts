@@ -3,7 +3,12 @@ import { Resend } from 'resend'
 import { z } from 'zod'
 import { getProdutoById } from '../src/content/vinil'
 import { getRodapeById } from '../src/content/rodapes'
-import { BASEBOARD_BAR_LENGTH_M, FLOORING_BOX_AREA_M2 } from '../src/lib/calculations'
+
+// Keep the order function independent from browser-facing modules and their
+// Vite aliases. Importing calculations.ts here makes the serverless function
+// try to resolve "@/content/precos" at runtime.
+const FLOORING_BOX_AREA_M2 = 1.76
+const BASEBOARD_BAR_LENGTH_M = 2.25
 
 const itemSchema = z.object({
   productId: z.number().int().positive(), name: z.string(), reference: z.string(), kind: z.enum(['flooring', 'baseboard']), units: z.number().int().positive(),
@@ -11,7 +16,7 @@ const itemSchema = z.object({
 })
 const applicationQuoteSchema = z.object({
   distrito: z.string().min(1), concelho: z.string().min(1), area: z.number().positive(), rodape: z.number().nonnegative(), applicationTotal: z.number().nonnegative(),
-}).optional()
+}).nullish()
 const orderSchema = z.object({
   nome: z.string().min(2), telefone: z.string().min(9), email: z.string().email(), morada: z.string().min(5),
   observacoes: z.string().optional(), tipo: z.string(), delivery: z.enum(['material', 'installation']), subtotal: z.number().nonnegative(), items: z.array(itemSchema).min(1),
@@ -53,15 +58,23 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const applicationText = data.applicationQuote
     ? `\nAplicação e deslocação (estimativa, não cobrada): ${data.applicationQuote.applicationTotal.toFixed(2)} € (${data.applicationQuote.area} m², ${data.applicationQuote.distrito} / ${data.applicationQuote.concelho})`
     : `\nTransporte do material: ${transportNotice}`
-  const result = await resend.emails.send({
-    from: process.env.RESEND_FROM || 'CarpiMater <onboarding@resend.dev>',
-    to: [process.env.NOTIFICATION_EMAIL || 'tomas.a.barros@hotmail.com'],
-    replyTo: data.email,
-    subject: `Nova encomenda ${data.reference ? `[${data.reference}] ` : ''}- ${data.nome}`,
-    html,
-    text: `Nova encomenda de ${data.nome}${data.reference ? ` (referência ${data.reference})` : ''}\n\nPagamento: ${data.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}\nComprovativo anexado: ${data.comprovativo.name}\n\n${itemLines}\n\nMaterial a pagar: ${verifiedSubtotal.toFixed(2)} €${applicationText}`,
-    attachments: [{ filename: data.comprovativo.name, content: Buffer.from(data.comprovativo.base64, 'base64'), contentType: data.comprovativo.type }],
-  })
-  if (result.error) return res.status(502).json({ error: result.error.message })
-  return res.json({ ok: true, messageId: result.data?.id })
+  try {
+    const result = await resend.emails.send({
+      from: process.env.RESEND_FROM || 'CarpiMater <onboarding@resend.dev>',
+      to: [process.env.NOTIFICATION_EMAIL || 'tomas.a.barros@hotmail.com'],
+      replyTo: data.email,
+      subject: `Nova encomenda ${data.reference ? `[${data.reference}] ` : ''}- ${data.nome}`,
+      html,
+      text: `Nova encomenda de ${data.nome}${data.reference ? ` (referência ${data.reference})` : ''}\n\nPagamento: ${data.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}\nComprovativo anexado: ${data.comprovativo.name}\n\n${itemLines}\n\nMaterial a pagar: ${verifiedSubtotal.toFixed(2)} €${applicationText}`,
+      attachments: [{ filename: data.comprovativo.name, content: Buffer.from(data.comprovativo.base64, 'base64'), contentType: data.comprovativo.type }],
+    })
+    if (result.error) {
+      console.error('ORDER_EMAIL_ERROR', result.error)
+      return res.status(502).json({ error: 'Não foi possível enviar a encomenda por email. Tente novamente.' })
+    }
+    return res.json({ ok: true, messageId: result.data?.id })
+  } catch (error) {
+    console.error('ORDER_EMAIL_EXCEPTION', error)
+    return res.status(502).json({ error: 'Não foi possível enviar a encomenda por email. Tente novamente.' })
+  }
 }

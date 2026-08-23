@@ -87,11 +87,13 @@ export default function CheckoutPage() {
       const comprovativo = { name: file.name, type: proofContentType, size: file.size, base64: await fileToBase64(file) }
       const payload = Object.fromEntries(form.entries())
       const response = await fetch('/api/encomenda', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, items, subtotal, delivery, paymentMethod: payment, reference: ref, applicationQuote, comprovativo }) })
-      if (!response.ok) throw new Error('Pedido não enviado')
+      const responseData = await response.json().catch(() => null)
+      if (!response.ok) throw new Error(responseData?.error || 'Não foi possível enviar a encomenda. Tente novamente.')
       setReference(ref)
       setStatus('success')
       clear()
-    } catch {
+    } catch (error) {
+      setFormError(error instanceof Error ? error.message : 'Não foi possível enviar a encomenda. Tente novamente.')
       setStatus('error')
     }
   }
