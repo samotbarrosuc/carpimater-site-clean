@@ -13,6 +13,7 @@ let dialogScrollLocks = 0
 let lockedScrollY = 0
 let savedBodyStyles: Pick<CSSStyleDeclaration, 'position' | 'top' | 'left' | 'right' | 'width' | 'overflow'> | null = null
 let savedHtmlOverflow = ''
+let savedHtmlScrollBehavior = ''
 
 function lockPageScroll() {
   if (dialogScrollLocks === 0) {
@@ -26,7 +27,9 @@ function lockPageScroll() {
       overflow: document.body.style.overflow,
     }
     savedHtmlOverflow = document.documentElement.style.overflow
+    savedHtmlScrollBehavior = document.documentElement.style.scrollBehavior
     document.documentElement.style.overflow = 'hidden'
+    document.documentElement.style.scrollBehavior = 'auto'
     document.body.style.position = 'fixed'
     document.body.style.top = `-${lockedScrollY}px`
     document.body.style.left = '0'
@@ -39,18 +42,17 @@ function lockPageScroll() {
   return () => {
     dialogScrollLocks = Math.max(0, dialogScrollLocks - 1)
     if (dialogScrollLocks !== 0 || !savedBodyStyles) return
-    document.documentElement.style.overflow = savedHtmlOverflow
+    const scrollY = lockedScrollY
     document.body.style.position = savedBodyStyles.position
     document.body.style.top = savedBodyStyles.top
     document.body.style.left = savedBodyStyles.left
     document.body.style.right = savedBodyStyles.right
     document.body.style.width = savedBodyStyles.width
     document.body.style.overflow = savedBodyStyles.overflow
+    document.documentElement.style.overflow = savedHtmlOverflow
+    window.scrollTo({ top: scrollY, left: 0, behavior: 'instant' })
+    document.documentElement.style.scrollBehavior = savedHtmlScrollBehavior
     savedBodyStyles = null
-    const scrollY = lockedScrollY
-    requestAnimationFrame(() => {
-      if (dialogScrollLocks === 0) window.scrollTo(0, scrollY)
-    })
   }
 }
 
