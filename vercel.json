@@ -7,6 +7,6 @@
   ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
-    { "source": "/((?!api/|sitemap\\.xml|robots\\.txt|loja|vinilico|flutuante|rodapes|cozinha|construcao|contactos|encomenda|politica-de-privacidade).*)", "destination": "/index.html" }
+    { "source": "/((?!api/|sitemap\\.xml|robots\\.txt|loja|vinilico|flutuante|rodapes|cozinha|construcao|contactos|encomenda|politica-de-privacidade|termos-e-condicoes).*)", "destination": "/index.html" }
   ]
 }

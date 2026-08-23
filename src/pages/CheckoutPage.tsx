@@ -13,6 +13,7 @@ import { DISTRITOS, getConcelhosByDistrito } from '@/content/viagens'
 type PaymentMethod = 'mbway' | 'iban'
 const BANK_IBAN = 'PT50 0018 0003 5127 2706 0200 6'
 const MAX_PROOF_SIZE_BYTES = 3 * 1024 * 1024
+const TERMS_VERSION = '2026-08-23'
 
 function getProofContentType(selectedFile: File) {
   if (['application/pdf', 'image/jpeg', 'image/png'].includes(selectedFile.type)) return selectedFile.type
@@ -56,6 +57,7 @@ export default function CheckoutPage() {
   const [concelho, setConcelho] = useState('')
   const [reference, setReference] = useState('')
   const [formError, setFormError] = useState('')
+  const [termsAccepted, setTermsAccepted] = useState(false)
   const concelhos = getConcelhosByDistrito(distrito)
 
   const updateApplicationQuote = (quote: ApplicationQuoteData | null) => {
@@ -98,7 +100,7 @@ export default function CheckoutPage() {
     try {
       const comprovativo = { name: file.name, type: proofContentType, size: file.size, base64: await fileToBase64(file) }
       const payload = Object.fromEntries(form.entries())
-      const response = await fetch('/api/encomenda', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, items, subtotal, delivery, paymentMethod: payment, reference: ref, applicationQuote, comprovativo }) })
+      const response = await fetch('/api/encomenda', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, items, subtotal, delivery, paymentMethod: payment, reference: ref, applicationQuote, comprovativo, termsAccepted, termsVersion: TERMS_VERSION }) })
       const responseData = await response.json().catch(() => null)
       if (!response.ok) throw new Error(responseData?.error || 'Não foi possível enviar a encomenda. Tente novamente.')
       setReference(ref)
@@ -122,7 +124,7 @@ export default function CheckoutPage() {
             <p className="mt-5 leading-7 text-slate-600">Obrigado! Vamos confirmar o pagamento e os detalhes de entrega. Receberá o nosso contacto para validar tudo antes do envio.</p>
             <div className="mt-6 space-y-2 rounded-2xl bg-emerald-50 p-5 text-left text-sm leading-6 text-emerald-900">
               <p className="font-bold text-emerald-700">O que acontece a seguir</p>
-              <p>1. Confirmamos o seu comprovativo de pagamento.</p>
+              <p>1. Confirmamos o stock e o seu comprovativo de pagamento.</p>
               <p>2. Ligamos ou enviamos mensagem para validar a morada e a entrega.</p>
               <p>3. O material é enviado e chega em até 10 dias úteis.</p>
             </div>
@@ -161,6 +163,7 @@ export default function CheckoutPage() {
                 <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
                   <h2 className="text-lg font-bold">2. Como quer pagar?</h2>
                   <p className="mt-1 text-sm text-slate-500">Paga apenas o material. A aplicação é uma estimativa e não é cobrada agora.</p>
+                  <div className="mt-4 rounded-xl border border-orange-200 bg-orange-50 p-4 text-sm leading-6 text-orange-950"><strong>Encomenda sujeita a confirmação de stock.</strong> Se o material não estiver disponível para entrega no prazo indicado e não aceitar uma nova data, devolvemos integralmente o pagamento no máximo até ao 10.º dia útil seguinte ao pagamento.</div>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
                     <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'mbway' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="mbway" checked={payment === 'mbway'} onChange={() => setPayment('mbway')} className="mr-2 accent-orange-600" /><span className="font-semibold">MB Way</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Rápido e sem custos. Recebe o pedido de pagamento na app.</span></label>
                     <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'iban' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="iban" checked={payment === 'iban'} onChange={() => setPayment('iban')} className="mr-2 accent-orange-600" /><span className="font-semibold">Transferência bancária</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Transferência tradicional por IBAN.</span></label>
@@ -214,7 +217,11 @@ export default function CheckoutPage() {
                       <p className="mt-1">Se o problema continuar, pode enviar o comprovativo diretamente por <a href={`mailto:${EMAIL}?subject=Comprovativo de encomenda`} className="font-bold underline">email</a> ou <a href={getWhatsAppUrl('Olá! Quero enviar o comprovativo de pagamento da minha encomenda.')} target="_blank" rel="noopener noreferrer" className="font-bold underline">WhatsApp</a>.</p>
                     </div>
                   )}
-                  <button type="submit" disabled={status === 'sending' || (delivery === 'installation' && !applicationQuote)} className="mt-5 w-full rounded-xl bg-primary px-5 py-4 font-bold text-white disabled:opacity-50">{status === 'sending' ? 'A enviar...' : 'Confirmar encomenda'}</button>
+                  <label className="mt-5 flex cursor-pointer items-start gap-3 rounded-xl border border-slate-200 bg-slate-50 p-4 text-sm leading-6 text-slate-700">
+                    <input required name="termsAcceptedCheckbox" type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-orange-600" />
+                    <span>Li e aceito os <a href="/termos-e-condicoes" target="_blank" rel="noopener noreferrer" className="font-bold text-primary underline underline-offset-2">Termos e Condições</a> para concluir a compra.</span>
+                  </label>
+                  <button type="submit" disabled={status === 'sending' || !termsAccepted || (delivery === 'installation' && !applicationQuote)} className="mt-4 w-full rounded-xl bg-primary px-5 py-4 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">{status === 'sending' ? 'A enviar...' : 'Confirmar encomenda com obrigação de pagar'}</button>
                   <p className="mt-3 text-center text-xs text-slate-400">Ao confirmar, enviamos o seu pedido para a equipa CarpiMater. Não é feito nenhum pagamento automático.</p>
                 </section>
               </form>

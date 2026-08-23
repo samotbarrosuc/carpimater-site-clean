@@ -33,7 +33,7 @@ export const FAQS: FaqItem[] = [
   },
   {
     question: 'O preço inclui a aplicação?',
-    answer: 'Não. Os preços apresentados na loja referem-se apenas aos materiais e não incluem a aplicação. Para evitar surpresas, disponibilizamos um simulador que apresenta uma estimativa separada do serviço de aplicação antes de finalizar a encomenda. O valor final é confirmado após avaliarmos as condições da obra.',
+    answer: 'Não. Os preços apresentados na loja referem-se apenas aos materiais e não incluem a aplicação. Na finalização da encomenda pode solicitar a aplicação e consultar uma estimativa separada desse serviço. O valor final é confirmado após avaliarmos as condições da obra.',
   },
   {
     question: 'É possível aplicar sobre cerâmica?',

@@ -48,6 +48,11 @@ const pages = {
     description: 'Política de privacidade e proteção de dados da CarpiMater.',
     index: false,
   },
+  'termos-e-condicoes': {
+    title: 'Termos e Condições de Venda | CarpiMater',
+    description: 'Termos aplicáveis às encomendas de pavimentos e rodapés na loja online CarpiMater.',
+    index: false,
+  },
 }
 
 function escapeAttribute(value) {

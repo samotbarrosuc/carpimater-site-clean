@@ -9,7 +9,7 @@ const WA_QUANTITY = getWhatsAppUrl('Olá! Preciso de ajuda para escolher a quant
 const storeBenefits = [
   { icon: Factory, title: 'Preço de fábrica', desc: 'Sem intermediários' },
   { icon: Truck, title: 'Entrega gratuita', desc: 'Região Centro' },
-  { icon: Clock3, title: 'Até 10 dias', desc: 'Entrega na obra' },
+  { icon: Clock3, title: 'Até 10 dias úteis', desc: 'Após confirmação de stock' },
   { icon: BadgeCheck, title: 'IVA incluído', desc: 'Sem surpresas' },
 ]
 

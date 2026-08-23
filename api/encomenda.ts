@@ -7,6 +7,7 @@ const FLOORING_BOX_AREA_M2 = 1.76
 const BASEBOARD_BAR_LENGTH_M = 2.25
 const NOTIFICATION_EMAIL = 'tomas.a.barros@hotmail.com'
 const RESEND_FROM = 'CarpiMater <info@carpimater.pt>'
+const TERMS_VERSION = '2026-08-23'
 const FLOORING_NAMES = ['Carvalho Mel', 'Carvalho Nogal', 'Eucalipto', 'Oliveira', 'Tanzânia Almond', 'Tanzânia Coconut', 'Tanzânia Grey', 'Tanzânia Natural', 'Tanzânia Silver']
 const BASEBOARD_NAMES = ['Branco Liso', 'Carvalho Mel', 'Carvalho Nogal', 'Eucalipto', 'Oliveira', 'Tanzânia Almond', 'Tanzânia Coconut', 'Tanzânia Grey', 'Tanzânia Natural', 'Tanzânia Silver']
 
@@ -66,6 +67,8 @@ const orderSchema = z.object({
   applicationQuote: applicationQuoteSchema,
   paymentMethod: z.enum(['mbway', 'iban']).optional(),
   reference: z.string().optional(),
+  termsAccepted: z.literal(true),
+  termsVersion: z.literal(TERMS_VERSION),
   comprovativo: z.object({
     name: z.string().min(1),
     type: z.enum(['application/pdf', 'image/jpeg', 'image/png']),
@@ -95,7 +98,7 @@ function escapeHtml(value: string) {
   })[character] || character)
 }
 
-function buildEmailContent(data: OrderData, items: VerifiedItem[], verifiedSubtotal: number) {
+function buildEmailContent(data: OrderData, items: VerifiedItem[], verifiedSubtotal: number, termsAcceptedAt: Date) {
   const reference = data.reference || 'Sem referência'
   const payment = data.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'
   const delivery = data.delivery === 'installation' ? 'Material + pedido de aplicação' : 'Só material'
@@ -147,6 +150,12 @@ function buildEmailContent(data: OrderData, items: VerifiedItem[], verifiedSubto
   ${row('Pagamento', payment)}
   ${row('Comprovativo', `${escapeHtml(data.comprovativo.name)} (anexo)`)}
 </table>
+<p style="margin:0 0 4px;font-weight:700;font-size:13px;text-transform:uppercase;color:#374151">Aceitação contratual</p>
+<table style="border-collapse:collapse;margin-bottom:18px">
+  ${row('Termos aceites', 'Sim')}
+  ${row('Versão', escapeHtml(data.termsVersion))}
+  ${row('Data e hora', escapeHtml(termsAcceptedAt.toLocaleString('pt-PT', { timeZone: 'Europe/Lisbon' })))}
+</table>
 <table style="width:100%;max-width:760px;border-collapse:collapse;margin-bottom:18px;border:1px solid #e5e7eb">
   <thead><tr style="background:#f3f4f6"><th style="padding:9px 12px;text-align:left">Produto</th><th style="padding:9px 12px">Quantidade</th><th style="padding:9px 12px">Fornecido</th><th style="padding:9px 12px;text-align:right">Valor</th></tr></thead>
   <tbody>${productRows}</tbody>
@@ -183,6 +192,7 @@ ${applicationHtml}
     `Opção: ${delivery}`,
     `Pagamento: ${payment}`,
     `Comprovativo: ${data.comprovativo.name} (anexo)`,
+    `Termos e Condições aceites: Sim — versão ${data.termsVersion} — ${termsAcceptedAt.toLocaleString('pt-PT', { timeZone: 'Europe/Lisbon' })}`,
     '',
     'PRODUTOS',
     ...itemLines,
@@ -223,7 +233,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   }
 
   const verifiedSubtotal = verifiedItems.reduce((total, item) => total + item.suppliedAmount * item.unitPrice, 0)
-  const { subject, html, text } = buildEmailContent(data, verifiedItems, verifiedSubtotal)
+  const { subject, html, text } = buildEmailContent(data, verifiedItems, verifiedSubtotal, new Date())
 
   try {
     const resend = new Resend(apiKey)

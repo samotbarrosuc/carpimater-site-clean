@@ -9,6 +9,7 @@ import FlutuantePage from "@/pages/FlutuantePage";
 import CozinhaPage from "@/pages/CozinhaPage";
 import EmpreiteirosPage from "@/pages/EmpreiteirosPage";
 import PrivacyPolicyPage from "@/pages/PrivacyPolicyPage";
+import TermsPage from "@/pages/TermsPage";
 import LojaPage from "@/pages/LojaPage";
 import CheckoutPage from "@/pages/CheckoutPage";
 import ContactosPage from "@/pages/ContactosPage";
@@ -34,6 +35,7 @@ function Router() {
       <Route path="/construção" component={() => <Redirect to="/construcao" />} />
       <Route path="/empreiteiros" component={() => <Redirect to="/construcao" />} />
       <Route path="/politica-de-privacidade" component={PrivacyPolicyPage} />
+      <Route path="/termos-e-condicoes" component={TermsPage} />
       <Route component={NotFound} />
     </Switch>
   );

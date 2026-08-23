@@ -18,13 +18,14 @@ export default function Footer() {
   const isEmpreiteiros = pathname.startsWith('/construcao')
   const isContactos = pathname.startsWith('/contactos')
   const isPrivacy = pathname.startsWith('/politica-de-privacidade')
+  const isTerms = pathname.startsWith('/termos-e-condicoes')
   const siteVariant = getSiteVariantFromPath(pathname)
   const siteContent = getSiteVariantContent(siteVariant)
   const currentYear = new Date().getFullYear()
 
   const companyDesc = isEmpreiteiros
     ? 'Carpintaria técnica para empreiteiros, promotores e construtores. Pavimentos, cozinhas e marcenaria de obra, com fabrico em Paços de Ferreira.'
-    : isContactos || isPrivacy
+    : isContactos || isPrivacy || isTerms
     ? 'Pavimentos, cozinhas por medida e carpintaria em geral. Atuação regular na Região Centro; outras zonas sujeitas a confirmação prévia.'
     : siteContent.companyDescription
 
@@ -110,11 +111,17 @@ export default function Footer() {
             © {currentYear} {BUSINESS_NAME}. {FOOTER_LEGAL_TEXT}
           </p>
           <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 text-xs text-white/60">
+            <a href="/termos-e-condicoes" className="hover:text-white transition-colors">
+              Termos e Condições
+            </a>
+            <span className="text-white/30">·</span>
             <a href="/politica-de-privacidade" className="hover:text-white transition-colors">
               Política de Privacidade
             </a>
             <span className="text-white/30">·</span>
-            <span>Portugal</span>
+            <a href="https://www.livroreclamacoes.pt/Inicio/" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors">
+              Livro de Reclamações
+            </a>
           </div>
         </div>
       </div>

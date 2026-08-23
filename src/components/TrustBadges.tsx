@@ -4,7 +4,7 @@ export default function TrustBadges() {
   const badges = [
     { icon: Factory, text: 'Preços diretos de fábrica' },
     { icon: Truck, text: 'Portes grátis · Região Centro' },
-    { icon: Clock3, text: 'Entrega até 10 dias' },
+    { icon: Clock3, text: 'Até 10 dias úteis após confirmação de stock' },
     { icon: BadgeCheck, text: 'IVA incluído no preço' },
   ]
 
