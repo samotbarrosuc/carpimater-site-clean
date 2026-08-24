@@ -23,18 +23,20 @@ const STEPS = [
 
 const FEATURED_MATERIALS = [
   {
-    name: 'Vinílico SPC',
-    label: 'Pavimento impermeável',
-    description: 'Resistente, confortável e fácil de limpar.',
-    image: '/images/produtos-vinil/carvalho_mel_IMG_2897_optimized_2000-scaled-e1729769492932.jpeg',
-    href: '/loja?categoria=vinilico#catalogo-loja',
-  },
-  {
     name: 'Flutuante híbrido',
     label: 'Resistência à água 100 h+',
     description: 'Núcleo HDF com carbono e base acústica integrada.',
     image: '/images/produtos-flutuante/pingo.webp',
     href: '/loja?categoria=flutuante#catalogo-loja',
+    isNew: true,
+  },
+  {
+    name: 'Vinílico SPC',
+    label: 'Pavimento impermeável',
+    description: 'Resistente, confortável e fácil de limpar.',
+    image: '/images/produtos-vinil/carvalho_mel_IMG_2897_optimized_2000-scaled-e1729769492932.jpeg',
+    href: '/loja?categoria=vinilico#catalogo-loja',
+    isNew: false,
   },
   {
     name: 'Rodapé PVC',
@@ -42,6 +44,7 @@ const FEATURED_MATERIALS = [
     description: 'Resistente à humidade e simples de manter.',
     image: '/images/produtos-rodape/rodape pvc branco liso.jpg',
     href: '/loja?categoria=rodape#catalogo-loja',
+    isNew: false,
   },
 ]
 
@@ -296,7 +299,10 @@ export default function Home() {
             <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
               {FEATURED_MATERIALS.map((material) => (
                 <a href={material.href} key={material.name} className="group overflow-hidden rounded-2xl border border-[#d8d0c4] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(25,36,46,0.08)]">
-                  <div className="aspect-[4/3] overflow-hidden bg-slate-200"><img src={material.image} alt={material.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" /></div>
+                  <div className="relative aspect-[4/3] overflow-hidden bg-slate-200">
+                    <img src={material.image} alt={material.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />
+                    {material.isNew && <span className="absolute left-3 top-3 rounded-full bg-[#f05b13] px-2.5 py-1 text-[0.58rem] font-extrabold uppercase tracking-[0.13em] text-white shadow-md">Novidade</span>}
+                  </div>
                   <div className="p-3.5 sm:p-4">
                     <p className="text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#f05b13]">{material.label}</p>
                     <h3 className="mt-1.5 font-display text-base font-bold leading-tight text-[#19242e]">{material.name}</h3>
