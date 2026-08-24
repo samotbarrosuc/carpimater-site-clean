@@ -171,7 +171,7 @@ export default function Home() {
                     <strong className="max-w-[9rem] font-display text-sm leading-4 text-white sm:text-base sm:leading-5">Cozinhas e roupeiros</strong>
                     <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#f05b13] transition-transform duration-300 group-hover:scale-x-100" />
                   </a>
-                  <a href="/loja?categoria=vinilico" className="group relative isolate flex min-h-[88px] flex-col justify-between overflow-hidden border-r border-white/10 p-3 text-white transition hover:bg-white/[0.07] sm:p-4">
+                  <a href="/loja" className="group relative isolate flex min-h-[88px] flex-col justify-between overflow-hidden border-r border-white/10 p-3 text-white transition hover:bg-white/[0.07] sm:p-4">
                     <span className="flex items-center gap-2 text-[0.52rem] font-bold uppercase tracking-[0.12em] text-white/55"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#f05b13] text-white"><Layers3 className="h-3.5 w-3.5" /></span>Loja online</span>
                     <strong className="font-display text-sm leading-4 text-white sm:text-base sm:leading-5">Pavimentos</strong>
                     <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#f05b13] transition-transform duration-300 group-hover:scale-x-100" />
