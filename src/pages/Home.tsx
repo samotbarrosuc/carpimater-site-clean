@@ -137,11 +137,8 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <p className="section-kicker mb-5 flex items-center gap-3">
-                  <span className="h-px w-7 bg-[#f05b13]" /> Carpintaria · Pavimentos · Rodapés
-                </p>
                 <h1 className="mb-5 max-w-xl font-display text-[3.25rem] font-bold leading-[0.94] tracking-[-0.045em] text-[#19242e] sm:text-6xl lg:text-7xl">
-                  Carpintaria por medida, <em className="font-serif font-normal italic tracking-[-0.02em] text-[#f05b13]">pavimentos e rodapés.</em>
+                  Carpintaria por medida <em className="block font-serif font-normal italic tracking-[-0.02em] text-[#f05b13]">Coimbra.</em>
                 </h1>
                 <p className="mb-7 max-w-lg text-base leading-7 text-[#40505b] sm:text-lg">
                   Venda online de materiais e serviços de carpintaria, fornecimento e montagem em obra.

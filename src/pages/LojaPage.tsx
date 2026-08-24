@@ -1,4 +1,4 @@
-import { BadgeCheck, Clock3, Tags, HelpCircle, Truck } from 'lucide-react'
+import { BadgeCheck, Clock3, Store, HelpCircle, Truck } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import StoreCatalog from '@/components/StoreCatalog'
@@ -7,7 +7,7 @@ import { getWhatsAppUrl } from '@/content/site'
 const WA_QUANTITY = getWhatsAppUrl('Olá! Preciso de ajuda para escolher a quantidade de pavimento ou rodapé.')
 
 const storeBenefits = [
-  { icon: Tags, title: 'Preços publicados', desc: 'Por m² ou metro' },
+  { icon: Store, title: 'Loja online', desc: 'Compra de materiais' },
   { icon: Truck, title: 'Entrega gratuita', desc: 'Região Centro' },
   { icon: Clock3, title: 'Até 10 dias úteis', desc: 'Após confirmação de stock' },
   { icon: BadgeCheck, title: 'IVA incluído', desc: 'No preço apresentado' },
@@ -22,7 +22,7 @@ export default function LojaPage() {
         <div className="mx-auto grid max-w-6xl items-end gap-6 sm:gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <div>
             <p className="section-kicker">Loja de materiais</p>
-            <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.02] tracking-[-0.035em] sm:text-6xl">Pavimentos e rodapés.<br /><span className="font-serif font-normal italic text-[#f08a45]">Preços publicados.</span></h1>
+            <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.02] tracking-[-0.035em] sm:text-6xl">Pavimentos e rodapés.<br /><span className="font-serif font-normal italic text-[#f08a45]">Loja online.</span></h1>
             <p className="mt-5 max-w-xl text-sm leading-6 text-white/65 sm:text-base">Escolha o material, indique a quantidade e adicione ao carrinho. A aplicação pode ser pedida em separado.</p>
           </div>
 
