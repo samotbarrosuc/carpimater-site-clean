@@ -61,17 +61,14 @@ const handlers = {
       const from = 'CarpiMater <info@carpimater.pt>';
       const items = Array.isArray(body.items) ? body.items : [];
       const itemLines = items.map((item) => `${item.name} - ${item.units} ${item.kind === 'flooring' ? 'caixas' : 'barras'} - ${item.suppliedAmount} ${item.kind === 'flooring' ? 'm²' : 'm'}`).join('\n');
-      if (!body.comprovativo?.name || !body.comprovativo?.base64) {
-        return new MockResponse(res).status(400).json({ error: 'Comprovativo em falta' });
-      }
       const { error } = await resend.emails.send({
         from,
         to: [to],
         replyTo: body.email?.trim() || to,
         subject: `Nova encomenda ${body.reference ? `[${body.reference}] ` : ''}- ${body.nome || 'Cliente'}`,
-        html: `<h2>Nova encomenda CarpiMater</h2>${body.reference ? `<p><strong>Referência:</strong> ${body.reference}</p>` : ''}<p><strong>Cliente:</strong> ${body.nome || 'N/A'}</p><p><strong>Telefone:</strong> ${body.telefone || 'N/A'}</p><p><strong>Email:</strong> ${body.email || 'Não indicado'}</p><p><strong>Local:</strong> ${[body.freguesia, body.concelho, body.distrito].filter(Boolean).join(', ') || 'N/A'}</p>${body.morada ? `<p><strong>Morada:</strong> ${body.morada}</p>` : ''}<p><strong>Opção:</strong> ${body.delivery || 'N/A'}</p><p><strong>Pagamento:</strong> ${body.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}</p><p><strong>Termos aceites:</strong> ${body.termsAccepted ? `Sim — versão ${body.termsVersion || 'N/A'}` : 'Não'}</p><p><strong>Comprovativo anexado:</strong> ${body.comprovativo.name}</p><pre>${itemLines}</pre><p>Total: ${body.subtotal || 0} €</p>`,
-        text: `Nova encomenda de ${body.nome || 'Cliente'}${body.reference ? ` (referência ${body.reference})` : ''}\n\nPagamento: ${body.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}\nComprovativo anexado: ${body.comprovativo.name}\n\n${itemLines}\n\nTotal: ${body.subtotal || 0} €`,
-        attachments: [{ filename: body.comprovativo.name, content: Buffer.from(body.comprovativo.base64, 'base64'), contentType: body.comprovativo.type }],
+        html: `<h2>Nova encomenda CarpiMater</h2>${body.reference ? `<p><strong>Referência:</strong> ${body.reference}</p>` : ''}<p><strong>Cliente:</strong> ${body.nome || 'N/A'}</p><p><strong>Telefone:</strong> ${body.telefone || 'N/A'}</p><p><strong>Email:</strong> ${body.email || 'Não indicado'}</p><p><strong>Local:</strong> ${[body.freguesia, body.concelho, body.distrito].filter(Boolean).join(', ') || 'N/A'}</p>${body.morada ? `<p><strong>Morada:</strong> ${body.morada}</p>` : ''}<p><strong>Opção:</strong> ${body.delivery || 'N/A'}</p><p><strong>Pagamento:</strong> ${body.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}</p><p><strong>Termos aceites:</strong> ${body.termsAccepted ? `Sim — versão ${body.termsVersion || 'N/A'}` : 'Não'}</p><p><strong>Comprovativo:</strong> ${body.comprovativo?.name || 'Não anexado'}</p><pre>${itemLines}</pre><p>Total: ${body.subtotal || 0} €</p>`,
+        text: `Nova encomenda de ${body.nome || 'Cliente'}${body.reference ? ` (referência ${body.reference})` : ''}\n\nPagamento: ${body.paymentMethod === 'iban' ? 'Transferência bancária (IBAN)' : 'MB Way'}\nComprovativo: ${body.comprovativo?.name || 'Não anexado'}\n\n${itemLines}\n\nTotal: ${body.subtotal || 0} €`,
+        attachments: body.comprovativo ? [{ filename: body.comprovativo.name, content: Buffer.from(body.comprovativo.base64, 'base64'), contentType: body.comprovativo.type }] : undefined,
       });
       if (error) return new MockResponse(res).status(502).json({ error: error.message || 'Falha ao enviar email' });
       return new MockResponse(res).json({ ok: true });

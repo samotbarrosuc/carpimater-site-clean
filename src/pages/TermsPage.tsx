@@ -17,7 +17,7 @@ export default function TermsPage() {
               <div><p className="text-xs font-bold uppercase tracking-[0.18em] text-primary">Informação legal</p><h1 className="font-display text-3xl font-bold sm:text-4xl">Termos e Condições de Venda</h1></div>
             </div>
             <p className="mt-5 max-w-3xl text-sm leading-6 text-slate-600">Estes termos regulam as encomendas de materiais efetuadas na loja online CarpiMater. Leia-os antes de concluir a compra.</p>
-            <p className="mt-2 text-xs text-slate-400">Versão 2026-08-23 · Última atualização: 23 de agosto de 2026</p>
+            <p className="mt-2 text-xs text-slate-400">Versão 2026-08-24 · Última atualização: 24 de agosto de 2026</p>
           </header>
 
           <div className="space-y-5 text-sm leading-7 text-slate-600">
@@ -31,7 +31,7 @@ export default function TermsPage() {
               <h2 className="font-display text-xl font-bold text-[#19242e]">2. Produtos, preços e encomenda</h2>
               <p className="mt-3">As características essenciais, acabamento, unidade de venda e preço de cada produto são apresentados na loja. Os preços estão expressos em euros e incluem IVA à taxa legal em vigor.</p>
               <p className="mt-3">A encomenda é efetuada por caixas inteiras de pavimento ou barras inteiras de rodapé. A indicação de metros quadrados ou metros lineares permite calcular a quantidade a fornecer; prevalece sempre a quantidade de caixas ou barras constante do resumo final.</p>
-              <p className="mt-3">O envio do formulário e do comprovativo confirma a receção do pedido, mas a disponibilidade do material fica sujeita a confirmação pela CarpiMater. O contrato fica definitivamente confirmado após validação do pagamento e do stock.</p>
+              <p className="mt-3">O envio do formulário confirma a receção do pedido, mas a disponibilidade do material fica sujeita a confirmação pela CarpiMater. O comprovativo de pagamento é opcional. O contrato fica definitivamente confirmado após validação do pagamento e do stock.</p>
             </section>
 
             <section className="rounded-2xl border border-orange-200 bg-orange-50 p-6 sm:p-8">
@@ -40,7 +40,7 @@ export default function TermsPage() {
 
             <section className={sectionClass}>
               <h2 className="font-display text-xl font-bold text-[#19242e]">4. Pagamento, confirmação e fatura</h2>
-              <p className="mt-3">Os meios de pagamento disponíveis são MB Way e transferência bancária. A encomenda só é processada após receção e validação do comprovativo. A CarpiMater emitirá o documento fiscal legalmente aplicável à transmissão dos bens.</p>
+              <p className="mt-3">Os meios de pagamento disponíveis são MB Way e transferência bancária. A encomenda só é processada após confirmação do pagamento. O envio do comprovativo pode facilitar essa confirmação, mas não é obrigatório. A CarpiMater emitirá o documento fiscal legalmente aplicável à transmissão dos bens.</p>
               <p className="mt-3">A estimativa de aplicação apresentada no checkout é meramente indicativa, não integra o preço pago pelos materiais e não constitui adjudicação do serviço. A aplicação é confirmada separadamente depois de avaliadas as condições da obra.</p>
             </section>
 

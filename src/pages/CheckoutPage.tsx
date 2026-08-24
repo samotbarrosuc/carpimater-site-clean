@@ -13,7 +13,7 @@ import { DISTRITOS, getConcelhosByDistrito } from '@/content/viagens'
 type PaymentMethod = 'mbway' | 'iban'
 const BANK_IBAN = 'PT50 0018 0003 5127 2706 0200 6'
 const MAX_PROOF_SIZE_BYTES = 3 * 1024 * 1024
-const TERMS_VERSION = '2026-08-23'
+const TERMS_VERSION = '2026-08-24'
 
 function getProofContentType(selectedFile: File) {
   if (['application/pdf', 'image/jpeg', 'image/png'].includes(selectedFile.type)) return selectedFile.type
@@ -77,16 +77,12 @@ export default function CheckoutPage() {
 
   const submit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
-    if (!file) {
-      setFormError('Anexe o comprovativo de pagamento (PDF, JPG ou PNG) para podermos confirmar a encomenda.')
-      return
-    }
-    const proofContentType = getProofContentType(file)
-    if (!proofContentType) {
+    const proofContentType = file ? getProofContentType(file) : ''
+    if (file && !proofContentType) {
       setFormError('O comprovativo tem de ser um PDF ou uma imagem (JPG/PNG). Escolha outro ficheiro.')
       return
     }
-    if (file.size > MAX_PROOF_SIZE_BYTES) {
+    if (file && file.size > MAX_PROOF_SIZE_BYTES) {
       setFormError('O comprovativo não pode ultrapassar 3 MB. Escolha um ficheiro mais pequeno.')
       return
     }
@@ -98,7 +94,9 @@ export default function CheckoutPage() {
     const pad = (n: number) => String(n).padStart(2, '0')
     const ref = `CM-${now.getFullYear()}${pad(now.getMonth() + 1)}${pad(now.getDate())}-${Math.random().toString(36).slice(2, 6).toUpperCase()}`
     try {
-      const comprovativo = { name: file.name, type: proofContentType, size: file.size, base64: await fileToBase64(file) }
+      const comprovativo = file
+        ? { name: file.name, type: proofContentType, size: file.size, base64: await fileToBase64(file) }
+        : undefined
       const payload = Object.fromEntries(form.entries())
       const response = await fetch('/api/encomenda', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...payload, items, subtotal, delivery, paymentMethod: payment, reference: ref, applicationQuote, comprovativo, termsAccepted, termsVersion: TERMS_VERSION }) })
       const responseData = await response.json().catch(() => null)
@@ -124,7 +122,7 @@ export default function CheckoutPage() {
             <p className="mt-5 leading-7 text-slate-600">Recebemos o pedido. Vamos verificar o pagamento, o stock e os dados de entrega antes do envio.</p>
             <div className="mt-6 space-y-2 rounded-2xl bg-emerald-50 p-5 text-left text-sm leading-6 text-emerald-900">
               <p className="font-bold text-emerald-700">O que acontece a seguir</p>
-              <p>1. Confirmamos o stock e o seu comprovativo de pagamento.</p>
+              <p>1. Confirmamos o stock e o pagamento.</p>
               <p>2. Ligamos ou enviamos mensagem para validar a morada e a entrega.</p>
               <p>3. Confirmamos consigo a data prevista de entrega.</p>
             </div>
@@ -176,13 +174,13 @@ export default function CheckoutPage() {
                           <li>Abra a app MB Way e escolha <strong>Enviar dinheiro</strong>.</li>
                           <li>Envie {formatEur(subtotal)} (IVA inc.) para <strong>{PHONE_NUMBER}</strong> (Tomás Barros).</li>
                           <li>No descritivo, escreva o <strong>seu nome e a sua localidade</strong>.</li>
-                          <li>Anexe o comprovativo (printscreen) no passo 4.</li>
+                          <li>Se quiser, pode anexar o comprovativo no passo 4.</li>
                         </ol>
                       </div>
                     ) : (
                       <div className="mt-3">
                         <p className="flex items-center gap-2 text-sm font-semibold text-emerald-900"><CreditCard className="h-4 w-4" />IBAN: <span className="font-mono">{BANK_IBAN}</span></p>
-                        <p className="mt-2 text-sm leading-6 text-emerald-800">Transfira {formatEur(subtotal)} (IVA inc.) para o IBAN indicado e anexe o comprovativo no passo 4.</p>
+                        <p className="mt-2 text-sm leading-6 text-emerald-800">Transfira {formatEur(subtotal)} (IVA inc.) para o IBAN indicado. Pode anexar o comprovativo no passo 4.</p>
                       </div>
                     )}
                     <div className="mt-3 flex flex-wrap items-center justify-between gap-3 border-t border-emerald-200 pt-3"><span className="text-sm text-emerald-800">Valor a pagar</span><span className="text-lg font-bold text-emerald-700">{formatEur(subtotal)} <span className="text-xs font-semibold text-emerald-600">(IVA inc.)</span></span></div>
@@ -206,8 +204,8 @@ export default function CheckoutPage() {
                 </section>
 
                 <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
-                  <h2 className="text-lg font-bold">4. Comprovativo de pagamento</h2>
-                  <p className="mt-1 text-sm text-slate-500">Anexe o comprovativo {payment === 'mbway' ? 'da app MB Way' : 'da transferência'} para confirmarmos a encomenda.</p>
+                  <h2 className="text-lg font-bold">4. Comprovativo de pagamento <span className="font-normal text-slate-400">(opcional)</span></h2>
+                  <p className="mt-1 text-sm text-slate-500">Se quiser, pode anexar o comprovativo {payment === 'mbway' ? 'da app MB Way' : 'da transferência'}.</p>
                   <label className="mt-4 flex cursor-pointer items-center gap-3 rounded-xl border border-dashed border-slate-300 p-4 text-sm font-semibold hover:border-primary"><Upload className="h-5 w-5 text-primary" />{file ? file.name : 'Escolher ficheiro (PDF, JPG ou PNG · máximo 3 MB)'}<input type="file" accept=".pdf,.jpg,.jpeg,.png" onChange={(event) => { setFile(event.target.files?.[0] || null); setFormError('') }} className="sr-only" /></label>
                   {formError && <p className="mt-4 rounded-xl border border-red-200 bg-red-50 p-4 text-sm font-semibold text-red-700">{formError}</p>}
                   {status === 'error' && (

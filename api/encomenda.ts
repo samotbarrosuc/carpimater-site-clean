@@ -7,7 +7,7 @@ const FLOORING_BOX_AREA_M2 = 1.76
 const BASEBOARD_BAR_LENGTH_M = 2.25
 const NOTIFICATION_EMAIL = 'tomas.a.barros@hotmail.com'
 const RESEND_FROM = 'CarpiMater <info@carpimater.pt>'
-const TERMS_VERSION = '2026-08-23'
+const TERMS_VERSION = '2026-08-24'
 const FLOORING_NAMES = ['Carvalho Mel', 'Carvalho Nogal', 'Eucalipto', 'Oliveira', 'Tanzânia Almond', 'Tanzânia Coconut', 'Tanzânia Grey', 'Tanzânia Natural', 'Tanzânia Silver']
 const BASEBOARD_NAMES = ['Branco Liso', 'Carvalho Mel', 'Carvalho Nogal', 'Eucalipto', 'Oliveira', 'Tanzânia Almond', 'Tanzânia Coconut', 'Tanzânia Grey', 'Tanzânia Natural', 'Tanzânia Silver']
 
@@ -75,7 +75,7 @@ const orderSchema = z.object({
     type: z.enum(['application/pdf', 'image/jpeg', 'image/png']),
     size: z.number().positive().max(3 * 1024 * 1024),
     base64: z.string().min(1),
-  }),
+  }).optional(),
 })
 
 type OrderData = z.infer<typeof orderSchema>
@@ -150,7 +150,7 @@ function buildEmailContent(data: OrderData, items: VerifiedItem[], verifiedSubto
 <table style="border-collapse:collapse;margin-bottom:12px">
   ${row('Opção', delivery)}
   ${row('Pagamento', payment)}
-  ${row('Comprovativo', `${escapeHtml(data.comprovativo.name)} (anexo)`)}
+  ${row('Comprovativo', data.comprovativo ? `${escapeHtml(data.comprovativo.name)} (anexo)` : 'Não anexado')}
 </table>
 <p style="margin:0 0 4px;font-weight:700;font-size:13px;text-transform:uppercase;color:#374151">Aceitação contratual</p>
 <table style="border-collapse:collapse;margin-bottom:18px">
@@ -194,7 +194,7 @@ ${applicationHtml}
     '',
     `Opção: ${delivery}`,
     `Pagamento: ${payment}`,
-    `Comprovativo: ${data.comprovativo.name} (anexo)`,
+    `Comprovativo: ${data.comprovativo ? `${data.comprovativo.name} (anexo)` : 'Não anexado'}`,
     `Termos e Condições aceites: Sim — versão ${data.termsVersion} — ${termsAcceptedAt.toLocaleString('pt-PT', { timeZone: 'Europe/Lisbon' })}`,
     '',
     'PRODUTOS',
@@ -247,11 +247,11 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
       subject,
       html,
       text,
-      attachments: [{
+      attachments: data.comprovativo ? [{
         filename: data.comprovativo.name,
         content: Buffer.from(data.comprovativo.base64, 'base64'),
         contentType: data.comprovativo.type,
-      }],
+      }] : undefined,
     })
 
     if (result.error) {
