@@ -26,7 +26,7 @@ const FEATURED_MATERIALS = [
     name: 'Vinílico SPC',
     label: 'Pavimento impermeável',
     description: 'Resistente, confortável e fácil de limpar.',
-    image: '/images/pavimento-vinilico-sala-coimbra.png',
+    image: '/images/produtos-vinil/carvalho_mel_IMG_2897_optimized_2000-scaled-e1729769492932.jpeg',
     href: '/loja?categoria=vinilico#catalogo-loja',
   },
   {
