@@ -11,7 +11,7 @@ import { CompareSlider, pairs as beforeAfterPairs } from '@/components/cozinha/s
 import { FAQS } from '@/content/faq'
 import { WHATSAPP_NUMBER, EMAIL } from '@/content/site'
 import { CONTACT_MOBILE_ERROR, sanitizePortugueseMobile, validateContactDetails } from '@/lib/contact-validation'
-import { ShoppingBag, Store, ChevronDown, ChevronRight, Mail, MessageCircle, Phone } from 'lucide-react'
+import { ShoppingBag, Store, ChevronDown, ChevronRight, Hammer, Layers3, Mail, MessageCircle, PanelsTopLeft, Phone } from 'lucide-react'
 
 const WA_HOME = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá CarpiMater! Gostaria de saber mais sobre os vossos serviços.')}`
 
@@ -165,18 +165,21 @@ export default function Home() {
                     Pedir orçamento
                   </a>
                 </div>
-                <nav aria-label="Áreas principais" className="grid max-w-xl grid-cols-3 gap-px overflow-hidden rounded-2xl border border-[#dcd5ca] bg-[#dcd5ca] shadow-sm">
-                  <a href="/cozinha" className="group flex min-h-[88px] flex-col justify-between bg-white/80 p-3 transition hover:bg-white sm:p-4">
-                    <span className="text-[0.58rem] font-bold uppercase tracking-[0.13em] text-[#f05b13]">Por medida</span>
-                    <strong className="font-display text-sm leading-4 text-[#19242e] sm:text-base sm:leading-5">Cozinhas e roupeiros</strong>
+                <nav aria-label="Áreas principais" className="grid max-w-xl grid-cols-3 overflow-hidden rounded-[1.35rem] border border-[#2b3b47] bg-[#19242e] shadow-[0_14px_34px_rgba(25,36,46,0.14)]">
+                  <a href="/cozinha" className="group relative isolate flex min-h-[88px] flex-col justify-between overflow-hidden border-r border-white/10 p-3 text-white transition hover:bg-white/[0.07] sm:p-4">
+                    <span className="flex items-center gap-2 text-[0.52rem] font-bold uppercase tracking-[0.12em] text-white/55"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#f05b13] text-white"><PanelsTopLeft className="h-3.5 w-3.5" /></span>Por medida</span>
+                    <strong className="max-w-[9rem] font-display text-sm leading-4 text-white sm:text-base sm:leading-5">Cozinhas e roupeiros</strong>
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#f05b13] transition-transform duration-300 group-hover:scale-x-100" />
                   </a>
-                  <a href="/loja?categoria=vinilico" className="group flex min-h-[88px] flex-col justify-between bg-white/80 p-3 transition hover:bg-white sm:p-4">
-                    <span className="text-[0.58rem] font-bold uppercase tracking-[0.13em] text-[#f05b13]">Loja online</span>
-                    <strong className="font-display text-sm leading-4 text-[#19242e] sm:text-base sm:leading-5">Pavimentos</strong>
+                  <a href="/loja?categoria=vinilico" className="group relative isolate flex min-h-[88px] flex-col justify-between overflow-hidden border-r border-white/10 p-3 text-white transition hover:bg-white/[0.07] sm:p-4">
+                    <span className="flex items-center gap-2 text-[0.52rem] font-bold uppercase tracking-[0.12em] text-white/55"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#f05b13] text-white"><Layers3 className="h-3.5 w-3.5" /></span>Loja online</span>
+                    <strong className="font-display text-sm leading-4 text-white sm:text-base sm:leading-5">Pavimentos</strong>
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#f05b13] transition-transform duration-300 group-hover:scale-x-100" />
                   </a>
-                  <a href="/construcao" className="group flex min-h-[88px] flex-col justify-between bg-white/80 p-3 transition hover:bg-white sm:p-4">
-                    <span className="text-[0.58rem] font-bold uppercase tracking-[0.13em] text-[#f05b13]">Em obra</span>
-                    <strong className="font-display text-sm leading-4 text-[#19242e] sm:text-base sm:leading-5">Carpintaria e montagem</strong>
+                  <a href="/construcao" className="group relative isolate flex min-h-[88px] flex-col justify-between overflow-hidden p-3 text-white transition hover:bg-white/[0.07] sm:p-4">
+                    <span className="flex items-center gap-2 text-[0.52rem] font-bold uppercase tracking-[0.12em] text-white/55"><span className="flex h-7 w-7 shrink-0 items-center justify-center rounded-lg bg-[#f05b13] text-white"><Hammer className="h-3.5 w-3.5" /></span>Em obra</span>
+                    <strong className="max-w-[9rem] font-display text-sm leading-4 text-white sm:text-base sm:leading-5">Carpintaria e montagem</strong>
+                    <span className="absolute inset-x-0 bottom-0 h-0.5 origin-left scale-x-0 bg-[#f05b13] transition-transform duration-300 group-hover:scale-x-100" />
                   </a>
                 </nav>
               </motion.div>
