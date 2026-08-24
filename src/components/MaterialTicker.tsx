@@ -23,6 +23,15 @@ const MATERIALS: TickerMaterial[] = [
     color: product.cor,
     href: '/loja?categoria=vinilico',
   })),
+  ...getProdutosByVariant('flutuante').map((product) => ({
+    id: `hybrid-${product.id}`,
+    name: `ZCUDO ${product.nome}`,
+    price: product.precoM2,
+    unit: 'm²' as const,
+    image: product.imagem,
+    color: product.cor,
+    href: '/loja?categoria=flutuante',
+  })),
   ...RODAPES.map((product) => ({
     id: `baseboard-${product.id}`,
     name: `Rodapé ${product.nome}`,
@@ -38,7 +47,7 @@ function MaterialIcon({ material, duplicate = false }: { material: TickerMateria
   return (
     <a
       href={material.href}
-      aria-label={duplicate ? undefined : `${material.name}, ${formatEur(material.price)} por ${material.unit}. Abrir na loja.`}
+      aria-label={duplicate ? undefined : `${material.name}, ${material.price > 0 ? `${formatEur(material.price)} por ${material.unit}` : 'preço sob consulta'}. Abrir na loja.`}
       tabIndex={duplicate ? -1 : 0}
       className="flex h-12 w-12 shrink-0 items-center overflow-hidden rounded-xl border border-[#ddd6cc] bg-white p-1 shadow-sm transition-[border-color,box-shadow] duration-300 hover:border-primary/40 hover:shadow-md focus:border-primary/40 focus:outline-none focus:ring-2 focus:ring-primary/20 sm:h-11 sm:w-[190px] sm:pr-3"
     >
@@ -57,7 +66,7 @@ function MaterialIcon({ material, duplicate = false }: { material: TickerMateria
       </span>
       <span className="ml-2 hidden min-w-0 whitespace-nowrap sm:block">
         <span className="block max-w-[128px] truncate text-xs font-bold text-[#19242e]">{material.name}</span>
-        <span className="mt-0.5 block text-[0.65rem] font-semibold text-primary">{formatEur(material.price)}/{material.unit}</span>
+        <span className="mt-0.5 block text-[0.65rem] font-semibold text-primary">{material.price > 0 ? `${formatEur(material.price)}/${material.unit}` : 'Preço sob consulta'}</span>
       </span>
     </a>
   )

@@ -95,9 +95,8 @@ export function getFaqsByVariant(variant: SiteVariant): FaqItem[] {
   return FAQS.map((faq) => ({
     ...faq,
     answer: faq.answer
-      .replace(/pavimento vinílico/gi, 'pavimento flutuante')
-      .replace(/vinílico/gi, 'flutuante')
-      .replace(/vinílicos/gi, 'flutuantes')
-      .replace(/25 anos/gi, '20 anos'),
+      .replace(/pavimento vinílico/gi, 'pavimento flutuante híbrido')
+      .replace(/vinílico/gi, 'flutuante híbrido')
+      .replace(/vinílicos/gi, 'flutuantes híbridos'),
   }))
 }

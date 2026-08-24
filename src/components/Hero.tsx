@@ -164,7 +164,7 @@ export default function Hero() {
                     href={`/loja?categoria=${siteVariant}`}
                     className="inline-flex min-h-[52px] w-full items-center justify-center gap-2 whitespace-nowrap rounded-xl bg-primary px-7 text-[0.9rem] font-bold text-primary-foreground shadow-[0_8px_24px_rgba(240,91,19,0.22)] transition hover:bg-primary/90 sm:w-auto"
                   >
-                    Ver {siteVariant === 'vinilico' ? 'vinílicos' : 'flutuantes'} na loja
+                    Ver {siteVariant === 'vinilico' ? 'vinílicos' : 'flutuantes híbridos'} na loja
                     <ChevronRight className="h-4 w-4" />
                   </a>
                 )}

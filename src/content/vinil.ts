@@ -34,6 +34,16 @@ export interface Produto {
   sobConsulta?: boolean
   /** Caso de uso ideal */
   useCase?: string
+  /** Família do pavimento, usada nos cartões e nas fichas técnicas */
+  categoria?: 'vinilico' | 'hibrido'
+  /** Marca e coleção comercial */
+  marca?: string
+  colecao?: string
+  /** Medidas e dados técnicos apresentados ao cliente */
+  formato?: string
+  espessura?: string
+  garantia?: string
+  caracteristicas?: string[]
 }
 
 /**
@@ -133,7 +143,131 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
  * Pode editar nomes, referências, preços e imagens aqui,
  * no mesmo ficheiro onde já gere os produtos vinílicos.
  */
-const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = []
+const NEXTCORE_FEATURES = [
+  'Classe de utilização AC5',
+  'Resistência à água e salpicos durante 100 h+',
+  'Base acústica IXPE de 1,5 mm integrada',
+  'Superfície antibacteriana e solução eco friendly',
+  'Textura Real Wood, relevo autêntico e poro sincronizado',
+  'Sistema de encaixe Unilin com ZCUDO Shield',
+  'Biselado nos quatro lados',
+  'Compatível com cozinhas e casas de banho',
+]
+
+const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
+  {
+    nome: 'Pingo',
+    referencia: 'ZCU-NC95-PINGO',
+    precoM2: 0,
+    cor: '#c9b9a1',
+    imagem: '/images/produtos-flutuante/pingo.webp',
+    sobConsulta: true,
+    categoria: 'hibrido',
+    marca: 'ZCUDO',
+    colecao: 'NextCore 9,5',
+    formato: '1215 × 197 × 8 mm + base IXPE de 1,5 mm',
+    espessura: '9,5 mm',
+    garantia: '25 anos',
+    caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Tom claro e sereno para espaços luminosos.',
+  },
+  {
+    nome: 'Tots',
+    referencia: 'ZCU-NC95-TOTS',
+    precoM2: 0,
+    cor: '#b98251',
+    imagem: '/images/produtos-flutuante/tots.webp',
+    sobConsulta: true,
+    categoria: 'hibrido',
+    marca: 'ZCUDO',
+    colecao: 'NextCore 9,5',
+    formato: '1215 × 197 × 8 mm + base IXPE de 1,5 mm',
+    espessura: '9,5 mm',
+    garantia: '25 anos',
+    caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Carvalho quente com um desenho natural e equilibrado.',
+  },
+  {
+    nome: 'Moka',
+    referencia: 'ZCU-NC95-MOKA',
+    precoM2: 0,
+    cor: '#8c654f',
+    imagem: '/images/produtos-flutuante/moka.webp',
+    sobConsulta: true,
+    categoria: 'hibrido',
+    marca: 'ZCUDO',
+    colecao: 'NextCore 9,5',
+    formato: '1215 × 197 × 8 mm + base IXPE de 1,5 mm',
+    espessura: '9,5 mm',
+    garantia: '25 anos',
+    caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Madeira média, acolhedora e fácil de combinar.',
+  },
+  {
+    nome: 'Arq',
+    referencia: 'ZCU-NC115-ARQ',
+    precoM2: 0,
+    cor: '#d2b28e',
+    imagem: '/images/produtos-flutuante/arq.webp',
+    sobConsulta: true,
+    categoria: 'hibrido',
+    marca: 'ZCUDO',
+    colecao: 'NextCore 11,5',
+    formato: '1845 × 197 × 10 mm + base IXPE de 1,5 mm',
+    espessura: '11,5 mm',
+    garantia: '25 anos',
+    caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Régua longa e clara para ampliar visualmente a divisão.',
+  },
+  {
+    nome: 'Grisácio',
+    referencia: 'ZCU-NC115-GRISACIO',
+    precoM2: 0,
+    cor: '#b9ad99',
+    imagem: '/images/produtos-flutuante/grisacio.webp',
+    sobConsulta: true,
+    categoria: 'hibrido',
+    marca: 'ZCUDO',
+    colecao: 'NextCore 11,5',
+    formato: '1845 × 197 × 10 mm + base IXPE de 1,5 mm',
+    espessura: '11,5 mm',
+    garantia: '25 anos',
+    caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Carvalho acinzentado para interiores contemporâneos.',
+  },
+  {
+    nome: 'Torrado',
+    referencia: 'ZCU-NC115-TORRADO',
+    precoM2: 0,
+    cor: '#6f4933',
+    imagem: '/images/produtos-flutuante/torrado.webp',
+    sobConsulta: true,
+    categoria: 'hibrido',
+    marca: 'ZCUDO',
+    colecao: 'NextCore 11,5',
+    formato: '1845 × 197 × 10 mm + base IXPE de 1,5 mm',
+    espessura: '11,5 mm',
+    garantia: '25 anos',
+    caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Tom escuro e marcado para ambientes com personalidade.',
+  },
+  {
+    nome: 'Mel',
+    referencia: 'ZCU-NC115-MEL',
+    precoM2: 0,
+    cor: '#ad7544',
+    imagem: '/images/produtos-flutuante/mel.webp',
+    sobConsulta: true,
+    categoria: 'hibrido',
+    marca: 'ZCUDO',
+    colecao: 'NextCore 11,5',
+    formato: '1845 × 197 × 10 mm + base IXPE de 1,5 mm',
+    espessura: '11,5 mm',
+    garantia: '25 anos',
+    caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Tom mel luminoso para uma atmosfera acolhedora.',
+  },
+]
 
 const COZINHA_EDITAVEIS: ProdutoEditavel[] = [
   {

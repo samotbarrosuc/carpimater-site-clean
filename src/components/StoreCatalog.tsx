@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState, type CSSProperties } from 'react'
-import { Droplets, House, Info, Layers3, Minus, Plus, Ruler, ShoppingBag, Sparkles, Trash2, X } from 'lucide-react'
+import { Droplets, House, Info, Layers3, MessageCircle, Minus, Plus, Ruler, ShoppingBag, Sparkles, Trash2, X } from 'lucide-react'
 import { getProdutosByVariant, type Produto } from '@/content/vinil'
 import { RODAPES, type RodapeProduto } from '@/content/rodapes'
 import { BASEBOARD_BAR_LENGTH_M, FLOORING_BOX_AREA_M2, calcBaseboardPurchase, calcFlooringPurchase, formatEur, formatQuantity, parseQuantityInput, sanitizeQuantityInput } from '@/lib/calculations'
 import { createBaseboardCartItem, createFlooringCartItem, getCartItemPrice } from '@/lib/cart'
 import { useCart } from '@/context/CartContext'
+import { getWhatsAppUrl } from '@/content/site'
 
 type Choice = { kind: 'flooring'; product: Produto } | { kind: 'baseboard'; product: RodapeProduto }
 type StoreCategory = 'all' | 'vinilico' | 'flutuante' | 'rodape'
@@ -117,6 +118,7 @@ function ProductMedia({ image, color, name, kind }: { image?: string; color: str
 
 function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void }) {
   const flooring = choice.kind === 'flooring'
+  const hybrid = flooring && choice.product.categoria === 'hibrido'
   const viewportStyle = useDialogViewport(close)
 
   return (
@@ -131,7 +133,27 @@ function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void
           <button type="button" onClick={close} aria-label="Fechar informação" className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-slate-100 text-slate-600 transition hover:bg-slate-200"><X className="h-4 w-4" /></button>
         </div>
 
-        {flooring ? (
+        {hybrid ? (
+          <>
+            <div className="mt-5 rounded-2xl border border-[#cfe4e5] bg-[#f0f8f8] p-4">
+              <div className="flex items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-[#239da7]" />Flutuante híbrido {choice.product.marca} {choice.product.colecao}</div>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Pavimento laminado híbrido com núcleo HDF reforçado com carbono, textura de madeira e base acústica integrada. Adequado a cozinhas e casas de banho, com resistência à água e aos salpicos durante 100 h+.</p>
+            </div>
+            <dl className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4 text-sm">
+              <div className="col-span-2"><dt className="text-xs text-slate-500">Formato da régua</dt><dd className="mt-1 font-bold text-[#19242e]">{choice.product.formato}</dd></div>
+              <div><dt className="text-xs text-slate-500">Espessura total</dt><dd className="mt-1 font-bold text-[#19242e]">{choice.product.espessura}</dd></div>
+              <div><dt className="text-xs text-slate-500">Garantia</dt><dd className="mt-1 font-bold text-[#19242e]">{choice.product.garantia}</dd></div>
+            </dl>
+            <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[0.68rem] font-bold text-slate-600">
+              <div className="rounded-xl border border-slate-200 p-3"><Droplets className="mx-auto mb-2 h-4 w-4 text-[#239da7]" />100 h+</div>
+              <div className="rounded-xl border border-slate-200 p-3"><Layers3 className="mx-auto mb-2 h-4 w-4 text-[#239da7]" />Classe AC5</div>
+              <div className="rounded-xl border border-slate-200 p-3"><Sparkles className="mx-auto mb-2 h-4 w-4 text-[#239da7]" />Fácil limpeza</div>
+            </div>
+            <ul className="mt-4 space-y-1.5 text-xs leading-5 text-slate-500">
+              {choice.product.caracteristicas?.slice(2).map((feature) => <li key={feature}>• {feature}</li>)}
+            </ul>
+          </>
+        ) : flooring ? (
           <>
             <div className="mt-5 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4">
               <div className="flex items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-primary" />Pavimento vinílico SPC</div>
@@ -275,12 +297,16 @@ export function CartDrawer() {
   )
 }
 
-function FlooringCard({ product, floorLabel, onAdd, onInfo }: { product: Produto; floorLabel: string; onAdd: () => void; onInfo: () => void }) {
+function FlooringCard({ product, onAdd, onInfo }: { product: Produto; onAdd: () => void; onInfo: () => void }) {
+  const hybrid = product.categoria === 'hibrido'
+  const floorLabel = hybrid ? `${product.marca} ${product.colecao}` : 'SPC vinílico'
+  const consultationUrl = getWhatsAppUrl(`Olá! Gostaria de saber o preço e a disponibilidade do pavimento flutuante híbrido ZCUDO ${product.colecao}, acabamento ${product.nome}.`, 'flutuante')
+
   return (
     <article id={`produto-${product.referencia.toLowerCase()}`} className="group min-w-0 scroll-mt-28 overflow-hidden rounded-2xl border border-[#e2ddd5] bg-white shadow-[0_1px_2px_rgba(25,36,46,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_14px_32px_rgba(25,36,46,0.09)]">
       <div className="relative aspect-[4/3] overflow-hidden bg-[#eee9e1]">
         <ProductMedia image={product.imagem} color={product.cor} name={product.nome} kind="flooring" />
-        <span className="absolute left-2.5 top-2.5 rounded-lg bg-[#19242e]/88 px-2 py-1 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm">Vinílico</span>
+        <span className={`absolute left-2.5 top-2.5 rounded-lg px-2 py-1 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm ${hybrid ? 'bg-[#177d86]/92' : 'bg-[#19242e]/88'}`}>{hybrid ? 'Híbrido' : 'Vinílico'}</span>
         <button type="button" onClick={onInfo} aria-label={`Ver informação de ${product.nome}`} className="absolute right-2.5 top-2.5 flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/95 text-[#19242e] shadow-md backdrop-blur-sm transition hover:bg-primary hover:text-white"><Info className="h-4 w-4" /></button>
       </div>
       <div className="p-3 sm:p-4">
@@ -288,8 +314,17 @@ function FlooringCard({ product, floorLabel, onAdd, onInfo }: { product: Produto
         <h3 className="mt-1.5 truncate font-display text-[0.95rem] font-bold text-[#19242e] sm:text-base">{product.nome}</h3>
         <p className="mt-1 hidden min-h-9 text-xs leading-[1.15rem] text-slate-500 sm:block">{product.useCase || 'Pavimento resistente para interiores'}</p>
         <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
-          <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">{formatEur(product.precoM2)}<span className="text-xs font-semibold text-slate-400">/m²</span></strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">IVA incluído</span></div>
-          <button type="button" onClick={onAdd} aria-label={`Adicionar ${product.nome}`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f05b13] text-white transition hover:bg-[#d94d0d] sm:w-auto sm:px-3"><Plus className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Adicionar</span></button>
+          {product.sobConsulta ? (
+            <>
+              <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">Sob consulta</strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">Preço e stock</span></div>
+              <a href={consultationUrl} target="_blank" rel="noopener noreferrer" aria-label={`Consultar ${product.nome} por WhatsApp`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#177d86] text-white transition hover:bg-[#126a72] sm:w-auto sm:px-3"><MessageCircle className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Consultar</span></a>
+            </>
+          ) : (
+            <>
+              <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">{formatEur(product.precoM2)}<span className="text-xs font-semibold text-slate-400">/m²</span></strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">IVA incluído</span></div>
+              <button type="button" onClick={onAdd} aria-label={`Adicionar ${product.nome}`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f05b13] text-white transition hover:bg-[#d94d0d] sm:w-auto sm:px-3"><Plus className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Adicionar</span></button>
+            </>
+          )}
         </div>
       </div>
     </article>
@@ -326,7 +361,9 @@ export default function StoreCatalog() {
   const [choice, setChoice] = useState<Choice | null>(null)
   const [infoChoice, setInfoChoice] = useState<Choice | null>(null)
   const { itemCount, setIsOpen } = useCart()
-  const products = getProdutosByVariant(category === 'flutuante' ? 'flutuante' : 'vinilico')
+  const vinylProducts = getProdutosByVariant('vinilico')
+  const hybridProducts = getProdutosByVariant('flutuante')
+  const products = category === 'flutuante' ? hybridProducts : category === 'vinilico' ? vinylProducts : [...vinylProducts, ...hybridProducts]
 
   useEffect(() => {
     const updateCategory = () => setCategory(getCategoryFromUrl())
@@ -336,9 +373,8 @@ export default function StoreCatalog() {
 
   const showFloors = category !== 'rodape'
   const showBases = category === 'all' || category === 'rodape'
-  const floorLabel = category === 'flutuante' ? 'Flutuante / laminado' : 'SPC vinílico'
   const isFlutuanteUnavailable = category === 'flutuante' && products.length === 0
-  const tabs: Array<[StoreCategory, string]> = [['all', 'Todos'], ['vinilico', 'Vinílico SPC'], ['flutuante', 'Flutuante'], ['rodape', 'Rodapés']]
+  const tabs: Array<[StoreCategory, string]> = [['all', 'Todos'], ['vinilico', 'Vinílico SPC'], ['flutuante', 'Flutuante híbrido'], ['rodape', 'Rodapés']]
 
   return (
     <>
@@ -354,7 +390,7 @@ export default function StoreCatalog() {
         <div className="mt-8 rounded-2xl border border-dashed border-[#cfc5b8] bg-white p-8 text-center sm:p-12"><p className="section-kicker">Disponibilidade sob consulta</p><h2 className="mt-3 font-display text-2xl font-bold text-[#19242e]">Estamos a atualizar o catálogo flutuante.</h2><p className="mx-auto mt-3 max-w-lg text-sm leading-6 text-slate-600">Fale connosco para confirmar modelos, preços e disponibilidade antes de encomendar.</p><a href="https://wa.me/351910093635?text=Ol%C3%A1!%20Gostaria%20de%20saber%20que%20pavimentos%20flutuantes%20est%C3%A3o%20dispon%C3%ADveis." target="_blank" rel="noopener noreferrer" className="mt-6 inline-flex rounded-xl bg-primary px-5 py-3 text-sm font-bold text-white">Falar sobre flutuante</a></div>
       ) : (
         <div className="mt-6 grid grid-cols-2 gap-3 sm:mt-8 sm:grid-cols-3 sm:gap-4 lg:grid-cols-4 lg:gap-5">
-          {showFloors && products.map((product) => <FlooringCard key={`floor-${product.id}`} product={product} floorLabel={floorLabel} onAdd={() => setChoice({ kind: 'flooring', product })} onInfo={() => setInfoChoice({ kind: 'flooring', product })} />)}
+          {showFloors && products.map((product) => <FlooringCard key={`floor-${product.referencia}`} product={product} onAdd={() => setChoice({ kind: 'flooring', product })} onInfo={() => setInfoChoice({ kind: 'flooring', product })} />)}
           {showBases && RODAPES.map((product) => <BaseboardCard key={`base-${product.id}`} product={product} onAdd={() => setChoice({ kind: 'baseboard', product })} onInfo={() => setInfoChoice({ kind: 'baseboard', product })} />)}
         </div>
       )}

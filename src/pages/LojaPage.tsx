@@ -22,8 +22,8 @@ export default function LojaPage() {
         <div className="mx-auto grid max-w-6xl items-end gap-6 sm:gap-10 lg:grid-cols-[1.05fr_0.95fr] lg:gap-16">
           <div>
             <p className="section-kicker">Loja de materiais</p>
-            <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.02] tracking-[-0.035em] sm:text-6xl">Pavimentos e rodapés.<br /><span className="font-serif font-normal italic text-[#f08a45]">Compra simples.</span></h1>
-            <p className="mt-5 max-w-xl text-sm leading-6 text-white/65 sm:text-base">Preços publicados, IVA incluído e encomenda online. Compre apenas o material ou solicite também aplicação profissional.</p>
+            <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.02] tracking-[-0.035em] sm:text-6xl">Pavimentos e rodapés.<br /><span className="font-serif font-normal italic text-[#f08a45]">Até 25 anos de garantia</span></h1>
+            <p className="mt-5 max-w-xl text-sm leading-6 text-white/65 sm:text-base">Conheça os acabamentos disponíveis, consulte preços e stock e solicite também aplicação profissional.</p>
           </div>
 
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10">
@@ -56,7 +56,7 @@ export default function LojaPage() {
         <div className="mb-7 grid gap-5 border-b border-[#ded8cf] pb-7 md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <p className="section-kicker">Catálogo</p>
-            <h2 className="mt-2 font-display text-3xl font-bold tracking-[-0.025em] sm:text-4xl">Vinílicos e rodapés disponíveis</h2>
+            <h2 className="mt-2 font-display text-3xl font-bold tracking-[-0.025em] sm:text-4xl">Vinílicos, flutuantes híbridos e rodapés</h2>
             <p className="mt-3 max-w-xl text-sm leading-6 text-slate-600">Filtre por categoria e selecione um acabamento para calcular a compra.</p>
           </div>
           <a href={`/whatsapp-redirect.html?url=${encodeURIComponent(WA_QUANTITY)}`} target="_blank" rel="noopener noreferrer" className="flex max-w-sm items-center gap-3 rounded-xl border border-[#ded8cf] bg-white px-4 py-3 text-sm text-slate-600 shadow-sm transition hover:border-primary/40">
@@ -72,13 +72,13 @@ export default function LojaPage() {
         <div className="mx-auto grid max-w-6xl gap-8 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
           <div>
             <p className="section-kicker">Loja online e aplicação</p>
-            <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.025em] sm:text-4xl">Pavimentos com preço claro e carpinteiros para aplicar.</h2>
-            <p className="mt-4 max-w-2xl leading-7 text-slate-600">Na loja CarpiMater pode encomendar pavimento vinílico SPC e rodapés PVC com preços visíveis. Para pavimentos flutuantes, laminados e soluções com acabamento de madeira, confirme os modelos disponíveis com a nossa equipa.</p>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.025em] sm:text-4xl">Vinílico SPC, flutuante híbrido e rodapés.</h2>
+            <p className="mt-4 max-w-2xl leading-7 text-slate-600">Na loja CarpiMater encontra pavimentos vinílicos SPC, o flutuante híbrido ZCUDO NextCore e rodapés PVC. Se não encontrar o que procura, fale connosco.</p>
           </div>
           <div className="rounded-2xl border border-[#ded8cf] bg-[#f8f5ef] p-6 sm:p-7">
             <h3 className="font-display text-xl font-bold">Coimbra, Aveiro, Leiria e arredores</h3>
             <p className="mt-3 text-sm leading-6 text-slate-600">Entregamos materiais e prestamos serviços de aplicação na região Centro. A equipa reúne experiência de carpintaria para preparar, rematar e instalar cada pavimento com cuidado.</p>
-            <div className="mt-5 flex flex-wrap gap-3"><a href="/loja?categoria=vinilico#catalogo-loja" className="text-sm font-bold text-primary hover:text-[#d94d0d]">Ver pavimentos vinílicos</a><span className="text-slate-300">·</span><a href="/rodapes" className="text-sm font-bold text-primary hover:text-[#d94d0d]">Ver rodapés PVC</a></div>
+            <div className="mt-5 flex flex-wrap gap-3"><a href="/loja?categoria=vinilico#catalogo-loja" className="text-sm font-bold text-primary hover:text-[#d94d0d]">Ver pavimentos vinílicos</a><span className="text-slate-300">·</span><a href="/loja?categoria=flutuante#catalogo-loja" className="text-sm font-bold text-primary hover:text-[#d94d0d]">Ver flutuante híbrido</a><span className="text-slate-300">·</span><a href="/rodapes" className="text-sm font-bold text-primary hover:text-[#d94d0d]">Ver rodapés PVC</a></div>
           </div>
         </div>
       </section>

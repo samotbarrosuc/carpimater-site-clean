@@ -18,7 +18,7 @@ const PAGE_LINKS = [
 
 const SERVICE_PILLS = [
   { label: "Vinílico", href: "/vinilico" },
-  { label: "Flutuante", href: "/flutuante" },
+  { label: "Flutuante híbrido", href: "/flutuante" },
   { label: "Cozinhas", href: "/cozinha", active: true },
   { label: "Construção", href: "/construcao" },
 ];

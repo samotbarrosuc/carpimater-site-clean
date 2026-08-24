@@ -22,13 +22,13 @@ type SeoEntry = {
 const SEO_BY_PATH: Record<string, SeoEntry> = {
   '/': {
     title: 'CarpiMater | Carpintaria por medida em Coimbra',
-    description: 'Carpintaria por medida e loja online de pavimentos vinílicos SPC, flutuantes, laminados e rodapés PVC, com preços publicados e aplicação em Coimbra e Região Centro.',
-    searchTopics: ['carpintaria por medida em Coimbra', 'pavimentos em Coimbra', 'pavimento vinílico SPC', 'pavimento flutuante', 'pavimento laminado', 'pavimento em madeira', 'rodapé PVC'],
+    description: 'Carpintaria por medida e loja de pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC, com aplicação em Coimbra e Região Centro.',
+    searchTopics: ['carpintaria por medida em Coimbra', 'pavimentos em Coimbra', 'pavimento vinílico SPC', 'pavimento flutuante híbrido', 'ZCUDO NextCore', 'pavimento laminado resistente à água', 'rodapé PVC'],
   },
   '/loja': {
-    title: 'Loja de Pavimentos e Rodapés PVC em Coimbra | CarpiMater',
-    description: 'Compre pavimentos vinílicos SPC e rodapés PVC online, com preços publicados e IVA incluído. Entrega e aplicação em Coimbra, Aveiro, Leiria e região Centro.',
-    searchTopics: ['loja de pavimentos online', 'pavimentos vinílicos SPC', 'pavimentos flutuantes', 'pavimentos laminados', 'rodapés PVC', 'preços de pavimentos'],
+    title: 'Loja de Pavimentos Híbridos, Vinílicos e Rodapés | CarpiMater',
+    description: 'Descubra pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC. Entrega e aplicação em Coimbra, Aveiro, Leiria e Região Centro.',
+    searchTopics: ['loja de pavimentos online', 'pavimentos vinílicos SPC', 'pavimento flutuante híbrido ZCUDO', 'ZCUDO NextCore', 'pavimentos laminados resistentes à água', 'rodapés PVC', 'preços de pavimentos'],
     pageType: 'CollectionPage',
   },
   '/vinilico': {
@@ -38,10 +38,11 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
     serviceType: 'Venda e aplicação de pavimento vinílico SPC',
   },
   '/flutuante': {
-    title: 'Pavimento Flutuante, Laminado e Madeira | Coimbra',
-    description: 'Pavimentos flutuantes, laminados e com acabamento de madeira para salas e quartos. Fornecimento e aplicação em Coimbra, Aveiro, Leiria e arredores.',
-    searchTopics: ['pavimento flutuante', 'pavimento laminado', 'pavimento em madeira', 'aplicação de pavimento em Coimbra'],
-    serviceType: 'Venda e aplicação de pavimento flutuante e laminado',
+    title: 'Flutuante Híbrido ZCUDO NextCore em Coimbra | CarpiMater',
+    description: 'Pavimento flutuante híbrido ZCUDO NextCore AC5, resistente à água 100 h+, com base acústica. Fornecimento e aplicação em Coimbra, Aveiro e Leiria.',
+    searchTopics: ['pavimento flutuante híbrido', 'ZCUDO NextCore', 'pavimento laminado híbrido', 'pavimento AC5', 'pavimento resistente à água', 'aplicação de pavimento em Coimbra'],
+    image: `${SITE_URL}/images/produtos-flutuante/pingo.webp`,
+    serviceType: 'Venda e aplicação de pavimento flutuante híbrido ZCUDO NextCore',
   },
   '/rodapes': {
     title: 'Rodapés PVC em Coimbra | Preços e Compra Online',
@@ -107,7 +108,7 @@ const businessSchema = {
   url: SITE_URL,
   logo: `${SITE_URL}/images/logo-carpimater-v2.png`,
   image: DEFAULT_IMAGE,
-  description: 'Carpintaria por medida e loja online de pavimentos vinílicos SPC, flutuantes, laminados, em madeira e rodapés PVC, com aplicação profissional na Região Centro.',
+  description: 'Carpintaria por medida e loja de pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC, com aplicação profissional na Região Centro.',
   telephone: PHONE_NUMBER,
   email: EMAIL,
   address: {
@@ -122,6 +123,7 @@ const businessSchema = {
   knowsAbout: [
     'pavimento vinílico SPC',
     'pavimento flutuante',
+    'pavimento flutuante híbrido ZCUDO NextCore',
     'pavimento laminado',
     'pavimento em madeira',
     'pavimento híbrido',
@@ -138,8 +140,8 @@ const businessSchema = {
     name: 'Materiais e serviços CarpiMater',
     itemListElement: [
       { '@type': 'OfferCatalog', name: 'Pavimentos vinílicos SPC' },
-      { '@type': 'OfferCatalog', name: 'Pavimentos flutuantes e laminados' },
-      { '@type': 'OfferCatalog', name: 'Pavimentos em madeira e híbridos' },
+      { '@type': 'OfferCatalog', name: 'Pavimento flutuante híbrido ZCUDO NextCore' },
+      { '@type': 'OfferCatalog', name: 'Pavimentos laminados resistentes à água' },
       { '@type': 'OfferCatalog', name: 'Rodapés PVC' },
       { '@type': 'OfferCatalog', name: 'Aplicação de pavimentos e rodapés' },
       { '@type': 'OfferCatalog', name: 'Carpintaria por medida e cozinhas' },
@@ -153,6 +155,7 @@ function absoluteUrl(path: string) {
 
 function productItemList() {
   const vinyl = getProdutosByVariant('vinilico').filter((product) => !product.sobConsulta && product.precoM2 > 0)
+  const hybrid = getProdutosByVariant('flutuante')
   const items = [
     ...vinyl.map((product) => ({
       '@type': 'Product',
@@ -177,6 +180,26 @@ function productItemList() {
           referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MTK' },
         },
       },
+    })),
+    ...hybrid.map((product) => ({
+      '@type': 'Product',
+      '@id': `${SITE_URL}/loja#produto-${product.referencia.toLowerCase()}`,
+      name: `Pavimento flutuante híbrido ZCUDO ${product.colecao} ${product.nome}`,
+      description: `${product.useCase || 'Pavimento flutuante híbrido ZCUDO NextCore.'} ${product.formato || ''}`.trim(),
+      sku: product.referencia,
+      category: 'Pavimento flutuante híbrido',
+      material: 'Carbon Core HDF com base acústica IXPE',
+      color: product.nome,
+      brand: { '@type': 'Brand', name: product.marca || 'ZCUDO' },
+      ...(product.imagem ? { image: absoluteUrl(product.imagem) } : {}),
+      url: `${SITE_URL}/loja?categoria=flutuante#produto-${product.referencia.toLowerCase()}`,
+      additionalProperty: [
+        { '@type': 'PropertyValue', name: 'Coleção', value: product.colecao },
+        { '@type': 'PropertyValue', name: 'Formato', value: product.formato },
+        { '@type': 'PropertyValue', name: 'Classe', value: 'AC5' },
+        { '@type': 'PropertyValue', name: 'Resistência à água', value: '100 h+' },
+        { '@type': 'PropertyValue', name: 'Garantia', value: product.garantia },
+      ],
     })),
     ...RODAPES.map((product) => ({
       '@type': 'Product',
@@ -209,7 +232,7 @@ function productItemList() {
   return {
     '@type': 'ItemList',
     '@id': `${SITE_URL}/loja#catalogo`,
-    name: 'Pavimentos vinílicos e rodapés com preços online',
+    name: 'Pavimentos vinílicos, flutuantes híbridos ZCUDO e rodapés',
     numberOfItems: items.length,
     itemListElement: items.map((item, index) => ({
       '@type': 'ListItem',

@@ -31,10 +31,10 @@ const FEATURED_MATERIALS = [
     href: '/loja?categoria=vinilico#catalogo-loja',
   },
   {
-    name: 'Flutuante híbrido H₂O',
-    label: 'Pavimento resistente à água',
-    description: 'Aspeto natural com elevada estabilidade.',
-    image: '/images/pavimento-flutuante-claro.png',
+    name: 'Flutuante híbrido ZCUDO',
+    label: 'NextCore · resistência 100 h+',
+    description: 'Núcleo HDF com carbono e base acústica integrada.',
+    image: '/images/produtos-flutuante/pingo.webp',
     href: '/loja?categoria=flutuante#catalogo-loja',
   },
   {
@@ -198,7 +198,7 @@ export default function Home() {
               <a href="/loja" className="group clean-card flex min-h-[250px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)] sm:p-7">
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#19242e] text-xs font-bold text-white">02</span>
                 <h3 className="mt-8 font-display text-xl font-bold text-[#19242e]">Escolher os materiais</h3>
-                <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Pavimentos e rodapés do catálogo original, vendidos por caixas e barras inteiras.</p>
+                <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Vinílicos SPC, flutuantes híbridos ZCUDO e rodapés num catálogo simples de comparar.</p>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#f05b13]">Visitar loja <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
               </a>
               <a href="/loja" className="group clean-card flex min-h-[250px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)] sm:p-7">
@@ -246,16 +246,16 @@ export default function Home() {
               </a>
 
               {/* Pavimentos — merged Vinílico + Flutuante */}
-              <a href="/loja?categoria=vinilico" className="group clean-card flex flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]">
+              <a href="/loja" className="group clean-card flex flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]">
                 <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
                   <img
                     src="/images/pavimento-vinilico-sala-coimbra.png"
-                    alt="Pavimento vinílico e flutuante instalado pela CarpiMater em Coimbra"
+                    alt="Pavimento vinílico e flutuante híbrido instalado pela CarpiMater em Coimbra"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-5 sm:p-6">
-                  <p className="section-kicker">Vinílico e flutuante</p>
+                  <p className="section-kicker">Vinílico e híbrido</p>
                   <h3 className="mt-2 font-display text-xl font-bold text-foreground">Pavimentos</h3>
                   <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Materiais resistentes, compra online e aplicação profissional quando precisar.</p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary">Ver pavimentos <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
@@ -368,7 +368,7 @@ export default function Home() {
                     Carpintaria por medida, pavimentos e rodapés em Coimbra, Aveiro e Leiria
                   </h2>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    A CarpiMater reúne carpintaria por medida e uma loja online de pavimentos e rodapés PVC com preços publicados. Entregamos e aplicamos pavimentos vinílicos SPC, flutuantes, laminados, híbridos e soluções com acabamento de madeira regularmente na Região Centro.
+                    A CarpiMater reúne carpintaria por medida e uma loja online de pavimentos e rodapés PVC. Entregamos e aplicamos pavimentos vinílicos SPC e o novo flutuante híbrido ZCUDO NextCore, além de rodapés, regularmente na Região Centro.
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Trabalhamos regularmente em Coimbra e arredores, Condeixa-a-Nova, Figueira da Foz, Cantanhede, Mealhada, Lousã, Aveiro, Leiria, Pombal e Marinha Grande. Para outras zonas do país, contacte-nos para confirmarmos disponibilidade.</p>
                   <a href="/loja" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">Ver preços na loja <ChevronRight className="h-4 w-4" /></a>

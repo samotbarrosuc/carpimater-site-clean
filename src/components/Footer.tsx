@@ -63,7 +63,7 @@ export default function Footer() {
               {[
                 { label: 'Loja de materiais', href: '/loja' },
                 { label: 'Cozinhas à medida', href: '/cozinha' },
-                { label: 'Pavimento flutuante e laminado', href: '/flutuante' },
+                { label: 'Flutuante híbrido ZCUDO NextCore', href: '/flutuante' },
                 { label: 'Pavimento vinílico SPC', href: '/vinilico' },
                 { label: 'Rodapés PVC', href: '/rodapes' },
                 { label: 'Carpintaria para Obras', href: '/construcao' },

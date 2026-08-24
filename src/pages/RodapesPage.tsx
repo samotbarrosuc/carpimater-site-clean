@@ -33,7 +33,7 @@ export default function RodapesPage() {
         <div className="mx-auto max-w-6xl">
           <div className="max-w-2xl">
             <p className="section-kicker">Modelos disponíveis</p>
-            <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.025em] sm:text-5xl">Rodapé PVC para pavimento vinílico, flutuante ou laminado</h2>
+            <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.025em] sm:text-5xl">Rodapé PVC para pavimento vinílico ou flutuante híbrido</h2>
             <p className="mt-4 leading-7 text-[#40505b]">Acabamentos brancos e efeito madeira, resistentes e fáceis de manter. Todos os preços apresentados incluem IVA.</p>
           </div>
           <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-4 sm:gap-5">

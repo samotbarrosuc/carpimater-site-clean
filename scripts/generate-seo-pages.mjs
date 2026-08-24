@@ -7,9 +7,9 @@ const template = await readFile(join(outputDir, 'index.html'), 'utf8')
 
 const pages = {
   loja: {
-    title: 'Loja de Pavimentos e Rodapés PVC em Coimbra | CarpiMater',
-    description: 'Compre pavimentos vinílicos SPC e rodapés PVC online, com preços publicados e IVA incluído. Entrega e aplicação em Coimbra, Aveiro, Leiria e região Centro.',
-    topics: ['loja de pavimentos online', 'pavimentos vinílicos SPC', 'pavimentos flutuantes', 'pavimentos laminados', 'rodapés PVC', 'preços de pavimentos'],
+    title: 'Loja de Pavimentos Híbridos, Vinílicos e Rodapés | CarpiMater',
+    description: 'Descubra pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC. Entrega e aplicação em Coimbra, Aveiro, Leiria e Região Centro.',
+    topics: ['loja de pavimentos online', 'pavimentos vinílicos SPC', 'pavimento flutuante híbrido ZCUDO', 'ZCUDO NextCore', 'pavimentos laminados resistentes à água', 'rodapés PVC', 'preços de pavimentos'],
     type: 'CollectionPage',
   },
   vinilico: {
@@ -18,9 +18,9 @@ const pages = {
     topics: ['pavimento vinílico', 'pavimento vinílico SPC', 'pavimento impermeável', 'aplicação de pavimento vinílico em Coimbra'],
   },
   flutuante: {
-    title: 'Pavimento Flutuante, Laminado e Madeira | Coimbra',
-    description: 'Pavimentos flutuantes, laminados e com acabamento de madeira para salas e quartos. Fornecimento e aplicação em Coimbra, Aveiro, Leiria e arredores.',
-    topics: ['pavimento flutuante', 'pavimento laminado', 'pavimento em madeira', 'aplicação de pavimento em Coimbra'],
+    title: 'Flutuante Híbrido ZCUDO NextCore em Coimbra | CarpiMater',
+    description: 'Pavimento flutuante híbrido ZCUDO NextCore AC5, resistente à água 100 h+, com base acústica. Fornecimento e aplicação em Coimbra, Aveiro e Leiria.',
+    topics: ['pavimento flutuante híbrido', 'ZCUDO NextCore', 'pavimento laminado híbrido', 'pavimento AC5', 'pavimento resistente à água', 'aplicação de pavimento em Coimbra'],
   },
   rodapes: {
     title: 'Rodapés PVC em Coimbra | Preços e Compra Online',
