@@ -14,5 +14,8 @@ export const PRECO_VINILICO_SPC_M2 = 22
 /** Preço do pavimento flutuante híbrido por m². */
 export const PRECO_FLUTUANTE_HIBRIDO_M2 = 22.5
 
-/** Preço do rodapé PVC por metro linear. */
-export const PRECO_RODAPE_PVC_ML = 4
+/** Preço do rodapé PVC branco por metro linear. */
+export const PRECO_RODAPE_PVC_BRANCO_ML = 4
+
+/** Preço dos restantes rodapés PVC com cor por metro linear. */
+export const PRECO_RODAPE_PVC_ML = 5

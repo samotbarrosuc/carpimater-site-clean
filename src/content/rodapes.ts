@@ -1,4 +1,4 @@
-import { PRECO_RODAPE_PVC_ML } from '@/content/precos-materiais'
+import { PRECO_RODAPE_PVC_BRANCO_ML, PRECO_RODAPE_PVC_ML } from '@/content/precos-materiais'
 
 /*  *//**
  * ============================================================
@@ -53,7 +53,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
     nome: 'Branco Liso',
     referencia: 'ROD-001',
-    precoMl: PRECO_RODAPE_PVC_ML,
+    precoMl: PRECO_RODAPE_PVC_BRANCO_ML,
     cor: '#FFFFFF',
     imagem: '/images/produtos-rodape/rodape pvc branco liso.jpg',
     material: 'PVC',
