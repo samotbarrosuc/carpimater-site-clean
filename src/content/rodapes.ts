@@ -39,6 +39,8 @@ export interface RodapeProduto {
   espessura: string
   /** Altura visível (ex: '7 cm') */
   altura: string
+  /** Produto apresentado apenas mediante consulta */
+  sobConsulta?: boolean
 }
 
 /**
@@ -59,6 +61,16 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     material: 'PVC',
     espessura: '14mm',
     altura: '7 cm',
+  },
+  {
+    nome: 'Rodapé em madeira',
+    referencia: 'ROD-011',
+    precoMl: 0,
+    cor: '#B58A62',
+    material: 'Madeira',
+    espessura: 'Sob consulta',
+    altura: 'Sob consulta',
+    sobConsulta: true,
   },
   {
     nome: 'Carvalho Mel',
@@ -152,8 +164,8 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   },
 ]
 
-export const RODAPES: RodapeProduto[] = RODAPES_EDITAVEIS.map((rodape, index) => ({
-  id: index + 1,
+export const RODAPES: RodapeProduto[] = RODAPES_EDITAVEIS.map((rodape) => ({
+  id: Number(rodape.referencia.replace('ROD-', '')),
   ...rodape,
 }))
 

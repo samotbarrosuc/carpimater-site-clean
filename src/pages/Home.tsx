@@ -310,7 +310,7 @@ export default function Home() {
                 <a href={material.href} key={material.name} className="group overflow-hidden rounded-2xl border border-[#d8d0c4] bg-white shadow-sm transition hover:-translate-y-0.5 hover:shadow-[0_14px_32px_rgba(25,36,46,0.08)]">
                   <div className="relative aspect-[4/3] overflow-hidden bg-slate-200">
                     <img src={material.image} alt={material.name} className="h-full w-full object-cover transition duration-500 group-hover:scale-[1.035]" />
-                    {material.isNew && <span className="absolute left-3 top-3 rounded-full border border-[#e7b83e] bg-[#ffdd57] px-2.5 py-1 text-[0.58rem] font-extrabold uppercase tracking-[0.13em] text-[#b42318] shadow-md">Novidade</span>}
+                    {material.isNew && <span className="absolute left-3 top-3 rounded-full border border-[#e7b83e] bg-[#ffdd57] px-2.5 py-1 text-[0.58rem] font-extrabold uppercase tracking-[0.13em] text-[#174c8c] shadow-md">Novidade</span>}
                   </div>
                   <div className="p-3.5 sm:p-4">
                     <p className="text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#f05b13]">{material.label}</p>

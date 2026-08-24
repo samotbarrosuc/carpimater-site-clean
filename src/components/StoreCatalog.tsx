@@ -119,6 +119,7 @@ function ProductMedia({ image, color, name, kind }: { image?: string; color: str
 function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void }) {
   const flooring = choice.kind === 'flooring'
   const hybrid = flooring && choice.product.categoria === 'hibrido'
+  const woodBaseboard = !flooring && choice.product.material === 'Madeira'
   const viewportStyle = useDialogViewport(close)
 
   return (
@@ -136,7 +137,7 @@ function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void
         {hybrid ? (
           <>
             <div className="mt-5 rounded-2xl border border-[#cfe4e5] bg-[#f0f8f8] p-4">
-              <div className="flex flex-wrap items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-[#239da7]" />Flutuante híbrido {choice.product.marca} {choice.product.colecao}<span className="rounded-full border border-[#e7b83e] bg-[#ffdd57] px-2 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.12em] text-[#b42318]">Novidade</span></div>
+              <div className="flex flex-wrap items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-[#239da7]" />Flutuante híbrido {choice.product.marca} {choice.product.colecao}<span className="rounded-full border border-[#e7b83e] bg-[#ffdd57] px-2 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.12em] text-[#174c8c]">Novidade</span></div>
               <p className="mt-2 text-sm leading-6 text-slate-600">Pavimento laminado híbrido com núcleo HDF reforçado com carbono, textura de madeira e base acústica integrada. Adequado a cozinhas e casas de banho, com resistência à água e aos salpicos durante 100 h+.</p>
             </div>
             <dl className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4 text-sm">
@@ -167,7 +168,7 @@ function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void
           </>
         ) : (
           <>
-            <p className="mt-5 text-sm leading-6 text-slate-600">Rodapé em PVC resistente à humidade e simples de limpar, pensado para proteger a base da parede e criar um acabamento uniforme.</p>
+            <p className="mt-5 text-sm leading-6 text-slate-600">{woodBaseboard ? 'Rodapé em madeira com medidas, acabamento, preço e disponibilidade sob consulta.' : 'Rodapé em PVC resistente à humidade e simples de limpar, pensado para proteger a base da parede e criar um acabamento uniforme.'}</p>
             <dl className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4 text-sm">
               <div><dt className="text-xs text-slate-500">Material</dt><dd className="mt-1 font-bold text-[#19242e]">{choice.product.material}</dd></div>
               <div><dt className="text-xs text-slate-500">Altura</dt><dd className="mt-1 font-bold text-[#19242e]">{choice.product.altura}</dd></div>
@@ -308,7 +309,7 @@ function FlooringCard({ product, onAdd, onInfo }: { product: Produto; onAdd: () 
         <ProductMedia image={product.imagem} color={product.cor} name={product.nome} kind="flooring" />
         <div className="absolute left-2.5 top-2.5 flex flex-wrap gap-1.5">
           <span className={`rounded-lg px-2 py-1 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm ${hybrid ? 'bg-[#177d86]/92' : 'bg-[#19242e]/88'}`}>{hybrid ? 'Híbrido' : 'Vinílico'}</span>
-          {hybrid && <span className="rounded-lg border border-[#e7b83e] bg-[#ffdd57] px-2 py-1 text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-[#b42318] shadow-sm">Novidade</span>}
+          {hybrid && <span className="hidden rounded-lg border border-[#e7b83e] bg-[#ffdd57] px-2 py-1 text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-[#174c8c] opacity-0 shadow-sm transition-opacity duration-200 group-hover:opacity-100 lg:inline-flex">Novidade</span>}
         </div>
         <button type="button" onClick={onInfo} aria-label={`Ver informação de ${product.nome}`} className="absolute right-2.5 top-2.5 flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/95 text-[#19242e] shadow-md backdrop-blur-sm transition hover:bg-primary hover:text-white"><Info className="h-4 w-4" /></button>
       </div>
@@ -334,6 +335,8 @@ function FlooringCard({ product, onAdd, onInfo }: { product: Produto; onAdd: () 
 }
 
 function BaseboardCard({ product, onAdd, onInfo }: { product: RodapeProduto; onAdd: () => void; onInfo: () => void }) {
+  const consultationUrl = getWhatsAppUrl(`Olá! Gostaria de saber o preço e a disponibilidade do ${product.nome.toLowerCase()}.`)
+
   return (
     <article id={`produto-${product.referencia.toLowerCase()}`} className="group min-w-0 scroll-mt-28 overflow-hidden rounded-2xl border border-[#e2ddd5] bg-white shadow-[0_1px_2px_rgba(25,36,46,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_14px_32px_rgba(25,36,46,0.09)]">
       <div className="relative aspect-[4/3] overflow-hidden bg-[#eee9e1]">
@@ -346,8 +349,17 @@ function BaseboardCard({ product, onAdd, onInfo }: { product: RodapeProduto; onA
         <h3 className="mt-1.5 truncate font-display text-[0.95rem] font-bold text-[#19242e] sm:text-base">{product.nome}</h3>
         <p className="mt-1 hidden text-xs leading-[1.15rem] text-slate-500 sm:block">Altura: {product.altura}</p>
         <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
-          <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">{formatEur(product.precoMl)}<span className="text-xs font-semibold text-slate-400">/m</span></strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">IVA incluído</span></div>
-          <button type="button" onClick={onAdd} aria-label={`Adicionar ${product.nome}`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f05b13] text-white transition hover:bg-[#d94d0d] sm:w-auto sm:px-3"><Plus className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Adicionar</span></button>
+          {product.sobConsulta ? (
+            <>
+              <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">Sob consulta</strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">Preço e medidas</span></div>
+              <a href={consultationUrl} target="_blank" rel="noopener noreferrer" aria-label={`Consultar ${product.nome} por WhatsApp`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#177d86] text-white transition hover:bg-[#126a72] sm:w-auto sm:px-3"><MessageCircle className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Consultar</span></a>
+            </>
+          ) : (
+            <>
+              <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">{formatEur(product.precoMl)}<span className="text-xs font-semibold text-slate-400">/m</span></strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">IVA incluído</span></div>
+              <button type="button" onClick={onAdd} aria-label={`Adicionar ${product.nome}`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f05b13] text-white transition hover:bg-[#d94d0d] sm:w-auto sm:px-3"><Plus className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Adicionar</span></button>
+            </>
+          )}
         </div>
       </div>
     </article>
@@ -376,14 +388,14 @@ export default function StoreCatalog() {
   const showFloors = category !== 'rodape'
   const showBases = category === 'all' || category === 'rodape'
   const isFlutuanteUnavailable = category === 'flutuante' && products.length === 0
-  const tabs: Array<[StoreCategory, string]> = [['all', 'Todos'], ['vinilico', 'Vinílico SPC'], ['flutuante', 'Flutuante híbrido'], ['rodape', 'Rodapés']]
+  const tabs: Array<[StoreCategory, string]> = [['all', 'Todos'], ['flutuante', 'Flutuante híbrido'], ['vinilico', 'Vinílico SPC'], ['rodape', 'Rodapés']]
 
   return (
     <>
       <div className="-mx-4 overflow-x-auto px-4 pb-1 pt-5" role="tablist" aria-label="Categorias da loja">
         <div className="flex w-max gap-1 rounded-xl border border-[#ded8cf] bg-white p-1 shadow-sm">
           {tabs.map(([value, label]) => (
-            <button key={value} type="button" role="tab" aria-selected={category === value} onClick={() => { setCategory(value); window.history.replaceState({}, '', value === 'all' ? '/loja' : `/loja?categoria=${value}`) }} className={`relative inline-flex items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-2 text-xs font-bold transition sm:text-sm ${category === value ? 'bg-[#19242e] text-white shadow-sm' : 'text-slate-500 hover:bg-[#f7f3ea] hover:text-[#19242e]'}`}>{value === 'flutuante' && <span className="pointer-events-none absolute left-1/2 top-[-0.25rem] z-10 -translate-x-1/2 -translate-y-full rounded-full border border-[#e7b83e] bg-[#ffdd57] px-1.5 py-0.5 text-[0.48rem] font-extrabold uppercase tracking-[0.08em] text-[#b42318]">Novidade</span>}<span>{label}</span></button>
+            <button key={value} type="button" role="tab" aria-selected={category === value} onClick={() => { setCategory(value); window.history.replaceState({}, '', value === 'all' ? '/loja' : `/loja?categoria=${value}`) }} className={`relative inline-flex items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-2 text-xs font-bold transition sm:text-sm ${category === value ? 'bg-[#19242e] text-white shadow-sm' : 'text-slate-500 hover:bg-[#f7f3ea] hover:text-[#19242e]'}`}>{value === 'flutuante' && <span className="pointer-events-none absolute left-1/2 top-[-0.25rem] z-10 -translate-x-1/2 -translate-y-full rounded-full border border-[#e7b83e] bg-[#ffdd57] px-2.5 py-0.5 text-[0.58rem] font-extrabold uppercase tracking-[0.1em] text-[#174c8c] shadow-md">Novidade</span>}<span>{label}</span></button>
           ))}
         </div>
       </div>
