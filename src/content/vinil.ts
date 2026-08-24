@@ -1,4 +1,5 @@
 import type { SiteVariant } from '@/content/site'
+import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_VINILICO_SPC_M2 } from '@/content/precos-materiais'
 
 /**
  * ============================================================
@@ -8,7 +9,7 @@ import type { SiteVariant } from '@/content/site'
  * Edite aqui toda a informação dos pavimentos vinílicos:
  *   - nome          → nome exibido no site
  *   - referencia    → referência interna (ex: VIN-001)
- *   - precoM2       → preço por m² (IVA incluído)
+ *   - precoM2       → definido centralmente em precos-materiais.ts
  *   - cor           → cor hexadecimal do swatch (ex: '#C9A96E')
  *   - imagem        → caminho da foto em /public/
  *                     Ex: '/images/produtos-vinil/foto.jpg'
@@ -58,7 +59,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Carvalho Mel',
     referencia: 'VIN-001',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#C9A96E',
     imagem: '/images/produtos-vinil/carvalho_mel_IMG_2897_optimized_2000-scaled-e1729769492932.jpeg',
     useCase: 'Ideal para salas de estar modernas',
@@ -66,7 +67,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Carvalho Nogal',
     referencia: 'VIN-002',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#8B8680',
     imagem: '/images/produtos-vinil/carvalho_nogal_PHOTO-2023-06-13-01-28-00-e1729769602770.jpg',
     useCase: 'Perfeito para ambientes elegantes',
@@ -74,7 +75,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Eucalipto',
     referencia: 'VIN-003',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#B5935A',
     imagem: '/images/produtos-vinil/eucalipto_PHOTO-2023-11-21-08-25-04-e1729769679644.jpg',
     useCase: 'Ideal para cozinhas e áreas de serviço',
@@ -82,42 +83,42 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Oliveira',
     referencia: 'VIN-004',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#D4C4A0',
     imagem: '/images/produtos-vinil/oliveira_PHOTO-2023-06-13-01-26-58-e1729769780755.jpg',
   },
   {
     nome: 'Tanzânia Almond',
     referencia: 'VIN-005',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#E8D5B0',
     imagem: '/images/produtos-vinil/Tanzania_Almond_optimized_2000-scaled.jpg',
   },
   {
     nome: 'Tanzânia Coconut',
     referencia: 'VIN-006',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#3D2B1F',
     imagem: '/images/produtos-vinil/tanzania_coconut_IMG_2899_optimized_2000-scaled.jpeg',
   },
   {
     nome: 'Tanzânia Grey',
     referencia: 'VIN-007',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#6B3A2A',
     imagem: '/images/produtos-vinil/tanzania_grey_IMG_2902_optimized_2000-scaled.jpeg',
   },
   {
     nome: 'Tanzânia Natural',
     referencia: 'VIN-008',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#B0ADB0',
     imagem: '/images/produtos-vinil/Tanzania_Natural_1_optimized_2000-scaled.jpg',
   },
   {
     nome: 'Tanzânia Silver',
     referencia: 'VIN-009',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#F5F0E8',
     imagem: '/images/produtos-vinil/tanzania_silver.jpeg',
   },
@@ -140,8 +141,8 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
 /**
  * Produtos do sub-site de pavimento flutuante.
  *
- * Pode editar nomes, referências, preços e imagens aqui,
- * no mesmo ficheiro onde já gere os produtos vinílicos.
+ * Pode editar nomes, referências e imagens aqui.
+ * Os preços são geridos em precos-materiais.ts.
  */
 const NEXTCORE_FEATURES = [
   'Classe de utilização AC5',
@@ -158,7 +159,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Pingo',
     referencia: 'ZCU-NC95-PINGO',
-    precoM2: 22,
+    precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#c9b9a1',
     imagem: '/images/produtos-flutuante/pingo.webp',
     categoria: 'hibrido',
@@ -173,7 +174,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Tots',
     referencia: 'ZCU-NC95-TOTS',
-    precoM2: 22,
+    precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#b98251',
     imagem: '/images/produtos-flutuante/tots.webp',
     categoria: 'hibrido',
@@ -188,7 +189,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Moka',
     referencia: 'ZCU-NC95-MOKA',
-    precoM2: 22,
+    precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#8c654f',
     imagem: '/images/produtos-flutuante/moka.webp',
     categoria: 'hibrido',
@@ -203,7 +204,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Arq',
     referencia: 'ZCU-NC115-ARQ',
-    precoM2: 22,
+    precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#d2b28e',
     imagem: '/images/produtos-flutuante/arq.webp',
     categoria: 'hibrido',
@@ -218,7 +219,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Grisácio',
     referencia: 'ZCU-NC115-GRISACIO',
-    precoM2: 22,
+    precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#b9ad99',
     imagem: '/images/produtos-flutuante/grisacio.webp',
     categoria: 'hibrido',
@@ -233,7 +234,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Torrado',
     referencia: 'ZCU-NC115-TORRADO',
-    precoM2: 22,
+    precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#6f4933',
     imagem: '/images/produtos-flutuante/torrado.webp',
     categoria: 'hibrido',
@@ -248,7 +249,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Mel',
     referencia: 'ZCU-NC115-MEL',
-    precoM2: 22,
+    precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#ad7544',
     imagem: '/images/produtos-flutuante/mel.webp',
     categoria: 'hibrido',

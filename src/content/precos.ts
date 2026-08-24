@@ -10,7 +10,7 @@
  *     PRECO_MAO_OBRA_M2          → custo de aplicação por m²
  *     PRECO_MAO_OBRA_RODAPE_ML   → custo de aplicação de rodapé por metro linear
  *
- *   MATERIAIS (preço base — o preço real de cada produto está em vinil.ts e rodapes.ts)
+ *   MATERIAIS (os preços da loja estão centralizados em precos-materiais.ts)
  *     PRECO_RODAPE_ML            → preço base do rodapé por metro linear
  *     PRECO_PERFIL_UN            → preço de cada perfil de transição (porta)
  *
@@ -29,6 +29,8 @@
  * ============================================================
  */
 
+export { PRECO_RODAPE_PVC_ML as PRECO_RODAPE_ML } from '@/content/precos-materiais'
+
 // ── Mão de obra ────────────────────────────────────────────────────────────────
 
 /** Custo de aplicação por m² (IVA incluído) */
@@ -38,9 +40,6 @@ export const PRECO_MAO_OBRA_M2 = 9
 export const PRECO_MAO_OBRA_RODAPE_ML = 3.2
 
 // ── Materiais ──────────────────────────────────────────────────────────────────
-
-/** Preço base do rodapé por metro linear (IVA incluído) */
-export const PRECO_RODAPE_ML = 4.00
 
 /** Preço de cada perfil de transição por unidade (IVA incluído) */
 export const PRECO_PERFIL_UN = 15
