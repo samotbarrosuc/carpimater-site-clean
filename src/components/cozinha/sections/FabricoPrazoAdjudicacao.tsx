@@ -14,30 +14,30 @@ export default function FabricoPrazoAdjudicacao() {
   const inView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section id="fabrico-prazo-adjudicacao" ref={ref} className="py-16 lg:py-24 bg-secondary">
+    <section id="fabrico-prazo-adjudicacao" ref={ref} className="bg-[#f8f5ef] py-10 sm:py-12">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-12"
+          className="hidden"
         >
         </motion.div>
 
-        <div className="grid gap-10">
+        <div className="overflow-hidden rounded-[1.5rem] border border-[#2c3b46] bg-[#19242e] shadow-[0_18px_45px_rgba(25,36,46,0.13)]">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={inView ? { opacity: 1, y: 0 } : {}}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="grid sm:grid-cols-3 gap-4"
+            className="grid sm:grid-cols-3"
           >
             {kpis.map((kpi) => (
               <div
                 key={kpi.label}
-                className="rounded-2xl border border-white/10 bg-white/5 p-6 text-center shadow-[0_14px_32px_rgba(0,0,0,0.10)]"
+                className="flex min-h-[128px] flex-col items-center justify-center border-b border-white/10 p-6 text-center last:border-b-0 sm:border-b-0 sm:border-r sm:last:border-r-0"
               >
-                <p className="text-[1.6rem] font-bold text-white">{kpi.value}</p>
-                <p className="text-xs uppercase tracking-[0.18em] mt-3 text-slate-300">
+                <p className="font-display text-xl font-bold text-white sm:text-[1.45rem]">{kpi.value}</p>
+                <p className="mt-3 text-[0.62rem] font-bold uppercase tracking-[0.18em] text-white/45">
                   {kpi.label}
                 </p>
               </div>

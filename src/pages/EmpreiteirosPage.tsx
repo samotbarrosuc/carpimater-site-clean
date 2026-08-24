@@ -66,35 +66,35 @@ const FAQS = [
 export default function EmpreiteirosPage() {
   return (
     <SimulatorProvider>
-      <div className="min-h-screen bg-background text-foreground">
+      <div className="min-h-screen bg-[#f8f5ef] text-[#19242e]">
         <Navbar />
 
         {/* ── HERO ── */}
-        <section id="hero" className="relative flex items-center overflow-hidden bg-secondary pb-16 pt-28 sm:pb-20 sm:pt-32">
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,#1f2427_0%,#2a3034_35%,#15191c_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(236,156,72,0.22),transparent_38%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_76%,rgba(96,126,142,0.24),transparent_36%)]" />
+        <section id="hero" className="relative flex items-center overflow-hidden bg-[#f8f5ef] pb-16 pt-28 sm:pb-20 sm:pt-32">
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,#f8f5ef_0%,#f3eee6_55%,#fff_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_14%,rgba(240,91,19,0.10),transparent_34%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_78%,rgba(25,36,46,0.07),transparent_34%)]" />
 
           <div className="container mx-auto px-5 sm:px-6 lg:px-8 relative z-10 w-full">
-            <div className="max-w-[1520px] mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,0.96fr)_minmax(540px,1.04fr)] gap-10 xl:gap-14 items-start lg:items-center">
+            <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(500px,1.08fr)] lg:items-center xl:gap-14">
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.55 }}
-                className="max-w-[900px] mx-auto lg:mx-0 lg:pr-5 text-center lg:text-left flex flex-col items-center lg:items-start"
+                className="mx-auto flex max-w-[900px] flex-col items-start text-left lg:mx-0 lg:pr-5"
               >
                 <div className="mb-6">
-                  <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
-                    <span className="block text-white">Carpintaria por medida</span>
-                    <span className="block text-white">para obras e</span>
+                  <h1 className="font-display text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] sm:text-[3.25rem] lg:text-[3.65rem]">
+                    <span className="block text-[#19242e]">Carpintaria por medida</span>
+                    <span className="block text-[#19242e]">para obras e</span>
                     <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">remodelações.</span>
                   </h1>
-                  <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">
+                  <p className="mb-6 mt-5 max-w-xl text-sm leading-7 text-[#40505b] sm:text-base">
                     <span>Fornecemos e montamos cozinhas, roupeiros, portas, painéis, escadas, pavimentos, rodapés e outros trabalhos de carpintaria.</span>
                   </p>
 
-                  <div className="mb-6 rounded-2xl border border-white/12 bg-white/[0.06] p-2 shadow-[0_20px_55px_rgba(0,0,0,0.18)] sm:hidden">
-                    <div className="relative rounded-2xl overflow-hidden border border-white/10 h-[22rem]">
+                  <div className="mb-6 rounded-[1.5rem] border border-[#d8d0c4] bg-[#19242e] p-2 shadow-[0_20px_55px_rgba(25,36,46,0.13)] sm:hidden">
+                    <div className="relative h-[20rem] overflow-hidden rounded-[1.15rem] border border-white/10">
                       <img
                         src="/images/card-obras.png"
                         alt="Carpintaria para obra CarpiMater"
@@ -107,7 +107,7 @@ export default function EmpreiteirosPage() {
 
                 <div className="flex flex-col gap-2.5 mb-6">
                   {['Levantamento de medidas', 'Proposta por escrito', 'Fabrico e montagem'].map((item) => (
-                    <div key={item} className="flex items-center gap-2.5 text-white/80">
+                    <div key={item} className="flex items-center gap-2.5 text-[#40505b]">
                       <svg className="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                       </svg>
@@ -117,10 +117,10 @@ export default function EmpreiteirosPage() {
                 </div>
 
                 <div className="mb-6 max-w-xl border-l-2 border-primary pl-4">
-                  <p className="text-base sm:text-lg font-semibold text-white leading-6">
+                  <p className="text-base font-semibold leading-6 text-[#19242e] sm:text-lg">
                     Serviço definido para cada obra.
                   </p>
-                  <p className="text-sm text-white/70 mt-2">
+                  <p className="mt-2 text-sm leading-6 text-[#40505b]">
                     Analisamos as medidas e os trabalhos pedidos antes de confirmar materiais, preço, condições e prazo previsto.
                   </p>
                 </div>
@@ -137,13 +137,13 @@ export default function EmpreiteirosPage() {
                   </a>
                   <a
                     href={TEL_LINK}
-                    className="inline-flex min-h-[52px] items-center justify-center gap-3 whitespace-nowrap rounded-xl border border-white/20 bg-white/[0.04] px-7 text-[0.9rem] font-semibold text-white transition-colors hover:bg-white/[0.09]"
+                    className="inline-flex min-h-[52px] items-center justify-center gap-3 whitespace-nowrap rounded-xl border border-[#c9c0b4] bg-white/70 px-7 text-[0.9rem] font-semibold text-[#19242e] transition-colors hover:border-[#19242e] hover:bg-white"
                   >
                     Ligar
                   </a>
                 </div>
 
-                <p className="text-xs sm:text-sm text-white/40 max-w-[760px] mt-2">
+                <p className="mt-2 max-w-[760px] text-xs text-[#40505b]/60 sm:text-sm">
                   Região Centro · Outras zonas sujeitas a confirmação de disponibilidade
                 </p>
               </motion.div>
@@ -152,10 +152,10 @@ export default function EmpreiteirosPage() {
                 initial={{ opacity: 0, x: 20, y: 18 }}
                 animate={{ opacity: 1, x: 0, y: 0 }}
                 transition={{ duration: 0.6, delay: 0.12 }}
-                className="hidden lg:block relative w-full max-w-[760px] mx-auto lg:mx-0 lg:justify-self-end lg:pt-2"
+                className="relative mx-auto hidden w-full max-w-[760px] lg:block lg:justify-self-end lg:pt-2"
               >
-                <div className="rounded-2xl border border-white/12 bg-white/[0.06] p-2 shadow-[0_24px_70px_rgba(0,0,0,0.22)]">
-                  <div className="relative rounded-2xl overflow-hidden border border-white/10 h-[22rem]">
+                <div className="rounded-[1.75rem] border border-[#d8d0c4] bg-[#19242e] p-2 shadow-[0_28px_70px_rgba(25,36,46,0.14)]">
+                  <div className="relative h-[24rem] overflow-hidden rounded-[1.4rem] border border-white/10">
                     <img
                       src="/images/card-obras.png"
                       alt="Carpintaria para obra CarpiMater"
@@ -168,27 +168,27 @@ export default function EmpreiteirosPage() {
             </div>
           </div>
 
-          <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce">
+          <div className="hidden">
             <div className="w-px h-10 bg-white/20" />
             <div className="w-1.5 h-1.5 rounded-full bg-primary" />
           </div>
         </section>
 
         {/* ── SERVICES GRID ── */}
-        <section id="servicos" className="bg-[#f8f5ef] py-16 sm:py-20">
+        <section id="servicos" className="border-y border-[#e4ded5] bg-white py-16 sm:py-20">
           <div className="container mx-auto px-4">
-            <div className="mx-auto mb-10 max-w-5xl">
+            <div className="mx-auto mb-10 max-w-6xl">
               <p className="section-kicker mb-3">Carpintaria em obra</p>
               <h2 className="font-display text-3xl font-bold tracking-[-0.025em] text-slate-950 sm:text-4xl">
                 Serviços disponíveis
               </h2>
               
             </div>
-            <div className="mx-auto grid max-w-5xl grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
+            <div className="mx-auto grid max-w-6xl grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-4">
               {SERVICES.map((s) => (
-                <div key={s.label} className="clean-card flex min-h-16 items-center gap-3 rounded-xl px-3.5 py-3.5 sm:px-4">
-                  <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-[#f7f3ea]"><s.icon className="h-4 w-4 text-primary" /></span>
-                  <span className="text-slate-950 text-sm font-medium">{s.label}</span>
+                <div key={s.label} className="group flex min-h-[82px] items-center gap-3 rounded-2xl border border-[#ded8cf] bg-[#fbfaf7] px-3.5 py-4 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_12px_28px_rgba(25,36,46,0.07)] sm:px-4">
+                  <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#19242e] text-white transition-colors group-hover:bg-primary"><s.icon className="h-4 w-4" /></span>
+                  <span className="text-sm font-semibold leading-5 text-[#19242e]">{s.label}</span>
                 </div>
               ))}
             </div>
@@ -196,9 +196,9 @@ export default function EmpreiteirosPage() {
         </section>
 
         {/* ── TRUST BAR ── */}
-        <div className="bg-[#111] border-y border-white/10 py-6">
-          <div className="container mx-auto px-4">
-            <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 max-w-4xl mx-auto">
+        <div className="bg-[#f8f5ef] px-4 py-10 sm:px-6 sm:py-12">
+          <div className="mx-auto max-w-6xl">
+            <div className="mx-auto grid grid-cols-2 gap-5 rounded-[1.5rem] border border-[#2b3b47] bg-[#19242e] p-6 shadow-[0_18px_45px_rgba(25,36,46,0.13)] sm:grid-cols-3 sm:p-7 lg:grid-cols-5">
               {[
                 { val: 'Por medida', sub: 'Conforme a obra' },
                 { val: 'Proposta', sub: 'Trabalhos discriminados' },
@@ -206,7 +206,7 @@ export default function EmpreiteirosPage() {
                 { val: 'Montagem', sub: 'Executada em obra' },
                 { val: 'Cobertura', sub: 'Região Centro' },
               ].map((item, i, arr) => (
-                <div key={item.val} className={`text-center${i === arr.length - 1 && arr.length % 2 !== 0 ? ' col-span-2 sm:col-span-1' : ''}`}>
+                <div key={item.val} className={`text-center lg:border-r lg:border-white/10 lg:last:border-r-0${i === arr.length - 1 && arr.length % 2 !== 0 ? ' col-span-2 sm:col-span-1' : ''}`}>
                   <p className="text-white font-bold text-sm">{item.val}</p>
                   <p className="text-white/50 text-xs mt-0.5">{item.sub}</p>
                 </div>
@@ -219,13 +219,13 @@ export default function EmpreiteirosPage() {
         <HowItWorks />
 
         {/* ── MARKET PROOF ── */}
-        <section className="py-16 lg:py-20 bg-secondary">
-          <div className="container mx-auto px-4">
-            <div className="text-center mb-10">
+        <section className="border-y border-[#e4ded5] bg-[#f8f5ef] py-16 lg:py-20">
+          <div className="container mx-auto max-w-6xl px-4">
+            <div className="mb-10 max-w-2xl text-left">
               <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
                 Processo de trabalho
               </p>
-              <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-white">
+              <h2 className="font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-4xl">
                 Como prestamos o serviço
               </h2>
             </div>
@@ -256,16 +256,16 @@ export default function EmpreiteirosPage() {
                 return (
                   <div
                     key={card.title}
-                    className="rounded-xl border border-white/10 bg-white/[0.04] p-5 flex flex-col gap-3.5 hover:border-primary/25 transition-colors"
+                    className="group flex min-h-[205px] flex-col gap-5 rounded-2xl border border-[#ded8cf] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]"
                   >
-                    <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-primary/14">
-                      <Icon size={17} className="text-primary" />
+                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#19242e] text-white transition-colors group-hover:bg-primary">
+                      <Icon size={18} />
                     </div>
                     <div>
-                      <h3 className="font-semibold text-white mb-1 text-sm leading-snug">
+                      <h3 className="font-display text-base font-bold leading-snug text-[#19242e]">
                         {card.title}
                       </h3>
-                      <p className="text-xs leading-relaxed text-white/45">{card.desc}</p>
+                      <p className="mt-2 text-sm leading-6 text-[#40505b]">{card.desc}</p>
                     </div>
                   </div>
                 )
@@ -275,18 +275,18 @@ export default function EmpreiteirosPage() {
         </section>
 
         {/* ── FAQ ── */}
-        <section id="faq" className="py-16 lg:py-24 bg-muted/30">
-          <div className="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8">
+        <section id="faq" className="bg-white py-16 lg:py-20">
+          <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5 }}
-              className="text-center mb-10"
+              className="mb-10 max-w-2xl text-left"
             >
               <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
                 FAQ
               </p>
-              <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-foreground">
+              <h2 className="font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-4xl">
                 Perguntas Frequentes
               </h2>
             </motion.div>
@@ -296,17 +296,17 @@ export default function EmpreiteirosPage() {
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: 0.15 }}
             >
-              <Accordion type="single" collapsible className="flex flex-col gap-2">
+              <Accordion type="single" collapsible className="grid gap-3">
                 {FAQS.map((faq, i) => (
                   <AccordionItem
                     key={i}
                     value={`item-${i}`}
-                    className="rounded-xl border px-5 bg-white shadow-sm data-[state=open]:border-primary"
+                    className="rounded-2xl border border-[#ded8cf] bg-[#fbfaf7] px-5 shadow-sm transition data-[state=open]:border-primary data-[state=open]:shadow-[0_12px_30px_rgba(25,36,46,0.07)] sm:px-6"
                   >
-                    <AccordionTrigger className="font-medium text-sm text-left py-4 hover:no-underline text-foreground">
+                    <AccordionTrigger className="py-5 text-left text-sm font-bold text-[#19242e] hover:no-underline">
                       {faq.q}
                     </AccordionTrigger>
-                    <AccordionContent className="text-sm leading-relaxed pb-4 text-muted-foreground">
+                    <AccordionContent className="pb-5 text-sm leading-6 text-[#40505b]">
                       {faq.a}
                     </AccordionContent>
                   </AccordionItem>
@@ -314,13 +314,13 @@ export default function EmpreiteirosPage() {
               </Accordion>
             </motion.div>
 
-            <div className="mt-10 rounded-2xl bg-primary/8 border border-primary/20 p-8 text-center">
+            <div className="mt-10 rounded-2xl border border-primary/20 bg-primary/[0.06] p-8 text-center">
               <p className="font-semibold text-foreground mb-4">Tem outra questão? Contacte-nos.</p>
               <a
                 href={WA_LINK_PROPOSTA}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-white font-bold px-7 py-3.5 rounded-full hover:bg-primary/90 transition-colors"
+                className="inline-flex items-center gap-2 rounded-xl bg-primary px-7 py-3.5 font-bold text-white transition-colors hover:bg-primary/90"
               >
                 Pedir orçamento
               </a>
@@ -329,10 +329,10 @@ export default function EmpreiteirosPage() {
         </section>
 
         {/* ── FINAL CTA ── */}
-        <section className="py-20 lg:py-28 relative overflow-hidden bg-secondary">
-          <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_0%,rgba(240,91,19,0.10),transparent_55%)]" />
+        <section className="relative overflow-hidden bg-[#f8f5ef] px-4 py-16 sm:px-6 lg:py-20">
 
-          <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
+          <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-[#2b3b47] bg-[#19242e] px-6 py-14 text-center shadow-[0_24px_65px_rgba(25,36,46,0.15)] sm:px-10 lg:py-16">
+            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(240,91,19,0.13),transparent_58%)]" />
             <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">Contacto</p>
             <h2 className="font-display font-bold mb-4 leading-snug text-white text-[clamp(1.5rem,3vw,2.2rem)]">
               Precisa de carpintaria para uma obra?
@@ -343,7 +343,7 @@ export default function EmpreiteirosPage() {
 
             <div className="flex flex-wrap gap-3 justify-center mb-10">
               {['Plantas ou medidas', 'Proposta por escrito', 'Montagem em obra'].map((s) => (
-                <span key={s} className="flex items-center gap-2 bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded-full">
+                <span key={s} className="flex items-center gap-2 rounded-full border border-white/15 bg-white/[0.06] px-4 py-2 text-sm text-white">
                   <Shield className="w-3.5 h-3.5 text-primary" /> {s}
                 </span>
               ))}
@@ -354,13 +354,13 @@ export default function EmpreiteirosPage() {
                 href={WA_LINK_PROPOSTA}
                 target="_blank"
                 rel="noreferrer"
-                className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:bg-primary/90 transition-colors text-base shadow-[0_8px_30px_rgba(240,91,19,0.5)]"
+                className="inline-flex items-center gap-2 rounded-xl bg-primary px-8 py-4 text-base font-bold text-white shadow-[0_8px_26px_rgba(240,91,19,0.28)] transition-colors hover:bg-primary/90"
               >
                 Pedir orçamento
               </a>
               <a
                 href={TEL_LINK}
-                className="inline-flex items-center gap-2 border border-white/30 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-base"
+                className="inline-flex items-center gap-2 rounded-xl border border-white/25 bg-white/[0.03] px-8 py-4 text-base font-semibold text-white transition-colors hover:bg-white/[0.08]"
               >
                 Ligar
               </a>

@@ -13,7 +13,7 @@ import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 export default function CozinhaPage() {
   return (
     <SimulatorProvider>
-      <main className="min-h-screen">
+      <main className="min-h-screen bg-[#f8f5ef] text-[#19242e]">
         <Navbar />
         <Hero />
         <HowItWorks />

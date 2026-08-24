@@ -57,15 +57,17 @@ export default function Hero() {
   return (
     <section
       id="hero"
-      className={`relative min-h-[88vh] sm:min-h-screen bg-secondary flex items-center overflow-hidden pt-28 pb-12 sm:pt-32 sm:pb-20 lg:pt-32 lg:pb-20 ${
-        isKitchen ? 'bg-[#1f2427]' : ''
+      className={`relative flex items-center overflow-hidden ${
+        isKitchen
+          ? 'min-h-0 bg-[#f8f5ef] pb-16 pt-28 sm:pb-20 sm:pt-32'
+          : 'min-h-[88vh] bg-secondary pb-12 pt-28 sm:min-h-screen sm:pb-20 sm:pt-32 lg:pb-20 lg:pt-32'
       }`}
     >
       {isKitchen && (
         <img
           src={kitchenHeroImage}
           alt="Cozinha CarpiMater"
-          className="absolute inset-0 w-full h-full object-cover block sm:hidden opacity-30"
+          className="hidden"
         />
       )}
       {!isKitchen && (
@@ -81,34 +83,34 @@ export default function Hero() {
       )}
       {isKitchen && (
         <>
-          <div className="absolute inset-0 bg-[linear-gradient(135deg,#1f2427_0%,#2a3034_35%,#15191c_100%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_18%_20%,rgba(236,156,72,0.22),transparent_38%)]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_84%_76%,rgba(96,126,142,0.24),transparent_36%)]" />
+          <div className="absolute inset-0 bg-[linear-gradient(135deg,#f8f5ef_0%,#f3eee6_55%,#fff_100%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_12%_12%,rgba(240,91,19,0.10),transparent_34%)]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_78%,rgba(25,36,46,0.07),transparent_34%)]" />
         </>
       )}
       <div className="container mx-auto px-5 sm:px-6 lg:px-8 relative z-10 w-full">
-        <div className="max-w-[1520px] mx-auto grid grid-cols-1 lg:grid-cols-[minmax(0,0.96fr)_minmax(540px,1.04fr)] gap-10 xl:gap-14 items-start lg:items-center">
+        <div className={`mx-auto grid grid-cols-1 items-start gap-10 lg:items-center xl:gap-14 ${isKitchen ? 'max-w-7xl lg:grid-cols-[minmax(0,0.9fr)_minmax(500px,1.1fr)]' : 'max-w-[1520px] lg:grid-cols-[minmax(0,0.96fr)_minmax(540px,1.04fr)]'}`}>
           <motion.div
             initial={{ opacity: 0, y: 18 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.55 }}
-            className="max-w-[900px] mx-auto lg:mx-0 lg:pr-5 text-center lg:text-left flex flex-col items-center lg:items-start"
+            className={`mx-auto flex max-w-[900px] flex-col lg:mx-0 lg:pr-5 ${isKitchen ? 'items-start text-left' : 'items-center text-center lg:items-start lg:text-left'}`}
           >
             {isKitchen ? (
               /* ── COZINHA HERO HEADLINE ── */
               (<div className="mb-6">
-                <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
-                  <span className="block text-white"></span>
+                <h1 className="font-display text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] sm:text-[3.25rem] lg:text-[3.65rem]">
+                  <span className="block text-[#19242e]"></span>
                   <span className="block text-primary">Cozinhas por medida</span>
-                  <span className="block text-white">com fabrico e montagem.</span>
+                  <span className="block text-[#19242e]">com fabrico e montagem.</span>
                 </h1>
-                <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">
+                <p className="mb-6 mt-5 max-w-xl text-sm leading-7 text-[#40505b] sm:text-base">
                   Medimos o espaço, preparamos a proposta e coordenamos o fabrico e a montagem.
                 </p>
-                <div className="w-full max-w-xl mx-auto mb-8 rounded-[1.75rem] overflow-hidden border border-white/10 bg-white/5 shadow-sm">
+                <div className="mx-auto mb-5 w-full max-w-xl overflow-hidden rounded-[1.75rem] border border-[#d8d0c4] bg-[#19242e] p-2 shadow-[0_20px_55px_rgba(25,36,46,0.13)]">
                   <CompareSlider before={beforeAfterPairs[0].before} after={beforeAfterPairs[0].after} aspectRatio="16/9" />
                 </div>
-                <p className="text-center text-xs text-white/60 mt-2">
+                <p className="mt-2 text-left text-xs text-[#40505b]/65">
                   Arraste o divisor para ver o antes e depois.
                 </p>
               </div>)
@@ -137,7 +139,7 @@ export default function Hero() {
                   { full: 'Projeto adaptado ao espaço', short: 'Projeto por medida' },
                   { full: 'Fabrico e montagem em obra', short: 'Fabrico e montagem' },
                 ].map((item) => (
-                  <div key={item.full} className="flex items-center gap-2.5 text-white/80">
+                  <div key={item.full} className="flex items-center gap-2.5 text-[#40505b]">
                     <svg className="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                       <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
                     </svg>
@@ -177,15 +179,15 @@ export default function Hero() {
               </p>
             )}
             {isKitchen && (
-              <p className="text-xs sm:text-sm text-white/40 max-w-[760px] mt-2">
+              <p className="mt-2 max-w-[760px] text-xs text-[#40505b]/60 sm:text-sm">
                 Região Centro · Outras zonas sujeitas a confirmação de disponibilidade
               </p>
             )}
           </motion.div>
 
           {isKitchen && (
-            <div className="lg:hidden grid grid-cols-1 gap-3 mt-8">
-              <div className="relative w-full max-w-[400px] mx-auto overflow-hidden rounded-[1.5rem] border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.25)] h-[200px]">
+            <div className="mt-2 grid grid-cols-2 gap-3 lg:hidden">
+              <div className="relative mx-auto h-[150px] w-full overflow-hidden rounded-[1.25rem] border border-[#d8d0c4] shadow-[0_18px_45px_rgba(25,36,46,0.11)] sm:h-[210px]">
                 <img
                   src={kitchenHeroImage}
                   alt="Cozinha CarpiMater"
@@ -193,7 +195,7 @@ export default function Hero() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30" />
               </div>
-              <div className="relative w-full max-w-[400px] mx-auto overflow-hidden rounded-[1.5rem] border border-white/10 shadow-[0_25px_60px_rgba(0,0,0,0.15)] h-[200px]">
+              <div className="relative mx-auto h-[150px] w-full overflow-hidden rounded-[1.25rem] border border-[#d8d0c4] shadow-[0_18px_45px_rgba(25,36,46,0.09)] sm:h-[210px]">
                 <img
                   src={kitchenHeroImageSecondary}
                   alt="Cozinha CarpiMater"
@@ -205,8 +207,8 @@ export default function Hero() {
           )}
 
           {isKitchen && (
-            <div className="hidden lg:grid grid-cols-1 gap-4">
-              <div className="relative w-full max-w-[540px] overflow-hidden rounded-[2rem] border border-white/10 shadow-[0_45px_110px_rgba(0,0,0,0.35)] h-[280px]">
+            <div className="hidden grid-cols-1 gap-4 lg:grid">
+              <div className="relative h-[285px] w-full max-w-[560px] overflow-hidden rounded-[1.75rem] border border-[#d8d0c4] shadow-[0_28px_70px_rgba(25,36,46,0.14)]">
                 <img
                   src={kitchenHeroImage}
                   alt="Cozinha CarpiMater"
@@ -214,7 +216,7 @@ export default function Hero() {
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30" />
               </div>
-              <div className="relative w-full max-w-[540px] overflow-hidden rounded-[2rem] border border-white/10 shadow-[0_45px_110px_rgba(0,0,0,0.2)] h-[280px]">
+              <div className="relative ml-auto h-[235px] w-[84%] max-w-[480px] overflow-hidden rounded-[1.75rem] border border-[#d8d0c4] shadow-[0_22px_55px_rgba(25,36,46,0.11)]">
                 <img
                   src={kitchenHeroImageSecondary}
                   alt="Cozinha CarpiMater"

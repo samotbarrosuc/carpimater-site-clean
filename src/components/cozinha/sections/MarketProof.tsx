@@ -30,18 +30,18 @@ export default function MarketProof() {
   const inView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section id="porque-nos" ref={ref} className="py-16 lg:py-20 bg-secondary">
+    <section id="porque-nos" ref={ref} className="bg-white py-16 lg:py-20">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.5 }}
-          className="text-center mb-10"
+          className="mb-10 max-w-2xl text-left"
         >
           <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
             Serviço de carpintaria
           </p>
-          <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-white">
+          <h2 className="font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-4xl">
             O que está incluído
           </h2>
         </motion.div>
@@ -55,16 +55,16 @@ export default function MarketProof() {
                 initial={{ opacity: 0, y: 24 }}
                 animate={inView ? { opacity: 1, y: 0 } : {}}
                 transition={{ duration: 0.45, delay: i * 0.08 }}
-                className="rounded-xl border border-white/10 bg-white/[0.04] p-5 flex flex-col gap-3.5 hover:border-primary/25 transition-colors"
+                className="group flex min-h-[205px] flex-col gap-5 rounded-2xl border border-[#ded8cf] bg-[#fbfaf7] p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]"
               >
-                <div className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 bg-primary/14">
-                  <Icon size={17} className="text-primary" />
+                <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#19242e] text-white transition-colors group-hover:bg-primary">
+                  <Icon size={18} />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-white mb-1 text-sm leading-snug">
+                  <h3 className="font-display text-base font-bold leading-snug text-[#19242e]">
                     {card.title}
                   </h3>
-                  <p className="text-xs leading-relaxed text-white/45">
+                  <p className="mt-2 text-sm leading-6 text-[#40505b]">
                     {card.desc}
                   </p>
                 </div>

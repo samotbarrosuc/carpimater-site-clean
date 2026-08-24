@@ -8,10 +8,10 @@ export default function FinalCTA() {
   const inView = useInView(ref, { once: true, margin: "-80px" });
 
   return (
-    <section id="final-cta" ref={ref} className="py-20 lg:py-28 relative overflow-hidden bg-secondary">
-      <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_0%,rgba(240,91,19,0.10),transparent_55%)]" />
+    <section id="final-cta" ref={ref} className="relative overflow-hidden bg-white px-4 py-16 sm:px-6 lg:py-20">
 
-      <div className="relative max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div className="relative mx-auto max-w-6xl overflow-hidden rounded-[2rem] border border-[#2b3b47] bg-[#19242e] px-6 py-14 text-center shadow-[0_24px_65px_rgba(25,36,46,0.15)] sm:px-10 lg:py-16">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_50%_0%,rgba(240,91,19,0.13),transparent_58%)]" />
         <motion.div
           initial={{ opacity: 0, y: 24 }}
           animate={inView ? { opacity: 1, y: 0 } : {}}
@@ -38,7 +38,7 @@ export default function FinalCTA() {
             </a>
             <a
               href="tel:+351910093635"
-              className="flex items-center justify-center gap-2 rounded-xl border border-white/20 px-7 py-3.5 text-sm font-semibold text-white/70 transition hover:border-white/35 hover:text-white"
+          className="flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/[0.03] px-7 py-3.5 text-sm font-semibold text-white/70 transition hover:border-white/35 hover:bg-white/[0.07] hover:text-white"
             >
               <Phone size={16} />
               Ligar
