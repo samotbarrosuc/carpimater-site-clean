@@ -380,10 +380,10 @@ export default function StoreCatalog() {
 
   return (
     <>
-      <div className="-mx-4 overflow-x-auto px-4 pb-1" role="tablist" aria-label="Categorias da loja">
+      <div className="-mx-4 overflow-x-auto px-4 pb-1 pt-5" role="tablist" aria-label="Categorias da loja">
         <div className="flex w-max gap-1 rounded-xl border border-[#ded8cf] bg-white p-1 shadow-sm">
           {tabs.map(([value, label]) => (
-            <button key={value} type="button" role="tab" aria-selected={category === value} onClick={() => { setCategory(value); window.history.replaceState({}, '', value === 'all' ? '/loja' : `/loja?categoria=${value}`) }} className={`inline-flex flex-col items-center justify-center gap-0.5 whitespace-nowrap rounded-lg px-3.5 py-2 text-xs font-bold transition sm:text-sm ${category === value ? 'bg-[#19242e] text-white shadow-sm' : 'text-slate-500 hover:bg-[#f7f3ea] hover:text-[#19242e]'}`}>{value === 'flutuante' && <span className="rounded-full border border-[#e7b83e] bg-[#ffdd57] px-1.5 py-0.5 text-[0.48rem] font-extrabold uppercase tracking-[0.08em] text-[#b42318]">Novidade</span>}<span>{label}</span></button>
+            <button key={value} type="button" role="tab" aria-selected={category === value} onClick={() => { setCategory(value); window.history.replaceState({}, '', value === 'all' ? '/loja' : `/loja?categoria=${value}`) }} className={`relative inline-flex items-center justify-center whitespace-nowrap rounded-lg px-3.5 py-2 text-xs font-bold transition sm:text-sm ${category === value ? 'bg-[#19242e] text-white shadow-sm' : 'text-slate-500 hover:bg-[#f7f3ea] hover:text-[#19242e]'}`}>{value === 'flutuante' && <span className="pointer-events-none absolute left-1/2 top-[-0.25rem] z-10 -translate-x-1/2 -translate-y-full rounded-full border border-[#e7b83e] bg-[#ffdd57] px-1.5 py-0.5 text-[0.48rem] font-extrabold uppercase tracking-[0.08em] text-[#b42318]">Novidade</span>}<span>{label}</span></button>
           ))}
         </div>
       </div>
