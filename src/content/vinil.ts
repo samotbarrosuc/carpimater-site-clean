@@ -158,7 +158,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Pingo',
     referencia: 'ZCU-NC95-PINGO',
-    precoM2: 0,
+    precoM2: 22,
     cor: '#c9b9a1',
     imagem: '/images/produtos-flutuante/pingo.webp',
     sobConsulta: true,
@@ -174,7 +174,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Tots',
     referencia: 'ZCU-NC95-TOTS',
-    precoM2: 0,
+    precoM2: 22,
     cor: '#b98251',
     imagem: '/images/produtos-flutuante/tots.webp',
     sobConsulta: true,
@@ -190,7 +190,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Moka',
     referencia: 'ZCU-NC95-MOKA',
-    precoM2: 0,
+    precoM2: 22,
     cor: '#8c654f',
     imagem: '/images/produtos-flutuante/moka.webp',
     sobConsulta: true,
@@ -206,7 +206,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Arq',
     referencia: 'ZCU-NC115-ARQ',
-    precoM2: 0,
+    precoM2: 22,
     cor: '#d2b28e',
     imagem: '/images/produtos-flutuante/arq.webp',
     sobConsulta: true,
@@ -222,7 +222,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Grisácio',
     referencia: 'ZCU-NC115-GRISACIO',
-    precoM2: 0,
+    precoM2: 22,
     cor: '#b9ad99',
     imagem: '/images/produtos-flutuante/grisacio.webp',
     sobConsulta: true,
@@ -238,7 +238,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Torrado',
     referencia: 'ZCU-NC115-TORRADO',
-    precoM2: 0,
+    precoM2: 22,
     cor: '#6f4933',
     imagem: '/images/produtos-flutuante/torrado.webp',
     sobConsulta: true,
@@ -254,7 +254,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: 'Mel',
     referencia: 'ZCU-NC115-MEL',
-    precoM2: 0,
+    precoM2: 22,
     cor: '#ad7544',
     imagem: '/images/produtos-flutuante/mel.webp',
     sobConsulta: true,

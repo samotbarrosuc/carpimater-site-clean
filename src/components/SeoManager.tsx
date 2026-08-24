@@ -193,6 +193,20 @@ function productItemList() {
       brand: { '@type': 'Brand', name: product.marca || 'ZCUDO' },
       ...(product.imagem ? { image: absoluteUrl(product.imagem) } : {}),
       url: `${SITE_URL}/loja?categoria=flutuante#produto-${product.referencia.toLowerCase()}`,
+      offers: {
+        '@type': 'Offer',
+        url: `${SITE_URL}/loja?categoria=flutuante#produto-${product.referencia.toLowerCase()}`,
+        priceCurrency: 'EUR',
+        price: product.precoM2.toFixed(2),
+        itemCondition: 'https://schema.org/NewCondition',
+        priceSpecification: {
+          '@type': 'UnitPriceSpecification',
+          price: product.precoM2.toFixed(2),
+          priceCurrency: 'EUR',
+          unitCode: 'MTK',
+          referenceQuantity: { '@type': 'QuantitativeValue', value: 1, unitCode: 'MTK' },
+        },
+      },
       additionalProperty: [
         { '@type': 'PropertyValue', name: 'Coleção', value: product.colecao },
         { '@type': 'PropertyValue', name: 'Formato', value: product.formato },

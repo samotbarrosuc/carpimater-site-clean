@@ -300,7 +300,7 @@ export function CartDrawer() {
 function FlooringCard({ product, onAdd, onInfo }: { product: Produto; onAdd: () => void; onInfo: () => void }) {
   const hybrid = product.categoria === 'hibrido'
   const floorLabel = hybrid ? `${product.marca} ${product.colecao}` : 'SPC vinílico'
-  const consultationUrl = getWhatsAppUrl(`Olá! Gostaria de saber o preço e a disponibilidade do pavimento flutuante híbrido ZCUDO ${product.colecao}, acabamento ${product.nome}.`, 'flutuante')
+  const consultationUrl = getWhatsAppUrl(`Olá! Gostaria de confirmar o stock do pavimento flutuante híbrido ZCUDO ${product.colecao}, acabamento ${product.nome}, anunciado a ${formatEur(product.precoM2)}/m².`, 'flutuante')
 
   return (
     <article id={`produto-${product.referencia.toLowerCase()}`} className="group min-w-0 scroll-mt-28 overflow-hidden rounded-2xl border border-[#e2ddd5] bg-white shadow-[0_1px_2px_rgba(25,36,46,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_14px_32px_rgba(25,36,46,0.09)]">
@@ -316,8 +316,8 @@ function FlooringCard({ product, onAdd, onInfo }: { product: Produto; onAdd: () 
         <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
           {product.sobConsulta ? (
             <>
-              <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">Sob consulta</strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">Preço e stock</span></div>
-              <a href={consultationUrl} target="_blank" rel="noopener noreferrer" aria-label={`Consultar ${product.nome} por WhatsApp`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#177d86] text-white transition hover:bg-[#126a72] sm:w-auto sm:px-3"><MessageCircle className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Consultar</span></a>
+              <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">{formatEur(product.precoM2)}<span className="text-xs font-semibold text-slate-400">/m²</span></strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">IVA incluído</span></div>
+              <a href={consultationUrl} target="_blank" rel="noopener noreferrer" aria-label={`Confirmar stock de ${product.nome} por WhatsApp`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#177d86] text-white transition hover:bg-[#126a72] sm:w-auto sm:px-3"><MessageCircle className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Confirmar stock</span></a>
             </>
           ) : (
             <>
