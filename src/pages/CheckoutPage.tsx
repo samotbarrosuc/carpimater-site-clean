@@ -121,12 +121,12 @@ export default function CheckoutPage() {
             <CheckCircle2 className="mx-auto h-16 w-16 text-emerald-600" />
             <h1 className="mt-6 text-4xl font-display font-bold">Pedido recebido</h1>
             {reference && <p className="mt-4 inline-block rounded-full bg-slate-100 px-4 py-2 font-mono text-sm font-bold text-slate-700">Referência: {reference}</p>}
-            <p className="mt-5 leading-7 text-slate-600">Obrigado! Vamos confirmar o pagamento e os detalhes de entrega. Receberá o nosso contacto para validar tudo antes do envio.</p>
+            <p className="mt-5 leading-7 text-slate-600">Recebemos o pedido. Vamos verificar o pagamento, o stock e os dados de entrega antes do envio.</p>
             <div className="mt-6 space-y-2 rounded-2xl bg-emerald-50 p-5 text-left text-sm leading-6 text-emerald-900">
               <p className="font-bold text-emerald-700">O que acontece a seguir</p>
               <p>1. Confirmamos o stock e o seu comprovativo de pagamento.</p>
               <p>2. Ligamos ou enviamos mensagem para validar a morada e a entrega.</p>
-              <p>3. O material é enviado e chega em até 10 dias úteis.</p>
+              <p>3. Confirmamos consigo a data prevista de entrega.</p>
             </div>
             <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:justify-center">
               <Link href="/loja" className="inline-block rounded-xl bg-primary px-6 py-4 font-bold text-white">Voltar à loja</Link>
@@ -164,8 +164,8 @@ export default function CheckoutPage() {
                   <h2 className="text-lg font-bold">2. Como quer pagar?</h2>
                   <p className="mt-1 text-sm text-slate-500">Paga apenas o material. A aplicação é uma estimativa e não é cobrada agora.</p>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
-                    <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'mbway' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="mbway" checked={payment === 'mbway'} onChange={() => setPayment('mbway')} className="mr-2 accent-orange-600" /><span className="font-semibold">MB Way</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Rápido e sem custos. Recebe o pedido de pagamento na app.</span></label>
-                    <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'iban' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="iban" checked={payment === 'iban'} onChange={() => setPayment('iban')} className="mr-2 accent-orange-600" /><span className="font-semibold">Transferência bancária</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Transferência tradicional por IBAN.</span></label>
+                    <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'mbway' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="mbway" checked={payment === 'mbway'} onChange={() => setPayment('mbway')} className="mr-2 accent-orange-600" /><span className="font-semibold">MB Way</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Envie o valor para o número indicado.</span></label>
+                    <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'iban' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="iban" checked={payment === 'iban'} onChange={() => setPayment('iban')} className="mr-2 accent-orange-600" /><span className="font-semibold">Transferência bancária</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Transfira o valor para o IBAN indicado.</span></label>
                   </div>
                   <div className="mt-4 rounded-2xl border border-emerald-200 bg-emerald-50 p-5">
                     <p className="text-xs font-bold uppercase tracking-[0.18em] text-emerald-700">Dados de pagamento</p>

@@ -27,13 +27,13 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
   },
   '/loja': {
     title: 'Loja de Pavimentos Híbridos, Vinílicos e Rodapés | CarpiMater',
-    description: 'Descubra pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC. Entrega e aplicação em Coimbra, Aveiro, Leiria e Região Centro.',
+    description: 'Loja online de pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC. Entrega e aplicação em Coimbra, Aveiro, Leiria e Região Centro.',
     searchTopics: ['loja de pavimentos online', 'pavimentos vinílicos SPC', 'pavimento flutuante híbrido ZCUDO', 'ZCUDO NextCore', 'pavimentos laminados resistentes à água', 'rodapés PVC', 'preços de pavimentos'],
     pageType: 'CollectionPage',
   },
   '/vinilico': {
     title: 'Pavimento Vinílico em Coimbra | Loja e Aplicação',
-    description: 'Pavimento vinílico SPC com preços online, compra por caixas e aplicação profissional. Serviço em Coimbra, Aveiro, Leiria, Condeixa e Figueira da Foz.',
+    description: 'Pavimento vinílico SPC com preços online, compra por caixas e serviço de aplicação em Coimbra, Aveiro, Leiria, Condeixa e Figueira da Foz.',
     searchTopics: ['pavimento vinílico', 'pavimento vinílico SPC', 'pavimento impermeável', 'aplicação de pavimento vinílico em Coimbra'],
     serviceType: 'Venda e aplicação de pavimento vinílico SPC',
   },
@@ -46,7 +46,7 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
   },
   '/rodapes': {
     title: 'Rodapés PVC em Coimbra | Preços e Compra Online',
-    description: 'Rodapés PVC com preços publicados, vários acabamentos e compra online por barras. Entrega ou aplicação profissional em Coimbra, Aveiro, Leiria e arredores.',
+    description: 'Rodapés PVC com preços publicados, vários acabamentos e compra online por barras. Entrega ou aplicação em Coimbra, Aveiro, Leiria e arredores.',
     searchTopics: ['rodapé', 'rodapés', 'rodapé PVC', 'rodapé branco', 'aplicação de rodapés em Coimbra'],
     pageType: 'CollectionPage',
     serviceType: 'Venda e aplicação de rodapés PVC',
@@ -71,7 +71,7 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
   },
   '/encomenda': {
     title: 'Finalizar Encomenda | CarpiMater',
-    description: 'Finalize com segurança a sua encomenda de pavimentos e rodapés CarpiMater.',
+    description: 'Formulário para concluir a encomenda de pavimentos e rodapés CarpiMater.',
     pageType: 'CheckoutPage',
     index: false,
   },
@@ -108,7 +108,7 @@ const businessSchema = {
   url: SITE_URL,
   logo: `${SITE_URL}/images/logo-carpimater-v2.png`,
   image: DEFAULT_IMAGE,
-  description: 'Carpintaria por medida e loja de pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC, com aplicação profissional na Região Centro.',
+  description: 'Carpintaria por medida e loja de pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC, com aplicação na Região Centro.',
   telephone: PHONE_NUMBER,
   email: EMAIL,
   address: {

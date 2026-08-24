@@ -79,7 +79,7 @@ export default function MaterialTicker() {
         <a href="/loja" className="group/promo relative z-10 hidden shrink-0 items-center gap-3 border-r border-[#e1c9a9] bg-[#fff9ef] px-6 py-3 text-[#19242e] transition-colors hover:bg-white sm:flex" aria-label="Ir para a loja — portes grátis na Região Centro">
           <span className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f05b13] text-white shadow-[0_6px_16px_rgba(240,91,19,0.2)]"><Truck className="h-4 w-4" /></span>
           <div>
-            <p className="text-[0.58rem] font-extrabold uppercase tracking-[0.16em] text-[#c54d14]">Receba sem sair de casa</p>
+            <p className="text-[0.58rem] font-extrabold uppercase tracking-[0.16em] text-[#c54d14]">Entregas da loja</p>
             <p className="mt-0.5 text-xs text-[#40505b] sm:text-sm"><strong className="font-extrabold text-[#19242e]">Portes grátis</strong><span className="font-semibold text-[#8b5a35]"> — Região Centro</span></p>
           </div>
           <ChevronRight className="ml-auto h-4 w-4 shrink-0 text-[#f05b13] transition-transform group-hover/promo:translate-x-0.5 sm:ml-1" />

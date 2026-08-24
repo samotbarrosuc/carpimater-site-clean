@@ -1,14 +1,14 @@
 import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Check, X } from "lucide-react";
+import { Check } from "lucide-react";
 
 const rows = [
-  { label: "Projecto 100% Personalizado", carpi: true, grande: false },
-  { label: "Materiais de Qualidade Superior", carpi: true, grande: false },
-  { label: "Montagem Incluída no Preço", carpi: true, grande: false },
-  { label: "Carpinteiro Disponível Pós-Entrega", carpi: true, grande: false },
-  { label: "Sem Custos Ocultos", carpi: true, grande: false },
-  { label: "Preço Final Competitivo", carpi: true, grande: true },
+  { label: "Levantamento de medidas", detail: "Conforme o espaço" },
+  { label: "Desenho da cozinha", detail: "Adaptado ao pedido" },
+  { label: "Materiais e ferragens", detail: "Indicados na proposta" },
+  { label: "Fabrico", detail: "Após aprovação" },
+  { label: "Transporte", detail: "Definido na proposta" },
+  { label: "Montagem", detail: "Trabalhos discriminados" },
 ];
 
 export default function ComparisonBanner() {
@@ -25,13 +25,13 @@ export default function ComparisonBanner() {
           className="text-center mb-10"
         >
           <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
-            Comparação
+            Condições do serviço
           </p>
           <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-foreground">
-            CarpiMater vs. Grandes Superfícies
+            O que fica definido na proposta
           </h2>
           <p className="mt-3 text-sm max-w-md mx-auto text-muted-foreground">
-            Veja por si mesmo o que distingue uma cozinha por medida de uma solução standard.
+            Antes de avançar, confirmamos por escrito o trabalho, os materiais, o preço e o prazo previsto.
           </p>
         </motion.div>
 
@@ -43,13 +43,13 @@ export default function ComparisonBanner() {
         >
           <div className="grid grid-cols-3 text-xs font-semibold bg-secondary">
             <div className="px-5 py-4 text-left text-white/80">
-              Critério
+              Trabalho
             </div>
             <div className="px-5 py-4 text-center font-bold text-sm text-primary">
-              CarpiMater
+              Incluído
             </div>
             <div className="px-5 py-4 text-center text-white/45">
-              Soluções standard
+              Como é definido
             </div>
           </div>
 
@@ -70,15 +70,7 @@ export default function ComparisonBanner() {
                 </span>
               </div>
               <div className="px-5 py-3.5 flex justify-center">
-                {row.grande ? (
-                  <span className="w-6 h-6 rounded-full flex items-center justify-center bg-primary/8">
-                    <Check size={13} className="text-primary" strokeWidth={3} />
-                  </span>
-                ) : (
-                  <span className="w-6 h-6 rounded-full flex items-center justify-center bg-black/4">
-                    <X size={13} className="text-muted-foreground/60" strokeWidth={3} />
-                  </span>
-                )}
+                <span className="text-center text-xs text-muted-foreground">{row.detail}</span>
               </div>
             </motion.div>
           ))}

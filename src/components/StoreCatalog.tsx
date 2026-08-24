@@ -157,7 +157,7 @@ function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void
           <>
             <div className="mt-5 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4">
               <div className="flex items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-primary" />Pavimento vinílico SPC</div>
-              <p className="mt-2 text-sm leading-6 text-slate-600">Ideal para todas as zonas da casa, incluindo cozinhas e casas de banho. É impermeável, resistente ao uso diário e fácil de limpar, aliando estabilidade a um acabamento confortável com aspeto de madeira.</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Pavimento SPC impermeável, adequado a salas, quartos, cozinhas e casas de banho. É resistente ao uso diário e fácil de limpar.</p>
             </div>
             <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[0.68rem] font-bold text-slate-600">
               <div className="rounded-xl border border-slate-200 p-3"><House className="mx-auto mb-2 h-4 w-4 text-primary" />Toda a casa</div>

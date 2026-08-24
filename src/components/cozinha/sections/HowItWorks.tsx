@@ -6,26 +6,26 @@ const steps = [
   {
     icon: MessageSquare,
     num: "01",
-    title: "Consulta & Briefing",
-    desc: "Ouvimos as suas necessidades, visitamos o espaço e medimos com rigor. Sem compromisso.",
+    title: "Medidas e necessidades",
+    desc: "Recolhemos as medidas e a informação necessária sobre o espaço.",
   },
   {
     icon: PenTool,
     num: "02",
-    title: "Projecto Personalizado",
-    desc: "Criamos um projecto detalhado à sua medida. Aprovação só quando estiver satisfeito.",
+    title: "Desenho e proposta",
+    desc: "Preparamos o desenho, os materiais, o preço e as condições do trabalho.",
   },
   {
     icon: Factory,
     num: "03",
-    title: "Fabrico em Paços de Ferreira",
-    desc: "Produzimos na nossa fábrica com materiais de qualidade e controlo rigoroso em cada fase.",
+    title: "Fabrico",
+    desc: "O trabalho é fabricado de acordo com o projeto aprovado.",
   },
   {
     icon: CheckCircle2,
     num: "04",
-    title: "Montagem Profissional",
-    desc: "A nossa equipa instala tudo com precisão. A cozinha chega pronta a usar.",
+    title: "Montagem",
+    desc: "Transportamos e montamos os elementos previstos na proposta.",
   },
 ];
 
@@ -49,7 +49,7 @@ export default function HowItWorks() {
             Como funciona
           </h2>
           <p className="mt-3 text-sm max-w-md mx-auto text-muted-foreground">
-            Tratamos de tudo — do primeiro contacto ao último pormenor.
+            Do levantamento de medidas à montagem em obra.
           </p>
         </motion.div>
 

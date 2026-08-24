@@ -31,9 +31,9 @@ export default function Hero() {
         { value: '60% do valor total', label: 'Adjudicação' },
       ]
     : [
-        { value: '24h', label: 'Tempo de resposta' },
+        { value: 'Loja online', label: 'Preços publicados' },
         { value: siteContent.supplierWarrantyLabel, label: 'Garantia do fabricante' },
-        { value: '5,0 ★', label: 'Avaliação no Google' },
+        { value: 'Região Centro', label: 'Entrega e aplicação' },
       ]
 
   const goToPreviousProject = () => {
@@ -99,11 +99,11 @@ export default function Hero() {
               (<div className="mb-6">
                 <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
                   <span className="block text-white"></span>
-                  <span className="block text-primary">Cozinhas à medida</span>
-                  <span className="block text-white">a preço direto de fábrica.</span>
+                  <span className="block text-primary">Cozinhas por medida</span>
+                  <span className="block text-white">com fabrico e montagem.</span>
                 </h1>
                 <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">
-                  Fabrico em Paços de Ferreira e montagem profissional incluída.<br />Qualidade superior, a preço direto de fábrica.
+                  Medimos o espaço, preparamos a proposta e coordenamos o fabrico e a montagem.
                 </p>
                 <div className="w-full max-w-xl mx-auto mb-8 rounded-[1.75rem] overflow-hidden border border-white/10 bg-white/5 shadow-sm">
                   <CompareSlider before={beforeAfterPairs[0].before} after={beforeAfterPairs[0].after} aspectRatio="16/9" />
@@ -124,7 +124,7 @@ export default function Hero() {
             {!isKitchen && (
             <div className="w-full max-w-[760px]">
               <div className="text-sm sm:text-lg md:text-[1.3rem] text-white/90 leading-relaxed mb-3 text-left space-y-1">
-                <p>{siteContent.heroStepOneText} Veja modelos, preços e condições na loja.</p>
+                <p>{siteContent.heroStepOneText}</p>
               </div>
             </div>
             )}
@@ -133,9 +133,9 @@ export default function Hero() {
               /* ── 3 CHECKMARKS antes do botão ── */
               (<div className="flex flex-col gap-2.5 mb-6">
                 {[
-                  { full: 'Orçamento gratuito. Resposta rápida.', short: 'Orçamento gratuito. Resposta rápida.' },
-                  { full: 'Projecto detalhado e aprovado por si', short: 'Projecto aprovado por si' },
-                  { full: 'Montagem profissional incluída', short: 'Montagem incluída' },
+                  { full: 'Levantamento de medidas e proposta', short: 'Medidas e proposta' },
+                  { full: 'Projeto adaptado ao espaço', short: 'Projeto por medida' },
+                  { full: 'Fabrico e montagem em obra', short: 'Fabrico e montagem' },
                 ].map((item) => (
                   <div key={item.full} className="flex items-center gap-2.5 text-white/80">
                     <svg className="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
@@ -157,7 +157,7 @@ export default function Hero() {
                     className="inline-flex min-h-[52px] w-full items-center justify-center gap-3 whitespace-nowrap rounded-xl bg-primary px-7 text-[0.9rem] font-bold text-white shadow-[0_8px_24px_rgba(240,91,19,0.24)] transition hover:bg-primary/90 sm:w-auto"
                   >
                     <MessageCircle className="w-4 h-4 shrink-0" />
-                    Pedir Orçamento Gratuito
+                    Pedir orçamento
                   </a>
                 ) : (
                   <a
@@ -173,12 +173,12 @@ export default function Hero() {
 
             {!isKitchen && (
               <p className="text-sm sm:text-base md:text-[1.05rem] text-white/62 leading-relaxed mb-8 max-w-[760px]">
-                Tratamos de tudo por si. Sem complicações, sem surpresas.
+                Se precisar de aplicação, pode pedi-la juntamente com o material.
               </p>
             )}
             {isKitchen && (
               <p className="text-xs sm:text-sm text-white/40 max-w-[760px] mt-2">
-                Orçamento sem compromisso · Sem custos ocultos · Fabrico em Paços de Ferreira
+                Região Centro · Outras zonas sujeitas a confirmação de disponibilidade
               </p>
             )}
           </motion.div>

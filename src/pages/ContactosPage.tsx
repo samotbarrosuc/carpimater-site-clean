@@ -49,16 +49,16 @@ export default function ContactosPage() {
       <section className="bg-[#19242e] px-4 pb-12 pt-28 text-white sm:pb-16 sm:pt-32">
         <div className="mx-auto max-w-6xl">
           <p className="section-kicker">Contacto</p>
-          <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight tracking-[-0.035em] sm:text-6xl">Vamos perceber o que <span className="font-serif font-normal italic text-[#f08a45]">precisa.</span></h1>
-          <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 sm:text-lg">Diga-nos se procura um projeto à medida, materiais ou aplicação. Escolha a forma mais simples de falar connosco.</p>
+          <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-tight tracking-[-0.035em] sm:text-6xl">Contacte a <span className="font-serif font-normal italic text-[#f08a45]">CarpiMater.</span></h1>
+          <p className="mt-5 max-w-2xl text-base leading-7 text-white/70 sm:text-lg">Envie-nos o seu pedido de carpintaria, materiais, entrega ou aplicação.</p>
         </div>
       </section>
       <section className="mx-auto grid max-w-6xl gap-10 px-4 py-14 sm:py-20 lg:grid-cols-[0.8fr_1.2fr]">
         <div>
           <p className="section-kicker">Fale diretamente</p>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.025em]">Estamos aqui para ajudar a decidir.</h2>
+          <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.025em]">Escolha como nos quer contactar.</h2>
           <div className="mt-8 space-y-3">
-            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="clean-card flex items-center gap-3 rounded-xl p-4 font-semibold transition hover:border-[#25D366]/50"><span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#25D366]/10"><MessageCircle className="h-4 w-4 text-[#25D366]" /></span><span>Falar por WhatsApp</span></a>
+            <a href={WHATSAPP_URL} target="_blank" rel="noopener noreferrer" className="clean-card flex items-center gap-3 rounded-xl p-4 font-semibold transition hover:border-[#25D366]/50"><span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#25D366]/10"><MessageCircle className="h-4 w-4 text-[#25D366]" /></span><span>WhatsApp</span></a>
             <a href={`tel:${PHONE_NUMBER.replace(/\s/g, '')}`} className="clean-card flex items-center gap-3 rounded-xl p-4 font-semibold transition hover:border-[#f05b13]/50"><span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#f7f3ea]"><Phone className="h-4 w-4 text-[#f05b13]" /></span><span>{PHONE_NUMBER.replace('+351 ', '')}</span></a>
             <a href={`mailto:${EMAIL}`} className="clean-card flex items-center gap-3 rounded-xl p-4 font-semibold transition hover:border-[#f05b13]/50"><span className="flex h-9 w-9 items-center justify-center rounded-lg bg-[#f7f3ea]"><Mail className="h-4 w-4 text-[#f05b13]" /></span><span>{EMAIL}</span></a>
           </div>
@@ -66,7 +66,7 @@ export default function ContactosPage() {
         </div>
         <form onSubmit={submit} className="clean-card rounded-2xl p-6 sm:p-9">
           <p className="section-kicker">Mensagem</p>
-          <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.025em]">Conte-nos o que tem em mente.</h2>
+          <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.025em]">Envie o seu pedido.</h2>
           <div className="mt-7 space-y-4">
             <label className="block text-sm font-semibold">Nome *<input name="nome" autoComplete="name" required minLength={2} value={form.nome} onChange={(event) => setForm({ ...form, nome: event.target.value })} className="mt-2 w-full rounded-xl border border-[#d8ccbc] bg-[#f7f3ea] px-4 py-3 font-normal outline-none focus:border-[#f05b13]" /></label>
             <label className="block text-sm font-semibold">Telemóvel *<input name="telemovel" type="tel" inputMode="numeric" autoComplete="tel" required minLength={9} maxLength={9} pattern="9[0-9]{8}" title={CONTACT_MOBILE_ERROR} value={form.contacto} onChange={(event) => setForm({ ...form, contacto: sanitizePortugueseMobile(event.target.value) })} onInvalid={(event) => event.currentTarget.setCustomValidity(CONTACT_MOBILE_ERROR)} onInput={(event) => event.currentTarget.setCustomValidity('')} className="mt-2 w-full rounded-xl border border-[#d8ccbc] bg-[#f7f3ea] px-4 py-3 font-normal outline-none focus:border-[#f05b13]" /><span className="mt-1.5 hidden text-xs font-normal text-slate-500 sm:block">9 algarismos, começado por 9.</span></label>

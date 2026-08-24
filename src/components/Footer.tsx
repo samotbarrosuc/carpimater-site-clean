@@ -24,9 +24,9 @@ export default function Footer() {
   const currentYear = new Date().getFullYear()
 
   const companyDesc = isEmpreiteiros
-    ? 'Carpintaria técnica para empreiteiros, promotores e construtores. Pavimentos, cozinhas e marcenaria de obra, com fabrico em Paços de Ferreira.'
+    ? 'Carpintaria por medida, fornecimento e montagem em obra para particulares, empreiteiros e promotores.'
     : isContactos || isPrivacy || isTerms
-    ? 'Pavimentos, cozinhas por medida e carpintaria em geral. Atuação regular na Região Centro; outras zonas sujeitas a confirmação prévia.'
+    ? 'Loja de pavimentos e rodapés, carpintaria por medida e montagem em obra.'
     : siteContent.companyDescription
 
   return (
@@ -45,7 +45,7 @@ export default function Footer() {
               <span className="font-display font-bold text-2xl text-slate-900">{BUSINESS_NAME}</span>
             </div>
             <p className="mt-4 max-w-sm text-sm leading-relaxed text-slate-600">{companyDesc}</p>
-            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-primary">Região Centro · Outras zonas sob consulta</p>
+            <p className="mt-5 text-xs font-semibold uppercase tracking-[0.14em] text-primary">Região Centro · Outras zonas mediante disponibilidade</p>
             <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs font-semibold text-slate-500">
               <a href="/termos-e-condicoes" className="transition-colors hover:text-primary">
                 Termos e Condições
@@ -63,10 +63,10 @@ export default function Footer() {
               {[
                 { label: 'Loja de materiais', href: '/loja' },
                 { label: 'Cozinhas à medida', href: '/cozinha' },
-                { label: 'Flutuante híbrido ZCUDO NextCore', href: '/flutuante' },
+                { label: 'Pavimento flutuante híbrido', href: '/flutuante' },
                 { label: 'Pavimento vinílico SPC', href: '/vinilico' },
                 { label: 'Rodapés PVC', href: '/rodapes' },
-                { label: 'Carpintaria para Obras', href: '/construcao' },
+                { label: 'Carpintaria para obras', href: '/construcao' },
               ].map((link) => (
                 <li key={link.href}>
                   <a href={link.href} className="text-sm text-slate-600 hover:text-primary transition-colors">

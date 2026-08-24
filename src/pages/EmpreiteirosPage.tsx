@@ -3,13 +3,12 @@ import { MapPin, CheckCircle2, Shield, Clock, Gem, Star, Wrench, Package, DoorOp
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import HowItWorks from '@/components/cozinha/sections/HowItWorks'
-import FabricoPrazoAdjudicacao from '@/components/cozinha/sections/FabricoPrazoAdjudicacao'
 import { SimulatorProvider } from '@/context/SimulatorContext'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion'
 
 const WA_NUMBER = '351910093635'
 const WA_MSG_PROPOSTA = encodeURIComponent('Olá CarpiMater! Sou empreiteiro/investidor e quero uma proposta de carpintaria para obra.')
-const WA_MSG_PROJETO = encodeURIComponent('Olá! Quero iniciar o meu projecto de carpintaria com a CarpiMater.')
+const WA_MSG_PROJETO = encodeURIComponent('Olá! Gostaria de pedir orçamento para um trabalho de carpintaria.')
 const WA_LINK_PROPOSTA = `/whatsapp-redirect.html?url=${encodeURIComponent(`https://wa.me/${WA_NUMBER}?text=${WA_MSG_PROPOSTA}`)}`
 const WA_LINK_PROJETO = `/whatsapp-redirect.html?url=${encodeURIComponent(`https://wa.me/${WA_NUMBER}?text=${WA_MSG_PROJETO}`)}`
 const TEL_LINK = `tel:+${WA_NUMBER}`
@@ -35,24 +34,24 @@ const SERVICES = [
 
 const FAQS = [
   {
-    q: 'Como garantem os prazos?',
-    a: 'Planificamos cada fase — projecto, fabrico e instalação — com datas concretas. A nossa produção CNC própria em Paços de Ferreira elimina dependência de fornecedores externos e mantém o controlo do prazo nas nossas mãos.',
+    q: 'Como funciona o pedido?',
+    a: 'Envie as plantas, medidas, fotografias e a localização da obra. Depois de analisarmos o pedido, confirmamos os trabalhos, os materiais, o preço e o prazo previsto.',
   },
   {
-    q: 'A qualidade é comparável à das grandes superfícies?',
-    a: 'É muito superior. Usamos materiais de qualidade por defeito, com acabamentos e resistência que as grandes superfícies não oferecem a este preço. Fabricamos à medida — não há peças standard que "encaixam mais ou menos".',
+    q: 'Que trabalhos fazem?',
+    a: 'Fazemos cozinhas, roupeiros, portas interiores, painéis, escadas, móveis por medida, pavimentos e rodapés. Confirmamos a disponibilidade para outros trabalhos depois de analisar o pedido.',
   },
   {
     q: 'Que materiais utilizam?',
-    a: 'Painéis de MDF e aglomerado de qualidade certificada, acabamentos lacados ou em folha de madeira real, ferragens de marcas europeias. Nada de baixo custo que comprometa o resultado final.',
+    a: 'Os materiais e as ferragens variam conforme o trabalho. As referências, os acabamentos e as condições ficam indicados na proposta.',
   },
   {
-    q: 'Quais os benefícios para investidores imobiliários?',
-    a: 'Carpintaria de qualidade valoriza o imóvel e acelera a venda ou o arrendamento. Oferecemos projecto detalhado com renders 3D, preço fixo por obra e entrega coordenada com o calendário da construção.',
+    q: 'Trabalham com empreiteiros e promotores?',
+    a: 'Sim. Analisamos trabalhos para moradias, remodelações e edifícios com várias frações. A capacidade e o calendário são confirmados para cada obra.',
   },
   {
-    q: 'Trabalham com empreiteiros de todas as dimensões?',
-    a: 'Sim. Trabalhamos desde obras unifamiliares a promoções imobiliárias com múltiplas fracções. A nossa capacidade de produção CNC permite escalar sem perda de qualidade.',
+    q: 'Fazem apenas o fornecimento?',
+    a: 'Depende do trabalho. Podemos fornecer e montar em obra, ou indicar na proposta quais as partes do serviço abrangidas.',
   },
   {
     q: 'Qual é a área geográfica de cobertura?',
@@ -60,7 +59,7 @@ const FAQS = [
   },
   {
     q: 'O orçamento tem custo?',
-    a: 'Não. O orçamento é sempre gratuito e sem compromisso. Fazemos uma análise detalhada do projecto e entregamos proposta com preço fixo em 48 horas.',
+    a: 'Envie o pedido para análise. Se for necessária uma visita ou algum trabalho prévio antes da proposta, informamos primeiro as respetivas condições.',
   },
 ]
 
@@ -86,13 +85,12 @@ export default function EmpreiteirosPage() {
               >
                 <div className="mb-6">
                   <h1 className="text-[2rem] sm:text-[2.5rem] md:text-[3rem] lg:text-[3.25rem] xl:text-[3.5rem] font-display font-bold leading-[1.08] tracking-[-0.015em]">
-                    <span className="block text-white">Toda a carpintaria</span>
-                    <span className="block text-white">para a sua obra,</span>
-                    <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">sem atrasos.</span>
+                    <span className="block text-white">Carpintaria por medida</span>
+                    <span className="block text-white">para obras e</span>
+                    <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">remodelações.</span>
                   </h1>
                   <p className="text-white/65 text-sm sm:text-base max-w-xl leading-relaxed mt-4 mb-6">
-                    <span className="sm:hidden">Carpintaria sob medida para obras.<br />Tratamos de tudo: das medidas à instalação.</span>
-                    <span className="hidden sm:inline">Roupeiros, cozinhas, portas interiores, closets e painéis, etc.<br />Materiais de qualidade, preços mais baixos que as outras carpintarias, prazos cumpridos.</span>
+                    <span>Fornecemos e montamos cozinhas, roupeiros, portas, painéis, escadas, pavimentos, rodapés e outros trabalhos de carpintaria.</span>
                   </p>
 
                   <div className="mb-6 rounded-2xl border border-white/12 bg-white/[0.06] p-2 shadow-[0_20px_55px_rgba(0,0,0,0.18)] sm:hidden">
@@ -108,7 +106,7 @@ export default function EmpreiteirosPage() {
                 </div>
 
                 <div className="flex flex-col gap-2.5 mb-6">
-                  {['Orçamento gratuito e rápido', 'Pouca burocracia', 'Compromisso com os prazos'].map((item) => (
+                  {['Levantamento de medidas', 'Proposta por escrito', 'Fabrico e montagem'].map((item) => (
                     <div key={item} className="flex items-center gap-2.5 text-white/80">
                       <svg className="w-4 h-4 text-primary shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2.5}>
                         <path strokeLinecap="round" strokeLinejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -120,10 +118,10 @@ export default function EmpreiteirosPage() {
 
                 <div className="mb-6 max-w-xl border-l-2 border-primary pl-4">
                   <p className="text-base sm:text-lg font-semibold text-white leading-6">
-                    Qualidade de topo, aos preços mais baixos do mercado.
+                    Serviço definido para cada obra.
                   </p>
                   <p className="text-sm text-white/70 mt-2">
-                    Produção própria em Paços de Ferreira, sem intermediários, com instalação coordenada e cumprimento dos prazos (média de 10 semanas).
+                    Analisamos as medidas e os trabalhos pedidos antes de confirmar materiais, preço, condições e prazo previsto.
                   </p>
                 </div>
 
@@ -135,18 +133,18 @@ export default function EmpreiteirosPage() {
                     className="inline-flex min-h-[52px] items-center justify-center gap-3 whitespace-nowrap rounded-xl bg-primary px-7 text-[0.9rem] font-bold text-white shadow-[0_8px_24px_rgba(240,91,19,0.25)] transition hover:bg-primary/90"
                   >
                     <MessageCircle className="w-4 h-4 shrink-0" />
-                    Pedir Orçamento Gratuito
+                    Pedir orçamento
                   </a>
                   <a
                     href={TEL_LINK}
                     className="inline-flex min-h-[52px] items-center justify-center gap-3 whitespace-nowrap rounded-xl border border-white/20 bg-white/[0.04] px-7 text-[0.9rem] font-semibold text-white transition-colors hover:bg-white/[0.09]"
                   >
-                    Ligar Agora
+                    Ligar
                   </a>
                 </div>
 
                 <p className="text-xs sm:text-sm text-white/40 max-w-[760px] mt-2">
-                  Orçamento sem compromisso · Sem custos ocultos · Entregue dentro do prazo
+                  Região Centro · Outras zonas sujeitas a confirmação de disponibilidade
                 </p>
               </motion.div>
 
@@ -180,9 +178,9 @@ export default function EmpreiteirosPage() {
         <section id="servicos" className="bg-[#f8f5ef] py-16 sm:py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-10 max-w-5xl">
-              <p className="section-kicker mb-3">Serviço completo</p>
+              <p className="section-kicker mb-3">Carpintaria em obra</p>
               <h2 className="font-display text-3xl font-bold tracking-[-0.025em] text-slate-950 sm:text-4xl">
-                Tudo o que a sua obra precisa
+                Serviços disponíveis
               </h2>
               
             </div>
@@ -202,11 +200,11 @@ export default function EmpreiteirosPage() {
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-5 max-w-4xl mx-auto">
               {[
-                { val: 'Fabrico Nacional', sub: 'Paços de Ferreira' },
-                { val: 'Tradição', sub: '40+ Anos' },
-                { val: 'Qualidade', sub: 'Materiais Premium' },
-                { val: 'Preço mais baixo', sub: 'Sem Intermediários' },
-                { val: 'Prazos Cumpridos', sub: 'Sem Atrasos' },
+                { val: 'Por medida', sub: 'Conforme a obra' },
+                { val: 'Proposta', sub: 'Trabalhos discriminados' },
+                { val: 'Materiais', sub: 'Definidos por escrito' },
+                { val: 'Montagem', sub: 'Executada em obra' },
+                { val: 'Cobertura', sub: 'Região Centro' },
               ].map((item, i, arr) => (
                 <div key={item.val} className={`text-center${i === arr.length - 1 && arr.length % 2 !== 0 ? ' col-span-2 sm:col-span-1' : ''}`}>
                   <p className="text-white font-bold text-sm">{item.val}</p>
@@ -219,40 +217,39 @@ export default function EmpreiteirosPage() {
 
         {/* ── HOW IT WORKS ── */}
         <HowItWorks />
-        <FabricoPrazoAdjudicacao />
 
         {/* ── MARKET PROOF ── */}
         <section className="py-16 lg:py-20 bg-secondary">
           <div className="container mx-auto px-4">
             <div className="text-center mb-10">
               <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
-                Porquê a CarpiMater
+                Processo de trabalho
               </p>
               <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-white">
-                O que nos distingue
+                Como prestamos o serviço
               </h2>
             </div>
             <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
               {[
                 {
                   icon: MapPin,
-                  title: 'Fabrico Próprio',
-                  desc: 'Produzimos em Paços de Ferreira, sem intermediários. Os valores saem mais baixos e é difícil bater este nível de qualidade.',
+                  title: 'Levantamento',
+                  desc: 'Recolhemos as medidas, plantas, fotografias e condições da obra.',
                 },
                 {
                   icon: Clock,
-                  title: 'Prazos Cumpridos',
-                  desc: 'Planificamos cada fase antes de começar. O prazo acordado é o prazo de entrega.',
+                  title: 'Proposta',
+                  desc: 'Indicamos os trabalhos, materiais, preço e prazo previsto.',
                 },
                 {
                   icon: Gem,
-                  title: 'Materiais de Qualidade',
-                  desc: 'Utilizamos apenas ferragens de marca e madeiras de qualidade superior.',
+                  title: 'Fabrico',
+                  desc: 'O fabrico começa depois da aprovação das medidas e da proposta.',
                 },
                 {
                   icon: Wrench,
-                  title: 'Montagem Incluída',
-                  desc: 'As nossas equipas fazem a montagem na Região Centro. Outras zonas estão sujeitas a confirmação prévia de disponibilidade.',
+                  title: 'Montagem',
+                  desc: 'Fazemos a montagem em obra nos locais e condições confirmados.',
                 },
               ].map((card, i) => {
                 const Icon = card.icon
@@ -318,14 +315,14 @@ export default function EmpreiteirosPage() {
             </motion.div>
 
             <div className="mt-10 rounded-2xl bg-primary/8 border border-primary/20 p-8 text-center">
-              <p className="font-semibold text-foreground mb-4">Tem outra questão? Fale directamente connosco.</p>
+              <p className="font-semibold text-foreground mb-4">Tem outra questão? Contacte-nos.</p>
               <a
                 href={WA_LINK_PROPOSTA}
                 target="_blank"
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 bg-primary text-white font-bold px-7 py-3.5 rounded-full hover:bg-primary/90 transition-colors"
               >
-                Pedir Orçamento Gratuito
+                Pedir orçamento
               </a>
             </div>
           </div>
@@ -336,16 +333,16 @@ export default function EmpreiteirosPage() {
           <div className="absolute inset-0 pointer-events-none bg-[radial-gradient(ellipse_at_50%_0%,rgba(240,91,19,0.10),transparent_55%)]" />
 
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 relative text-center">
-            <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">Pronto para começar?</p>
+            <p className="text-xs uppercase tracking-[0.25em] text-primary font-semibold mb-4">Contacto</p>
             <h2 className="font-display font-bold mb-4 leading-snug text-white text-[clamp(1.5rem,3vw,2.2rem)]">
-              Quer carpintaria de qualidade com valores mais baixos?
+              Precisa de carpintaria para uma obra?
             </h2>
             <p className="text-white/60 text-sm sm:text-base max-w-lg mx-auto mb-8">
-              Fale connosco agora e receba um orçamento gratuito e detalhado em 24 horas. Sem compromisso.
+              Envie as plantas, medidas ou fotografias e uma descrição dos trabalhos pretendidos.
             </p>
 
             <div className="flex flex-wrap gap-3 justify-center mb-10">
-              {['Resposta em 24h', 'Orçamento gratuito', 'Sem compromisso'].map((s) => (
+              {['Plantas ou medidas', 'Proposta por escrito', 'Montagem em obra'].map((s) => (
                 <span key={s} className="flex items-center gap-2 bg-white/10 border border-white/20 text-white text-sm px-4 py-2 rounded-full">
                   <Shield className="w-3.5 h-3.5 text-primary" /> {s}
                 </span>
@@ -359,18 +356,18 @@ export default function EmpreiteirosPage() {
                 rel="noreferrer"
                 className="inline-flex items-center gap-2 bg-primary text-white font-bold px-8 py-4 rounded-full hover:bg-primary/90 transition-colors text-base shadow-[0_8px_30px_rgba(240,91,19,0.5)]"
               >
-                Pedir Orçamento Gratuito
+                Pedir orçamento
               </a>
               <a
                 href={TEL_LINK}
                 className="inline-flex items-center gap-2 border border-white/30 text-white font-semibold px-8 py-4 rounded-full hover:bg-white/10 transition-colors text-base"
               >
-                Ligar Agora
+                Ligar
               </a>
             </div>
 
             <p className="text-white/35 text-sm">
-              Carpintaria de Paços de Ferreira · Mais de 40 anos de tradição · Vários clientes satisfeitos
+              Particulares · Empreiteiros · Promotores
             </p>
           </div>
         </section>

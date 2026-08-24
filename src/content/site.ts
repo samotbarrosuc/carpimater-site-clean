@@ -48,14 +48,14 @@ export const SITE_VARIANT_CONTENT: Record<SiteVariant, SiteVariantContent> = {
     switchLabel: 'Pavimentos Vinílicos',
     whatsappMessage: 'Olá! Gostaria de saber mais sobre os vossos pavimentos vinílicos.',
     companyDescription:
-      'Especialistas no fabrico de cozinhas e serviços de carpintaria por medida.',
+      'Loja de pavimentos e rodapés. Fazemos também carpintaria por medida e montagem em obra.',
     materialSingular: 'vinílico',
     materialPlural: 'vinílicos',
     materialTechnical: 'Vinílico SPC',
     supplierWarrantyLabel: '25 anos',
     heroTitle: 'Pavimentos vinílicos',
-    heroStepOneText: 'Escolha o vinílico.',
-    heroServiceLine: 'Fornecimento & Instalação',
+    heroStepOneText: 'Consulte os acabamentos e os preços disponíveis.',
+    heroServiceLine: 'Venda e aplicação',
     catalogCtaLabel: 'Ver catálogo de vinílicos',
     catalogHeaderLabel: 'Catálogo de pavimentos',
     catalogPrimaryTitle: 'Pavimento vinílico',
@@ -67,14 +67,14 @@ export const SITE_VARIANT_CONTENT: Record<SiteVariant, SiteVariantContent> = {
     switchLabel: 'Flutuante Híbrido',
     whatsappMessage: 'Olá! Gostaria de saber mais sobre o pavimento flutuante híbrido ZCUDO NextCore.',
     companyDescription:
-      'Fornecimento e aplicação de pavimento flutuante híbrido ZCUDO NextCore na Região Centro.',
+      'Loja de pavimentos e rodapés. Fazemos também carpintaria por medida e montagem em obra.',
     materialSingular: 'flutuante híbrido',
     materialPlural: 'flutuantes híbridos',
     materialTechnical: 'ZCUDO NextCore',
     supplierWarrantyLabel: '25 anos',
-    heroTitle: 'Flutuante híbrido ZCUDO',
-    heroStepOneText: 'Escolha o acabamento NextCore.',
-    heroServiceLine: 'Fornecimento & Instalação',
+    heroTitle: 'Pavimento flutuante híbrido',
+    heroStepOneText: 'Consulte os acabamentos e os preços disponíveis.',
+    heroServiceLine: 'Venda e aplicação',
     catalogCtaLabel: 'Ver catálogo ZCUDO NextCore',
     catalogHeaderLabel: 'Catálogo de pavimentos',
     catalogPrimaryTitle: 'Pavimento flutuante híbrido',
@@ -87,14 +87,14 @@ export const SITE_VARIANT_CONTENT: Record<SiteVariant, SiteVariantContent> = {
     whatsappMessage:
       'Olá! Preciso de uma solução para a minha cozinha e gostaria de saber como avançar.',
     companyDescription:
-      'Cozinhas por medida e soluções de cozinha com projeto personalizado, fabrico em Paços de Ferreira e montagem profissional com carpintaria parceira.',
+      'Cozinhas e outros trabalhos de carpintaria por medida, com fornecimento e montagem em obra.',
     materialSingular: 'cozinha',
     materialPlural: 'cozinhas',
     materialTechnical: 'Mobiliário de cozinha por medida',
     supplierWarrantyLabel: 'Nacional',
-    heroTitle: 'A Cozinha que Imaginou. Fabricada em Portugal.',
-    heroStepOneText: 'Partilhe as suas ideias ou necessidades — visitamos e medimos gratuitamente.',
-    heroServiceLine: 'Orçamento Gratuito em 48h',
+    heroTitle: 'Cozinhas por medida',
+    heroStepOneText: 'Envie-nos as medidas, fotografias ou plantas do espaço.',
+    heroServiceLine: 'Projeto, fabrico e montagem',
     catalogCtaLabel: 'Pedir proposta por WhatsApp',
     catalogHeaderLabel: 'Cozinhas por medida',
     catalogPrimaryTitle: 'Cozinha por medida',
@@ -133,7 +133,7 @@ export const PHONE_NUMBER = '+351 910 093 635'
 export const EMAIL = 'tomas.a.barros@hotmail.com'
 
 /** Texto da área de serviço (exibido no hero e no rodapé) */
-export const SERVICE_AREA_TEXT = 'Atuamos regularmente na Região Centro. Pedidos para outras zonas do país estão sujeitos a contacto prévio e confirmação de disponibilidade.'
+export const SERVICE_AREA_TEXT = 'Trabalhamos regularmente na Região Centro. Para outras zonas do país, confirme primeiro a nossa disponibilidade.'
 
 /** Descrição curta da empresa (exibida no rodapé) */
 export const COMPANY_DESCRIPTION = SITE_VARIANT_CONTENT.vinilico.companyDescription

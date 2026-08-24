@@ -5,9 +5,9 @@ import { BUSINESS_NAME, getWhatsAppUrl } from '@/content/site'
 
 const SERVICES = [
   { label: 'Cozinhas por medida', description: 'Projeto, fabrico e montagem', href: '/cozinha' },
-  { label: 'Pavimento vinílico', description: 'Conheça o vinílico SPC', href: '/vinilico' },
-  { label: 'Flutuante híbrido ZCUDO', description: 'NextCore · resistente à água', href: '/flutuante' },
-  { label: 'Carpintaria para obra', description: 'Soluções para construção', href: '/construcao' },
+  { label: 'Pavimento vinílico', description: 'Modelos, preços e aplicação', href: '/vinilico' },
+  { label: 'Flutuante híbrido', description: 'Modelos, preços e aplicação', href: '/flutuante' },
+  { label: 'Carpintaria para obra', description: 'Fornecimento e montagem', href: '/construcao' },
 ]
 
 const MAIN_LINKS = [

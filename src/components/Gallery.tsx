@@ -11,13 +11,13 @@ export default function Gallery() {
         {/* Header */}
         <div className="mb-9 max-w-2xl">
           <p className="section-kicker mb-3">
-            Projetos recentes
+            Pavimentos aplicados
           </p>
           <h2 className="font-display text-3xl font-bold tracking-[-0.025em] text-foreground sm:text-4xl">
             Trabalhos realizados
           </h2>
           <p className="mt-3 text-sm leading-6 text-muted-foreground sm:text-base">
-            Fotos reais de projetos executados pela nossa equipa.
+            Alguns trabalhos realizados pela nossa equipa.
           </p>
         </div>
 
@@ -43,7 +43,7 @@ export default function Gallery() {
 
               {/* Label */}
               <div className="absolute bottom-0 left-0 right-0 p-4 sm:p-5">
-                <p className="mb-1 text-[0.6rem] font-bold uppercase tracking-[0.15em] text-white/55">Projeto realizado</p>
+                <p className="mb-1 text-[0.6rem] font-bold uppercase tracking-[0.15em] text-white/55">Aplicação</p>
                 <p className="font-display text-base font-bold text-white sm:text-lg">{item.description}</p>
               </div>
             </motion.div>

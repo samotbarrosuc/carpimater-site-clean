@@ -9,12 +9,12 @@ import {
 
 const faqs = [
   {
-    q: "Os preços são competitivos?",
-    a: "Sim. Preços diretos de fábrica, com uma qualidade de materiais e acabamentos muito superior. A longo prazo, a diferença nota-se claramente.",
+    q: "Como é definido o preço?",
+    a: "O preço depende das medidas, dos materiais, das ferragens e da montagem. Esses elementos são discriminados na proposta.",
   },
   {
     q: "Qual é o prazo habitual de entrega e montagem?",
-    a: "Entre 8 a 10 semanas desde a aprovação final do projecto até à conclusão da montagem. Este prazo depende da complexidade e dimensão da cozinha. Cumprimos o que acordamos.",
+    a: "O prazo habitual é de 8 a 10 semanas após a aprovação do projeto. Pode variar conforme a dimensão, os materiais e a agenda de montagem.",
   },
   {
     q: "Fazem projetos e montagem fora da Região Centro?",
@@ -22,15 +22,15 @@ const faqs = [
   },
   {
     q: "A montagem está incluída no preço?",
-    a: "Sim, a montagem está sempre incluída. A CarpiMater trata de tudo, do início ao fim — o cliente não precisa de contratar outra empresa nem de se preocupar com coordenação de trabalhos.",
+    a: "A proposta indica se o transporte e a montagem estão incluídos e quais os trabalhos abrangidos.",
   },
   {
     q: "Que tipo de materiais utilizam?",
-    a: "Painéis de MDF e aglomerado de qualidade, acabamentos lacados ou em folha de madeira natural, ferragens de marcas europeias. Não utilizamos opções de baixo custo que comprometam o resultado.",
+    a: "Trabalhamos com MDF, aglomerado, acabamentos lacados ou em folha de madeira e diferentes ferragens. A escolha é registada na proposta.",
   },
   {
     q: "Fazem reparos e renovações em cozinhas existentes?",
-    a: "Sim. Dispomos de carpinteiros especializados em renovações parciais, substituição de frentes e tampos, e reparações diversas. Se a sua cozinha tem problemas — contacte-nos.",
+    a: "Sim, conforme o trabalho. Envie fotografias e uma descrição para confirmarmos se fazemos a reparação ou renovação pretendida.",
   },
 ];
 

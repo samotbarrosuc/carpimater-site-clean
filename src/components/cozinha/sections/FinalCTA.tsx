@@ -19,12 +19,11 @@ export default function FinalCTA() {
         >
           
           <h2 className="font-display font-bold mb-4 leading-snug text-white text-[clamp(1.5rem,3vw,2.2rem)]">
-            Pronto para começar o seu projecto?
+            Precisa de uma cozinha por medida?
           </h2>
 
           <p className="text-sm leading-relaxed mb-8 max-w-md mx-auto text-white/55">
-            Contacte-nos pelo WhatsApp ou por telefone. Analisamos o espaço
-            e apresentamos uma proposta personalizada, sem qualquer custo.
+            Envie-nos as medidas, fotografias ou plantas do espaço. Entraremos em contacto para reunir a informação necessária.
           </p>
 
           <div className="flex flex-col sm:flex-row gap-3 justify-center mb-8">
@@ -35,19 +34,19 @@ export default function FinalCTA() {
               className="flex items-center justify-center gap-2 rounded-xl bg-primary px-7 py-3.5 text-sm font-bold text-white shadow-[0_6px_20px_rgba(240,91,19,0.22)] transition hover:bg-primary/90"
             >
               <MessageCircle size={16} />
-              Pedir Orçamento por WhatsApp
+              Pedir orçamento por WhatsApp
             </a>
             <a
               href="tel:+351910093635"
               className="flex items-center justify-center gap-2 rounded-xl border border-white/20 px-7 py-3.5 text-sm font-semibold text-white/70 transition hover:border-white/35 hover:text-white"
             >
               <Phone size={16} />
-              Ligar Agora
+              Ligar
             </a>
           </div>
 
           <p className="text-xs text-white/28">
-            Sem compromisso · Resposta rápida · Fabricação em Portugal
+            Região Centro · Outras zonas sob consulta
           </p>
         </motion.div>
       </div>

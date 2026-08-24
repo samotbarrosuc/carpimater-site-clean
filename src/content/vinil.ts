@@ -62,7 +62,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#C9A96E',
     imagem: '/images/produtos-vinil/carvalho_mel_IMG_2897_optimized_2000-scaled-e1729769492932.jpeg',
-    useCase: 'Ideal para salas de estar modernas',
+    useCase: 'Tom de madeira médio e quente.',
   },
   {
     nome: 'Carvalho Nogal',
@@ -70,7 +70,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#8B8680',
     imagem: '/images/produtos-vinil/carvalho_nogal_PHOTO-2023-06-13-01-28-00-e1729769602770.jpg',
-    useCase: 'Perfeito para ambientes elegantes',
+    useCase: 'Tom castanho escuro.',
   },
   {
     nome: 'Eucalipto',
@@ -78,7 +78,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#B5935A',
     imagem: '/images/produtos-vinil/eucalipto_PHOTO-2023-11-21-08-25-04-e1729769679644.jpg',
-    useCase: 'Ideal para cozinhas e áreas de serviço',
+    useCase: 'Tom de madeira claro.',
   },
   {
     nome: 'Oliveira',
@@ -148,8 +148,8 @@ const NEXTCORE_FEATURES = [
   'Classe de utilização AC5',
   'Resistência à água e salpicos durante 100 h+',
   'Base acústica IXPE de 1,5 mm integrada',
-  'Superfície antibacteriana e solução eco friendly',
-  'Textura Real Wood, relevo autêntico e poro sincronizado',
+  'Superfície antibacteriana',
+  'Textura Real Wood e poro sincronizado',
   'Sistema de encaixe Unilin com ZCUDO Shield',
   'Biselado nos quatro lados',
   'Compatível com cozinhas e casas de banho',
@@ -169,7 +169,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '9,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
-    useCase: 'Tom claro e sereno para espaços luminosos.',
+    useCase: 'Tom de madeira claro.',
   },
   {
     nome: 'Tots',
@@ -184,7 +184,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '9,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
-    useCase: 'Carvalho quente com um desenho natural e equilibrado.',
+    useCase: 'Tom carvalho quente.',
   },
   {
     nome: 'Moka',
@@ -199,7 +199,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '9,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
-    useCase: 'Madeira média, acolhedora e fácil de combinar.',
+    useCase: 'Tom de madeira médio.',
   },
   {
     nome: 'Arq',
@@ -214,7 +214,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '11,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
-    useCase: 'Régua longa e clara para ampliar visualmente a divisão.',
+    useCase: 'Régua longa em tom claro.',
   },
   {
     nome: 'Grisácio',
@@ -229,7 +229,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '11,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
-    useCase: 'Carvalho acinzentado para interiores contemporâneos.',
+    useCase: 'Tom carvalho acinzentado.',
   },
   {
     nome: 'Torrado',
@@ -244,7 +244,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '11,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
-    useCase: 'Tom escuro e marcado para ambientes com personalidade.',
+    useCase: 'Tom de madeira escuro.',
   },
   {
     nome: 'Mel',
@@ -259,7 +259,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '11,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
-    useCase: 'Tom mel luminoso para uma atmosfera acolhedora.',
+    useCase: 'Tom mel.',
   },
 ]
 

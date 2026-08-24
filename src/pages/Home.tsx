@@ -16,9 +16,9 @@ import { ShoppingBag, Store, ChevronDown, ChevronRight, Mail, MessageCircle, Pho
 const WA_HOME = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent('Olá CarpiMater! Gostaria de saber mais sobre os vossos serviços.')}`
 
 const STEPS = [
-  { num: '01', title: 'Ouvir', desc: 'Perceber o espaço, as medidas e o que precisa de resolver.' },
-  { num: '02', title: 'Decidir', desc: 'Escolher materiais, prioridades e datas com informação clara.' },
-  { num: '03', title: 'Fazer', desc: 'Executar com cuidado e entregar como prometido.' },
+  { num: '01', title: 'Pedido', desc: 'Indique o trabalho, as medidas e a localização.' },
+  { num: '02', title: 'Proposta', desc: 'Confirmamos os materiais, o preço e o prazo previsto.' },
+  { num: '03', title: 'Execução', desc: 'Preparamos o material e fazemos a montagem em obra.' },
 ]
 
 const FEATURED_MATERIALS = [
@@ -135,14 +135,15 @@ export default function Home() {
                 transition={{ duration: 0.5 }}
               >
                 <p className="section-kicker mb-5 flex items-center gap-3">
-                  <span className="h-px w-7 bg-[#f05b13]" /> Carpintaria · Interiores · Pavimentos
+                  <span className="h-px w-7 bg-[#f05b13]" /> Carpintaria · Pavimentos · Rodapés
                 </p>
                 <h1 className="mb-5 max-w-xl font-display text-[3.25rem] font-bold leading-[0.94] tracking-[-0.045em] text-[#19242e] sm:text-6xl lg:text-7xl">
-                  Carpintaria que <em className="font-serif font-normal italic tracking-[-0.02em] text-[#f05b13]">fica.</em>
+                  Carpintaria por medida, <em className="font-serif font-normal italic tracking-[-0.02em] text-[#f05b13]">pavimentos e rodapés.</em>
                 </h1>
                 <p className="mb-7 max-w-lg text-base leading-7 text-[#40505b] sm:text-lg">
-                  Qualidade e preço, sem compromissos desnecessários. Espaços bem pensados e uma equipa que aparece quando diz que aparece.
+                  Venda online de materiais e serviços de carpintaria, fornecimento e montagem em obra.
                 </p>
+
                 <div className="mb-9 flex flex-col gap-3 sm:flex-row">
                   <a
                     href="/loja"
@@ -165,9 +166,9 @@ export default function Home() {
                   </a>
                 </div>
                 <div className="grid max-w-lg grid-cols-3 gap-4 border-t border-[#dcd5ca] pt-5">
-                  <div><strong className="block font-display text-xl text-[#19242e]">40 anos</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">de experiência</span></div>
-                  <div><strong className="block font-display text-xl text-[#19242e]">400+</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">projetos entregues</span></div>
-                  <div><strong className="block font-display text-xl text-[#19242e]">5,0 ★</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">avaliação Google</span></div>
+                  <div><strong className="block font-display text-xl text-[#19242e]">Loja online</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">preços publicados</span></div>
+                  <div><strong className="block font-display text-xl text-[#19242e]">Por medida</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">carpintaria para cada espaço</span></div>
+                  <div><strong className="block font-display text-xl text-[#19242e]">Região Centro</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">entrega e montagem</span></div>
                 </div>
               </motion.div>
               </div>
@@ -183,28 +184,28 @@ export default function Home() {
         <section className="bg-[#f8f5ef] px-4 py-16 sm:py-20">
           <div className="mx-auto max-w-6xl">
             <div className="max-w-2xl">
-              <p className="section-kicker">O caminho certo começa aqui</p>
-              <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">Escolha como quer <em className="font-serif font-normal italic text-[#f05b13]">avançar.</em></h2>
-              <p className="mt-4 max-w-xl leading-7 text-[#40505b]">Há quem chegue com uma planta. Há quem chegue com uma divisão vazia. Começamos sempre por ouvir.</p>
+              <p className="section-kicker">Serviços e loja</p>
+              <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">Escolha o que <em className="font-serif font-normal italic text-[#f05b13]">precisa.</em></h2>
+              <p className="mt-4 max-w-xl leading-7 text-[#40505b]">Pode pedir um trabalho de carpintaria, comprar materiais ou solicitar a respetiva aplicação.</p>
             </div>
             <div className="mt-9 grid gap-4 lg:grid-cols-3">
               <a href="/#home-contactos" className="group clean-card flex min-h-[250px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)] sm:p-7">
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#f05b13] text-xs font-bold text-white">01</span>
-                <h3 className="mt-8 font-display text-xl font-bold text-[#19242e]">Um projeto à sua medida</h3>
-                <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Cozinhas, roupeiros, escadas e carpintaria pensados para o seu espaço e forma de viver.</p>
+                <h3 className="mt-8 font-display text-xl font-bold text-[#19242e]">Carpintaria por medida</h3>
+                <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Cozinhas, roupeiros, portas, escadas e outros trabalhos adaptados ao espaço.</p>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#f05b13]">Pedir orçamento <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
               </a>
               <a href="/loja" className="group clean-card flex min-h-[250px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)] sm:p-7">
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#19242e] text-xs font-bold text-white">02</span>
                 <h3 className="mt-8 font-display text-xl font-bold text-[#19242e]">Escolher os materiais</h3>
-                <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Vinílicos SPC, flutuantes híbridos ZCUDO e rodapés num catálogo simples de comparar.</p>
+                <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Pavimentos vinílicos, flutuantes híbridos e rodapés, vendidos por caixas e barras.</p>
                 <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#f05b13]">Visitar loja <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
               </a>
               <a href="/loja" className="group clean-card flex min-h-[250px] flex-col rounded-2xl p-6 transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)] sm:p-7">
                 <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[#e8ded1] text-xs font-bold text-[#19242e]">03</span>
                 <h3 className="mt-8 font-display text-xl font-bold text-[#19242e]">Solicitar aplicação</h3>
                 <p className="mt-3 flex-1 text-sm leading-6 text-[#40505b]">Escolha o material, adicione-o ao carrinho e peça um orçamento previsto para aplicação antes de confirmar a encomenda.</p>
-                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#f05b13]">Pedir instalação <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
+                <span className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-[#f05b13]">Pedir aplicação <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
               </a>
             </div>
           </div>
@@ -214,12 +215,12 @@ export default function Home() {
         <section id="home-servicos" className="bg-white py-16 sm:py-20">
           <div className="container mx-auto px-4">
             <div className="mx-auto mb-9 max-w-6xl">
-              <p className="section-kicker mb-3">Serviços especializados</p>
+              <p className="section-kicker mb-3">Serviços</p>
               <h2 className="font-display text-3xl font-bold tracking-[-0.025em] text-foreground sm:text-4xl">
-                O que fazemos, com método
+                O que fazemos
               </h2>
               <p className="mt-3 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base">
-                Mobiliário e toda a carpintaria para sua casa — fornecimento, instalação e acabamentos geridos por nós de início ao fim.
+                Fazemos carpintaria por medida e fornecemos e instalamos pavimentos e rodapés.
               </p>
             </div>
 
@@ -235,9 +236,9 @@ export default function Home() {
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-5 sm:p-6">
-                  <p className="section-kicker">Projeto completo</p>
+                  <p className="section-kicker">Carpintaria por medida</p>
                   <h3 className="mt-2 font-display text-xl font-bold text-foreground">Cozinhas por medida</h3>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Desenho, fabrico e montagem adaptados ao espaço e à forma como vive.</p>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Levantamento de medidas, proposta, fabrico e montagem.</p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary">
                     Ver cozinhas <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" />
                   </span>
@@ -249,14 +250,14 @@ export default function Home() {
                 <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
                   <img
                     src="/images/pavimento-vinilico-sala-coimbra.png"
-                    alt="Pavimento vinílico e flutuante híbrido instalado pela CarpiMater em Coimbra"
+                    alt="Pavimentos vinílicos e flutuantes híbridos instalados pela CarpiMater em Coimbra"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                   />
                 </div>
                 <div className="flex flex-1 flex-col p-5 sm:p-6">
-                  <p className="section-kicker">Vinílico e híbrido</p>
+                  <p className="section-kicker">Vinílico e flutuante híbrido</p>
                   <h3 className="mt-2 font-display text-xl font-bold text-foreground">Pavimentos</h3>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Materiais resistentes, compra online e aplicação profissional quando precisar.</p>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Compra online, entrega e serviço de aplicação opcional.</p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary">Ver pavimentos <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
                 </div>
               </a>
@@ -273,7 +274,7 @@ export default function Home() {
                 <div className="flex flex-1 flex-col p-5 sm:p-6">
                   <p className="section-kicker">Construção e remodelação</p>
                   <h3 className="mt-2 font-display text-xl font-bold text-foreground">Carpintaria e obra</h3>
-                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Roupeiros, portas, cozinhas e soluções completas para empreiteiros e particulares.</p>
+                  <p className="mt-2 flex-1 text-sm leading-6 text-muted-foreground">Roupeiros, portas, cozinhas e outros trabalhos para particulares e empresas.</p>
                   <span className="mt-5 inline-flex items-center gap-1.5 text-sm font-bold text-primary">Ver soluções <ChevronRight className="h-4 w-4 transition group-hover:translate-x-1" /></span>
                 </div>
               </a>
@@ -285,12 +286,12 @@ export default function Home() {
           <div className="mx-auto max-w-6xl">
             <div className="flex flex-col justify-between gap-5 sm:flex-row sm:items-end">
               <div className="max-w-xl">
-                <p className="section-kicker">Materiais para durar</p>
-                <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">O pavimento muda <em className="font-serif font-normal italic text-[#f05b13]">tudo.</em></h2>
-                <p className="mt-4 leading-7 text-[#40505b]">Uma seleção pequena e bem escolhida, pronta para ir do ecrã para a sua casa.</p>
-                <p className="mt-1 leading-7 text-[#40505b] sm:mt-3">Compre só o material ou peça instalação.</p>
+                <p className="section-kicker">Loja de materiais</p>
+                <h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">Pavimentos e <em className="font-serif font-normal italic text-[#f05b13]">rodapés.</em></h2>
+                <p className="mt-4 leading-7 text-[#40505b]">Consulte os modelos, os preços e as características de cada material.</p>
+                <p className="mt-1 leading-7 text-[#40505b] sm:mt-3">Pode comprar apenas o material ou solicitar aplicação.</p>
               </div>
-              <a href="/loja" className="inline-flex items-center gap-2 font-bold text-[#19242e] transition hover:text-[#f05b13] sm:rounded-xl sm:bg-[#f05b13] sm:px-5 sm:py-3 sm:text-white sm:shadow-[0_8px_20px_rgba(240,91,19,0.22)] sm:hover:bg-[#d94d0d] sm:hover:text-white">Explorar loja <ChevronRight className="h-4 w-4" /></a>
+              <a href="/loja" className="inline-flex items-center gap-2 font-bold text-[#19242e] transition hover:text-[#f05b13] sm:rounded-xl sm:bg-[#f05b13] sm:px-5 sm:py-3 sm:text-white sm:shadow-[0_8px_20px_rgba(240,91,19,0.22)] sm:hover:bg-[#d94d0d] sm:hover:text-white">Ver loja <ChevronRight className="h-4 w-4" /></a>
             </div>
             <div className="mt-9 grid grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4">
               {FEATURED_MATERIALS.map((material) => (
@@ -313,7 +314,7 @@ export default function Home() {
                 <div className="mt-auto pt-8">
                   <p className="text-[0.58rem] font-bold uppercase tracking-[0.14em] text-[#b46b34]">Mais acabamentos</p>
                   <h3 className="mt-1.5 font-display text-lg font-bold leading-tight text-[#3d2b1f]">Ver + na loja</h3>
-                  <span className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-[#f05b13] px-3 py-2 text-xs font-bold text-white shadow-[0_5px_12px_rgba(240,91,19,0.2)] transition-colors group-hover:bg-[#d94e0d]">Explorar catálogo <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" /></span>
+                  <span className="mt-3 inline-flex items-center gap-1.5 rounded-lg bg-[#f05b13] px-3 py-2 text-xs font-bold text-white shadow-[0_5px_12px_rgba(240,91,19,0.2)] transition-colors group-hover:bg-[#d94e0d]">Ver catálogo <ChevronRight className="h-3.5 w-3.5 transition-transform group-hover:translate-x-0.5" /></span>
                 </div>
               </a>
             </div>
@@ -328,10 +329,10 @@ export default function Home() {
               <div className="text-center mb-12">
                 <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Processo</p>
                 <h2 className="text-2xl sm:text-3xl font-display font-bold text-white mb-3">
-                  Uma obra com cabeça.
+                  Como trabalhamos
                 </h2>
                 <p className="text-white/65 max-w-xl mx-auto">
-                  Simples, rápido e sem surpresas. É assim que a CarpiMater trabalha.
+                  Confirmamos o trabalho, os materiais, o preço e o prazo antes de avançar.
                 </p>
               </div>
 
@@ -362,12 +363,12 @@ export default function Home() {
             <div className="max-w-5xl mx-auto">
               <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
                 <div className="max-w-xl">
-                  <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Onde actuamos</p>
+                  <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Onde trabalhamos</p>
                   <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-4">
-                    Carpintaria por medida, pavimentos e rodapés em Coimbra, Aveiro e Leiria
+                    Pavimentos e carpintaria em Coimbra, Aveiro e Leiria
                   </h2>
                   <p className="text-muted-foreground text-sm leading-relaxed">
-                    A CarpiMater reúne carpintaria por medida e uma loja online de pavimentos e rodapés PVC. Entregamos e aplicamos pavimentos vinílicos SPC e o novo flutuante híbrido ZCUDO NextCore, além de rodapés, regularmente na Região Centro.
+                    Vendemos pavimentos vinílicos SPC, flutuantes híbridos e rodapés PVC. Fazemos também a aplicação dos materiais e trabalhos de carpintaria por medida.
                   </p>
                   <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Trabalhamos regularmente em Coimbra e arredores, Condeixa-a-Nova, Figueira da Foz, Cantanhede, Mealhada, Lousã, Aveiro, Leiria, Pombal e Marinha Grande. Para outras zonas do país, contacte-nos para confirmarmos disponibilidade.</p>
                   <a href="/loja" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">Ver preços na loja <ChevronRight className="h-4 w-4" /></a>
@@ -407,7 +408,7 @@ export default function Home() {
                     Fale connosco
                   </h2>
                   <p className="text-muted-foreground text-sm leading-relaxed mb-8">
-                    Respondemos em menos de 24 horas, por WhatsApp ou e-mail. Sem compromisso.
+                    Pode contactar-nos por WhatsApp, telefone, e-mail ou através do formulário.
                   </p>
                   <div className="flex flex-col gap-3">
                     <a
@@ -421,7 +422,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="font-semibold text-foreground text-sm">WhatsApp</p>
-                        <p className="text-muted-foreground text-xs">Resposta mais rápida</p>
+                        <p className="text-muted-foreground text-xs">Mensagem direta</p>
                       </div>
                       <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:translate-x-0.5 transition-transform" />
                     </a>
@@ -434,7 +435,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="font-semibold text-foreground text-sm">{EMAIL}</p>
-                        <p className="text-muted-foreground text-xs">Para orçamentos e questões gerais</p>
+                        <p className="text-muted-foreground text-xs">Pedidos e informações</p>
                       </div>
                       <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:translate-x-0.5 transition-transform" />
                     </a>
@@ -447,7 +448,7 @@ export default function Home() {
                       </div>
                       <div>
                         <p className="font-semibold text-foreground text-sm">910 093 635</p>
-                        <p className="text-muted-foreground text-xs">Ligue directamente</p>
+                        <p className="text-muted-foreground text-xs">Contacto telefónico</p>
                       </div>
                       <ChevronRight className="w-4 h-4 text-muted-foreground ml-auto group-hover:translate-x-0.5 transition-transform" />
                     </a>
@@ -456,7 +457,7 @@ export default function Home() {
 
                 <div id="home-contacto" style={{ scrollMarginTop: '4rem' }} className="clean-card rounded-2xl p-6 sm:p-8">
                   <h3 className="font-display font-bold text-foreground text-lg mb-1">Enviar mensagem</h3>
-                  <p className="text-muted-foreground text-sm mb-6">Preencha o formulário e enviaremos um email com a sua mensagem.</p>
+                  <p className="text-muted-foreground text-sm mb-6">Preencha o formulário para nos enviar o seu pedido.</p>
                   <form onSubmit={handleContactSubmit} className="flex flex-col gap-3">
                     <input
                       name="nome"
@@ -485,7 +486,7 @@ export default function Home() {
                       title={CONTACT_MOBILE_ERROR}
                       className="rounded-xl border border-border bg-background px-4 py-3 text-sm outline-none focus:border-primary transition-colors placeholder:text-muted-foreground w-full"
                     />
-                    <p className="-mt-1 px-1 text-xs text-muted-foreground">9 algarismos, começado por 9.</p>
+                    <p className="-mt-1 px-1 text-xs text-muted-foreground"></p>
                     <textarea
                       value={contactForm.mensagem}
                       onChange={(e) => setContactForm(f => ({ ...f, mensagem: e.target.value }))}
@@ -512,7 +513,7 @@ export default function Home() {
                       </a>
                     )}
                     <p className="text-xs text-muted-foreground text-center">
-                      Responderemos em menos de 24 horas.
+                      Entraremos em contacto assim que possível.
                     </p>
                   </form>
                 </div>
@@ -523,7 +524,7 @@ export default function Home() {
 
         <section id="home-faq" className="bg-white px-4 py-16 sm:py-24">
           <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
-            <div><p className="section-kicker">Antes de começar</p><h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">Perguntas <em className="font-serif font-normal italic text-[#f05b13]">honestas.</em></h2><p className="mt-4 leading-7 text-[#40505b]">Se a sua dúvida não está aqui, fale connosco. Respondemos com clareza.</p></div>
+            <div><p className="section-kicker">Informação útil</p><h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">Perguntas <em className="font-serif font-normal italic text-[#f05b13]">frequentes.</em></h2><p className="mt-4 leading-7 text-[#40505b]">Se não encontrar a informação de que precisa, contacte-nos.</p></div>
             <div className="divide-y divide-[#d8ccbc] border-y border-[#d8ccbc]">{FAQS.slice(0, 4).map((faq, index) => <div key={faq.question}><button type="button" aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? -1 : index)} className="flex w-full items-center justify-between gap-4 py-5 text-left font-semibold text-[#19242e]"><span>{faq.question}</span><ChevronDown className={`h-5 w-5 shrink-0 text-[#f05b13] transition-transform ${openFaq === index ? 'rotate-180' : ''}`} /></button>{openFaq === index && <p className="pb-5 text-sm leading-6 text-[#40505b]">{faq.answer}</p>}</div>)}</div>
           </div>
         </section>

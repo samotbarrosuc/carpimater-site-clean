@@ -25,7 +25,7 @@ export interface FaqItem {
 export const FAQS: FaqItem[] = [
   {
     question: 'O orçamento é final?',
-    answer: 'Não. A simulação automática é uma estimativa precisa baseada nas medidas fornecidas. O orçamento final é fechado apenas após validação presencial do local ou análise detalhada de fotografias.',
+    answer: 'Não. A simulação apresenta uma estimativa com base nas medidas indicadas. O valor final da aplicação é confirmado depois de avaliarmos o local ou as fotografias enviadas.',
   },
   {
     question: 'Trabalham fora da Região Centro?',
@@ -37,26 +37,26 @@ export const FAQS: FaqItem[] = [
   },
   {
     question: 'É possível aplicar sobre cerâmica?',
-    answer: 'Sim, nalguns casos. O pavimento vinílico (SPC) rígido pode ser aplicado directamente sobre cerâmica desde que a superfície esteja em bom estado, nivelada e sem peças soltas. Muitas vezes isto não é possível, e terá que se proceder previamente ao nivelamento do piso, com autonivelante. Este serviço é orçamentado à parte. Avaliamos sempre o estado da base antes de iniciar.',
+    answer: 'Sim, se a cerâmica estiver firme, nivelada e sem peças soltas. Quando a base precisa de preparação ou nivelamento, esse trabalho é avaliado e orçamentado à parte.',
   },
   {
     question: 'O que acontece se o meu chão não estiver em condições?',
-    answer: 'Nesse caso, poderá ser necessária uma preparação prévia da base, como nivelamento com argamassa autonivelante. Este serviço tem um custo adicional que será incluído no orçamento final após avaliação presencial.',
+    answer: 'Pode ser necessário preparar ou nivelar a base antes da aplicação. Confirmamos esse trabalho e o respetivo custo depois de avaliar o local.',
   },
   {
     question: 'A visita técnica está incluída?',
-    answer: 'Sim, a visita técnica para tirar medidas exatas e avaliar a base é totalmente gratuita e sem compromisso. Só avançamos para obra após a sua aprovação do orçamento final.',
+    answer: 'Quando a visita técnica for necessária, combinamos consigo as condições antes da deslocação. A obra só avança depois da aprovação da proposta.',
   },
   {
     question: 'Os perfis de transição são da mesma cor do chão?',
-    answer: 'Sim! Um dos nossos diferenciais é oferecermos perfis de transição exatamente na mesma cor e textura do pavimento escolhido, garantindo um acabamento premium em cada passagem de porta.',
+    answer: 'Depende do modelo escolhido e da disponibilidade dos perfis. Confirmamos as opções de cor e acabamento antes da encomenda.',
   },
 ]
 
 const FAQS_COZINHA: FaqItem[] = [
   {
-    question: 'A CarpiMater faz cozinhas novas e também resolve questões de cozinhas existentes?',
-    answer: 'Sim. Fazemos cozinhas por medida e oferecemos soluções para cozinhas já existentes, com carpinteiros especializados que trabalham para o seu conforto e segurança.',
+    question: 'Fazem cozinhas novas e alterações a cozinhas existentes?',
+    answer: 'Fazemos cozinhas por medida e analisamos alterações ou reparações em cozinhas existentes. Envie fotografias e uma descrição do trabalho.',
   },
   {
     question: 'Fazem cozinhas totalmente por medida?',
@@ -71,8 +71,8 @@ const FAQS_COZINHA: FaqItem[] = [
     answer: 'Começamos com briefing e levantamento de necessidades, avançamos para desenho e proposta, validamos tecnicamente no local e seguimos para fabrico e montagem.',
   },
   {
-    question: 'Têm preços competitivos?',
-    answer: 'Sim. Trabalhamos com preços competitivos face ao mercado, mantendo um padrão de qualidade elevado em materiais e execução.',
+    question: 'Como é definido o preço?',
+    answer: 'O preço depende das medidas, materiais, ferragens e trabalhos de montagem. Esses elementos são indicados na proposta.',
   },
   {
     question: 'Qual é o valor da adjudicação?',
@@ -84,7 +84,7 @@ const FAQS_COZINHA: FaqItem[] = [
   },
   {
     question: 'Têm em conta humidades e especificidades da casa?',
-    answer: 'Sim. O projeto técnico considera condições do espaço, incluindo humidades, ventilação e utilização diária, para garantir durabilidade e bom desempenho.',
+    answer: 'Sim. Durante o levantamento verificamos as condições visíveis do espaço e indicamos as soluções previstas na proposta.',
   },
 ]
 

@@ -5,23 +5,23 @@ import { MapPin, Clock, Gem, Wrench } from "lucide-react";
 const cards = [
   {
     icon: MapPin,
-    title: "Fabrico Próprio",
-    desc: "Produzimos em Paços de Ferreira, sem intermediários. Preço directo de fábrica.",
+    title: "Projeto por medida",
+    desc: "A distribuição e as dimensões são definidas para o espaço existente.",
   },
   {
     icon: Clock,
-    title: "Prazos Cumpridos",
-    desc: "Planificamos cada fase antes de começar. O prazo acordado é o prazo de entrega.",
+    title: "Prazo definido",
+    desc: "O prazo previsto é indicado na proposta e confirmado antes do fabrico.",
   },
   {
     icon: Gem,
-    title: "Materiais de Qualidade",
-    desc: "Utilizamos apenas ferragens de marca e madeiras de qualidade superior.",
+    title: "Materiais identificados",
+    desc: "Os materiais, acabamentos e ferragens ficam descritos na proposta.",
   },
   {
     icon: Wrench,
-    title: "Montagem Incluída",
-    desc: "As nossas equipas fazem a montagem na Região Centro. Outras zonas estão sujeitas a confirmação prévia de disponibilidade.",
+    title: "Montagem em obra",
+    desc: "Fazemos a montagem na Região Centro. Para outras zonas, confirme a disponibilidade.",
   },
 ];
 
@@ -39,10 +39,10 @@ export default function MarketProof() {
           className="text-center mb-10"
         >
           <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
-            Porquê a CarpiMater
+            Serviço de carpintaria
           </p>
           <h2 className="font-display font-bold text-2xl lg:text-[1.75rem] text-white">
-            O que nos distingue
+            O que está incluído
           </h2>
         </motion.div>
 
