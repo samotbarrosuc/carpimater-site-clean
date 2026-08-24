@@ -13,8 +13,21 @@ interface TickerMaterial {
   href: string
 }
 
-const MATERIALS: TickerMaterial[] = [
-  ...getProdutosByVariant('vinilico').map((product) => ({
+function shuffle<T>(items: T[]): T[] {
+  const shuffled = [...items]
+
+  for (let index = shuffled.length - 1; index > 0; index -= 1) {
+    const randomIndex = Math.floor(Math.random() * (index + 1))
+    ;[shuffled[index], shuffled[randomIndex]] = [shuffled[randomIndex], shuffled[index]]
+  }
+
+  return shuffled
+}
+
+const MATERIAL_GROUPS: Array<{ category: string; materials: TickerMaterial[] }> = [
+  {
+    category: 'vinilico',
+    materials: getProdutosByVariant('vinilico').map((product) => ({
     id: `vinyl-${product.id}`,
     name: product.nome,
     price: product.precoM2,
@@ -22,8 +35,11 @@ const MATERIALS: TickerMaterial[] = [
     image: product.imagem,
     color: product.cor,
     href: '/loja?categoria=vinilico',
-  })),
-  ...getProdutosByVariant('flutuante').map((product) => ({
+    })),
+  },
+  {
+    category: 'flutuante',
+    materials: getProdutosByVariant('flutuante').map((product) => ({
     id: `hybrid-${product.id}`,
     name: `ZCUDO ${product.nome}`,
     price: product.precoM2,
@@ -31,8 +47,11 @@ const MATERIALS: TickerMaterial[] = [
     image: product.imagem,
     color: product.cor,
     href: '/loja?categoria=flutuante',
-  })),
-  ...RODAPES.map((product) => ({
+    })),
+  },
+  {
+    category: 'rodape',
+    materials: RODAPES.map((product) => ({
     id: `baseboard-${product.id}`,
     name: `Rodapé ${product.nome}`,
     price: product.precoMl,
@@ -40,8 +59,36 @@ const MATERIALS: TickerMaterial[] = [
     image: product.imagem,
     color: product.cor,
     href: '/loja?categoria=rodape',
-  })),
+    })),
+  },
 ]
+
+function mixMaterials(): TickerMaterial[] {
+  const groups = MATERIAL_GROUPS.map((group) => ({
+    category: group.category,
+    materials: shuffle(group.materials),
+  }))
+  const mixed: TickerMaterial[] = []
+  let previousCategory = ''
+
+  while (groups.some((group) => group.materials.length > 0)) {
+    const differentGroups = groups.filter((group) => group.materials.length > 0 && group.category !== previousCategory)
+    const availableGroups = differentGroups.length > 0
+      ? differentGroups
+      : groups.filter((group) => group.materials.length > 0)
+    const selectedGroup = availableGroups[Math.floor(Math.random() * availableGroups.length)]
+    const material = selectedGroup.materials.shift()
+
+    if (material) {
+      mixed.push(material)
+      previousCategory = selectedGroup.category
+    }
+  }
+
+  return mixed
+}
+
+const MATERIALS = mixMaterials()
 
 function MaterialIcon({ material, duplicate = false }: { material: TickerMaterial; duplicate?: boolean }) {
   return (
