@@ -312,7 +312,6 @@ function FlooringCard({ product, onAdd, onInfo }: { product: Produto; onAdd: () 
       <div className="p-3 sm:p-4">
         <p className="truncate text-[0.6rem] font-bold uppercase tracking-[0.14em] text-slate-400">{product.referencia} · {floorLabel}</p>
         <h3 className="mt-1.5 truncate font-display text-[0.95rem] font-bold text-[#19242e] sm:text-base">{product.nome}</h3>
-        <p className="mt-1 hidden min-h-9 text-xs leading-[1.15rem] text-slate-500 sm:block">{product.useCase || 'Pavimento resistente para interiores'}</p>
         <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
           {product.sobConsulta ? (
             <>
@@ -342,7 +341,7 @@ function BaseboardCard({ product, onAdd, onInfo }: { product: RodapeProduto; onA
       <div className="p-3 sm:p-4">
         <p className="truncate text-[0.6rem] font-bold uppercase tracking-[0.14em] text-slate-400">{product.referencia} · {product.material}</p>
         <h3 className="mt-1.5 truncate font-display text-[0.95rem] font-bold text-[#19242e] sm:text-base">{product.nome}</h3>
-        <p className="mt-1 hidden min-h-9 text-xs leading-[1.15rem] text-slate-500 sm:block">{product.altura} de altura · barra de {formatQuantity(BASEBOARD_BAR_LENGTH_M, 2)} m</p>
+        <p className="mt-1 hidden text-xs leading-[1.15rem] text-slate-500 sm:block">Altura: {product.altura}</p>
         <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
           <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">{formatEur(product.precoMl)}<span className="text-xs font-semibold text-slate-400">/m</span></strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">IVA incluído</span></div>
           <button type="button" onClick={onAdd} aria-label={`Adicionar ${product.nome}`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#f05b13] text-white transition hover:bg-[#d94d0d] sm:w-auto sm:px-3"><Plus className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Adicionar</span></button>
