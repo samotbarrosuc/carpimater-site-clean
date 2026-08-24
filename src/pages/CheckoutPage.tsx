@@ -29,7 +29,7 @@ function MaterialSummary({ items, subtotal }: { items: ReturnType<typeof useCart
     <section className="mt-7 overflow-hidden rounded-2xl border border-[#d8d0c4] bg-white shadow-[0_10px_30px_rgba(25,36,46,0.06)]">
       <header className="flex flex-wrap items-center justify-between gap-3 border-b border-slate-200 px-5 py-4 sm:px-6">
         <div className="flex items-center gap-3"><span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f7f3ea] text-primary"><ReceiptText className="h-5 w-5" /></span><div><p className="text-xs font-bold uppercase tracking-[0.16em] text-primary">Antes de continuar</p><h2 className="font-display text-xl font-bold text-[#19242e]">Resumo da encomenda</h2></div></div>
-        <span className="rounded-lg bg-[#19242e] px-3 py-2 text-xs font-bold text-white">Valor a pagar agora</span>
+        <span className="rounded-lg bg-[#19242e] px-3 py-2 text-xs font-bold text-white">Valor a pagar</span>
       </header>
       <div className="divide-y divide-slate-100 px-5 sm:px-6">
         {items.map((item) => (
@@ -163,7 +163,6 @@ export default function CheckoutPage() {
                 <section className="rounded-3xl bg-white p-6 shadow-sm sm:p-8">
                   <h2 className="text-lg font-bold">2. Como quer pagar?</h2>
                   <p className="mt-1 text-sm text-slate-500">Paga apenas o material. A aplicação é uma estimativa e não é cobrada agora.</p>
-                  <div className="mt-4 rounded-xl border border-orange-200 bg-orange-50 p-4 text-sm leading-6 text-orange-950"><strong>Encomenda sujeita a confirmação de stock.</strong> Se o material não estiver disponível para entrega no prazo indicado e não aceitar uma nova data, devolvemos integralmente o pagamento no máximo até ao 10.º dia útil seguinte ao pagamento.</div>
                   <div className="mt-4 grid gap-3 sm:grid-cols-2">
                     <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'mbway' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="mbway" checked={payment === 'mbway'} onChange={() => setPayment('mbway')} className="mr-2 accent-orange-600" /><span className="font-semibold">MB Way</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Rápido e sem custos. Recebe o pedido de pagamento na app.</span></label>
                     <label className={`cursor-pointer rounded-xl border p-4 transition-colors ${payment === 'iban' ? 'border-primary bg-primary/5' : 'border-slate-200 hover:border-slate-300'}`}><input type="radio" name="paymentMethod" value="iban" checked={payment === 'iban'} onChange={() => setPayment('iban')} className="mr-2 accent-orange-600" /><span className="font-semibold">Transferência bancária</span><span className="mt-1 block pl-6 text-xs leading-5 text-slate-500">Transferência tradicional por IBAN.</span></label>
