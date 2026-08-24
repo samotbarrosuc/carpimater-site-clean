@@ -165,11 +165,20 @@ export default function Home() {
                     Pedir orçamento
                   </a>
                 </div>
-                <div className="grid max-w-lg grid-cols-3 gap-4 border-t border-[#dcd5ca] pt-5">
-                  <div><strong className="block font-display text-xl text-[#19242e]">Loja online</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">preços publicados</span></div>
-                  <div><strong className="block font-display text-xl text-[#19242e]">Por medida</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">carpintaria para cada espaço</span></div>
-                  <div><strong className="block font-display text-xl text-[#19242e]">Região Centro</strong><span className="mt-0.5 block text-[0.65rem] leading-4 text-[#40505b]/65">entrega e montagem</span></div>
-                </div>
+                <nav aria-label="Áreas principais" className="grid max-w-xl grid-cols-3 gap-px overflow-hidden rounded-2xl border border-[#dcd5ca] bg-[#dcd5ca] shadow-sm">
+                  <a href="/cozinha" className="group flex min-h-[88px] flex-col justify-between bg-white/80 p-3 transition hover:bg-white sm:p-4">
+                    <span className="text-[0.58rem] font-bold uppercase tracking-[0.13em] text-[#f05b13]">Por medida</span>
+                    <strong className="font-display text-sm leading-4 text-[#19242e] sm:text-base sm:leading-5">Cozinhas e roupeiros</strong>
+                  </a>
+                  <a href="/loja?categoria=vinilico" className="group flex min-h-[88px] flex-col justify-between bg-white/80 p-3 transition hover:bg-white sm:p-4">
+                    <span className="text-[0.58rem] font-bold uppercase tracking-[0.13em] text-[#f05b13]">Loja online</span>
+                    <strong className="font-display text-sm leading-4 text-[#19242e] sm:text-base sm:leading-5">Pavimentos</strong>
+                  </a>
+                  <a href="/construcao" className="group flex min-h-[88px] flex-col justify-between bg-white/80 p-3 transition hover:bg-white sm:p-4">
+                    <span className="text-[0.58rem] font-bold uppercase tracking-[0.13em] text-[#f05b13]">Em obra</span>
+                    <strong className="font-display text-sm leading-4 text-[#19242e] sm:text-base sm:leading-5">Carpintaria e montagem</strong>
+                  </a>
+                </nav>
               </motion.div>
               </div>
               <div className="relative overflow-hidden rounded-[1.75rem] border border-[#d8d0c4] bg-[#19242e] p-2 shadow-[0_24px_70px_rgba(25,36,46,0.16)]">
@@ -361,34 +370,25 @@ export default function Home() {
         </section>
 
         {/* ── ZONA DE COBERTURA ── */}
-        <section className="py-16 bg-muted/40 border-y border-border">
+        <section className="border-y border-border bg-muted/40 py-14 sm:py-16">
           <div className="container mx-auto px-4">
-            <div className="max-w-5xl mx-auto">
-              <div className="grid grid-cols-1 gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-                <div className="max-w-xl">
-                  <p className="text-xs uppercase tracking-[0.2em] text-primary font-semibold mb-3">Onde trabalhamos</p>
-                  <h2 className="text-2xl sm:text-3xl font-display font-bold text-foreground mb-4">
-                    Pavimentos e carpintaria em Coimbra, Aveiro e Leiria
-                  </h2>
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    Vendemos pavimentos vinílicos SPC, flutuantes híbridos e rodapés PVC. Fazemos também a aplicação dos materiais e trabalhos de carpintaria por medida.
-                  </p>
-                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">Trabalhamos regularmente em Coimbra e arredores, Condeixa-a-Nova, Figueira da Foz, Cantanhede, Mealhada, Lousã, Aveiro, Leiria, Pombal e Marinha Grande. Para outras zonas do país, contacte-nos para confirmarmos disponibilidade.</p>
-                  <a href="/loja" className="mt-5 inline-flex items-center gap-2 text-sm font-bold text-primary">Ver preços na loja <ChevronRight className="h-4 w-4" /></a>
-                </div>
-                <div className="grid grid-cols-3 gap-2 sm:gap-3">
-                  {[
-                    ['Coimbra', 'Loja, entrega e aplicação'],
-                    ['Aveiro', 'Entrega e aplicação'],
-                    ['Leiria', 'Entrega e aplicação'],
-                  ].map(([city, detail]) => (
-                    <div key={city} className="clean-card rounded-2xl p-3.5 sm:p-5">
-                      <p className="section-kicker">Região Centro</p>
-                      <h3 className="mt-3 font-display text-lg font-bold text-foreground sm:text-2xl">{city}</h3>
-                      <p className="mt-2 text-xs leading-5 text-muted-foreground sm:text-sm sm:leading-6">{detail}</p>
-                    </div>
-                  ))}
-                </div>
+            <div className="mx-auto grid max-w-6xl gap-7 lg:grid-cols-[1fr_auto] lg:items-end">
+              <div className="max-w-3xl border-l-2 border-primary pl-5 sm:pl-7">
+                <p className="mb-3 text-xs font-semibold uppercase tracking-[0.2em] text-primary">Área de serviço</p>
+                <h2 className="font-display text-2xl font-bold tracking-[-0.025em] text-foreground sm:text-3xl">
+                  Entrega e montagem na Região Centro
+                </h2>
+                <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
+                  Trabalhamos sobretudo em Coimbra, Aveiro, Leiria, Marinha Grande e zonas próximas. Para outras zonas, contacte-nos para confirmarmos a disponibilidade.
+                </p>
+              </div>
+              <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">
+                <a href="/loja" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl bg-[#19242e] px-5 text-sm font-bold text-white transition hover:bg-[#263744]">
+                  Ver materiais <ChevronRight className="h-4 w-4" />
+                </a>
+                <a href="/#home-contactos" className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-[#c9c0b4] bg-white px-5 text-sm font-bold text-[#19242e] transition hover:border-[#19242e]">
+                  Pedir orçamento <ChevronRight className="h-4 w-4" />
+                </a>
               </div>
             </div>
           </div>
