@@ -7,7 +7,6 @@ import FloatingWhatsApp from '@/components/FloatingWhatsApp'
 import TrustBadges from '@/components/TrustBadges'
 import MaterialTicker from '@/components/MaterialTicker'
 import Gallery from '@/components/Gallery'
-import Testimonials from '@/components/Testimonials'
 import { CompareSlider, pairs as beforeAfterPairs } from '@/components/cozinha/sections/BeforeAfter'
 import { FAQS } from '@/content/faq'
 import { WHATSAPP_NUMBER, EMAIL } from '@/content/site'
@@ -392,12 +391,11 @@ export default function Home() {
         </section>
 
         <Gallery />
-        <Testimonials />
 
         {/* ── CONTACTOS ── */}
         <section
           id="home-contactos"
-          className="border-t border-border bg-white py-16 sm:py-20"
+          className="border-t border-border bg-[#f8f5ef] py-16 sm:py-20"
           style={{ scrollMarginTop: '4rem' }}
         >
           <div className="container mx-auto px-4">
@@ -523,7 +521,7 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="home-faq" className="bg-[#f7f3ea] px-4 py-16 sm:py-24">
+        <section id="home-faq" className="bg-white px-4 py-16 sm:py-24">
           <div className="mx-auto grid max-w-5xl gap-10 lg:grid-cols-[0.8fr_1.2fr]">
             <div><p className="section-kicker">Antes de começar</p><h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-5xl">Perguntas <em className="font-serif font-normal italic text-[#f05b13]">honestas.</em></h2><p className="mt-4 leading-7 text-[#40505b]">Se a sua dúvida não está aqui, fale connosco. Respondemos com clareza.</p></div>
             <div className="divide-y divide-[#d8ccbc] border-y border-[#d8ccbc]">{FAQS.slice(0, 4).map((faq, index) => <div key={faq.question}><button type="button" aria-expanded={openFaq === index} onClick={() => setOpenFaq(openFaq === index ? -1 : index)} className="flex w-full items-center justify-between gap-4 py-5 text-left font-semibold text-[#19242e]"><span>{faq.question}</span><ChevronDown className={`h-5 w-5 shrink-0 text-[#f05b13] transition-transform ${openFaq === index ? 'rotate-180' : ''}`} /></button>{openFaq === index && <p className="pb-5 text-sm leading-6 text-[#40505b]">{faq.answer}</p>}</div>)}</div>
