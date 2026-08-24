@@ -76,7 +76,7 @@ export default function EmpreiteirosPage() {
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_88%_78%,rgba(25,36,46,0.07),transparent_34%)]" />
 
           <div className="container mx-auto px-5 sm:px-6 lg:px-8 relative z-10 w-full">
-            <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,0.92fr)_minmax(500px,1.08fr)] lg:items-center xl:gap-14">
+            <div className="mx-auto grid max-w-7xl grid-cols-1 items-start gap-10 lg:grid-cols-[minmax(0,1.15fr)_minmax(390px,0.85fr)] lg:items-center xl:gap-14">
               <motion.div
                 initial={{ opacity: 0, y: 18 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -84,10 +84,16 @@ export default function EmpreiteirosPage() {
                 className="mx-auto flex max-w-[900px] flex-col items-start text-left lg:mx-0 lg:pr-5"
               >
                 <div className="mb-6">
-                  <h1 className="font-display text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] sm:text-[3.25rem] lg:text-[3.65rem]">
-                    <span className="block text-[#19242e]">Carpintaria por medida</span>
-                    <span className="block text-[#19242e]">para obras e</span>
-                    <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">remodelações.</span>
+                  <h1 className="font-display text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] sm:text-[3.25rem] lg:text-[2.25rem] xl:text-[3rem]">
+                    <span className="lg:hidden">
+                      <span className="block text-[#19242e]">Carpintaria por medida</span>
+                      <span className="block text-[#19242e]">para obras e</span>
+                      <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">remodelações.</span>
+                    </span>
+                    <span className="hidden lg:block">
+                      <span className="block whitespace-nowrap text-[#19242e]">Carpintaria por medida para</span>
+                      <span className="block whitespace-nowrap font-serif text-[0.95em] font-normal italic text-[#f08a45]">obras e remodelações.</span>
+                    </span>
                   </h1>
                   <p className="mb-6 mt-5 max-w-xl text-sm leading-7 text-[#40505b] sm:text-base">
                     <span>Fornecemos e montamos cozinhas, roupeiros, portas, painéis, escadas, pavimentos, rodapés e outros trabalhos de carpintaria.</span>
