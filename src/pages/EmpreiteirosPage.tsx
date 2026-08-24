@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { MapPin, CheckCircle2, Shield, Clock, Gem, Star, Wrench, Package, DoorOpen, UtensilsCrossed, Layers, Maximize2, BookOpen, Tv, Droplets, Briefcase, BedDouble, Archive, LayoutGrid, Ruler, LayoutDashboard, Shirt, MessageCircle } from 'lucide-react'
+import { Shield, Wrench, Package, DoorOpen, UtensilsCrossed, Layers, Maximize2, BookOpen, Tv, Droplets, Briefcase, BedDouble, Archive, LayoutGrid, Ruler, LayoutDashboard, Shirt, MessageCircle } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import Footer from '@/components/Footer'
 import HowItWorks from '@/components/cozinha/sections/HowItWorks'
@@ -224,64 +224,8 @@ export default function EmpreiteirosPage() {
         {/* ── HOW IT WORKS ── */}
         <HowItWorks />
 
-        {/* ── MARKET PROOF ── */}
-        <section className="border-y border-[#e4ded5] bg-[#f8f5ef] py-16 lg:py-20">
-          <div className="container mx-auto max-w-6xl px-4">
-            <div className="mb-10 max-w-2xl text-left">
-              <p className="text-xs uppercase tracking-[0.22em] text-primary font-semibold mb-3">
-                Processo de trabalho
-              </p>
-              <h2 className="font-display text-3xl font-bold tracking-[-0.03em] text-[#19242e] sm:text-4xl">
-                Como prestamos o serviço
-              </h2>
-            </div>
-            <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-4">
-              {[
-                {
-                  icon: MapPin,
-                  title: 'Levantamento',
-                  desc: 'Recolhemos as medidas, plantas, fotografias e condições da obra.',
-                },
-                {
-                  icon: Clock,
-                  title: 'Proposta',
-                  desc: 'Indicamos os trabalhos, materiais, preço e prazo previsto.',
-                },
-                {
-                  icon: Gem,
-                  title: 'Fabrico',
-                  desc: 'O fabrico começa depois da aprovação das medidas e da proposta.',
-                },
-                {
-                  icon: Wrench,
-                  title: 'Montagem',
-                  desc: 'Fazemos a montagem em obra nos locais e condições confirmados.',
-                },
-              ].map((card, i) => {
-                const Icon = card.icon
-                return (
-                  <div
-                    key={card.title}
-                    className="group flex min-h-[205px] flex-col gap-5 rounded-2xl border border-[#ded8cf] bg-white p-6 shadow-sm transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]"
-                  >
-                    <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#19242e] text-white transition-colors group-hover:bg-primary">
-                      <Icon size={18} />
-                    </div>
-                    <div>
-                      <h3 className="font-display text-base font-bold leading-snug text-[#19242e]">
-                        {card.title}
-                      </h3>
-                      <p className="mt-2 text-sm leading-6 text-[#40505b]">{card.desc}</p>
-                    </div>
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-
         {/* ── FAQ ── */}
-        <section id="faq" className="bg-white py-16 lg:py-20">
+        <section id="faq" className="bg-[#f8f5ef] py-16 lg:py-20">
           <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
             <motion.div
               initial={{ opacity: 0, y: 20 }}
