@@ -136,7 +136,7 @@ function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void
         {hybrid ? (
           <>
             <div className="mt-5 rounded-2xl border border-[#cfe4e5] bg-[#f0f8f8] p-4">
-              <div className="flex flex-wrap items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-[#239da7]" />Flutuante híbrido {choice.product.marca} {choice.product.colecao}<span className="rounded-full bg-primary px-2 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.12em] text-white">Novidade</span></div>
+              <div className="flex flex-wrap items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-[#239da7]" />Flutuante híbrido {choice.product.marca} {choice.product.colecao}<span className="rounded-full border border-[#e7b83e] bg-[#ffdd57] px-2 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.12em] text-[#b42318]">Novidade</span></div>
               <p className="mt-2 text-sm leading-6 text-slate-600">Pavimento laminado híbrido com núcleo HDF reforçado com carbono, textura de madeira e base acústica integrada. Adequado a cozinhas e casas de banho, com resistência à água e aos salpicos durante 100 h+.</p>
             </div>
             <dl className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4 text-sm">
@@ -308,7 +308,7 @@ function FlooringCard({ product, onAdd, onInfo }: { product: Produto; onAdd: () 
         <ProductMedia image={product.imagem} color={product.cor} name={product.nome} kind="flooring" />
         <div className="absolute left-2.5 top-2.5 flex flex-wrap gap-1.5">
           <span className={`rounded-lg px-2 py-1 text-[0.58rem] font-bold uppercase tracking-[0.12em] text-white backdrop-blur-sm ${hybrid ? 'bg-[#177d86]/92' : 'bg-[#19242e]/88'}`}>{hybrid ? 'Híbrido' : 'Vinílico'}</span>
-          {hybrid && <span className="rounded-lg bg-primary px-2 py-1 text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-white shadow-sm">Novidade</span>}
+          {hybrid && <span className="rounded-lg border border-[#e7b83e] bg-[#ffdd57] px-2 py-1 text-[0.58rem] font-extrabold uppercase tracking-[0.12em] text-[#b42318] shadow-sm">Novidade</span>}
         </div>
         <button type="button" onClick={onInfo} aria-label={`Ver informação de ${product.nome}`} className="absolute right-2.5 top-2.5 flex h-9 w-9 items-center justify-center rounded-full border border-white/70 bg-white/95 text-[#19242e] shadow-md backdrop-blur-sm transition hover:bg-primary hover:text-white"><Info className="h-4 w-4" /></button>
       </div>
@@ -383,7 +383,7 @@ export default function StoreCatalog() {
       <div className="-mx-4 overflow-x-auto px-4 pb-1" role="tablist" aria-label="Categorias da loja">
         <div className="flex w-max gap-1 rounded-xl border border-[#ded8cf] bg-white p-1 shadow-sm">
           {tabs.map(([value, label]) => (
-            <button key={value} type="button" role="tab" aria-selected={category === value} onClick={() => { setCategory(value); window.history.replaceState({}, '', value === 'all' ? '/loja' : `/loja?categoria=${value}`) }} className={`inline-flex items-center gap-1.5 whitespace-nowrap rounded-lg px-3.5 py-2 text-xs font-bold transition sm:text-sm ${category === value ? 'bg-[#19242e] text-white shadow-sm' : 'text-slate-500 hover:bg-[#f7f3ea] hover:text-[#19242e]'}`}>{label}{value === 'flutuante' && <span className="rounded-full bg-primary px-1.5 py-0.5 text-[0.48rem] font-extrabold uppercase tracking-[0.08em] text-white">Novidade</span>}</button>
+            <button key={value} type="button" role="tab" aria-selected={category === value} onClick={() => { setCategory(value); window.history.replaceState({}, '', value === 'all' ? '/loja' : `/loja?categoria=${value}`) }} className={`inline-flex flex-col items-center justify-center gap-0.5 whitespace-nowrap rounded-lg px-3.5 py-2 text-xs font-bold transition sm:text-sm ${category === value ? 'bg-[#19242e] text-white shadow-sm' : 'text-slate-500 hover:bg-[#f7f3ea] hover:text-[#19242e]'}`}>{value === 'flutuante' && <span className="rounded-full border border-[#e7b83e] bg-[#ffdd57] px-1.5 py-0.5 text-[0.48rem] font-extrabold uppercase tracking-[0.08em] text-[#b42318]">Novidade</span>}<span>{label}</span></button>
           ))}
         </div>
       </div>
