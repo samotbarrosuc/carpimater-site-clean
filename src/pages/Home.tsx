@@ -30,8 +30,8 @@ const FEATURED_MATERIALS = [
     href: '/loja?categoria=vinilico#catalogo-loja',
   },
   {
-    name: 'Flutuante híbrido ZCUDO',
-    label: 'NextCore · resistência 100 h+',
+    name: 'Flutuante híbrido',
+    label: 'Resistência à água 100 h+',
     description: 'Núcleo HDF com carbono e base acústica integrada.',
     image: '/images/produtos-flutuante/pingo.webp',
     href: '/loja?categoria=flutuante#catalogo-loja',
