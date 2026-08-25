@@ -1,4 +1,4 @@
-import { FormEvent, useState } from 'react'
+import { FormEvent, useCallback, useState } from 'react'
 import { Link } from 'wouter'
 import { ArrowLeft, CheckCircle2, CreditCard, MessageCircle, ReceiptText, Smartphone, Upload } from 'lucide-react'
 import Navbar from '@/components/Navbar'
@@ -60,13 +60,13 @@ export default function CheckoutPage() {
   const [termsAccepted, setTermsAccepted] = useState(false)
   const concelhos = getConcelhosByDistrito(distrito)
 
-  const updateApplicationQuote = (quote: ApplicationQuoteData | null) => {
+  const updateApplicationQuote = useCallback((quote: ApplicationQuoteData | null) => {
     setApplicationQuote(quote)
     if (quote) {
       setDistrito(quote.distrito)
       setConcelho(quote.concelho)
     }
-  }
+  }, [])
 
   const fileToBase64 = (selectedFile: File) => new Promise<string>((resolve, reject) => {
     const reader = new FileReader()

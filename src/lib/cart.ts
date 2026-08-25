@@ -6,6 +6,7 @@ export type CartItemKind = 'flooring' | 'baseboard'
 export interface CartItem {
   id: string
   kind: CartItemKind
+  flooringCategory?: 'vinilico' | 'hibrido'
   productId: number
   name: string
   reference: string
@@ -19,7 +20,7 @@ export interface CartItem {
 
 export function createFlooringCartItem(product: Produto, areaM2: number, includeWaste: boolean): CartItem {
   const result = calcFlooringPurchase(areaM2, product.precoM2, includeWaste)
-  return { id: `flooring-${product.id}`, kind: 'flooring', productId: product.id, name: product.nome, reference: product.referencia, image: product.imagem, unitPrice: product.precoM2, units: result.units, includeWaste, requestedAmount: result.requestedAmount, suppliedAmount: result.suppliedAmount }
+  return { id: `flooring-${product.id}`, kind: 'flooring', flooringCategory: product.categoria ?? 'vinilico', productId: product.id, name: product.nome, reference: product.referencia, image: product.imagem, unitPrice: product.precoM2, units: result.units, includeWaste, requestedAmount: result.requestedAmount, suppliedAmount: result.suppliedAmount }
 }
 
 export function createBaseboardCartItem(product: RodapeProduto, meters: number, includeWaste: boolean): CartItem {

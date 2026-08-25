@@ -22,6 +22,11 @@ import {
   ESTIMATIVA_MIN_MULTIPLIER,
   ESTIMATIVA_MAX_MULTIPLIER,
 } from '@/content/precos'
+import {
+  AREA_ROLO_MANTA_M2,
+  LIMIAR_ROLO_COMPLETO_MANTA_M2,
+  PRECO_RESTANTE_MANTA_M2,
+} from '@/content/precos-materiais'
 
 export interface EstimateResult {
   areaTotalM2: number
@@ -43,6 +48,40 @@ export interface EstimateResult {
   totalBase: number
   valorMin: number
   valorMax: number
+}
+
+export interface UnderlayCalculation {
+  areaM2: number
+  total: number
+  precoMedioM2: number
+}
+
+/**
+ * Calcula a manta/sub-pavimento usando rolos de 50 m².
+ * Até 50 m² é sempre cobrado um rolo. Acima disso, um restante inferior
+ * a 30 m² é cobrado ao m²; a partir de 30 m² é cobrado outro rolo.
+ */
+export function calcUnderlay(areaM2: number, precoRolo: number): UnderlayCalculation {
+  const area = Math.max(0, Number(areaM2) || 0)
+  if (area === 0) return { areaM2: 0, total: 0, precoMedioM2: 0 }
+
+  const rolosCompletos = Math.floor(area / AREA_ROLO_MANTA_M2)
+  const restante = area - rolosCompletos * AREA_ROLO_MANTA_M2
+  let total = rolosCompletos * precoRolo
+
+  if (rolosCompletos === 0) {
+    total = precoRolo
+  } else if (restante > 0 && restante < LIMIAR_ROLO_COMPLETO_MANTA_M2) {
+    total += restante * PRECO_RESTANTE_MANTA_M2
+  } else if (restante >= LIMIAR_ROLO_COMPLETO_MANTA_M2) {
+    total += precoRolo
+  }
+
+  return {
+    areaM2: area,
+    total,
+    precoMedioM2: total / area,
+  }
 }
 
 /**

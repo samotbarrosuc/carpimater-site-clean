@@ -1,8 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Calculator, Check, Info, MapPin, Pencil, Ruler, ShoppingBag, X } from 'lucide-react'
 import { DISTRITOS, getConcelhosByDistrito, getTravelEntry } from '@/content/viagens'
-import { calcEstimate, formatEur, formatQuantity, parseQuantityInput, sanitizeQuantityInput, type EstimateResult } from '@/lib/calculations'
+import { calcEstimate, calcUnderlay, formatEur, formatQuantity, parseQuantityInput, sanitizeQuantityInput, type EstimateResult, type UnderlayCalculation } from '@/lib/calculations'
 import type { CartItem } from '@/lib/cart'
+import { PRECO_ROLO_MANTA_PLASTICA_VINILICO, PRECO_ROLO_SUBPAVIMENTO_FLUTUANTE } from '@/content/precos-materiais'
+
+export interface ApplicationUnderlayLine extends UnderlayCalculation {
+  type: 'vinilico' | 'hibrido'
+  label: string
+}
 
 export interface ApplicationQuoteData {
   distrito: string
@@ -11,6 +17,8 @@ export interface ApplicationQuoteData {
   area: number
   rodape: number
   estimate: EstimateResult
+  underlayLines: ApplicationUnderlayLine[]
+  underlayTotal: number
   applicationTotal: number
 }
 
@@ -98,6 +106,18 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
     () => items.filter((item) => item.kind === 'flooring').reduce((total, item) => total + item.requestedAmount, 0),
     [items],
   )
+  const materialVinylArea = useMemo(
+    () => items
+      .filter((item) => item.kind === 'flooring' && (item.flooringCategory ?? (item.reference.startsWith('ZCU-') ? 'hibrido' : 'vinilico')) === 'vinilico')
+      .reduce((total, item) => total + item.requestedAmount, 0),
+    [items],
+  )
+  const materialHybridArea = useMemo(
+    () => items
+      .filter((item) => item.kind === 'flooring' && (item.flooringCategory ?? (item.reference.startsWith('ZCU-') ? 'hibrido' : 'vinilico')) === 'hibrido')
+      .reduce((total, item) => total + item.requestedAmount, 0),
+    [items],
+  )
   const flooringSupplied = useMemo(
     () => items.filter((item) => item.kind === 'flooring').reduce((total, item) => total + item.suppliedAmount, 0),
     [items],
@@ -112,6 +132,29 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
   )
   const area = areaOverride ?? materialArea
   const rodape = materialRodape > 0 ? (rodapeOverride ?? materialRodape) : manualRodape ? (rodapeOverride ?? 10) : 0
+  const areaScale = materialArea > 0 ? area / materialArea : 0
+  const vinylApplicationArea = materialVinylArea * areaScale
+  const hybridApplicationArea = materialHybridArea * areaScale
+
+  const underlayLines = useMemo<ApplicationUnderlayLine[]>(() => {
+    const lines: ApplicationUnderlayLine[] = []
+    if (vinylApplicationArea > 0) {
+      lines.push({
+        type: 'vinilico',
+        label: 'Manta plástica para pavimento vinílico',
+        ...calcUnderlay(vinylApplicationArea, PRECO_ROLO_MANTA_PLASTICA_VINILICO),
+      })
+    }
+    if (hybridApplicationArea > 0) {
+      lines.push({
+        type: 'hibrido',
+        label: 'Sub-pavimento para pavimento flutuante',
+        ...calcUnderlay(hybridApplicationArea, PRECO_ROLO_SUBPAVIMENTO_FLUTUANTE),
+      })
+    }
+    return lines
+  }, [hybridApplicationArea, vinylApplicationArea])
+  const underlayTotal = underlayLines.reduce((total, line) => total + line.total, 0)
 
   useEffect(() => {
     if (materialRodape > 0) {
@@ -129,12 +172,12 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
     [area, rodape, travel],
   )
   const applicationTotal = estimate
-    ? estimate.custoMaoObra + estimate.custoMaoObraRodape + estimate.custoDeslocacaoKm + estimate.custoPortagens
+    ? estimate.custoMaoObra + estimate.custoMaoObraRodape + estimate.custoDeslocacaoKm + estimate.custoPortagens + underlayTotal
     : 0
 
   useEffect(() => {
-    onChange(estimate && travel ? { distrito, concelho, preferredDate: preferredDate.trim() || undefined, area, rodape, estimate, applicationTotal } : null)
-  }, [applicationTotal, area, concelho, distrito, estimate, onChange, preferredDate, rodape, travel])
+    onChange(estimate && travel ? { distrito, concelho, preferredDate: preferredDate.trim() || undefined, area, rodape, estimate, underlayLines, underlayTotal, applicationTotal } : null)
+  }, [applicationTotal, area, concelho, distrito, estimate, onChange, preferredDate, rodape, travel, underlayLines, underlayTotal])
 
   return (
     <div className="mt-4 overflow-hidden rounded-2xl border border-[#d8d0c4] bg-[#f8f5ef]">
@@ -197,6 +240,15 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
           </div>
           <dl className="mt-4 space-y-2 border-t border-slate-100 pt-4 text-sm">
             <div className="flex justify-between gap-4"><dt className="text-slate-600">Aplicação do pavimento</dt><dd className="font-semibold text-[#19242e]">{formatEur(estimate.custoMaoObra)}</dd></div>
+            {underlayLines.map((line) => (
+              <div key={line.type} className="flex items-start justify-between gap-4">
+                <dt className="text-slate-600">
+                  <span className="block">{line.label}</span>
+                  <span className="mt-0.5 block text-[0.68rem] text-slate-400">{formatQuantity(line.areaM2, 2)} m² · {formatEur(line.precoMedioM2)}/m²</span>
+                </dt>
+                <dd className="shrink-0 font-semibold text-[#19242e]">{formatEur(line.total)}</dd>
+              </div>
+            ))}
             {rodape > 0 && <div className="flex justify-between gap-4"><dt className="text-slate-600">Aplicação de rodapé</dt><dd className="font-semibold text-[#19242e]">{formatEur(estimate.custoMaoObraRodape)}</dd></div>}
             <div className="flex justify-between gap-4"><dt className="flex items-center gap-1.5 text-slate-600"><MapPin className="h-3.5 w-3.5 text-primary" />Deslocações</dt><dd className="font-semibold text-[#19242e]">{formatEur(estimate.custoDeslocacaoKm)}</dd></div>
             {estimate.custoPortagens > 0 && <div className="flex justify-between gap-4"><dt className="text-slate-600">Portagens</dt><dd className="font-semibold text-[#19242e]">{formatEur(estimate.custoPortagens)}</dd></div>}

@@ -39,6 +39,13 @@ const applicationQuoteSchema = z.object({
   preferredDate: z.string().trim().max(50).optional(),
   area: z.number().positive(),
   rodape: z.number().nonnegative(),
+  underlayLines: z.array(z.object({
+    type: z.enum(['vinilico', 'hibrido']),
+    areaM2: z.number().positive(),
+    total: z.number().nonnegative(),
+    precoMedioM2: z.number().nonnegative(),
+  })).max(2).default([]),
+  underlayTotal: z.number().nonnegative().default(0),
   applicationTotal: z.number().nonnegative(),
 }).nullish()
 
@@ -118,6 +125,13 @@ function buildEmailContent(data: OrderData, items: VerifiedItem[], verifiedSubto
     </tr>`
   }).join('')
 
+  const underlayRows = data.applicationQuote?.underlayLines.map((line) => {
+    const label = line.type === 'vinilico'
+      ? 'Manta plástica para pavimento vinílico'
+      : 'Sub-pavimento para pavimento flutuante'
+    return row(label, `${formatQuantity(line.areaM2)} m² × ${formatEur(line.precoMedioM2)}/m² = <strong>${formatEur(line.total)}</strong>`)
+  }).join('') || ''
+
   const applicationHtml = data.applicationQuote
     ? `<p style="margin:0 0 4px;font-weight:700;font-size:13px;text-transform:uppercase;color:#374151">Orçamento previsto de aplicação</p>
        <table style="border-collapse:collapse;margin-bottom:18px">
@@ -125,6 +139,7 @@ function buildEmailContent(data: OrderData, items: VerifiedItem[], verifiedSubto
          ${data.applicationQuote.preferredDate ? row('Data pretendida', escapeHtml(data.applicationQuote.preferredDate)) : ''}
          ${row('Área a aplicar', `${formatQuantity(data.applicationQuote.area)} m²`)}
          ${row('Rodapé a aplicar', `${formatQuantity(data.applicationQuote.rodape)} m`)}
+         ${underlayRows}
          ${row('Estimativa', `<strong>${formatEur(data.applicationQuote.applicationTotal)}</strong> — não incluída no pagamento`)}
        </table>
        <p style="margin:-10px 0 18px;font-size:12px;color:#6b7280">Valor indicativo, sujeito a confirmação em obra após verificação do pavimento atual.</p>`
@@ -179,6 +194,10 @@ ${applicationHtml}
         ...(data.applicationQuote.preferredDate ? [`Data pretendida: ${data.applicationQuote.preferredDate}`] : []),
         `Área: ${formatQuantity(data.applicationQuote.area)} m²`,
         `Rodapé: ${formatQuantity(data.applicationQuote.rodape)} m`,
+        ...data.applicationQuote.underlayLines.map((line) => {
+          const label = line.type === 'vinilico' ? 'Manta plástica para pavimento vinílico' : 'Sub-pavimento para pavimento flutuante'
+          return `${label}: ${formatQuantity(line.areaM2)} m² × ${formatEur(line.precoMedioM2)}/m² = ${formatEur(line.total)}`
+        }),
         `Estimativa: ${formatEur(data.applicationQuote.applicationTotal)}`,
         'Valor indicativo, sujeito a confirmação em obra após verificação do pavimento atual.',
       ]
