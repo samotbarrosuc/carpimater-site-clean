@@ -56,32 +56,51 @@ export interface UnderlayCalculation {
 }
 
 /**
- * Calcula a manta/sub-pavimento por escalões e blocos de 50 m².
- * - menos de 30 m²: preço intermédio + diferença para o preço de bloco;
- * - de 30 a menos de 50 m²: preço intermédio;
- * - cada bloco de 50 m²: preço do rolo dividido por 50;
- * - após um bloco, um restante inferior a 30 m² usa o preço intermédio;
- *   ao atingir 30 m², esse restante passa para o preço de bloco.
+ * Calcula a manta/sub-pavimento com desconto progressivo por área.
+ * O preço médio atinge três referências: preço de pequena área até 30 m²,
+ * preço intermédio aos 50 m² e preço de volume aos 80 m². Entre estes
+ * pontos, o total é interpolado de forma contínua, garantindo que comprar
+ * mais área nunca reduz o valor total.
  */
 export function calcUnderlay(areaM2: number, precoRolo: number, precoIntermedioM2: number): UnderlayCalculation {
   const area = Math.max(0, Number(areaM2) || 0)
   if (area === 0) return { areaM2: 0, total: 0, precoMedioM2: 0 }
 
-  const precoBlocoM2 = precoRolo / AREA_ROLO_MANTA_M2
-  const precoPequenaAreaM2 = precoIntermedioM2 + (precoIntermedioM2 - precoBlocoM2)
+  const precoVolumeM2 = precoRolo / AREA_ROLO_MANTA_M2
+  const precoPequenaAreaM2 = precoIntermedioM2 + (precoIntermedioM2 - precoVolumeM2)
+  const areaPrecoIntermedio = AREA_ROLO_MANTA_M2
+  const areaPrecoVolume = AREA_ROLO_MANTA_M2 + LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2
+  const totalPequenaArea = LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2 * precoPequenaAreaM2
+  const totalPrecoIntermedio = areaPrecoIntermedio * precoIntermedioM2
+  const totalPrecoVolume = areaPrecoVolume * precoVolumeM2
+
+  const interpolarTotal = (valor: number, inicioArea: number, fimArea: number, inicioTotal: number, fimTotal: number) => {
+    const progresso = (valor - inicioArea) / (fimArea - inicioArea)
+    return inicioTotal + (fimTotal - inicioTotal) * progresso
+  }
+
   let total: number
 
-  if (area < LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2) {
+  if (area <= LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2) {
     total = area * precoPequenaAreaM2
-  } else if (area < AREA_ROLO_MANTA_M2) {
-    total = area * precoIntermedioM2
+  } else if (area <= areaPrecoIntermedio) {
+    total = interpolarTotal(
+      area,
+      LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2,
+      areaPrecoIntermedio,
+      totalPequenaArea,
+      totalPrecoIntermedio,
+    )
+  } else if (area < areaPrecoVolume) {
+    total = interpolarTotal(
+      area,
+      areaPrecoIntermedio,
+      areaPrecoVolume,
+      totalPrecoIntermedio,
+      totalPrecoVolume,
+    )
   } else {
-    const blocosCompletos = Math.floor(area / AREA_ROLO_MANTA_M2)
-    const restante = area - blocosCompletos * AREA_ROLO_MANTA_M2
-    total = blocosCompletos * precoRolo
-    if (restante > 0) {
-      total += restante * (restante < LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2 ? precoIntermedioM2 : precoBlocoM2)
-    }
+    total = area * precoVolumeM2
   }
 
   return {
