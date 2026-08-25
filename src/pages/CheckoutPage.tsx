@@ -218,8 +218,8 @@ export default function CheckoutPage() {
                     <input required name="termsAcceptedCheckbox" type="checkbox" checked={termsAccepted} onChange={(event) => setTermsAccepted(event.target.checked)} className="mt-1 h-4 w-4 shrink-0 accent-orange-600" />
                     <span>Li e aceito os <a href="/termos-e-condicoes" target="_blank" rel="noopener noreferrer" className="font-bold text-primary underline underline-offset-2">Termos e Condições</a> para concluir a compra.</span>
                   </label>
-                  <button type="submit" disabled={status === 'sending' || !termsAccepted || (delivery === 'installation' && !applicationQuote)} className="mt-4 w-full rounded-xl bg-primary px-5 py-4 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">{status === 'sending' ? 'A enviar...' : 'Confirmar encomenda'}</button>
-                  <p className="mt-3 text-center text-xs text-slate-400">Ao confirmar, enviamos o seu pedido para a equipa CarpiMater. Não é feito nenhum pagamento automático.</p>
+                  <button type="submit" disabled={status === 'sending' || !termsAccepted || (delivery === 'installation' && !applicationQuote)} className="mt-4 w-full rounded-xl bg-primary px-5 py-4 font-bold text-white disabled:cursor-not-allowed disabled:opacity-50">{status === 'sending' ? 'A enviar...' : 'Confirmar encomenda de materiais'}</button>
+                  <p className="mt-3 text-center text-xs text-slate-400">Ao confirmar, enviamos o seu pedido para a equipa CarpiMater.</p>
                 </section>
               </form>
               </>

@@ -24,7 +24,7 @@ export const PRECO_ROLO_SUBPAVIMENTO_FLUTUANTE = 87
 export const PRECO_MANTA_VINILICO_30_A_50_M2 = 0.75
 
 /** Preço por m² do sub-pavimento flutuante para áreas entre 30 e 50 m². */
-export const PRECO_SUBPAVIMENTO_FLUTUANTE_30_A_50_M2 = 2.61
+export const PRECO_SUBPAVIMENTO_FLUTUANTE_30_A_50_M2 = 2.04
 
 /** Área incluída em cada rolo completo. */
 export const AREA_ROLO_MANTA_M2 = 50
