@@ -1,5 +1,6 @@
 import type { SiteVariant } from '@/content/site'
 import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_VINILICO_SPC_M2 } from '@/content/precos-materiais'
+import { NOMES_FLUTUANTES_HIBRIDOS, NOMES_VINILICOS } from '@/content/nomes-materiais'
 
 /**
  * ============================================================
@@ -7,7 +8,7 @@ import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_VINILICO_SPC_M2 } from '@/content/pre
  * ============================================================
  *
  * Edite aqui toda a informação dos pavimentos vinílicos:
- *   - nome          → nome exibido no site
+ *   - nome          → definido centralmente em nomes-materiais.ts
  *   - referencia    → referência interna (ex: VIN-001)
  *   - precoM2       → definido centralmente em precos-materiais.ts
  *   - cor           → cor hexadecimal do swatch (ex: '#C9A96E')
@@ -55,77 +56,77 @@ interface ProdutoEditavel extends Omit<Produto, 'id'> {}
 
 const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
-    nome: 'Carvalho Mel',
+    nome: NOMES_VINILICOS['VIN-001'],
     referencia: 'VIN-001',
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#C9A96E',
     imagem: '/images/produtos-vinil/carvalho_mel_IMG_2897_optimized_2000-scaled-e1729769492932.jpeg',
   },
   {
-    nome: 'Carvalho Nogal',
+    nome: NOMES_VINILICOS['VIN-002'],
     referencia: 'VIN-002',
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#8B8680',
     imagem: '/images/produtos-vinil/carvalho_nogal_PHOTO-2023-06-13-01-28-00-e1729769602770.jpg',
   },
   {
-    nome: 'Eucalipto',
+    nome: NOMES_VINILICOS['VIN-003'],
     referencia: 'VIN-003',
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#B5935A',
     imagem: '/images/produtos-vinil/eucalipto_PHOTO-2023-11-21-08-25-04-e1729769679644.jpg',
   },
   {
-    nome: 'Oliveira',
+    nome: NOMES_VINILICOS['VIN-004'],
     referencia: 'VIN-004',
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#D4C4A0',
     imagem: '/images/produtos-vinil/oliveira_PHOTO-2023-06-13-01-26-58-e1729769780755.jpg',
   },
   {
-    nome: 'Tanzânia Almond',
+    nome: NOMES_VINILICOS['VIN-005'],
     referencia: 'VIN-005',
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#E8D5B0',
     imagem: '/images/produtos-vinil/Tanzania_Almond_optimized_2000-scaled.jpg',
   },
   {
-    nome: 'Tanzânia Coconut',
+    nome: NOMES_VINILICOS['VIN-006'],
     referencia: 'VIN-006',
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#3D2B1F',
     imagem: '/images/produtos-vinil/tanzania_coconut_IMG_2899_optimized_2000-scaled.jpeg',
   },
   {
-    nome: 'Tanzânia Grey',
+    nome: NOMES_VINILICOS['VIN-007'],
     referencia: 'VIN-007',
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#6B3A2A',
     imagem: '/images/produtos-vinil/tanzania_grey_IMG_2902_optimized_2000-scaled.jpeg',
   },
   {
-    nome: 'Tanzânia Natural',
+    nome: NOMES_VINILICOS['VIN-008'],
     referencia: 'VIN-008',
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#B0ADB0',
     imagem: '/images/produtos-vinil/Tanzania_Natural_1_optimized_2000-scaled.jpg',
   },
   {
-    nome: 'Tanzânia Silver',
+    nome: NOMES_VINILICOS['VIN-009'],
     referencia: 'VIN-009',
     precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#F5F0E8',
     imagem: '/images/produtos-vinil/tanzania_silver.jpeg',
   },
  /*  {
-    nome: 'Tarkett (sob consulta)',
+    nome: NOMES_VINILICOS['VIN-TAR-001'],
     referencia: 'VIN-TAR-001',
     precoM2: 0,
     cor: '#C7B299',
     sobConsulta: true,
   },
   {
-    nome: 'Forbo (sob consulta)',
+    nome: NOMES_VINILICOS['VIN-FOR-001'],
     referencia: 'VIN-FOR-001',
     precoM2: 0,
     cor: '#9FA7AD',
@@ -136,8 +137,8 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
 /**
  * Produtos do sub-site de pavimento flutuante.
  *
- * Pode editar nomes, referências e imagens aqui.
- * Os preços são geridos em precos-materiais.ts.
+ * Pode editar referências, dados técnicos e imagens aqui.
+ * Os nomes são geridos em nomes-materiais.ts.
  */
 const NEXTCORE_FEATURES = [
   'Classe de utilização AC5',
@@ -152,7 +153,7 @@ const NEXTCORE_FEATURES = [
 
 const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
   {
-    nome: 'Pingo',
+    nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC95-PINGO'],
     referencia: 'ZCU-NC95-PINGO',
     precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#c9b9a1',
@@ -167,7 +168,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     caracteristicas: NEXTCORE_FEATURES,
   },
   {
-    nome: 'Tots',
+    nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC95-TOTS'],
     referencia: 'ZCU-NC95-TOTS',
     precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#b98251',
@@ -182,7 +183,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     caracteristicas: NEXTCORE_FEATURES,
   },
   {
-    nome: 'Moka',
+    nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC95-MOKA'],
     referencia: 'ZCU-NC95-MOKA',
     precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#8c654f',
@@ -197,7 +198,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     caracteristicas: NEXTCORE_FEATURES,
   },
   {
-    nome: 'Arq',
+    nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC115-ARQ'],
     referencia: 'ZCU-NC115-ARQ',
     precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#d2b28e',
@@ -212,7 +213,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     caracteristicas: NEXTCORE_FEATURES,
   },
   {
-    nome: 'Grisácio',
+    nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC115-GRISACIO'],
     referencia: 'ZCU-NC115-GRISACIO',
     precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#b9ad99',
@@ -227,7 +228,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     caracteristicas: NEXTCORE_FEATURES,
   },
   {
-    nome: 'Torrado',
+    nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC115-TORRADO'],
     referencia: 'ZCU-NC115-TORRADO',
     precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#6f4933',
@@ -242,7 +243,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     caracteristicas: NEXTCORE_FEATURES,
   },
   {
-    nome: 'Mel',
+    nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC115-MEL'],
     referencia: 'ZCU-NC115-MEL',
     precoM2: PRECO_FLUTUANTE_HIBRIDO_M2,
     cor: '#ad7544',

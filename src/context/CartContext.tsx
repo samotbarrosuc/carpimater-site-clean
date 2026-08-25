@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useMemo, useState, type ReactNode } from 'react'
 import { getCartItemPrice, updateCartItemUnits, type CartItem } from '@/lib/cart'
+import { getNomeMaterial } from '@/content/nomes-materiais'
 
 interface CartContextValue {
   items: CartItem[]
@@ -18,7 +19,16 @@ const STORAGE_KEY = 'carpimater-cart-v1'
 
 export function CartProvider({ children }: { children: ReactNode }) {
   const [items, setItems] = useState<CartItem[]>(() => {
-    try { return JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '[]') } catch { return [] }
+    try {
+      const savedItems = JSON.parse(window.localStorage.getItem(STORAGE_KEY) || '[]')
+      if (!Array.isArray(savedItems)) return []
+      return savedItems.map((item: CartItem) => ({
+        ...item,
+        name: getNomeMaterial(item.reference) ?? item.name,
+      }))
+    } catch {
+      return []
+    }
   })
   const [isOpen, setIsOpen] = useState(false)
 

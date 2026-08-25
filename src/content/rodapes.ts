@@ -1,4 +1,5 @@
 import { PRECO_RODAPE_PVC_BRANCO_ML, PRECO_RODAPE_PVC_ML } from '@/content/precos-materiais'
+import { NOMES_RODAPES } from '@/content/nomes-materiais'
 
 /*  *//**
  * ============================================================
@@ -6,7 +7,7 @@ import { PRECO_RODAPE_PVC_BRANCO_ML, PRECO_RODAPE_PVC_ML } from '@/content/preco
  * ============================================================
  *
  * Edite aqui toda a informação dos rodapés:
- *   - nome          → nome exibido no catálogo e no simulador
+ *   - nome          → definido centralmente em nomes-materiais.ts
  *   - referencia    → referência interna (ex: ROD-001)
  *   - precoMl       → definido centralmente em precos-materiais.ts
  *   - cor           → cor hexadecimal do acabamento (ex: '#C9A96E')
@@ -53,7 +54,7 @@ interface RodapeEditavel extends Omit<RodapeProduto, 'id'> {}
 
 const RODAPES_EDITAVEIS: RodapeEditavel[] = [
   {
-    nome: 'Branco Liso',
+    nome: NOMES_RODAPES['ROD-001'],
     referencia: 'ROD-001',
     precoMl: PRECO_RODAPE_PVC_BRANCO_ML,
     cor: '#FFFFFF',
@@ -63,7 +64,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     altura: '7 cm',
   },
   {
-    nome: 'Rodapé em madeira',
+    nome: NOMES_RODAPES['ROD-011'],
     referencia: 'ROD-011',
     precoMl: 0,
     cor: '#B58A62',
@@ -73,7 +74,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     sobConsulta: true,
   },
   {
-    nome: 'Carvalho Mel',
+    nome: NOMES_RODAPES['ROD-002'],
     referencia: 'ROD-002',
     precoMl: PRECO_RODAPE_PVC_ML,
     cor: '#C9A96E',
@@ -83,7 +84,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     altura: '7 cm',
   },
   {
-    nome: 'Carvalho Nogal',
+    nome: NOMES_RODAPES['ROD-003'],
     referencia: 'ROD-003',
     precoMl: PRECO_RODAPE_PVC_ML,
     cor: '#8B8680',
@@ -93,7 +94,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     altura: '7 cm',
   },
   {
-    nome: 'Eucalipto',
+    nome: NOMES_RODAPES['ROD-004'],
     referencia: 'ROD-004',
     precoMl: PRECO_RODAPE_PVC_ML,
     cor: '#B5935A',
@@ -103,7 +104,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     altura: '7 cm',
   },
   {
-    nome: 'Oliveira',
+    nome: NOMES_RODAPES['ROD-005'],
     referencia: 'ROD-005',
     precoMl: PRECO_RODAPE_PVC_ML,
     cor: '#D4C4A0',
@@ -113,7 +114,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     altura: '7 cm',
   },
   {
-    nome: 'Tanzânia Almond',
+    nome: NOMES_RODAPES['ROD-006'],
     referencia: 'ROD-006',
     precoMl: PRECO_RODAPE_PVC_ML,
     cor: '#E8D5B0',
@@ -123,7 +124,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     altura: '7 cm',
   },
   {
-    nome: 'Tanzânia Coconut',
+    nome: NOMES_RODAPES['ROD-007'],
     referencia: 'ROD-007',
     precoMl: PRECO_RODAPE_PVC_ML,
     cor: '#3D2B1F',
@@ -133,7 +134,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     altura: '7 cm',
   },
   {
-    nome: 'Tanzânia Grey',
+    nome: NOMES_RODAPES['ROD-008'],
     referencia: 'ROD-008',
     precoMl: PRECO_RODAPE_PVC_ML,
     cor: '#6B3A2A',
@@ -143,7 +144,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     altura: '7 cm',
   },
   {
-    nome: 'Tanzânia Natural',
+    nome: NOMES_RODAPES['ROD-009'],
     referencia: 'ROD-009',
     precoMl: PRECO_RODAPE_PVC_ML,
     cor: '#B0ADB0',
@@ -153,7 +154,7 @@ const RODAPES_EDITAVEIS: RodapeEditavel[] = [
     altura: '7 cm',
   },
   {
-    nome: 'Tanzânia Silver',
+    nome: NOMES_RODAPES['ROD-010'],
     referencia: 'ROD-010',
     precoMl: PRECO_RODAPE_PVC_ML,
     cor: '#F5F0E8',

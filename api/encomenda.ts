@@ -1,6 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
 import { z } from 'zod'
+import { getNomeMaterial, NOMES_FLUTUANTES_HIBRIDOS, NOMES_RODAPES, NOMES_VINILICOS } from '../src/content/nomes-materiais'
+import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_RODAPE_PVC_BRANCO_ML, PRECO_RODAPE_PVC_ML, PRECO_VINILICO_SPC_M2 } from '../src/content/precos-materiais'
 
 // Esta função é autónoma para ser carregada corretamente no runtime da Vercel.
 const FLOORING_BOX_AREA_M2 = 1.76
@@ -8,17 +10,33 @@ const BASEBOARD_BAR_LENGTH_M = 2.25
 const NOTIFICATION_EMAIL = 'tomas.a.barros@hotmail.com'
 const RESEND_FROM = 'CarpiMater <info@carpimater.pt>'
 const TERMS_VERSION = '2026-08-24'
-const FLOORING_NAMES = ['Carvalho Mel', 'Carvalho Nogal', 'Eucalipto', 'Oliveira', 'Tanzânia Almond', 'Tanzânia Coconut', 'Tanzânia Grey', 'Tanzânia Natural', 'Tanzânia Silver']
-const BASEBOARD_NAMES = ['Branco Liso', 'Carvalho Mel', 'Carvalho Nogal', 'Eucalipto', 'Oliveira', 'Tanzânia Almond', 'Tanzânia Coconut', 'Tanzânia Grey', 'Tanzânia Natural', 'Tanzânia Silver']
+const INACTIVE_REFERENCES = new Set(['VIN-TAR-001', 'VIN-FOR-001'])
+const hasReference = (collection: Record<string, string>, reference: string) => (
+  Object.prototype.hasOwnProperty.call(collection, reference)
+)
 
-const getOrderProduct = (kind: 'flooring' | 'baseboard', productId: number) => {
-  const names = kind === 'flooring' ? FLOORING_NAMES : BASEBOARD_NAMES
-  const name = names[productId - 1]
+const getOrderProduct = (kind: 'flooring' | 'baseboard', reference: string) => {
+  if (INACTIVE_REFERENCES.has(reference)) return null
+  const vinyl = hasReference(NOMES_VINILICOS, reference)
+  const hybrid = hasReference(NOMES_FLUTUANTES_HIBRIDOS, reference)
+  const baseboard = hasReference(NOMES_RODAPES, reference)
+  if ((kind === 'flooring' && !vinyl && !hybrid) || (kind === 'baseboard' && !baseboard)) return null
+
+  const name = getNomeMaterial(reference)
   if (!name) return null
+
+  const unitPrice = kind === 'flooring'
+    ? hybrid ? PRECO_FLUTUANTE_HIBRIDO_M2 : PRECO_VINILICO_SPC_M2
+    : reference === 'ROD-001'
+      ? PRECO_RODAPE_PVC_BRANCO_ML
+      : reference === 'ROD-011'
+        ? 0
+        : PRECO_RODAPE_PVC_ML
+
   return {
     name,
-    reference: `${kind === 'flooring' ? 'VIN' : 'ROD'}-${String(productId).padStart(3, '0')}`,
-    unitPrice: kind === 'flooring' ? 21.5 : 4,
+    reference,
+    unitPrice,
   }
 }
 
@@ -243,7 +261,7 @@ export default async function handler(req: VercelRequest, res: VercelResponse) {
   const data = parsed.data
   const verifiedItems: VerifiedItem[] = []
   for (const item of data.items) {
-    const product = getOrderProduct(item.kind, item.productId)
+    const product = getOrderProduct(item.kind, item.reference)
     if (!product) return res.status(400).json({ error: 'Produto indisponível' })
     verifiedItems.push({
       ...item,
