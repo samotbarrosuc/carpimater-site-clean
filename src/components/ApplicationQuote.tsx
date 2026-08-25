@@ -3,7 +3,7 @@ import { Calculator, Check, Info, MapPin, Pencil, Ruler, ShoppingBag, X } from '
 import { DISTRITOS, getConcelhosByDistrito, getTravelEntry } from '@/content/viagens'
 import { calcEstimate, calcUnderlay, formatEur, formatQuantity, parseQuantityInput, sanitizeQuantityInput, type EstimateResult, type UnderlayCalculation } from '@/lib/calculations'
 import type { CartItem } from '@/lib/cart'
-import { PRECO_ROLO_MANTA_PLASTICA_VINILICO, PRECO_ROLO_SUBPAVIMENTO_FLUTUANTE } from '@/content/precos-materiais'
+import { PRECO_MANTA_VINILICO_30_A_50_M2, PRECO_ROLO_MANTA_PLASTICA_VINILICO, PRECO_ROLO_SUBPAVIMENTO_FLUTUANTE, PRECO_SUBPAVIMENTO_FLUTUANTE_30_A_50_M2 } from '@/content/precos-materiais'
 
 export interface ApplicationUnderlayLine extends UnderlayCalculation {
   type: 'vinilico' | 'hibrido'
@@ -142,14 +142,14 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
       lines.push({
         type: 'vinilico',
         label: 'Manta plástica para pavimento vinílico',
-        ...calcUnderlay(vinylApplicationArea, PRECO_ROLO_MANTA_PLASTICA_VINILICO),
+        ...calcUnderlay(vinylApplicationArea, PRECO_ROLO_MANTA_PLASTICA_VINILICO, PRECO_MANTA_VINILICO_30_A_50_M2),
       })
     }
     if (hybridApplicationArea > 0) {
       lines.push({
         type: 'hibrido',
         label: 'Sub-pavimento para pavimento flutuante',
-        ...calcUnderlay(hybridApplicationArea, PRECO_ROLO_SUBPAVIMENTO_FLUTUANTE),
+        ...calcUnderlay(hybridApplicationArea, PRECO_ROLO_SUBPAVIMENTO_FLUTUANTE, PRECO_SUBPAVIMENTO_FLUTUANTE_30_A_50_M2),
       })
     }
     return lines

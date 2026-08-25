@@ -20,14 +20,17 @@ export const PRECO_ROLO_MANTA_PLASTICA_VINILICO = 25
 /** Preço de um rolo de 50 m² de sub-pavimento para pavimento flutuante. */
 export const PRECO_ROLO_SUBPAVIMENTO_FLUTUANTE = 87
 
-/** Preço por m² aplicado ao restante inferior a 30 m². */
-export const PRECO_RESTANTE_MANTA_M2 = 0.75
+/** Preço por m² da manta vinílica para áreas entre 30 e 50 m². */
+export const PRECO_MANTA_VINILICO_30_A_50_M2 = 0.75
+
+/** Preço por m² do sub-pavimento flutuante para áreas entre 30 e 50 m². */
+export const PRECO_SUBPAVIMENTO_FLUTUANTE_30_A_50_M2 = 2.61
 
 /** Área incluída em cada rolo completo. */
 export const AREA_ROLO_MANTA_M2 = 50
 
-/** A partir desta área restante é cobrado mais um rolo completo. */
-export const LIMIAR_ROLO_COMPLETO_MANTA_M2 = 30
+/** Área a partir da qual se aplica o escalão intermédio. */
+export const LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2 = 30
 
 /** Preço do rodapé PVC branco por metro linear. */
 export const PRECO_RODAPE_PVC_BRANCO_ML = 4

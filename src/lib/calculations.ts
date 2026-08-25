@@ -24,8 +24,7 @@ import {
 } from '@/content/precos'
 import {
   AREA_ROLO_MANTA_M2,
-  LIMIAR_ROLO_COMPLETO_MANTA_M2,
-  PRECO_RESTANTE_MANTA_M2,
+  LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2,
 } from '@/content/precos-materiais'
 
 export interface EstimateResult {
@@ -57,24 +56,32 @@ export interface UnderlayCalculation {
 }
 
 /**
- * Calcula a manta/sub-pavimento usando rolos de 50 m².
- * Até 50 m² é sempre cobrado um rolo. Acima disso, um restante inferior
- * a 30 m² é cobrado ao m²; a partir de 30 m² é cobrado outro rolo.
+ * Calcula a manta/sub-pavimento por escalões e blocos de 50 m².
+ * - menos de 30 m²: preço intermédio + diferença para o preço de bloco;
+ * - de 30 a menos de 50 m²: preço intermédio;
+ * - cada bloco de 50 m²: preço do rolo dividido por 50;
+ * - após um bloco, um restante inferior a 30 m² usa o preço intermédio;
+ *   ao atingir 30 m², esse restante passa para o preço de bloco.
  */
-export function calcUnderlay(areaM2: number, precoRolo: number): UnderlayCalculation {
+export function calcUnderlay(areaM2: number, precoRolo: number, precoIntermedioM2: number): UnderlayCalculation {
   const area = Math.max(0, Number(areaM2) || 0)
   if (area === 0) return { areaM2: 0, total: 0, precoMedioM2: 0 }
 
-  const rolosCompletos = Math.floor(area / AREA_ROLO_MANTA_M2)
-  const restante = area - rolosCompletos * AREA_ROLO_MANTA_M2
-  let total = rolosCompletos * precoRolo
+  const precoBlocoM2 = precoRolo / AREA_ROLO_MANTA_M2
+  const precoPequenaAreaM2 = precoIntermedioM2 + (precoIntermedioM2 - precoBlocoM2)
+  let total: number
 
-  if (rolosCompletos === 0) {
-    total = precoRolo
-  } else if (restante > 0 && restante < LIMIAR_ROLO_COMPLETO_MANTA_M2) {
-    total += restante * PRECO_RESTANTE_MANTA_M2
-  } else if (restante >= LIMIAR_ROLO_COMPLETO_MANTA_M2) {
-    total += precoRolo
+  if (area < LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2) {
+    total = area * precoPequenaAreaM2
+  } else if (area < AREA_ROLO_MANTA_M2) {
+    total = area * precoIntermedioM2
+  } else {
+    const blocosCompletos = Math.floor(area / AREA_ROLO_MANTA_M2)
+    const restante = area - blocosCompletos * AREA_ROLO_MANTA_M2
+    total = blocosCompletos * precoRolo
+    if (restante > 0) {
+      total += restante * (restante < LIMIAR_ESCALAO_INTERMEDIO_MANTA_M2 ? precoIntermedioM2 : precoBlocoM2)
+    }
   }
 
   return {
