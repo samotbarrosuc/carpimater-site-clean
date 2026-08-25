@@ -21,7 +21,7 @@ type SeoEntry = {
 
 const SEO_BY_PATH: Record<string, SeoEntry> = {
   '/': {
-    title: 'CarpiMater | Carpintaria por medida em Coimbra',
+    title: 'CarpiMater | Fornecimento e montagem de carpintarias',
     description: 'Carpintaria por medida e loja de pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC, com aplicação em Coimbra e Região Centro.',
     searchTopics: ['carpintaria por medida em Coimbra', 'pavimentos em Coimbra', 'pavimento vinílico SPC', 'pavimento flutuante híbrido', 'ZCUDO NextCore', 'pavimento laminado resistente à água', 'rodapé PVC'],
   },
