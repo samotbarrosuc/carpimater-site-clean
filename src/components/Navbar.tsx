@@ -3,14 +3,45 @@ import { ChevronDown, Menu, MessageCircle, ShoppingBag, X } from 'lucide-react'
 import { useLocation } from 'wouter'
 import { BUSINESS_NAME, getWhatsAppUrl } from '@/content/site'
 
-const SERVICES = [
-  { label: 'Cozinhas por medida', description: 'Projeto, fabrico e montagem', href: '/cozinha' },
-  { label: 'Montagem de cozinhas', description: 'Serviço em Coimbra e Região Centro', href: '/montagem-cozinhas-coimbra' },
-  { label: 'Roupeiros por medida', description: 'Fabrico e montagem', href: '/roupeiros-por-medida-coimbra' },
-  { label: 'Pavimento vinílico', description: 'Modelos, preços e aplicação', href: '/vinilico' },
-  { label: 'Flutuante híbrido', description: 'Modelos, preços e aplicação', href: '/flutuante' },
-  { label: 'Instalação de rodapés', description: 'PVC e madeira', href: '/instalacao-rodapes-coimbra' },
-  { label: 'Carpintaria para obra', description: 'Fornecimento e montagem', href: '/construcao' },
+interface ServiceLink {
+  label: string
+  description: string
+  href: string
+}
+
+interface ServiceGroup extends ServiceLink {
+  children?: ServiceLink[]
+}
+
+const SERVICE_GROUPS: ServiceGroup[] = [
+  {
+    label: 'Pavimentos',
+    description: 'Materiais, entrega e aplicação',
+    href: '/loja',
+    children: [
+      { label: 'Pavimento vinílico', description: 'Modelos, preços e aplicação', href: '/vinilico' },
+      { label: 'Flutuante híbrido', description: 'Modelos, preços e aplicação', href: '/flutuante' },
+      { label: 'Rodapés', description: 'PVC e madeira', href: '/instalacao-rodapes-coimbra' },
+    ],
+  },
+  {
+    label: 'Cozinhas por medida',
+    description: 'Projeto, fabrico e montagem',
+    href: '/cozinha',
+    children: [
+      { label: 'Montagem de cozinhas', description: 'Serviço adicional em Coimbra e Região Centro', href: '/montagem-cozinhas-coimbra' },
+    ],
+  },
+  {
+    label: 'Roupeiros por medida',
+    description: 'Fabrico e montagem',
+    href: '/roupeiros-por-medida-coimbra',
+  },
+  {
+    label: 'OBRAS E CONSTRUÇÃO',
+    description: 'Carpintaria, fornecimento e montagem',
+    href: '/construcao',
+  },
 ]
 
 const MAIN_LINKS = [
@@ -105,13 +136,32 @@ export default function Navbar() {
               <ChevronDown className={`h-4 w-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
             </button>
             {isServicesOpen && (
-              <div className="absolute left-1/2 top-full mt-3 max-h-[calc(100vh-7rem)] w-80 -translate-x-1/2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 text-[#19242e] shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
-                {SERVICES.map((item) => (
-                  <a key={item.href} href={item.href} onClick={(event) => navigate(event, item.href)} className="block rounded-xl px-4 py-3 transition-colors hover:bg-[#f7f3ea]">
-                    <span className="block text-sm font-bold">{item.label}</span>
-                    <span className="mt-0.5 block text-xs text-slate-500">{item.description}</span>
-                  </a>
-                ))}
+              <div className="absolute left-1/2 top-full mt-3 max-h-[calc(100vh-7rem)] w-[410px] -translate-x-1/2 overflow-y-auto rounded-[1.35rem] border border-[#ded8cf] bg-white p-3 text-[#19242e] shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
+                <div className="px-3 pb-3 pt-1">
+                  <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.18em] text-[#f05b13]">Áreas de serviço</p>
+                  <p className="mt-1 text-xs text-slate-500">Escolha uma área principal ou um serviço específico.</p>
+                </div>
+                <div className="space-y-2">
+                  {SERVICE_GROUPS.map((group) => (
+                    <section key={group.href} className="rounded-2xl border border-[#ebe6de] bg-[#fbfaf7] p-2">
+                      <a href={group.href} onClick={(event) => navigate(event, group.href)} className="group block rounded-xl px-3 py-2.5 transition-colors hover:bg-white">
+                        <span className="block text-[0.93rem] font-extrabold leading-tight text-[#19242e] group-hover:text-[#d94d0d]">{group.label}</span>
+                        <span className="mt-1 block text-[0.7rem] leading-4 text-slate-500">{group.description}</span>
+                      </a>
+                      {group.children && (
+                        <div className="mt-1 border-t border-[#e7e1d8] pt-1">
+                          {group.children.map((item) => (
+                            <a key={item.href} href={item.href} onClick={(event) => navigate(event, item.href)} className="group/child relative block rounded-xl py-2 pl-5 pr-2 transition-colors hover:bg-white">
+                              <span className="absolute left-2.5 top-[0.92rem] h-1.5 w-1.5 rounded-full bg-[#d8c7b3] transition-colors group-hover/child:bg-[#f05b13]" aria-hidden="true" />
+                              <span className="block text-xs font-bold leading-4 text-[#40505b] group-hover/child:text-[#19242e]">{item.label}</span>
+                              <span className="mt-0.5 block text-[0.65rem] leading-4 text-slate-400">{item.description}</span>
+                            </a>
+                          ))}
+                        </div>
+                      )}
+                    </section>
+                  ))}
+                </div>
               </div>
             )}
           </div>
@@ -153,12 +203,25 @@ export default function Navbar() {
             <span className="flex h-10 w-10 items-center justify-center rounded-xl bg-[#f7f3ea] text-primary"><ShoppingBag className="h-5 w-5" /></span>
           </a>
           <p className="px-2 text-[0.65rem] font-bold uppercase tracking-[0.2em] text-white/40">Serviços</p>
-          <div className="mt-2 space-y-1">
-            {SERVICES.map((item) => (
-              <a key={item.href} href={item.href} onClick={(event) => navigate(event, item.href)} className="block rounded-xl px-3 py-3.5 hover:bg-white/7">
-                <span className="block text-sm font-bold text-white">{item.label}</span>
-                <span className="mt-0.5 block text-xs text-white/45">{item.description}</span>
-              </a>
+          <div className="mt-3 space-y-2.5">
+            {SERVICE_GROUPS.map((group) => (
+              <section key={group.href} className="rounded-2xl border border-white/10 bg-white/[0.035] p-1.5">
+                <a href={group.href} onClick={(event) => navigate(event, group.href)} className="block rounded-xl px-3 py-3 hover:bg-white/7">
+                  <span className="block text-[0.94rem] font-extrabold leading-tight text-white">{group.label}</span>
+                  <span className="mt-1 block text-[0.7rem] leading-4 text-white/45">{group.description}</span>
+                </a>
+                {group.children && (
+                  <div className="mx-2 border-t border-white/10 py-1">
+                    {group.children.map((item) => (
+                      <a key={item.href} href={item.href} onClick={(event) => navigate(event, item.href)} className="relative block rounded-lg py-2.5 pl-5 pr-2 hover:bg-white/7">
+                        <span className="absolute left-2 top-[0.95rem] h-1.5 w-1.5 rounded-full bg-white/25" aria-hidden="true" />
+                        <span className="block text-xs font-bold leading-4 text-white/78">{item.label}</span>
+                        <span className="mt-0.5 block text-[0.65rem] leading-4 text-white/38">{item.description}</span>
+                      </a>
+                    ))}
+                  </div>
+                )}
+              </section>
             ))}
           </div>
           <div className="my-4 h-px bg-white/10" />

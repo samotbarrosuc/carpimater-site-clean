@@ -133,7 +133,7 @@ export default function MaterialTicker() {
         </a>
 
         <div className="min-w-0 flex-1 overflow-hidden py-2 sm:py-3">
-          <div className="material-marquee-track flex w-max" style={{ animation: 'material-marquee 52s linear infinite', animationPlayState: 'running' }}>
+          <div className="material-marquee-track flex w-max" style={{ animation: 'material-marquee 78s linear infinite', animationPlayState: 'running' }}>
             {[0, 1, 2].map((copy) => (
               <div key={copy} className="flex shrink-0 items-center gap-2 pr-2 sm:gap-3 sm:pr-3" aria-hidden={copy > 0 ? 'true' : undefined}>
                 {MATERIALS.map((material) => <MaterialIcon key={`${copy}-${material.id}`} material={material} duplicate={copy > 0} />)}
