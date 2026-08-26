@@ -5,6 +5,7 @@ const siteUrl = 'https://carpimater.pt'
 const outputDir = join(process.cwd(), 'dist')
 const template = await readFile(join(outputDir, 'index.html'), 'utf8')
 const materialPricesSource = await readFile(join(process.cwd(), 'src/content/precos-materiais.ts'), 'utf8')
+const travelDataSource = await readFile(join(process.cwd(), 'src/content/viagens.ts'), 'utf8')
 const localServices = JSON.parse(await readFile(join(process.cwd(), 'src/content/local-services.json'), 'utf8'))
 const kitchenFaqs = JSON.parse(await readFile(join(process.cwd(), 'src/content/kitchen-faq.json'), 'utf8'))
 
@@ -21,11 +22,30 @@ function formatMaterialPrice(price) {
   })
 }
 
+function slugify(value) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+function parseTravelLocations(source) {
+  const locations = []
+  const expression = /\{\s*distrito:\s*'([^']+)'\s*,\s*concelho:\s*'([^']+)'/g
+  for (const match of source.matchAll(expression)) {
+    locations.push({ distrito: match[1], concelho: match[2] })
+  }
+  return locations
+}
+
 const vinylPrice = formatMaterialPrice(readMaterialPrice('PRECO_VINILICO_SPC_M2'))
 const hybridPrice = formatMaterialPrice(readMaterialPrice('PRECO_FLUTUANTE_HIBRIDO_M2'))
 const whiteSkirtingPrice = formatMaterialPrice(readMaterialPrice('PRECO_RODAPE_PVC_BRANCO_ML'))
 const colourSkirtingPrice = formatMaterialPrice(readMaterialPrice('PRECO_RODAPE_PVC_ML'))
-const cityNames = ['Coimbra', 'Aveiro', 'Leiria', 'Condeixa-a-Nova', 'Figueira da Foz', 'Cantanhede', 'Mealhada', 'Lousã', 'Pombal', 'Marinha Grande']
+const travelLocations = parseTravelLocations(travelDataSource)
+const cityNames = [...new Set(travelLocations.map((location) => location.concelho))]
 
 const businessSchema = {
   '@type': ['OnlineStore', 'HomeAndConstructionBusiness'],
@@ -222,6 +242,117 @@ for (const service of localServices) {
   }
 }
 
+const localPavementLinks = travelLocations.map((location) => ({
+  href: `/pavimentos-${slugify(location.concelho)}`,
+  label: `Pavimentos em ${location.concelho}`,
+}))
+
+pages.loja.links = [
+  ...pages.loja.links,
+  { href: '/zonas-pavimentos-regiao-centro', label: 'Zonas de entrega gratuita na Região Centro' },
+]
+
+pages['zonas-pavimentos-regiao-centro'] = {
+  title: 'Pavimentos na Região Centro | Zonas de Entrega Gratuita',
+  description: 'Pavimentos vinílicos SPC, flutuante híbrido e rodapés com compra online, preços publicados e transporte gratuito para concelhos de Coimbra, Aveiro e Leiria.',
+  topics: [
+    'pavimentos região centro',
+    'pavimento vinílico Coimbra Aveiro Leiria',
+    'flutuante híbrido Coimbra Aveiro Leiria',
+    'loja de pavimentos região centro',
+    'transporte gratuito pavimentos',
+  ],
+  type: 'CollectionPage',
+  serviceType: 'Venda online, entrega e aplicação de pavimentos na Região Centro',
+  heading: 'Pavimentos e rodapés com entrega gratuita na Região Centro',
+  intro: `A CarpiMater vende pavimento vinílico SPC a ${vinylPrice} €/m², flutuante híbrido AC5 a ${hybridPrice} €/m² e rodapés PVC desde ${whiteSkirtingPrice} €/m. A entrega regular é gratuita em Coimbra, Aveiro, Leiria e nos concelhos indicados nesta página.`,
+  facts: [
+    'Compra online com preços publicados e IVA incluído',
+    'Entrega gratuita na Região Centro',
+    'Aplicação de pavimentos disponível em separado',
+    'Atendimento para outras zonas mediante contacto e disponibilidade',
+  ],
+  faqs: [
+    {
+      question: 'A entrega de pavimentos é gratuita na Região Centro?',
+      answer: 'Sim. A entrega regular de pavimentos e rodapés é gratuita na Região Centro. Para zonas fora desta área, confirmamos disponibilidade e condições antes de avançar.',
+    },
+    {
+      question: 'Também fazem aplicação dos pavimentos?',
+      answer: 'Sim. Pode comprar apenas o material ou pedir também aplicação. O valor da aplicação aparece separado do material e deve ser confirmado de acordo com as condições da obra.',
+    },
+  ],
+  links: [
+    { href: '/loja', label: 'Ver loja online' },
+    { href: '/flutuante', label: 'Ver flutuante híbrido' },
+    { href: '/vinilico', label: 'Ver pavimento vinílico SPC' },
+    { href: '/rodapes', label: 'Ver rodapés' },
+    ...localPavementLinks,
+  ],
+}
+
+for (const location of travelLocations) {
+  const localSlug = `pavimentos-${slugify(location.concelho)}`
+  pages[localSlug] = {
+    title: `Pavimentos em ${location.concelho} | Vinílico e Flutuante`,
+    description: `Compra online de pavimento vinílico SPC a ${vinylPrice} €/m², flutuante híbrido a ${hybridPrice} €/m² e rodapés para ${location.concelho}. Transporte gratuito na Região Centro e aplicação disponível.`,
+    topics: [
+      `pavimentos ${location.concelho}`,
+      `loja de pavimentos ${location.concelho}`,
+      `comprar pavimento vinílico ${location.concelho}`,
+      `pavimento vinílico ${location.concelho}`,
+      `flutuante híbrido ${location.concelho}`,
+      `comprar flutuante ${location.concelho}`,
+      `rodapés ${location.concelho}`,
+      `aplicação de pavimentos ${location.concelho}`,
+      `pavimento vinílico online ${location.concelho}`,
+      `transporte gratuito pavimentos ${location.concelho}`,
+    ],
+    type: 'CollectionPage',
+    serviceType: `Venda online, entrega e aplicação de pavimentos em ${location.concelho}`,
+    areaServed: [
+      { '@type': 'City', name: location.concelho },
+      { '@type': 'AdministrativeArea', name: `Distrito de ${location.distrito}` },
+      { '@type': 'AdministrativeArea', name: 'Região Centro, Portugal' },
+    ],
+    heading: `Pavimentos em ${location.concelho}: vinílico SPC, flutuante híbrido e rodapés`,
+    intro: `Se procura pavimento vinílico, flutuante híbrido ou rodapés em ${location.concelho}, pode comprar o material online na CarpiMater. Os preços estão publicados, incluem IVA e a entrega regular é gratuita na Região Centro. Também pode solicitar aplicação, apresentada numa estimativa separada.`,
+    facts: [
+      `Pavimento vinílico SPC: ${vinylPrice} €/m², IVA incluído`,
+      `Flutuante híbrido AC5: ${hybridPrice} €/m², IVA incluído`,
+      `Rodapé PVC: desde ${whiteSkirtingPrice} €/m`,
+      `Transporte gratuito para ${location.concelho} e Região Centro`,
+      'Aplicação disponível mediante confirmação de agenda e condições da obra',
+    ],
+    faqs: [
+      {
+        question: `Entregam pavimentos em ${location.concelho}?`,
+        answer: `Sim. A entrega regular de pavimentos e rodapés para ${location.concelho} está incluída na cobertura da Região Centro. Para situações especiais, confirmamos as condições antes de avançar.`,
+      },
+      {
+        question: `Posso comprar apenas o material para ${location.concelho}?`,
+        answer: 'Sim. Pode comprar apenas pavimento vinílico SPC, flutuante híbrido ou rodapés na loja online, com preços publicados e IVA incluído.',
+      },
+      {
+        question: `Também fazem aplicação de pavimento em ${location.concelho}?`,
+        answer: 'Sim, pode solicitar aplicação juntamente com o material. A estimativa é apresentada separadamente e confirmada depois de analisadas as condições da obra.',
+      },
+      {
+        question: 'Quais são os preços dos pavimentos?',
+        answer: `O pavimento vinílico SPC está a ${vinylPrice} €/m² e o flutuante híbrido AC5 está a ${hybridPrice} €/m², com IVA incluído. Os rodapés PVC começam em ${whiteSkirtingPrice} €/m.`,
+      },
+    ],
+    links: [
+      { href: '/loja', label: 'Ver todos os materiais na loja' },
+      { href: '/loja?categoria=flutuante', label: 'Comprar flutuante híbrido' },
+      { href: '/loja?categoria=vinilico', label: 'Comprar pavimento vinílico SPC' },
+      { href: '/loja?categoria=rodape', label: 'Comprar rodapés' },
+      { href: '/zonas-pavimentos-regiao-centro', label: 'Ver outras zonas de entrega' },
+      { href: '/contactos', label: 'Pedir apoio para encomenda ou aplicação' },
+    ],
+  }
+}
+
 function escapeAttribute(value) {
   return value.replaceAll('&', '&amp;').replaceAll('"', '&quot;').replaceAll('<', '&lt;').replaceAll('>', '&gt;')
 }
@@ -249,6 +380,12 @@ function renderStaticContent(page) {
 function replaceMeta(html, attribute, key, content) {
   const expression = new RegExp(`<meta ${attribute}="${key}" content="[^"]*" \\/>`)
   return html.replace(expression, `<meta ${attribute}="${key}" content="${escapeAttribute(content)}" />`)
+}
+
+function stripAppOnlyFallbackHider(html) {
+  return html
+    .replace(/\s*<script>\s*document\.documentElement\.classList\.add\('js-enabled'\)\s*<\/script>/, '')
+    .replace(/\s*<style>\s*\.js-enabled \[data-static-seo-content\][\s\S]*?<\/style>/, '')
 }
 
 for (const [slug, page] of Object.entries(pages)) {
@@ -299,7 +436,7 @@ for (const [slug, page] of Object.entries(pages)) {
       name: page.serviceType,
       serviceType: page.serviceType,
       provider: { '@id': `${siteUrl}/#business` },
-      areaServed: [
+      areaServed: page.areaServed || [
         { '@type': 'AdministrativeArea', name: 'Região Centro, Portugal' },
         ...cityNames.map((name) => ({ '@type': 'City', name })),
       ],
@@ -344,6 +481,7 @@ for (const [slug, page] of Object.entries(pages)) {
     /<div id="root">[\s\S]*?<\/body>/,
     `<div id="root">${renderStaticContent(page)}</div>\n  </body>`,
   )
+  html = stripAppOnlyFallbackHider(html)
 
   const pageDir = join(outputDir, slug)
   await mkdir(pageDir, { recursive: true })
@@ -351,4 +489,29 @@ for (const [slug, page] of Object.entries(pages)) {
   await writeFile(join(outputDir, `${slug}.html`), html)
 }
 
-console.log(`Generated ${Object.keys(pages).length} SEO route pages.`)
+const lastmod = new Date().toISOString().slice(0, 10)
+const sitemapEntries = [
+  { loc: `${siteUrl}/`, priority: '1.0', changefreq: 'weekly' },
+  ...Object.entries(pages)
+    .filter(([, page]) => page.index !== false)
+    .map(([slug, page]) => ({
+      loc: `${siteUrl}/${slug}`,
+      priority: page.priority || (slug.startsWith('pavimentos-') ? '0.64' : '0.72'),
+      changefreq: page.changefreq || (slug.startsWith('pavimentos-') ? 'monthly' : 'weekly'),
+    })),
+]
+
+const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${sitemapEntries.map((entry) => `  <url>
+    <loc>${escapeHtml(entry.loc)}</loc>
+    <lastmod>${lastmod}</lastmod>
+    <changefreq>${entry.changefreq}</changefreq>
+    <priority>${entry.priority}</priority>
+  </url>`).join('\n')}
+</urlset>
+`
+
+await writeFile(join(outputDir, 'sitemap.xml'), sitemap)
+
+console.log(`Generated ${Object.keys(pages).length} SEO route pages and ${sitemapEntries.length} sitemap URLs.`)
