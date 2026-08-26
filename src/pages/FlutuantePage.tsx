@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+import PavementSeoFacts from '@/components/PavementSeoFacts'
 
 export default function FlutuantePage() {
   return (
@@ -27,6 +28,8 @@ export default function FlutuantePage() {
             </div>
           </div>
         </section>
+
+        <PavementSeoFacts variant="flutuante" />
 
         <Footer />
         <FloatingWhatsApp />

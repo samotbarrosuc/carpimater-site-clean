@@ -3,6 +3,7 @@ import Navbar from '@/components/Navbar'
 import Hero from '@/components/Hero'
 import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+import PavementSeoFacts from '@/components/PavementSeoFacts'
 
 export default function VinilicoPage() {
   return (
@@ -19,6 +20,8 @@ export default function VinilicoPage() {
             </div>
           </div>
         </section>
+
+        <PavementSeoFacts variant="vinilico" />
 
         <Footer />
         <FloatingWhatsApp />

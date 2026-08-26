@@ -4,6 +4,7 @@ import { getProdutosByVariant } from '@/content/vinil'
 import { RODAPES } from '@/content/rodapes'
 import { BUSINESS_NAME, EMAIL, PHONE_NUMBER } from '@/content/site'
 import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_VINILICO_SPC_M2 } from '@/content/precos-materiais'
+import { PAVEMENT_SEO_CONTENT } from '@/content/pavement-seo'
 
 const SITE_URL = 'https://carpimater.pt'
 const DEFAULT_IMAGE = `${SITE_URL}/images/pavimento-vinilico-sala-coimbra.png`
@@ -25,6 +26,7 @@ type SeoEntry = {
   index?: boolean
   pageType?: 'WebPage' | 'CollectionPage' | 'AboutPage' | 'ContactPage' | 'CheckoutPage'
   serviceType?: string
+  faqs?: Array<{ question: string; answer: string }>
 }
 
 const SEO_BY_PATH: Record<string, SeoEntry> = {
@@ -44,6 +46,7 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
     description: `Vinílico SPC a ${VINYL_PRICE} €/m², IVA incluído. Entrega gratuita na Região Centro e aplicação disponível. Encomende online e veja também flutuante híbrido.`,
     searchTopics: ['pavimento vinílico', 'pavimento vinílico SPC', 'pavimento impermeável', 'aplicação de pavimento vinílico em Coimbra'],
     serviceType: 'Venda e aplicação de pavimento vinílico SPC',
+    faqs: PAVEMENT_SEO_CONTENT.vinilico.faqs,
   },
   '/flutuante': {
     title: `Pavimento Flutuante Híbrido a ${HYBRID_PRICE} €/m² | Coimbra`,
@@ -51,6 +54,7 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
     searchTopics: ['pavimento flutuante híbrido', 'ZCUDO NextCore', 'pavimento laminado híbrido', 'pavimento AC5', 'pavimento resistente à água', 'aplicação de pavimento em Coimbra'],
     image: `${SITE_URL}/images/produtos-flutuante/pingo.webp`,
     serviceType: 'Venda e aplicação de pavimento flutuante híbrido ZCUDO NextCore',
+    faqs: PAVEMENT_SEO_CONTENT.flutuante.faqs,
   },
   '/rodapes': {
     title: 'Rodapés PVC em Coimbra | Preços e Compra Online',
@@ -125,9 +129,20 @@ const businessSchema = {
     addressRegion: 'Coimbra',
     addressCountry: 'PT',
   },
-  areaServed: placeNames.map((name) => ({ '@type': 'City', name })),
+  areaServed: [
+    { '@type': 'AdministrativeArea', name: 'Região Centro, Portugal' },
+    ...placeNames.map((name) => ({ '@type': 'City', name })),
+  ],
   currenciesAccepted: 'EUR',
   paymentAccepted: ['MB WAY', 'Transferência bancária'],
+  contactPoint: {
+    '@type': 'ContactPoint',
+    telephone: PHONE_NUMBER,
+    email: EMAIL,
+    contactType: 'vendas e apoio ao cliente',
+    areaServed: 'PT',
+    availableLanguage: ['Português'],
+  },
   knowsAbout: [
     'pavimento vinílico SPC',
     'pavimento flutuante',
@@ -266,20 +281,17 @@ function productItemList() {
 
 function routeSchema(pathname: string, seo: SeoEntry, canonical: string) {
   const graph: Record<string, unknown>[] = []
-  const isBusinessPage = ['/', '/loja', '/contactos'].includes(pathname)
 
-  if (pathname === '/') {
-    graph.push({
-      '@type': 'WebSite',
-      '@id': WEBSITE_ID,
-      url: SITE_URL,
-      name: BUSINESS_NAME,
-      alternateName: 'CarpiMater Pavimentos e Carpintaria',
-      inLanguage: 'pt-PT',
-      publisher: { '@id': BUSINESS_ID },
-    })
-  }
-  if (isBusinessPage) graph.push(businessSchema)
+  graph.push({
+    '@type': 'WebSite',
+    '@id': WEBSITE_ID,
+    url: SITE_URL,
+    name: BUSINESS_NAME,
+    alternateName: 'CarpiMater Pavimentos e Carpintaria',
+    inLanguage: 'pt-PT',
+    publisher: { '@id': BUSINESS_ID },
+  })
+  graph.push(businessSchema)
 
   const pageId = `${canonical}#webpage`
   const page: Record<string, unknown> = {
@@ -302,6 +314,7 @@ function routeSchema(pathname: string, seo: SeoEntry, canonical: string) {
     page.mainEntity = { '@id': `${SITE_URL}/loja#catalogo` }
     graph.push(catalog)
   }
+  if (seo.serviceType) page.mainEntity = { '@id': `${canonical}#service` }
   graph.push(page)
 
   if (pathname !== '/') {
@@ -329,6 +342,21 @@ function routeSchema(pathname: string, seo: SeoEntry, canonical: string) {
         serviceUrl: canonical,
         servicePhone: PHONE_NUMBER,
       },
+    })
+  }
+
+  if (seo.faqs?.length) {
+    graph.push({
+      '@type': 'FAQPage',
+      '@id': `${canonical}#faq`,
+      mainEntity: seo.faqs.map((faq) => ({
+        '@type': 'Question',
+        name: faq.question,
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: faq.answer,
+        },
+      })),
     })
   }
 
