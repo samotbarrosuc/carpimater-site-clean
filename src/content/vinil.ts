@@ -1,5 +1,5 @@
 import type { SiteVariant } from '@/content/site'
-import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_VINILICO_SPC_M2 } from '@/content/precos-materiais'
+import { PRECO_FLUTUANTE_HIBRIDO_M2 } from '@/content/precos-materiais'
 import { NOMES_FLUTUANTES_HIBRIDOS, NOMES_VINILICOS } from '@/content/nomes-materiais'
 
 /**
@@ -10,7 +10,7 @@ import { NOMES_FLUTUANTES_HIBRIDOS, NOMES_VINILICOS } from '@/content/nomes-mate
  * Edite aqui toda a informação dos pavimentos vinílicos:
  *   - nome          → definido centralmente em nomes-materiais.ts
  *   - referencia    → referência interna (ex: VIN-001)
- *   - precoM2       → definido centralmente em precos-materiais.ts
+ *   - precoM2       → preço por m² (IVA incluído)
  *   - cor           → cor hexadecimal do swatch (ex: '#C9A96E')
  *   - imagem        → caminho da foto em /public/
  *                     Ex: '/images/produtos-vinil/foto.jpg'
@@ -34,6 +34,8 @@ export interface Produto {
   imagem?: string
   /** Quando true, o preço é sob consulta */
   sobConsulta?: boolean
+  /** Caso de uso ideal */
+  useCase?: string
   /** Família do pavimento, usada nos cartões e nas fichas técnicas */
   categoria?: 'vinilico' | 'hibrido'
   /** Marca e coleção comercial */
@@ -58,67 +60,70 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: NOMES_VINILICOS['VIN-001'],
     referencia: 'VIN-001',
-    precoM2: PRECO_VINILICO_SPC_M2,
+    precoM2: 21.50,
     cor: '#C9A96E',
     imagem: '/images/produtos-vinil/carvalho_mel_IMG_2897_optimized_2000-scaled-e1729769492932.jpeg',
+    useCase: 'Ideal para salas de estar modernas',
   },
   {
     nome: NOMES_VINILICOS['VIN-002'],
     referencia: 'VIN-002',
-    precoM2: PRECO_VINILICO_SPC_M2,
+    precoM2: 21.50,
     cor: '#8B8680',
     imagem: '/images/produtos-vinil/carvalho_nogal_PHOTO-2023-06-13-01-28-00-e1729769602770.jpg',
+    useCase: 'Perfeito para ambientes elegantes',
   },
   {
     nome: NOMES_VINILICOS['VIN-003'],
     referencia: 'VIN-003',
-    precoM2: PRECO_VINILICO_SPC_M2,
+    precoM2: 21.50,
     cor: '#B5935A',
     imagem: '/images/produtos-vinil/eucalipto_PHOTO-2023-11-21-08-25-04-e1729769679644.jpg',
+    useCase: 'Ideal para cozinhas e áreas de serviço',
   },
   {
     nome: NOMES_VINILICOS['VIN-004'],
     referencia: 'VIN-004',
-    precoM2: PRECO_VINILICO_SPC_M2,
+    precoM2: 21.50,
     cor: '#D4C4A0',
     imagem: '/images/produtos-vinil/oliveira_PHOTO-2023-06-13-01-26-58-e1729769780755.jpg',
   },
   {
     nome: NOMES_VINILICOS['VIN-005'],
     referencia: 'VIN-005',
-    precoM2: PRECO_VINILICO_SPC_M2,
+    precoM2: 21.50,
     cor: '#E8D5B0',
     imagem: '/images/produtos-vinil/Tanzania_Almond_optimized_2000-scaled.jpg',
   },
   {
     nome: NOMES_VINILICOS['VIN-006'],
     referencia: 'VIN-006',
-    precoM2: PRECO_VINILICO_SPC_M2,
+    precoM2: 21.50,
     cor: '#3D2B1F',
     imagem: '/images/produtos-vinil/tanzania_coconut_IMG_2899_optimized_2000-scaled.jpeg',
   },
   {
     nome: NOMES_VINILICOS['VIN-007'],
     referencia: 'VIN-007',
-    precoM2: PRECO_VINILICO_SPC_M2,
+    precoM2: 21.50,
     cor: '#6B3A2A',
     imagem: '/images/produtos-vinil/tanzania_grey_IMG_2902_optimized_2000-scaled.jpeg',
   },
   {
     nome: NOMES_VINILICOS['VIN-008'],
     referencia: 'VIN-008',
-    precoM2: PRECO_VINILICO_SPC_M2,
+    precoM2: 21.50,
     cor: '#B0ADB0',
     imagem: '/images/produtos-vinil/Tanzania_Natural_1_optimized_2000-scaled.jpg',
   },
   {
     nome: NOMES_VINILICOS['VIN-009'],
     referencia: 'VIN-009',
-    precoM2: PRECO_VINILICO_SPC_M2,
+    precoM2: 21.50,
     cor: '#F5F0E8',
     imagem: '/images/produtos-vinil/tanzania_silver.jpeg',
   },
- /*  {
+  /*  {
     nome: NOMES_VINILICOS['VIN-TAR-001'],
     referencia: 'VIN-TAR-001',
     precoM2: 0,
@@ -142,10 +147,10 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
  */
 const NEXTCORE_FEATURES = [
   'Classe de utilização AC5',
-  'Resistência à água e salpicos durante 100 h+',
+  'Resistência à água e salpicos 100 h+',
   'Base acústica IXPE de 1,5 mm integrada',
-  'Superfície antibacteriana',
-  'Textura Real Wood e poro sincronizado',
+  'Superfície antibacteriana e solução eco friendly',
+  'Textura Real Wood, relevo autêntico e poro sincronizado',
   'Sistema de encaixe Unilin com ZCUDO Shield',
   'Biselado nos quatro lados',
   'Compatível com cozinhas e casas de banho',
@@ -166,6 +171,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '9,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Tom claro e sereno para espaços luminosos.',
   },
   {
     nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC95-TOTS'],
@@ -181,6 +187,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '9,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Carvalho quente com um desenho natural e equilibrado.',
   },
   {
     nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC95-MOKA'],
@@ -196,6 +203,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '9,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Madeira média, acolhedora e fácil de combinar.',
   },
   {
     nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC115-ARQ'],
@@ -211,6 +219,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '11,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Régua longa e clara para ampliar visualmente a divisão.',
   },
   {
     nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC115-GRISACIO'],
@@ -226,6 +235,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '11,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Carvalho acinzentado para interiores contemporâneos.',
   },
   {
     nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC115-TORRADO'],
@@ -241,6 +251,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '11,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Tom escuro e marcado para ambientes com personalidade.',
   },
   {
     nome: NOMES_FLUTUANTES_HIBRIDOS['ZCU-NC115-MEL'],
@@ -256,6 +267,7 @@ const FLUTUANTE_EDITAVEIS: ProdutoEditavel[] = [
     espessura: '11,5 mm',
     garantia: '25 anos',
     caracteristicas: NEXTCORE_FEATURES,
+    useCase: 'Tom mel luminoso para uma atmosfera acolhedora.',
   },
 ]
 

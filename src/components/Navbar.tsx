@@ -38,8 +38,8 @@ const SERVICE_GROUPS: ServiceGroup[] = [
     href: '/roupeiros-por-medida-coimbra',
   },
   {
-    label: 'OBRAS E CONSTRUÇÃO',
-    description: 'Carpintaria, fornecimento e montagem',
+    label: 'Obras e Reabilitação',
+    description: 'Portas, móveis, escadas, ...',
     href: '/construcao',
   },
 ]

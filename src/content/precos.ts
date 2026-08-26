@@ -34,7 +34,7 @@ export { PRECO_RODAPE_PVC_ML as PRECO_RODAPE_ML } from '@/content/precos-materia
 // ── Mão de obra ────────────────────────────────────────────────────────────────
 
 /** Custo de aplicação por m² (IVA incluído) */
-export const PRECO_MAO_OBRA_M2 = 9
+export const PRECO_MAO_OBRA_M2 = 9.5
 
 /** Custo de aplicação do rodapé por metro linear (IVA incluído) */
 export const PRECO_MAO_OBRA_RODAPE_ML = 3.2
@@ -55,7 +55,7 @@ export const DESPERDICIO_RODAPE = 1.10
 // ── Deslocação ─────────────────────────────────────────────────────────────────
 
 /** Custo por km de deslocação (ida + volta) */
-export const CUSTO_KM = 0.35
+export const CUSTO_KM = 0.40
 
 /** Área máxima (m²) aplicada por dia */
 export const M2_POR_DESLOCACAO = 30

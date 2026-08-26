@@ -142,7 +142,7 @@ export default function Home() {
                   <span className="mt-3 block max-w-xl font-serif text-[0.54em] font-normal italic leading-[1.08] tracking-[-0.02em] text-[#f05b13]">Cozinhas, pavimentos e trabalhos por medida.</span>
                 </h1>
                 <p className="mb-7 max-w-lg text-base leading-7 text-[#40505b] sm:text-lg">
-                  Venda online de materiais e serviços de carpintaria, fornecimento e montagem em obra.
+                  Venda online de materiais e serviços de carpintaria. <br />Fornecimento e montagem em obra.
                 </p>
 
                 <div className="mb-9 flex flex-col gap-3 sm:flex-row">
@@ -259,7 +259,7 @@ export default function Home() {
               </a>
 
               {/* Pavimentos — merged Vinílico + Flutuante */}
-              <a href="/loja" className="group clean-card flex flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]">
+              <a href="/loja?categoria=vinilico" className="group clean-card flex flex-col overflow-hidden rounded-2xl transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_16px_38px_rgba(25,36,46,0.08)]">
                 <div className="relative aspect-[4/3] shrink-0 overflow-hidden">
                   <img
                     src="/images/pavimento-vinilico-sala-coimbra.png"
@@ -383,7 +383,7 @@ export default function Home() {
                   Entrega e montagem na Região Centro
                 </h2>
                 <p className="mt-4 max-w-2xl text-sm leading-6 text-muted-foreground sm:text-base sm:leading-7">
-                  Trabalhamos sobretudo em Coimbra, Aveiro, Leiria, Marinha Grande e zonas próximas. Para outras zonas, contacte-nos para confirmarmos a disponibilidade.
+                  Trabalhamos sobretudo em Coimbra, Aveiro, Leiria e zonas próximas. Para outras zonas, contacte-nos para confirmarmos a disponibilidade.
                 </p>
               </div>
               <div className="flex flex-col gap-3 sm:flex-row lg:justify-end">

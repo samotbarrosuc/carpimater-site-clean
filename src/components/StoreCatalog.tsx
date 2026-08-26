@@ -138,7 +138,7 @@ function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void
           <>
             <div className="mt-5 rounded-2xl border border-[#cfe4e5] bg-[#f0f8f8] p-4">
               <div className="flex flex-wrap items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-[#239da7]" />Flutuante híbrido {choice.product.marca} {choice.product.colecao}<span className="rounded-full border border-[#e7b83e] bg-[#ffdd57] px-2 py-0.5 text-[0.55rem] font-extrabold uppercase tracking-[0.12em] text-[#174c8c]">Novidade</span></div>
-              <p className="mt-2 text-sm leading-6 text-slate-600">Pavimento laminado híbrido com núcleo HDF reforçado com carbono, textura de madeira e base acústica integrada. Adequado a cozinhas e casas de banho, com resistência à água e aos salpicos durante 100 h+.</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Pavimento laminado híbrido com núcleo HDF reforçado com carbono, textura de madeira e base acústica integrada. Adequado a cozinhas e casas de banho, com resistência à água e aos salpicos 100 h+.</p>
             </div>
             <dl className="mt-4 grid grid-cols-2 gap-3 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4 text-sm">
               <div className="col-span-2"><dt className="text-xs text-slate-500">Formato da régua</dt><dd className="mt-1 font-bold text-[#19242e]">{choice.product.formato}</dd></div>
@@ -158,7 +158,7 @@ function ProductInfoModal({ choice, close }: { choice: Choice; close: () => void
           <>
             <div className="mt-5 rounded-2xl border border-[#e5ded5] bg-[#f7f3ea] p-4">
               <div className="flex items-center gap-2 text-sm font-bold text-[#19242e]"><Layers3 className="h-4 w-4 text-primary" />Pavimento vinílico SPC</div>
-              <p className="mt-2 text-sm leading-6 text-slate-600">Pavimento SPC impermeável, adequado a salas, quartos, cozinhas e casas de banho. É resistente ao uso diário e fácil de limpar.</p>
+              <p className="mt-2 text-sm leading-6 text-slate-600">Ideal para todas as zonas da casa, incluindo cozinhas e casas de banho. É impermeável, resistente ao uso diário e fácil de limpar, aliando estabilidade a um acabamento confortável com aspeto de madeira.</p>
             </div>
             <div className="mt-4 grid grid-cols-3 gap-2 text-center text-[0.68rem] font-bold text-slate-600">
               <div className="rounded-xl border border-slate-200 p-3"><House className="mx-auto mb-2 h-4 w-4 text-primary" />Toda a casa</div>
@@ -240,7 +240,7 @@ function PurchaseModal({ choice, close }: { choice: Choice; close: () => void })
 
         <label className="mt-4 flex cursor-pointer gap-3 rounded-xl border border-[#e4ded5] bg-[#f7f3ea] p-4 text-sm text-slate-700">
           <input type="checkbox" checked={waste} onChange={(event) => setWaste(event.target.checked)} className="mt-0.5 h-4 w-4 accent-orange-600" />
-          <span><strong>Adicionar 10% para desperdícios</strong><span className="ml-2 text-xs font-bold text-primary">Recomendado</span><span className="mt-1 block text-xs leading-5 text-slate-500">A quantidade e o preço atualizam automaticamente.</span></span>
+          <span><strong>Adicionar 10% para desperdícios</strong><span className="ml-2 text-xs font-bold text-primary">Recomendado</span><span className="mt-1 block text-xs leading-5 text-slate-500">Recomenda-se comprar sempre 10% a mais para desperdícios inerentes à aplicação.</span></span>
         </label>
 
         <div className="mt-4 rounded-2xl border border-slate-200 bg-slate-50/80 p-4">
@@ -301,7 +301,7 @@ export function CartDrawer() {
 function FlooringCard({ product, onAdd, onInfo }: { product: Produto; onAdd: () => void; onInfo: () => void }) {
   const hybrid = product.categoria === 'hibrido'
   const floorLabel = hybrid ? `${product.marca} ${product.colecao}` : 'SPC vinílico'
-  const consultationUrl = getWhatsAppUrl(`Olá! Gostaria de confirmar o stock do pavimento flutuante híbrido ZCUDO ${product.colecao}, acabamento ${product.nome}, anunciado a ${formatEur(product.precoM2)}/m².`, 'flutuante')
+  const consultationUrl = getWhatsAppUrl(`Olá! Gostaria de saber o preço e a disponibilidade do pavimento flutuante híbrido ZCUDO ${product.colecao}, acabamento ${product.nome}.`, 'flutuante')
 
   return (
     <article id={`produto-${product.referencia.toLowerCase()}`} className="group min-w-0 scroll-mt-28 overflow-hidden rounded-2xl border border-[#e2ddd5] bg-white shadow-[0_1px_2px_rgba(25,36,46,0.04)] transition duration-300 hover:-translate-y-0.5 hover:border-[#cfc5b8] hover:shadow-[0_14px_32px_rgba(25,36,46,0.09)]">
@@ -319,8 +319,8 @@ function FlooringCard({ product, onAdd, onInfo }: { product: Produto; onAdd: () 
         <div className="mt-3 flex items-center justify-between gap-2 border-t border-slate-100 pt-3">
           {product.sobConsulta ? (
             <>
-              <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">{formatEur(product.precoM2)}<span className="text-xs font-semibold text-slate-400">/m²</span></strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">IVA incluído</span></div>
-              <a href={consultationUrl} target="_blank" rel="noopener noreferrer" aria-label={`Confirmar stock de ${product.nome} por WhatsApp`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#177d86] text-white transition hover:bg-[#126a72] sm:w-auto sm:px-3"><MessageCircle className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Confirmar stock</span></a>
+              <div className="min-w-0"><strong className="block whitespace-nowrap text-sm text-[#19242e] sm:text-base">Sob consulta</strong><span className="hidden text-[0.62rem] text-slate-400 sm:block">Preço e stock</span></div>
+              <a href={consultationUrl} target="_blank" rel="noopener noreferrer" aria-label={`Consultar ${product.nome} por WhatsApp`} className="flex h-9 w-9 shrink-0 items-center justify-center rounded-xl bg-[#177d86] text-white transition hover:bg-[#126a72] sm:w-auto sm:px-3"><MessageCircle className="h-4 w-4" /><span className="ml-1 hidden text-xs font-bold sm:inline">Consultar</span></a>
             </>
           ) : (
             <>

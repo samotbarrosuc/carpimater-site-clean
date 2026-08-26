@@ -8,8 +8,8 @@ const WA_QUANTITY = getWhatsAppUrl('Olá! Preciso de ajuda para escolher a quant
 
 const storeBenefits = [
   { icon: Store, title: 'Loja online', desc: 'Compra de materiais' },
-  { icon: Truck, title: 'Entrega gratuita', desc: 'Região Centro' },
-  { icon: Clock3, title: 'Até 10 dias úteis', desc: 'Após confirmação de stock' },
+  { icon: Truck, title: 'Entrega gratuita', desc: 'na Região Centro' },
+  { icon: Clock3, title: 'Até 10 dias úteis', desc: 'Após confirmação de encomenda' },
   { icon: BadgeCheck, title: 'IVA incluído', desc: 'No preço apresentado' },
 ]
 
