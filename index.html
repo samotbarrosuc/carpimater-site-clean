@@ -96,6 +96,34 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Outfit:wght@400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <script>
+      document.documentElement.classList.add('js-enabled')
+    </script>
+    <style>
+      .js-enabled [data-static-seo-content] {
+        min-height: 100vh;
+        background: #f8f5ef;
+        color: transparent !important;
+        user-select: none;
+      }
+
+      .js-enabled [data-static-seo-content] * {
+        opacity: 0 !important;
+      }
+
+      .js-enabled [data-static-seo-content]::before {
+        content: "CarpiMater";
+        position: fixed;
+        left: 50%;
+        top: 46%;
+        transform: translate(-50%, -50%);
+        color: #19242e;
+        font-family: "Outfit", system-ui, sans-serif;
+        font-size: 1.1rem;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+      }
+    </style>
   </head>
   <body>
     <div id="root">
