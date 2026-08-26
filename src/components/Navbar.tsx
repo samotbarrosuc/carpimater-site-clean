@@ -39,7 +39,7 @@ const SERVICE_GROUPS: ServiceGroup[] = [
   },
   {
     label: 'Obras e Reabilitação',
-    description: 'Portas, móveis, escadas, ...',
+    description: 'Portas, móveis, escadas, etc...',
     href: '/construcao',
   },
 ]
@@ -137,10 +137,7 @@ export default function Navbar() {
             </button>
             {isServicesOpen && (
               <div className="absolute left-1/2 top-full mt-3 max-h-[calc(100vh-7rem)] w-[410px] -translate-x-1/2 overflow-y-auto rounded-[1.35rem] border border-[#ded8cf] bg-white p-3 text-[#19242e] shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
-                <div className="px-3 pb-3 pt-1">
-                  <p className="text-[0.62rem] font-extrabold uppercase tracking-[0.18em] text-[#f05b13]">Áreas de serviço</p>
-                  <p className="mt-1 text-xs text-slate-500">Escolha uma área principal ou um serviço específico.</p>
-                </div>
+                
                 <div className="space-y-2">
                   {SERVICE_GROUPS.map((group) => (
                     <section key={group.href} className="rounded-2xl border border-[#ebe6de] bg-[#fbfaf7] p-2">
