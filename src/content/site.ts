@@ -17,6 +17,13 @@
  * ============================================================
  */
 
+import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_VINILICO_SPC_M2 } from '@/content/precos-materiais'
+
+const formatMaterialPrice = (price: number) => price.toLocaleString('pt-PT', {
+  minimumFractionDigits: Number.isInteger(price) ? 0 : 2,
+  maximumFractionDigits: 2,
+})
+
 /** Nome da empresa */
 export const BUSINESS_NAME = 'CarpiMater'
 
@@ -54,7 +61,7 @@ export const SITE_VARIANT_CONTENT: Record<SiteVariant, SiteVariantContent> = {
     materialTechnical: 'Vinílico SPC',
     supplierWarrantyLabel: '25 anos',
     heroTitle: 'Pavimentos vinílicos',
-    heroStepOneText: 'Consulte os acabamentos e os preços disponíveis.',
+    heroStepOneText: `Pavimento vinílico SPC a ${formatMaterialPrice(PRECO_VINILICO_SPC_M2)} €/m², com IVA incluído e entrega gratuita na Região Centro.`,
     heroServiceLine: 'Venda e aplicação',
     catalogCtaLabel: 'Ver catálogo de vinílicos',
     catalogHeaderLabel: 'Catálogo de pavimentos',
@@ -73,7 +80,7 @@ export const SITE_VARIANT_CONTENT: Record<SiteVariant, SiteVariantContent> = {
     materialTechnical: 'ZCUDO NextCore',
     supplierWarrantyLabel: '25 anos',
     heroTitle: 'Pavimento flutuante híbrido',
-    heroStepOneText: 'Consulte os acabamentos e os preços disponíveis.',
+    heroStepOneText: `Flutuante híbrido AC5 resistente à água 100 h+, a ${formatMaterialPrice(PRECO_FLUTUANTE_HIBRIDO_M2)} €/m² e com garantia de 25 anos.`,
     heroServiceLine: 'Venda e aplicação',
     catalogCtaLabel: 'Ver catálogo ZCUDO NextCore',
     catalogHeaderLabel: 'Catálogo de pavimentos',

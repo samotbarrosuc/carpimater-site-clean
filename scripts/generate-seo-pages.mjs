@@ -4,6 +4,23 @@ import { join } from 'node:path'
 const siteUrl = 'https://carpimater.pt'
 const outputDir = join(process.cwd(), 'dist')
 const template = await readFile(join(outputDir, 'index.html'), 'utf8')
+const materialPricesSource = await readFile(join(process.cwd(), 'src/content/precos-materiais.ts'), 'utf8')
+
+function readMaterialPrice(name) {
+  const match = materialPricesSource.match(new RegExp(`export const ${name} = (\\d+(?:\\.\\d+)?)`))
+  if (!match) throw new Error(`Preço não encontrado: ${name}`)
+  return Number(match[1])
+}
+
+function formatMaterialPrice(price) {
+  return price.toLocaleString('pt-PT', {
+    minimumFractionDigits: Number.isInteger(price) ? 0 : 2,
+    maximumFractionDigits: 2,
+  })
+}
+
+const vinylPrice = formatMaterialPrice(readMaterialPrice('PRECO_VINILICO_SPC_M2'))
+const hybridPrice = formatMaterialPrice(readMaterialPrice('PRECO_FLUTUANTE_HIBRIDO_M2'))
 
 const pages = {
   loja: {
@@ -13,13 +30,13 @@ const pages = {
     type: 'CollectionPage',
   },
   vinilico: {
-    title: 'Pavimento Vinílico em Coimbra | Loja e Aplicação',
-    description: 'Pavimento vinílico SPC com preços online, compra por caixas e aplicação profissional. Serviço em Coimbra, Aveiro, Leiria, Condeixa e Figueira da Foz.',
+    title: `Pavimento Vinílico SPC a ${vinylPrice} €/m² em Coimbra | CarpiMater`,
+    description: `Vinílico SPC a ${vinylPrice} €/m², IVA incluído. Entrega gratuita na Região Centro e aplicação disponível. Encomende online e veja também flutuante híbrido.`,
     topics: ['pavimento vinílico', 'pavimento vinílico SPC', 'pavimento impermeável', 'aplicação de pavimento vinílico em Coimbra'],
   },
   flutuante: {
-    title: 'Flutuante Híbrido ZCUDO NextCore em Coimbra | CarpiMater',
-    description: 'Pavimento flutuante híbrido ZCUDO NextCore AC5, resistente à água 100 h+, com base acústica. Fornecimento e aplicação em Coimbra, Aveiro e Leiria.',
+    title: `Pavimento Flutuante Híbrido a ${hybridPrice} €/m² | Coimbra`,
+    description: `Flutuante híbrido AC5 a ${hybridPrice} €/m², resistente à água 100 h+ e com garantia de 25 anos. Entrega gratuita na Região Centro e serviço de aplicação.`,
     topics: ['pavimento flutuante híbrido', 'ZCUDO NextCore', 'pavimento laminado híbrido', 'pavimento AC5', 'pavimento resistente à água', 'aplicação de pavimento em Coimbra'],
   },
   rodapes: {
