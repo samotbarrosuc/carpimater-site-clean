@@ -18,6 +18,9 @@ const LojaPage = lazy(() => import("@/pages/LojaPage"));
 const CheckoutPage = lazy(() => import("@/pages/CheckoutPage"));
 const ContactosPage = lazy(() => import("@/pages/ContactosPage"));
 const RodapesPage = lazy(() => import("@/pages/RodapesPage"));
+const MontagemCozinhasPage = lazy(() => import("@/pages/LocalServicePages").then((module) => ({ default: module.MontagemCozinhasPage })));
+const RoupeirosPage = lazy(() => import("@/pages/LocalServicePages").then((module) => ({ default: module.RoupeirosPage })));
+const InstalacaoRodapesPage = lazy(() => import("@/pages/LocalServicePages").then((module) => ({ default: module.InstalacaoRodapesPage })));
 
 const queryClient = new QueryClient();
 
@@ -35,6 +38,9 @@ function Router() {
         <Route path="/contactos" component={ContactosPage} />
         <Route path="/cozinha" component={CozinhaPage} />
         <Route path="/construcao" component={EmpreiteirosPage} />
+        <Route path="/montagem-cozinhas-coimbra" component={MontagemCozinhasPage} />
+        <Route path="/roupeiros-por-medida-coimbra" component={RoupeirosPage} />
+        <Route path="/instalacao-rodapes-coimbra" component={InstalacaoRodapesPage} />
         <Route path="/construção" component={() => <Redirect to="/construcao" />} />
         <Route path="/empreiteiros" component={() => <Redirect to="/construcao" />} />
         <Route path="/politica-de-privacidade" component={PrivacyPolicyPage} />

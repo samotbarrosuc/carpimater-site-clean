@@ -63,13 +63,6 @@ export default function Hero() {
           : 'min-h-[88vh] bg-secondary pb-12 pt-28 sm:min-h-screen sm:pb-20 sm:pt-32 lg:pb-20 lg:pt-32'
       }`}
     >
-      {isKitchen && (
-        <img
-          src={kitchenHeroImage}
-          alt="Cozinha CarpiMater"
-          className="hidden"
-        />
-      )}
       {!isKitchen && (
         <>
           <div
@@ -100,12 +93,11 @@ export default function Hero() {
               /* ── COZINHA HERO HEADLINE ── */
               (<div className="mb-6">
                 <h1 className="font-display text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] sm:text-[3.25rem] lg:text-[3.65rem]">
-                  <span className="block text-[#19242e]"></span>
                   <span className="block text-primary">Cozinhas por medida</span>
-                  <span className="block text-[#19242e]">com fabrico e montagem.</span>
+                  <span className="block text-[#19242e]">em Coimbra.</span>
                 </h1>
                 <p className="mb-6 mt-5 max-w-xl text-sm leading-7 text-[#40505b] sm:text-base">
-                  Medimos o espaço, preparamos a proposta e coordenamos o fabrico e a montagem.
+                  Levantamento, proposta, fabrico e montagem adaptados ao espaço.
                 </p>
                 <div className="mx-auto mb-5 w-full max-w-xl overflow-hidden rounded-[1.75rem] border border-[#d8d0c4] bg-[#19242e] p-2 shadow-[0_20px_55px_rgba(25,36,46,0.13)]">
                   <CompareSlider before={beforeAfterPairs[0].before} after={beforeAfterPairs[0].after} aspectRatio="16/9" />
@@ -190,7 +182,9 @@ export default function Hero() {
               <div className="relative mx-auto h-[150px] w-full overflow-hidden rounded-[1.25rem] border border-[#d8d0c4] shadow-[0_18px_45px_rgba(25,36,46,0.11)] sm:h-[210px]">
                 <img
                   src={kitchenHeroImage}
-                  alt="Cozinha CarpiMater"
+                  alt="Cozinha branca por medida com ilha e armários altos"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30" />
@@ -198,7 +192,8 @@ export default function Hero() {
               <div className="relative mx-auto h-[150px] w-full overflow-hidden rounded-[1.25rem] border border-[#d8d0c4] shadow-[0_18px_45px_rgba(25,36,46,0.09)] sm:h-[210px]">
                 <img
                   src={kitchenHeroImageSecondary}
-                  alt="Cozinha CarpiMater"
+                  alt="Cozinha por medida com acabamento em madeira"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/20" />
@@ -211,7 +206,9 @@ export default function Hero() {
               <div className="relative h-[285px] w-full max-w-[560px] overflow-hidden rounded-[1.75rem] border border-[#d8d0c4] shadow-[0_28px_70px_rgba(25,36,46,0.14)]">
                 <img
                   src={kitchenHeroImage}
-                  alt="Cozinha CarpiMater"
+                  alt="Cozinha branca por medida com ilha e armários altos"
+                  fetchPriority="high"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/10 to-black/30" />
@@ -219,7 +216,8 @@ export default function Hero() {
               <div className="relative ml-auto h-[235px] w-[84%] max-w-[480px] overflow-hidden rounded-[1.75rem] border border-[#d8d0c4] shadow-[0_22px_55px_rgba(25,36,46,0.11)]">
                 <img
                   src={kitchenHeroImageSecondary}
-                  alt="Cozinha CarpiMater"
+                  alt="Cozinha por medida com acabamento em madeira"
+                  decoding="async"
                   className="w-full h-full object-cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-b from-transparent via-black/5 to-black/20" />
@@ -249,6 +247,8 @@ export default function Hero() {
                   <img
                     src={galleryItems[currentProjectIndex]?.image}
                     alt={`${siteContent.projectAltPrefix} ${galleryItems[currentProjectIndex]?.description}`}
+                    fetchPriority="high"
+                    decoding="async"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/55 via-transparent to-transparent" />

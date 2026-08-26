@@ -9,6 +9,7 @@ import FAQ from '@/components/cozinha/sections/FAQ'
 import FinalCTA from '@/components/cozinha/sections/FinalCTA'
 import Footer from '@/components/Footer'
 import FloatingWhatsApp from '@/components/FloatingWhatsApp'
+import KitchenSeoDetails from '@/components/KitchenSeoDetails'
 
 export default function CozinhaPage() {
   return (
@@ -16,6 +17,7 @@ export default function CozinhaPage() {
       <main className="min-h-screen bg-[#f8f5ef] text-[#19242e]">
         <Navbar />
         <Hero />
+        <KitchenSeoDetails />
         <HowItWorks />
         <FabricoPrazoAdjudicacao />
         <ComparisonBanner />

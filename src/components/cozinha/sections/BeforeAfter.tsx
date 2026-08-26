@@ -6,20 +6,20 @@ import type { MouseEvent as ReactMouseEvent, TouchEvent as ReactTouchEvent, CSSP
 
 export const pairs = [
   {
-    before: { src: "/images/antes-1.png" },
-    after:  { src: "/images/depois-1.png" },
+    before: { src: "/images/antes-1.png", alt: "Cozinha antes da renovação" },
+    after:  { src: "/images/depois-1.png", alt: "Cozinha depois da renovação" },
     title: "Renovação Total em Coimbra",
     desc: "Armários lacados a branco, tampo em quartzo e chão em vinílico SPC a imitar carvalho mel.",
   },
   {
-    before: { src: "/images/antes-2.png" },
-    after:  { src: "/images/depois-2.png" },
+    before: { src: "/images/antes-2.png", alt: "Mobiliário de cozinha antes da intervenção" },
+    after:  { src: "/images/depois-2.png", alt: "Mobiliário de cozinha depois da intervenção" },
     title: "Transformação em Leiria",
     desc: "Novas frentes em lacado branco mate sem puxadores, tampo em quartzo branco e iluminação LED sob armários.",
   },
 ]
 
-export function CompareSlider({ before, after, aspectRatio = "4/3" }: { before: { src: string }; after: { src: string }; aspectRatio?: string }) {
+export function CompareSlider({ before, after, aspectRatio = "4/3" }: { before: { src: string; alt?: string }; after: { src: string; alt?: string }; aspectRatio?: string }) {
   const [pos, setPos] = useState(37.5);
   const [dragging, setDragging] = useState(false);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -56,8 +56,8 @@ export function CompareSlider({ before, after, aspectRatio = "4/3" }: { before: 
 
   return (
     <div ref={containerRef} className="relative w-full rounded-xl overflow-hidden" style={{ aspectRatio, cursor: dragging ? "grabbing" : "default", touchAction: "pan-y" }}>
-      <img src={after.src} alt="Depois" draggable={false} style={imgStyle} />
-      <img src={before.src} alt="Antes" draggable={false} style={{ ...imgStyle, clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
+      <img src={after.src} alt={after.alt || "Resultado depois da intervenção"} fetchPriority="high" decoding="async" draggable={false} style={imgStyle} />
+      <img src={before.src} alt={before.alt || "Estado antes da intervenção"} fetchPriority="high" decoding="async" draggable={false} style={{ ...imgStyle, clipPath: `inset(0 ${100 - pos}% 0 0)` }} />
       <div style={{ position: "absolute", top: 0, bottom: 0, left: `${pos}%`, width: "2px", transform: "translateX(-50%)", backgroundColor: "#f05b13", pointerEvents: "none" }} />
       <div onMouseDown={onHandleMouseDown} onTouchStart={onHandleTouchStart} style={{ position: "absolute", top: "50%", left: `${pos}%`, transform: "translate(-50%, -50%)", width: 44, height: 44, borderRadius: "50%", backgroundColor: "#f05b13", border: "2px solid #fff", boxShadow: "0 2px 12px rgba(0,0,0,0.3)", display: "flex", alignItems: "center", justifyContent: "center", cursor: dragging ? "grabbing" : "grab", pointerEvents: "auto", zIndex: 10, touchAction: "none" }}>
         <svg width="20" height="20" viewBox="0 0 22 22" fill="none"><path d="M7 11L3 7v8l4-4z" fill="white" /><path d="M15 11l4-4v8l-4-4z" fill="white" /><rect x="10" y="3" width="2" height="16" rx="1" fill="white" /></svg>

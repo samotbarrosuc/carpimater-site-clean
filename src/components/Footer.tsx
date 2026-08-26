@@ -40,6 +40,8 @@ export default function Footer() {
               <img
                 src="/images/logo-carpimater-v2.png"
                 alt="Logotipo CarpiMater"
+                loading="lazy"
+                decoding="async"
                 className="h-11 w-11 rounded-xl border border-slate-200 bg-white object-contain"
               />
               <span className="font-display font-bold text-2xl text-slate-900">{BUSINESS_NAME}</span>
@@ -63,9 +65,12 @@ export default function Footer() {
               {[
                 { label: 'Loja de materiais', href: '/loja' },
                 { label: 'Cozinhas à medida', href: '/cozinha' },
+                { label: 'Montagem de cozinhas', href: '/montagem-cozinhas-coimbra' },
+                { label: 'Roupeiros por medida', href: '/roupeiros-por-medida-coimbra' },
                 { label: 'Pavimento flutuante híbrido', href: '/flutuante' },
                 { label: 'Pavimento vinílico SPC', href: '/vinilico' },
                 { label: 'Rodapés PVC', href: '/rodapes' },
+                { label: 'Instalação de rodapés', href: '/instalacao-rodapes-coimbra' },
                 { label: 'Carpintaria para obras', href: '/construcao' },
               ].map((link) => (
                 <li key={link.href}>

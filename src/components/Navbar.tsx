@@ -5,8 +5,11 @@ import { BUSINESS_NAME, getWhatsAppUrl } from '@/content/site'
 
 const SERVICES = [
   { label: 'Cozinhas por medida', description: 'Projeto, fabrico e montagem', href: '/cozinha' },
+  { label: 'Montagem de cozinhas', description: 'Serviço em Coimbra e Região Centro', href: '/montagem-cozinhas-coimbra' },
+  { label: 'Roupeiros por medida', description: 'Fabrico e montagem', href: '/roupeiros-por-medida-coimbra' },
   { label: 'Pavimento vinílico', description: 'Modelos, preços e aplicação', href: '/vinilico' },
   { label: 'Flutuante híbrido', description: 'Modelos, preços e aplicação', href: '/flutuante' },
+  { label: 'Instalação de rodapés', description: 'PVC e madeira', href: '/instalacao-rodapes-coimbra' },
   { label: 'Carpintaria para obra', description: 'Fornecimento e montagem', href: '/construcao' },
 ]
 
@@ -102,7 +105,7 @@ export default function Navbar() {
               <ChevronDown className={`h-4 w-4 transition-transform ${isServicesOpen ? 'rotate-180' : ''}`} />
             </button>
             {isServicesOpen && (
-              <div className="absolute left-1/2 top-full mt-3 w-72 -translate-x-1/2 overflow-hidden rounded-2xl border border-slate-200 bg-white p-2 text-[#19242e] shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
+              <div className="absolute left-1/2 top-full mt-3 max-h-[calc(100vh-7rem)] w-80 -translate-x-1/2 overflow-y-auto rounded-2xl border border-slate-200 bg-white p-2 text-[#19242e] shadow-[0_24px_70px_rgba(15,23,42,0.18)]">
                 {SERVICES.map((item) => (
                   <a key={item.href} href={item.href} onClick={(event) => navigate(event, item.href)} className="block rounded-xl px-4 py-3 transition-colors hover:bg-[#f7f3ea]">
                     <span className="block text-sm font-bold">{item.label}</span>

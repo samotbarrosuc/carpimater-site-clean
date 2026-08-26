@@ -1,3 +1,4 @@
+import { Check, ChevronRight } from 'lucide-react'
 import { PAVEMENT_SEO_CONTENT, type PavementSeoVariant } from '@/content/pavement-seo'
 
 export default function PavementSeoFacts({ variant }: { variant: PavementSeoVariant }) {
@@ -23,6 +24,16 @@ export default function PavementSeoFacts({ variant }: { variant: PavementSeoVari
           ))}
         </dl>
 
+        <div className="mt-12 grid gap-4 md:grid-cols-2">
+          {content.details.map((detail) => (
+            <article key={detail.title} className="rounded-2xl border border-[#ded8cf] bg-white p-6 sm:p-7">
+              <h2 className="font-display text-xl font-bold text-[#19242e]">{detail.title}</h2>
+              <p className="mt-3 text-sm leading-7 text-slate-600">{detail.text}</p>
+              {detail.items?.length ? <ul className="mt-4 space-y-2">{detail.items.map((item) => <li key={item} className="flex gap-2 text-sm text-slate-600"><Check className="mt-0.5 h-4 w-4 shrink-0 text-primary" />{item}</li>)}</ul> : null}
+            </article>
+          ))}
+        </div>
+
         <div className="mt-12">
           <h2 className="font-display text-2xl font-bold text-[#19242e] sm:text-3xl">Perguntas frequentes</h2>
           <div className="mt-6 grid gap-4 md:grid-cols-2">
@@ -33,6 +44,11 @@ export default function PavementSeoFacts({ variant }: { variant: PavementSeoVari
               </article>
             ))}
           </div>
+        </div>
+
+        <div className="mt-10 flex flex-col gap-3 rounded-2xl border border-[#2b3b47] bg-[#19242e] p-6 text-white sm:flex-row sm:items-center sm:justify-between sm:p-8">
+          <div><h2 className="font-display text-2xl font-bold">Escolha o acabamento e calcule a quantidade</h2><p className="mt-2 text-sm leading-6 text-white/65">Consulte os modelos disponíveis ou envie-nos fotografias para pedir aplicação.</p></div>
+          <div className="flex shrink-0 flex-col gap-2 text-sm font-bold text-[#f08a45]"><a href={content.storeHref} className="inline-flex items-center gap-1">Ver na loja<ChevronRight className="h-4 w-4" /></a><a href="/contactos" className="inline-flex items-center gap-1">Pedir informação<ChevronRight className="h-4 w-4" /></a></div>
         </div>
       </div>
     </section>

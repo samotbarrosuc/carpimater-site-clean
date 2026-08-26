@@ -137,8 +137,9 @@ export default function Home() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
               >
-                <h1 className="mb-5 max-w-xl font-display text-[3.25rem] font-bold leading-[0.94] tracking-[-0.045em] text-[#19242e] sm:text-6xl lg:text-7xl">
-                  Fornecimento e montagem de carpintarias
+                <h1 className="mb-5 max-w-2xl font-display text-[3.1rem] font-bold leading-[0.94] tracking-[-0.045em] text-[#19242e] sm:text-6xl lg:text-[4rem]">
+                  <span className="block">Carpintaria em Coimbra</span>
+                  <span className="mt-3 block max-w-xl font-serif text-[0.54em] font-normal italic leading-[1.08] tracking-[-0.02em] text-[#f05b13]">Cozinhas, pavimentos e trabalhos por medida.</span>
                 </h1>
                 <p className="mb-7 max-w-lg text-base leading-7 text-[#40505b] sm:text-lg">
                   Venda online de materiais e serviços de carpintaria, fornecimento e montagem em obra.

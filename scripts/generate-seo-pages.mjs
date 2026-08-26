@@ -5,6 +5,8 @@ const siteUrl = 'https://carpimater.pt'
 const outputDir = join(process.cwd(), 'dist')
 const template = await readFile(join(outputDir, 'index.html'), 'utf8')
 const materialPricesSource = await readFile(join(process.cwd(), 'src/content/precos-materiais.ts'), 'utf8')
+const localServices = JSON.parse(await readFile(join(process.cwd(), 'src/content/local-services.json'), 'utf8'))
+const kitchenFaqs = JSON.parse(await readFile(join(process.cwd(), 'src/content/kitchen-faq.json'), 'utf8'))
 
 function readMaterialPrice(name) {
   const match = materialPricesSource.match(new RegExp(`export const ${name} = (\\d+(?:\\.\\d+)?)`))
@@ -45,7 +47,7 @@ const businessSchema = {
     telephone: '+351 910 093 635',
     email: 'tomas.a.barros@hotmail.com',
     contactType: 'vendas e apoio ao cliente',
-    areaServed: 'PT',
+    areaServed: 'Região Centro, Portugal',
     availableLanguage: ['Português'],
   },
 }
@@ -113,11 +115,11 @@ const pages = {
     ],
   },
   vinilico: {
-    title: `Pavimento Vinílico SPC a ${vinylPrice} €/m² em Coimbra | CarpiMater`,
-    description: `Vinílico SPC a ${vinylPrice} €/m², IVA incluído. Entrega gratuita na Região Centro e aplicação disponível. Encomende online e veja também flutuante híbrido.`,
-    topics: ['pavimento vinílico', 'pavimento vinílico SPC', 'pavimento impermeável', 'aplicação de pavimento vinílico em Coimbra'],
+    title: 'Pavimento Vinílico SPC em Coimbra | Venda e Aplicação',
+    description: `Pavimento vinílico SPC a ${vinylPrice} €/m², IVA incluído. Venda online, entrega gratuita na Região Centro e aplicação em Coimbra e arredores.`,
+    topics: ['pavimento vinílico Coimbra', 'pavimento vinílico SPC', 'aplicação de pavimento vinílico Coimbra', 'instalação de pavimento vinílico Coimbra', 'preço pavimento vinílico Coimbra'],
     serviceType: 'Venda e aplicação de pavimento vinílico SPC',
-    heading: 'Comprar pavimento vinílico SPC na Região Centro',
+    heading: 'Pavimento vinílico SPC em Coimbra — fornecimento e aplicação',
     intro: `Pavimento vinílico SPC a ${vinylPrice} €/m², com IVA incluído. Entrega gratuita na Região Centro e serviço de aplicação e assentamento em Coimbra, Aveiro, Leiria e localidades próximas.`,
     facts: [`Preço: ${vinylPrice} €/m² com IVA`, 'Entrega gratuita na Região Centro', 'Garantia do fabricante: 25 anos', 'Aplicação com estimativa separada'],
     faqs: [
@@ -126,14 +128,14 @@ const pages = {
       { question: 'A CarpiMater faz o assentamento do pavimento?', answer: 'Sim. O serviço de aplicação pode ser pedido com o material. A estimativa é apresentada separadamente e o valor final depende das condições encontradas em obra.' },
       { question: 'Quanto material devo encomendar?', answer: 'Indique a área real. A loja permite acrescentar 10% para cortes e desperdícios, uma margem normalmente recomendada para a aplicação.' },
     ],
-    links: [{ href: '/loja?categoria=vinilico', label: 'Ver vinílicos na loja' }, { href: '/flutuante', label: 'Ver flutuante híbrido' }, { href: '/contactos', label: 'Pedir informação' }],
+    links: [{ href: '/loja?categoria=vinilico', label: 'Ver vinílicos na loja' }, { href: '/flutuante', label: 'Ver flutuante híbrido' }, { href: '/instalacao-rodapes-coimbra', label: 'Ver instalação de rodapés' }, { href: '/contactos', label: 'Pedir informação' }],
   },
   flutuante: {
-    title: `Pavimento Flutuante Híbrido a ${hybridPrice} €/m² | Coimbra`,
-    description: `Flutuante híbrido AC5 a ${hybridPrice} €/m², resistente à água 100 h+ e com garantia de 25 anos. Entrega gratuita na Região Centro e serviço de aplicação.`,
-    topics: ['pavimento flutuante híbrido', 'ZCUDO NextCore', 'pavimento laminado híbrido', 'pavimento AC5', 'pavimento resistente à água', 'aplicação de pavimento em Coimbra'],
+    title: 'Pavimento Flutuante em Coimbra | Venda e Aplicação',
+    description: `Flutuante híbrido AC5 a ${hybridPrice} €/m², resistente à água 100 h+ e com garantia de 25 anos. Entrega gratuita e aplicação na Região Centro.`,
+    topics: ['pavimento flutuante Coimbra', 'pavimento flutuante híbrido', 'aplicação de pavimento flutuante Coimbra', 'instalação de chão flutuante Coimbra', 'pavimento AC5 resistente à água'],
     serviceType: 'Venda e aplicação de pavimento flutuante híbrido AC5',
-    heading: 'Flutuante híbrido resistente à água na Região Centro',
+    heading: 'Pavimento flutuante em Coimbra — fornecimento e aplicação',
     intro: `Pavimento flutuante híbrido AC5 a ${hybridPrice} €/m², com IVA incluído, resistência à água 100 h+ e garantia do fabricante de 25 anos. Entrega gratuita na Região Centro e aplicação disponível.`,
     facts: [`Preço: ${hybridPrice} €/m² com IVA`, 'Resistência à água: 100 h+', 'Garantia do fabricante: 25 anos', 'Entrega gratuita na Região Centro'],
     faqs: [
@@ -142,38 +144,39 @@ const pages = {
       { question: 'Qual é a garantia do pavimento?', answer: 'A garantia indicada pelo fabricante é de 25 anos, sujeita às condições de utilização e instalação do produto.' },
       { question: 'Fazem entrega e aplicação em Coimbra, Aveiro e Leiria?', answer: 'Sim. A entrega regular é gratuita na Região Centro e a aplicação pode ser solicitada em separado. Para outras zonas, é necessário confirmar previamente a disponibilidade.' },
     ],
-    links: [{ href: '/loja?categoria=flutuante', label: 'Ver flutuantes na loja' }, { href: '/vinilico', label: 'Ver pavimento vinílico' }, { href: '/contactos', label: 'Pedir informação' }],
+    links: [{ href: '/loja?categoria=flutuante', label: 'Ver flutuantes na loja' }, { href: '/vinilico', label: 'Ver pavimento vinílico' }, { href: '/instalacao-rodapes-coimbra', label: 'Ver instalação de rodapés' }, { href: '/contactos', label: 'Pedir informação' }],
   },
   rodapes: {
-    title: 'Rodapés PVC em Coimbra | Preços e Compra Online',
-    description: 'Rodapés PVC com preços publicados, vários acabamentos e compra online por barras. Entrega ou aplicação profissional em Coimbra, Aveiro, Leiria e arredores.',
-    topics: ['rodapé', 'rodapés', 'rodapé PVC', 'rodapé branco', 'aplicação de rodapés em Coimbra'],
+    title: 'Rodapés PVC em Coimbra | Preços, Venda e Aplicação',
+    description: 'Rodapés PVC com preços publicados, compra online e serviço de aplicação em Coimbra e na Região Centro. Rodapés em madeira sob consulta.',
+    topics: ['rodapés PVC Coimbra', 'rodapé branco', 'comprar rodapés Coimbra', 'aplicação de rodapés Coimbra', 'rodapé em madeira Coimbra'],
     type: 'CollectionPage',
     serviceType: 'Venda e aplicação de rodapés PVC',
-    heading: 'Rodapés PVC com preços publicados',
+    heading: 'Rodapés PVC em Coimbra — venda e aplicação',
     intro: `Rodapé PVC branco a ${whiteSkirtingPrice} €/m e restantes cores a ${colourSkirtingPrice} €/m, com IVA incluído. Entrega e aplicação disponíveis na Região Centro.`,
     facts: [`Rodapé branco: ${whiteSkirtingPrice} €/m`, `Rodapés com cor: ${colourSkirtingPrice} €/m`, 'Entrega gratuita na Região Centro'],
-    links: [{ href: '/loja?categoria=rodape', label: 'Ver rodapés na loja' }, { href: '/contactos', label: 'Pedir informação' }],
+    links: [{ href: '/loja?categoria=rodape', label: 'Ver rodapés na loja' }, { href: '/instalacao-rodapes-coimbra', label: 'Instalação de rodapés em Coimbra' }, { href: '/contactos', label: 'Pedir informação' }],
   },
   cozinha: {
-    title: 'Cozinhas por Medida em Coimbra | Carpinteiros CarpiMater',
-    description: 'Projeto, fabrico e montagem de cozinhas por medida por profissionais de carpintaria. Atuação regular em Coimbra, Aveiro, Leiria e na Região Centro.',
-    topics: ['cozinhas por medida em Coimbra', 'carpinteiro em Coimbra', 'fabrico de cozinhas', 'montagem de cozinhas'],
+    title: 'Cozinhas por Medida em Coimbra | Fabrico e Montagem',
+    description: 'Cozinhas por medida em Coimbra: levantamento, proposta, fabrico e montagem. Materiais, ferragens, preço e prazo definidos por escrito.',
+    topics: ['cozinhas por medida Coimbra', 'fabrico de cozinhas Coimbra', 'montagem de cozinhas Coimbra', 'carpinteiro para cozinhas Coimbra'],
     serviceType: 'Projeto, fabrico e montagem de cozinhas por medida',
-    heading: 'Cozinhas por medida com fabrico e montagem',
+    heading: 'Cozinhas por medida em Coimbra',
     intro: 'A CarpiMater recolhe as medidas, prepara a proposta e coordena o fabrico e a montagem de cozinhas por medida na Região Centro.',
     facts: ['Levantamento de medidas', 'Proposta com materiais e preço', 'Fabrico por medida', 'Montagem em obra'],
-    links: [{ href: '/contactos', label: 'Pedir proposta' }, { href: '/construcao', label: 'Ver carpintaria para obras' }],
+    faqs: kitchenFaqs,
+    links: [{ href: '/montagem-cozinhas-coimbra', label: 'Montagem de cozinhas em Coimbra' }, { href: '/roupeiros-por-medida-coimbra', label: 'Roupeiros por medida em Coimbra' }, { href: '/contactos', label: 'Pedir proposta' }, { href: '/construcao', label: 'Ver carpintaria para obras' }],
   },
   construcao: {
-    title: 'Carpintaria para Obras em Coimbra e Região Centro',
+    title: 'Carpintaria para Obras em Coimbra | Fornecimento e Montagem',
     description: 'Carpinteiros para obras, remodelações e empreiteiros: pavimentos, cozinhas, roupeiros, portas e marcenaria em Coimbra, Aveiro, Leiria e arredores.',
     topics: ['carpintaria em Coimbra', 'carpinteiros para obras', 'carpintaria por medida', 'marcenaria', 'remodelações'],
     serviceType: 'Carpintaria por medida para construção e remodelação',
-    heading: 'Carpintaria por medida para obras e remodelações',
+    heading: 'Carpintaria para obras e remodelações em Coimbra',
     intro: 'Fornecimento e montagem de cozinhas, roupeiros, portas, pavimentos e outros trabalhos de carpintaria para particulares, empresas e empreiteiros na Região Centro.',
     facts: ['Levantamento em obra', 'Proposta de materiais e trabalhos', 'Fabrico por medida', 'Montagem em obra'],
-    links: [{ href: '/cozinha', label: 'Ver cozinhas por medida' }, { href: '/contactos', label: 'Pedir informação' }],
+    links: [{ href: '/cozinha', label: 'Ver cozinhas por medida' }, { href: '/montagem-cozinhas-coimbra', label: 'Montagem de cozinhas' }, { href: '/roupeiros-por-medida-coimbra', label: 'Roupeiros por medida' }, { href: '/instalacao-rodapes-coimbra', label: 'Instalação de rodapés' }, { href: '/contactos', label: 'Pedir informação' }],
   },
   contactos: {
     title: 'Pavimentos e Carpintaria em Coimbra | Contactos',
@@ -201,6 +204,22 @@ const pages = {
     description: 'Termos aplicáveis às encomendas de pavimentos e rodapés na loja online CarpiMater.',
     index: false,
   },
+}
+
+for (const service of localServices) {
+  pages[service.slug] = {
+    title: service.metaTitle,
+    description: service.metaDescription,
+    topics: service.searchTopics,
+    serviceType: service.serviceType,
+    heading: service.title,
+    intro: service.intro,
+    facts: service.highlights,
+    faqs: service.faqs,
+    links: service.relatedLinks,
+    image: `${siteUrl}${service.image}`,
+    imageAlt: service.imageAlt,
+  }
 }
 
 function escapeAttribute(value) {
@@ -252,6 +271,10 @@ for (const [slug, page] of Object.entries(pages)) {
     } : { about: { '@id': `${siteUrl}/#business` } }),
     inLanguage: 'pt-PT',
     isPartOf: { '@id': `${siteUrl}/#website` },
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: page.image || `${siteUrl}/images/pavimento-vinilico-sala-coimbra.png`,
+    },
     ...(slug === 'loja' ? { mainEntity: { '@id': `${siteUrl}/loja#ofertas` } } : {}),
     ...(page.serviceType ? { mainEntity: { '@id': `${canonical}#service` } } : {}),
   }
@@ -307,8 +330,11 @@ for (const [slug, page] of Object.entries(pages)) {
   html = replaceMeta(html, 'property', 'og:url', canonical)
   html = replaceMeta(html, 'property', 'og:title', page.title)
   html = replaceMeta(html, 'property', 'og:description', page.description)
+  html = replaceMeta(html, 'property', 'og:image', page.image || `${siteUrl}/images/pavimento-vinilico-sala-coimbra.png`)
+  html = replaceMeta(html, 'property', 'og:image:alt', page.imageAlt || 'CarpiMater — pavimentos, rodapés e carpintaria')
   html = replaceMeta(html, 'name', 'twitter:title', page.title)
   html = replaceMeta(html, 'name', 'twitter:description', page.description)
+  html = replaceMeta(html, 'name', 'twitter:image', page.image || `${siteUrl}/images/pavimento-vinilico-sala-coimbra.png`)
   html = html.replace(/<link rel="canonical" href="[^"]*" \/>/, `<link rel="canonical" href="${canonical}" />`)
   html = html.replace(
     /<script id="seo-structured-data" type="application\/ld\+json">[\s\S]*?<\/script>/,

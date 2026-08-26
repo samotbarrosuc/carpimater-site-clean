@@ -5,6 +5,8 @@ import { RODAPES } from '@/content/rodapes'
 import { BUSINESS_NAME, EMAIL, PHONE_NUMBER } from '@/content/site'
 import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_VINILICO_SPC_M2 } from '@/content/precos-materiais'
 import { PAVEMENT_SEO_CONTENT } from '@/content/pavement-seo'
+import localServices from '@/content/local-services.json'
+import kitchenFaqs from '@/content/kitchen-faq.json'
 
 const SITE_URL = 'https://carpimater.pt'
 const DEFAULT_IMAGE = `${SITE_URL}/images/pavimento-vinilico-sala-coimbra.png`
@@ -23,17 +25,31 @@ type SeoEntry = {
   description: string
   searchTopics?: string[]
   image?: string
+  imageAlt?: string
   index?: boolean
   pageType?: 'WebPage' | 'CollectionPage' | 'AboutPage' | 'ContactPage' | 'CheckoutPage'
   serviceType?: string
   faqs?: Array<{ question: string; answer: string }>
 }
 
+const LOCAL_SERVICE_SEO = Object.fromEntries(localServices.map((service) => [
+  `/${service.slug}`,
+  {
+    title: service.metaTitle,
+    description: service.metaDescription,
+    searchTopics: service.searchTopics,
+    serviceType: service.serviceType,
+    faqs: service.faqs,
+    image: `${SITE_URL}${service.image}`,
+    imageAlt: service.imageAlt,
+  } satisfies SeoEntry,
+])) as Record<string, SeoEntry>
+
 const SEO_BY_PATH: Record<string, SeoEntry> = {
   '/': {
-    title: 'CarpiMater | Fornecimento e montagem de carpintarias',
-    description: 'Carpintaria por medida e loja de pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC, com aplicação em Coimbra e Região Centro.',
-    searchTopics: ['carpintaria por medida em Coimbra', 'pavimentos em Coimbra', 'pavimento vinílico SPC', 'pavimento flutuante híbrido', 'ZCUDO NextCore', 'pavimento laminado resistente à água', 'rodapé PVC'],
+    title: 'Carpintaria em Coimbra | Cozinhas e Pavimentos | CarpiMater',
+    description: 'Carpintaria por medida em Coimbra. Cozinhas, roupeiros, pavimentos vinílicos e flutuantes, rodapés e montagem na Região Centro.',
+    searchTopics: ['carpintaria em Coimbra', 'carpinteiro em Coimbra', 'carpintaria por medida Coimbra', 'cozinhas por medida Coimbra', 'pavimentos em Coimbra', 'roupeiros por medida Coimbra'],
   },
   '/loja': {
     title: 'Loja de Pavimentos Híbridos, Vinílicos e Rodapés | CarpiMater',
@@ -42,35 +58,37 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
     pageType: 'CollectionPage',
   },
   '/vinilico': {
-    title: `Pavimento Vinílico SPC a ${VINYL_PRICE} €/m² em Coimbra | CarpiMater`,
-    description: `Vinílico SPC a ${VINYL_PRICE} €/m², IVA incluído. Entrega gratuita na Região Centro e aplicação disponível. Encomende online e veja também flutuante híbrido.`,
-    searchTopics: ['pavimento vinílico', 'pavimento vinílico SPC', 'pavimento impermeável', 'aplicação de pavimento vinílico em Coimbra'],
+    title: 'Pavimento Vinílico SPC em Coimbra | Venda e Aplicação',
+    description: `Pavimento vinílico SPC a ${VINYL_PRICE} €/m², IVA incluído. Venda online, entrega gratuita na Região Centro e aplicação em Coimbra e arredores.`,
+    searchTopics: ['pavimento vinílico Coimbra', 'pavimento vinílico SPC', 'aplicação de pavimento vinílico Coimbra', 'instalação de pavimento vinílico Coimbra', 'preço pavimento vinílico Coimbra'],
     serviceType: 'Venda e aplicação de pavimento vinílico SPC',
     faqs: PAVEMENT_SEO_CONTENT.vinilico.faqs,
   },
   '/flutuante': {
-    title: `Pavimento Flutuante Híbrido a ${HYBRID_PRICE} €/m² | Coimbra`,
-    description: `Flutuante híbrido AC5 a ${HYBRID_PRICE} €/m², resistente à água 100 h+ e com garantia de 25 anos. Entrega gratuita na Região Centro e serviço de aplicação.`,
-    searchTopics: ['pavimento flutuante híbrido', 'ZCUDO NextCore', 'pavimento laminado híbrido', 'pavimento AC5', 'pavimento resistente à água', 'aplicação de pavimento em Coimbra'],
+    title: 'Pavimento Flutuante em Coimbra | Venda e Aplicação',
+    description: `Flutuante híbrido AC5 a ${HYBRID_PRICE} €/m², resistente à água 100 h+ e com garantia de 25 anos. Entrega gratuita e aplicação na Região Centro.`,
+    searchTopics: ['pavimento flutuante Coimbra', 'pavimento flutuante híbrido', 'aplicação de pavimento flutuante Coimbra', 'instalação de chão flutuante Coimbra', 'pavimento AC5 resistente à água'],
     image: `${SITE_URL}/images/produtos-flutuante/pingo.webp`,
+    imageAlt: 'Pavimento flutuante híbrido em acabamento de madeira',
     serviceType: 'Venda e aplicação de pavimento flutuante híbrido ZCUDO NextCore',
     faqs: PAVEMENT_SEO_CONTENT.flutuante.faqs,
   },
   '/rodapes': {
-    title: 'Rodapés PVC em Coimbra | Preços e Compra Online',
-    description: 'Rodapés PVC com preços publicados, vários acabamentos e compra online por barras. Entrega ou aplicação em Coimbra, Aveiro, Leiria e arredores.',
-    searchTopics: ['rodapé', 'rodapés', 'rodapé PVC', 'rodapé branco', 'aplicação de rodapés em Coimbra'],
+    title: 'Rodapés PVC em Coimbra | Preços, Venda e Aplicação',
+    description: 'Rodapés PVC com preços publicados, compra online e serviço de aplicação em Coimbra e na Região Centro. Rodapés em madeira sob consulta.',
+    searchTopics: ['rodapés PVC Coimbra', 'rodapé branco', 'comprar rodapés Coimbra', 'aplicação de rodapés Coimbra', 'rodapé em madeira Coimbra'],
     pageType: 'CollectionPage',
     serviceType: 'Venda e aplicação de rodapés PVC',
   },
   '/cozinha': {
-    title: 'Cozinhas por Medida em Coimbra | Carpinteiros CarpiMater',
-    description: 'Projeto, fabrico e montagem de cozinhas por medida por profissionais de carpintaria. Atuação regular em Coimbra, Aveiro, Leiria e na Região Centro.',
-    searchTopics: ['cozinhas por medida em Coimbra', 'carpinteiro em Coimbra', 'fabrico de cozinhas', 'montagem de cozinhas'],
+    title: 'Cozinhas por Medida em Coimbra | Fabrico e Montagem',
+    description: 'Cozinhas por medida em Coimbra: levantamento, proposta, fabrico e montagem. Materiais, ferragens, preço e prazo definidos por escrito.',
+    searchTopics: ['cozinhas por medida Coimbra', 'fabrico de cozinhas Coimbra', 'montagem de cozinhas Coimbra', 'carpinteiro para cozinhas Coimbra'],
     serviceType: 'Projeto, fabrico e montagem de cozinhas por medida',
+    faqs: kitchenFaqs,
   },
   '/construcao': {
-    title: 'Carpintaria para Obras em Coimbra e Região Centro',
+    title: 'Carpintaria para Obras em Coimbra | Fornecimento e Montagem',
     description: 'Carpinteiros para obras, remodelações e empreiteiros: pavimentos, cozinhas, roupeiros, portas e marcenaria em Coimbra, Aveiro, Leiria e arredores.',
     searchTopics: ['carpintaria em Coimbra', 'carpinteiros para obras', 'carpintaria por medida', 'marcenaria', 'remodelações'],
     serviceType: 'Carpintaria para construção e remodelação',
@@ -97,6 +115,7 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
     description: 'Termos aplicáveis às encomendas de pavimentos e rodapés na loja online CarpiMater.',
     index: false,
   },
+  ...LOCAL_SERVICE_SEO,
 }
 
 const placeNames = [
@@ -140,7 +159,7 @@ const businessSchema = {
     telephone: PHONE_NUMBER,
     email: EMAIL,
     contactType: 'vendas e apoio ao cliente',
-    areaServed: 'PT',
+    areaServed: 'Região Centro, Portugal',
     availableLanguage: ['Português'],
   },
   knowsAbout: [
@@ -187,7 +206,6 @@ function productItemList() {
       description: `Pavimento vinílico SPC ${product.nome}, disponível para compra online.`,
       sku: product.referencia,
       category: 'Pavimento vinílico SPC',
-      brand: { '@type': 'Brand', name: BUSINESS_NAME },
       ...(product.imagem ? { image: absoluteUrl(product.imagem) } : {}),
       offers: {
         '@type': 'Offer',
@@ -247,7 +265,6 @@ function productItemList() {
       category: 'Rodapé PVC',
       material: product.material,
       color: product.nome,
-      brand: { '@type': 'Brand', name: BUSINESS_NAME },
       ...(product.imagem ? { image: absoluteUrl(product.imagem) } : {}),
       offers: {
         '@type': 'Offer',
@@ -307,6 +324,10 @@ function routeSchema(pathname: string, seo: SeoEntry, canonical: string) {
       { '@id': BUSINESS_ID },
       ...(seo.searchTopics || []).map((name) => ({ '@type': 'Thing', name })),
     ],
+    primaryImageOfPage: {
+      '@type': 'ImageObject',
+      url: seo.image || DEFAULT_IMAGE,
+    },
   }
 
   if (pathname === '/loja') {
@@ -405,7 +426,7 @@ export default function SeoManager() {
     setMeta('property', 'og:title', seo.title)
     setMeta('property', 'og:description', seo.description)
     setMeta('property', 'og:image', image)
-    setMeta('property', 'og:image:alt', 'CarpiMater — pavimentos, rodapés e carpintaria')
+    setMeta('property', 'og:image:alt', seo.imageAlt || 'CarpiMater — pavimentos, rodapés e carpintaria')
     setMeta('name', 'twitter:card', 'summary_large_image')
     setMeta('name', 'twitter:title', seo.title)
     setMeta('name', 'twitter:description', seo.description)

@@ -77,6 +77,19 @@ export default function ContactosPage() {
           </div>
         </form>
       </section>
+      <section className="border-y border-[#ded8cf] bg-white px-4 py-14 sm:py-16">
+        <div className="mx-auto max-w-6xl">
+          <div className="max-w-3xl"><p className="section-kicker">Antes de enviar</p><h2 className="mt-3 font-display text-3xl font-bold tracking-[-0.025em]">Informação que ajuda a analisar o pedido</h2><p className="mt-4 text-sm leading-7 text-[#40505b]">Sempre que possível, indique a localização, medidas aproximadas, fotografias e o trabalho pretendido. Para pavimentos e rodapés, indique também a área ou os metros lineares.</p></div>
+          <nav aria-label="Pedidos por tipo de serviço" className="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+            {[
+              { label: 'Cozinhas por medida', href: '/cozinha' },
+              { label: 'Roupeiros por medida', href: '/roupeiros-por-medida-coimbra' },
+              { label: 'Pavimentos e aplicação', href: '/vinilico' },
+              { label: 'Instalação de rodapés', href: '/instalacao-rodapes-coimbra' },
+            ].map((link) => <a key={link.href} href={link.href} className="rounded-xl border border-[#ded8cf] bg-[#f8f5ef] p-4 text-sm font-bold transition hover:border-primary hover:text-primary">{link.label}</a>)}
+          </nav>
+        </div>
+      </section>
       <Footer />
     </main>
   )

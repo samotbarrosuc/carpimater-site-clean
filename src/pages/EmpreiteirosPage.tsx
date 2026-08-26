@@ -87,12 +87,12 @@ export default function EmpreiteirosPage() {
                   <h1 className="font-display text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] sm:text-[3.25rem] lg:text-[2.25rem] xl:text-[3rem]">
                     <span className="lg:hidden">
                       <span className="block text-[#19242e]">Carpintaria por medida</span>
-                      <span className="block text-[#19242e]">para obras e</span>
-                      <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">remodelações.</span>
+                      <span className="block text-[#19242e]">para obras em</span>
+                      <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">Coimbra.</span>
                     </span>
                     <span className="hidden lg:block">
                       <span className="block whitespace-nowrap text-[#19242e]">Carpintaria por medida para</span>
-                      <span className="block whitespace-nowrap font-serif text-[0.95em] font-normal italic text-[#f08a45]">obras e remodelações.</span>
+                      <span className="block whitespace-nowrap font-serif text-[0.95em] font-normal italic text-[#f08a45]">obras e remodelações em Coimbra.</span>
                     </span>
                   </h1>
                   <p className="mb-6 mt-5 max-w-xl text-sm leading-7 text-[#40505b] sm:text-base">
@@ -198,6 +198,12 @@ export default function EmpreiteirosPage() {
                 </div>
               ))}
             </div>
+            <nav aria-label="Serviços de carpintaria em destaque" className="mx-auto mt-8 flex max-w-6xl flex-wrap gap-x-6 gap-y-3 border-t border-[#ded8cf] pt-6 text-sm font-bold text-primary">
+              <a href="/cozinha">Cozinhas por medida</a>
+              <a href="/montagem-cozinhas-coimbra">Montagem de cozinhas</a>
+              <a href="/roupeiros-por-medida-coimbra">Roupeiros por medida</a>
+              <a href="/instalacao-rodapes-coimbra">Instalação de rodapés</a>
+            </nav>
           </div>
         </section>
 

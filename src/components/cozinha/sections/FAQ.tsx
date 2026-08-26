@@ -6,33 +6,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "@/components/ui/accordion";
-
-const faqs = [
-  {
-    q: "Como é definido o preço?",
-    a: "O preço depende das medidas, dos materiais, das ferragens e da montagem. Esses elementos são discriminados na proposta.",
-  },
-  {
-    q: "Qual é o prazo habitual de entrega e montagem?",
-    a: "O prazo habitual é de 8 a 10 semanas após a aprovação do projeto. Pode variar conforme a dimensão, os materiais e a agenda de montagem.",
-  },
-  {
-    q: "Fazem projetos e montagem fora da Região Centro?",
-    a: "A montagem regular abrange a Região Centro. Para projetos noutras zonas do país, contacte-nos primeiro para confirmarmos disponibilidade.",
-  },
-  {
-    q: "A montagem está incluída no preço?",
-    a: "A proposta indica se o transporte e a montagem estão incluídos e quais os trabalhos abrangidos.",
-  },
-  {
-    q: "Que tipo de materiais utilizam?",
-    a: "Trabalhamos com MDF, aglomerado, acabamentos lacados ou em folha de madeira e diferentes ferragens. A escolha é registada na proposta.",
-  },
-  {
-    q: "Fazem reparos e renovações em cozinhas existentes?",
-    a: "Sim, conforme o trabalho. Envie fotografias e uma descrição para confirmarmos se fazemos a reparação ou renovação pretendida.",
-  },
-];
+import faqs from '@/content/kitchen-faq.json'
 
 export default function FAQ() {
   const ref = useRef(null);
@@ -68,10 +42,10 @@ export default function FAQ() {
                 className="rounded-2xl border border-[#ded8cf] bg-white px-5 shadow-sm transition data-[state=open]:border-primary data-[state=open]:shadow-[0_12px_30px_rgba(25,36,46,0.07)] sm:px-6"
               >
                 <AccordionTrigger className="py-5 text-left text-sm font-bold text-[#19242e] hover:no-underline">
-                  {faq.q}
+                  {faq.question}
                 </AccordionTrigger>
                 <AccordionContent className="pb-5 text-sm leading-6 text-[#40505b]">
-                  {faq.a}
+                  {faq.answer}
                 </AccordionContent>
               </AccordionItem>
             ))}
