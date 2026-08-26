@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'react'
-import { Calculator, Check, Info, MapPin, Pencil, Ruler, ShoppingBag, X } from 'lucide-react'
-import { DISTRITOS, getConcelhosByDistrito, getTravelEntry } from '@/content/viagens'
+import { Calculator, Check, Info, Pencil, Ruler, ShoppingBag, X } from 'lucide-react'
+import { DISTRITOS_COM_OUTRO, OUTRO_DISTRITO, getConcelhosByDistrito, getTravelEntry } from '@/content/viagens'
 import { calcEstimate, calcUnderlay, formatEur, formatQuantity, parseQuantityInput, sanitizeQuantityInput, type EstimateResult, type UnderlayCalculation } from '@/lib/calculations'
 import type { CartItem } from '@/lib/cart'
 import { PRECO_MANTA_VINILICO_30_A_50_M2, PRECO_ROLO_MANTA_PLASTICA_VINILICO, PRECO_ROLO_SUBPAVIMENTO_FLUTUANTE, PRECO_SUBPAVIMENTO_FLUTUANTE_30_A_50_M2 } from '@/content/precos-materiais'
@@ -163,21 +163,25 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
     }
   }, [materialRodape])
 
-  const concelhos = getConcelhosByDistrito(distrito)
-  const travel = getTravelEntry(distrito, concelho)
+  const isOutroDistrito = distrito === OUTRO_DISTRITO
+  const concelhos = isOutroDistrito ? [] : getConcelhosByDistrito(distrito)
+  const normalizedConcelho = concelho.trim()
+  const travel = isOutroDistrito ? undefined : getTravelEntry(distrito, concelho)
+  const hasLocation = Boolean(travel || (isOutroDistrito && normalizedConcelho))
   const estimate = useMemo(
-    () => travel && (area > 0 || rodape > 0)
-      ? calcEstimate(area, rodape, 0, 0, 0, travel.distance_km, travel.toll_eur, true)
+    () => hasLocation && (area > 0 || rodape > 0)
+      ? calcEstimate(area, rodape, 0, 0, 0, travel?.distance_km ?? 0, travel?.toll_eur ?? 0, true)
       : null,
-    [area, rodape, travel],
+    [area, hasLocation, rodape, travel],
   )
+  const deslocacoesTotal = estimate ? estimate.custoDeslocacaoKm + estimate.custoPortagens : 0
   const applicationTotal = estimate
-    ? estimate.custoMaoObra + estimate.custoMaoObraRodape + estimate.custoDeslocacaoKm + estimate.custoPortagens + underlayTotal
+    ? estimate.custoMaoObra + estimate.custoMaoObraRodape + deslocacoesTotal + underlayTotal
     : 0
 
   useEffect(() => {
-    onChange(estimate && travel ? { distrito, concelho, preferredDate: preferredDate.trim() || undefined, area, rodape, estimate, underlayLines, underlayTotal, applicationTotal } : null)
-  }, [applicationTotal, area, concelho, distrito, estimate, onChange, preferredDate, rodape, travel, underlayLines, underlayTotal])
+    onChange(estimate && hasLocation ? { distrito, concelho: normalizedConcelho, preferredDate: preferredDate.trim() || undefined, area, rodape, estimate, underlayLines, underlayTotal, applicationTotal } : null)
+  }, [applicationTotal, area, distrito, estimate, hasLocation, normalizedConcelho, onChange, preferredDate, rodape, underlayLines, underlayTotal])
 
   return (
     <div className="mt-4 overflow-hidden rounded-2xl border border-[#d8d0c4] bg-[#f8f5ef]">
@@ -218,8 +222,8 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
         </div>
 
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          <label className="text-sm font-semibold text-slate-800">Distrito<select value={distrito} onChange={(event) => { setDistrito(event.target.value); setConcelho('') }} className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-primary"><option value="">Escolha o distrito</option>{DISTRITOS.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
-          <label className="text-sm font-semibold text-slate-800">Concelho<select value={concelho} disabled={!distrito} onChange={(event) => setConcelho(event.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-primary disabled:bg-slate-100"><option value="">Escolha o concelho</option>{concelhos.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
+          <label className="text-sm font-semibold text-slate-800">Distrito<select value={distrito} onChange={(event) => { setDistrito(event.target.value); setConcelho('') }} className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-primary"><option value="">Escolha o distrito</option>{DISTRITOS_COM_OUTRO.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
+          <label className="text-sm font-semibold text-slate-800">Concelho{isOutroDistrito ? <input required value={concelho} onChange={(event) => setConcelho(event.target.value)} placeholder="Escreva o concelho" className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-primary" /> : <select value={concelho} disabled={!distrito} onChange={(event) => setConcelho(event.target.value)} className="mt-1.5 w-full rounded-xl border border-slate-300 bg-white px-3 py-2.5 font-normal outline-none focus:border-primary disabled:bg-slate-100"><option value="">Escolha o concelho</option>{concelhos.map((item) => <option key={item} value={item}>{item}</option>)}</select>}</label>
         </div>
         <label className="mt-4 block text-sm font-semibold text-slate-800">
           Para que data pretende o serviço? <span className="font-normal text-slate-400">(opcional)</span>
@@ -232,7 +236,7 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
         </p>
       </div>
 
-      {travel && estimate && (
+      {hasLocation && estimate && (
         <div className="border-t border-[#d8d0c4] bg-white p-5 sm:p-6">
           <div className="flex flex-wrap items-center justify-between gap-3">
             <div><p className="section-kicker">Orçamento previsto de aplicação</p><p className="mt-1 text-xs text-slate-500">Não incluído no valor da encomenda de materiais</p></div>
@@ -250,8 +254,7 @@ export default function ApplicationQuote({ items, onChange }: { items: CartItem[
               </div>
             ))}
             {rodape > 0 && <div className="flex justify-between gap-4"><dt className="text-slate-600">Aplicação de rodapé</dt><dd className="font-semibold text-[#19242e]">{formatEur(estimate.custoMaoObraRodape)}</dd></div>}
-            <div className="flex justify-between gap-4"><dt className="flex items-center gap-1.5 text-slate-600"><MapPin className="h-3.5 w-3.5 text-primary" />Deslocações</dt><dd className="font-semibold text-[#19242e]">{formatEur(estimate.custoDeslocacaoKm)}</dd></div>
-            {estimate.custoPortagens > 0 && <div className="flex justify-between gap-4"><dt className="text-slate-600">Portagens</dt><dd className="font-semibold text-[#19242e]">{formatEur(estimate.custoPortagens)}</dd></div>}
+            <div className="flex justify-between gap-4"><dt className="text-slate-600">Deslocações</dt><dd className="font-semibold text-[#19242e]">{isOutroDistrito ? 'Sob confirmação' : formatEur(deslocacoesTotal)}</dd></div>
           </dl>
           <p className="mt-4 flex items-start gap-2 rounded-xl bg-[#f8f5ef] p-3 text-[0.68rem] leading-5 text-slate-500"><Info className="mt-0.5 h-3.5 w-3.5 shrink-0 text-primary" />Este valor é apenas um orçamento previsto e não integra a fatura dos materiais. O valor final será confirmado pela equipa após verificar em obra o estado e as condições do pavimento atual.</p>
         </div>

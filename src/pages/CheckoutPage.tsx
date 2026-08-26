@@ -8,7 +8,7 @@ import { formatEur, formatQuantity } from '@/lib/calculations'
 import { getCartItemPrice } from '@/lib/cart'
 import ApplicationQuote, { type ApplicationQuoteData } from '@/components/ApplicationQuote'
 import { EMAIL, PHONE_NUMBER, getWhatsAppUrl } from '@/content/site'
-import { DISTRITOS, getConcelhosByDistrito } from '@/content/viagens'
+import { DISTRITOS_COM_OUTRO, OUTRO_DISTRITO, getConcelhosByDistrito } from '@/content/viagens'
 
 type PaymentMethod = 'mbway' | 'iban'
 const BANK_IBAN = 'PT50 0018 0003 5127 2706 0200 6'
@@ -58,7 +58,8 @@ export default function CheckoutPage() {
   const [reference, setReference] = useState('')
   const [formError, setFormError] = useState('')
   const [termsAccepted, setTermsAccepted] = useState(false)
-  const concelhos = getConcelhosByDistrito(distrito)
+  const isOutroDistrito = distrito === OUTRO_DISTRITO
+  const concelhos = isOutroDistrito ? [] : getConcelhosByDistrito(distrito)
 
   const updateApplicationQuote = useCallback((quote: ApplicationQuoteData | null) => {
     setApplicationQuote(quote)
@@ -194,8 +195,8 @@ export default function CheckoutPage() {
                   <div className="mt-4 grid gap-4 sm:grid-cols-2">
                     <label className="block text-sm font-semibold"><span className="mb-2 block">Nome completo <span className="text-primary">*</span></span><input required name="nome" type="text" autoComplete="name" className="w-full rounded-xl border border-slate-300 px-4 py-3 font-normal outline-none focus:border-primary" /></label>
                     <label className="block text-sm font-semibold"><span className="mb-2 block">Telefone <span className="text-primary">*</span></span><input required name="telefone" type="tel" inputMode="numeric" pattern="9[0-9]{8}" maxLength={9} title="Introduza um número com 9 algarismos, começado por 9." autoComplete="tel" className="w-full rounded-xl border border-slate-300 px-4 py-3 font-normal outline-none focus:border-primary" /></label>
-                    <label className="block text-sm font-semibold"><span className="mb-2 block">Distrito <span className="text-primary">*</span></span><select required name="distrito" value={distrito} onChange={(event) => { setDistrito(event.target.value); setConcelho('') }} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal outline-none focus:border-primary"><option value="">Escolha o distrito</option>{DISTRITOS.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
-                    <label className="block text-sm font-semibold"><span className="mb-2 block">Concelho <span className="text-primary">*</span></span><select required name="concelho" value={concelho} disabled={!distrito} onChange={(event) => setConcelho(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal outline-none focus:border-primary disabled:bg-slate-100 disabled:text-slate-400"><option value="">Escolha o concelho</option>{concelhos.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
+                    <label className="block text-sm font-semibold"><span className="mb-2 block">Distrito <span className="text-primary">*</span></span><select required name="distrito" value={distrito} onChange={(event) => { setDistrito(event.target.value); setConcelho('') }} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal outline-none focus:border-primary"><option value="">Escolha o distrito</option>{DISTRITOS_COM_OUTRO.map((item) => <option key={item} value={item}>{item}</option>)}</select></label>
+                    <label className="block text-sm font-semibold"><span className="mb-2 block">Concelho <span className="text-primary">*</span></span>{isOutroDistrito ? <input required name="concelho" type="text" value={concelho} onChange={(event) => setConcelho(event.target.value)} placeholder="Escreva o concelho" autoComplete="address-level2" className="w-full rounded-xl border border-slate-300 px-4 py-3 font-normal outline-none focus:border-primary" /> : <select required name="concelho" value={concelho} disabled={!distrito} onChange={(event) => setConcelho(event.target.value)} className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 font-normal outline-none focus:border-primary disabled:bg-slate-100 disabled:text-slate-400"><option value="">Escolha o concelho</option>{concelhos.map((item) => <option key={item} value={item}>{item}</option>)}</select>}</label>
                     <label className="block text-sm font-semibold"><span className="mb-2 block">Freguesia <span className="font-normal text-slate-400">(opcional)</span></span><input name="freguesia" type="text" autoComplete="address-level3" className="w-full rounded-xl border border-slate-300 px-4 py-3 font-normal outline-none focus:border-primary" /></label>
                     <label className="block text-sm font-semibold"><span className="mb-2 block">Morada <span className="font-normal text-slate-400">(opcional)</span></span><input name="morada" type="text" autoComplete="street-address" className="w-full rounded-xl border border-slate-300 px-4 py-3 font-normal outline-none focus:border-primary" /></label>
                     <label className="block text-sm font-semibold sm:col-span-2"><span className="mb-2 block">Email <span className="font-normal text-slate-400">(opcional)</span></span><input name="email" type="email" inputMode="email" autoComplete="email" className="w-full rounded-xl border border-slate-300 px-4 py-3 font-normal outline-none focus:border-primary" /></label>

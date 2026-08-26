@@ -94,9 +94,9 @@ const offerCatalog = {
 
 const pages = {
   loja: {
-    title: 'Loja de Pavimentos Híbridos, Vinílicos e Rodapés | CarpiMater',
-    description: 'Descubra pavimentos vinílicos SPC, flutuante híbrido ZCUDO NextCore e rodapés PVC. Entrega e aplicação em Coimbra, Aveiro, Leiria e Região Centro.',
-    topics: ['loja de pavimentos online', 'pavimentos vinílicos SPC', 'pavimento flutuante híbrido ZCUDO', 'ZCUDO NextCore', 'pavimentos laminados resistentes à água', 'rodapés PVC', 'preços de pavimentos'],
+    title: 'Loja de Pavimentos com Transporte Gratuito | CarpiMater',
+    description: 'Pavimentos vinílicos SPC, flutuante híbrido e rodapés PVC com preços online. Transporte gratuito em casa ou obra na Região Centro e aplicação disponível.',
+    topics: ['loja de pavimentos online', 'pavimentos vinílicos SPC', 'pavimento flutuante híbrido ZCUDO', 'ZCUDO NextCore', 'pavimentos laminados resistentes à água', 'rodapés PVC', 'preços de pavimentos', 'transporte gratuito pavimentos'],
     type: 'CollectionPage',
     heading: 'Loja online de pavimentos e rodapés na Região Centro',
     intro: `Compre pavimento vinílico SPC a ${vinylPrice} €/m², flutuante híbrido AC5 a ${hybridPrice} €/m² e rodapés PVC desde ${whiteSkirtingPrice} €/m. Os preços incluem IVA e a entrega regular é gratuita na Região Centro.`,
@@ -116,7 +116,7 @@ const pages = {
   },
   vinilico: {
     title: 'Pavimento Vinílico SPC em Coimbra | Venda e Aplicação',
-    description: `Pavimento vinílico SPC a ${vinylPrice} €/m², IVA incluído. Venda online, entrega gratuita na Região Centro e aplicação em Coimbra e arredores.`,
+    description: `Pavimento vinílico SPC a ${vinylPrice} €/m², IVA incluído. Transporte gratuito em casa ou obra na Região Centro e aplicação em Coimbra e arredores.`,
     topics: ['pavimento vinílico Coimbra', 'pavimento vinílico SPC', 'aplicação de pavimento vinílico Coimbra', 'instalação de pavimento vinílico Coimbra', 'preço pavimento vinílico Coimbra'],
     serviceType: 'Venda e aplicação de pavimento vinílico SPC',
     heading: 'Pavimento vinílico SPC em Coimbra — fornecimento e aplicação',
@@ -132,7 +132,7 @@ const pages = {
   },
   flutuante: {
     title: 'Pavimento Flutuante em Coimbra | Venda e Aplicação',
-    description: `Flutuante híbrido AC5 a ${hybridPrice} €/m², resistente à água 100 h+ e com garantia de 25 anos. Entrega gratuita e aplicação na Região Centro.`,
+    description: `Flutuante híbrido AC5 a ${hybridPrice} €/m², resistente à água 100 h+ e com garantia de 25 anos. Transporte gratuito e aplicação na Região Centro.`,
     topics: ['pavimento flutuante Coimbra', 'pavimento flutuante híbrido', 'aplicação de pavimento flutuante Coimbra', 'instalação de chão flutuante Coimbra', 'pavimento AC5 resistente à água'],
     serviceType: 'Venda e aplicação de pavimento flutuante híbrido AC5',
     heading: 'Pavimento flutuante em Coimbra — fornecimento e aplicação',

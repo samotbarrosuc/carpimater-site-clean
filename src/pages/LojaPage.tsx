@@ -24,6 +24,13 @@ export default function LojaPage() {
             <p className="section-kicker">Loja de materiais</p>
             <h1 className="mt-4 max-w-3xl font-display text-4xl font-bold leading-[1.02] tracking-[-0.035em] sm:text-6xl">Pavimentos e rodapés.<br /><span className="font-serif font-normal italic text-[#f08a45]">Loja online.</span></h1>
             <p className="mt-5 max-w-xl text-sm leading-6 text-white/65 sm:text-base">Escolha o material, indique a quantidade e adicione ao carrinho. A aplicação pode ser pedida em separado.</p>
+            <a href="#catalogo-loja" className="mt-6 inline-flex items-center gap-3 rounded-2xl border border-[#f08a45]/40 bg-[#f08a45] px-4 py-3 text-left text-[#19242e] shadow-[0_16px_34px_rgba(240,138,69,0.2)] transition hover:bg-[#ff9b55] sm:px-5">
+              <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-white/90"><Truck className="h-5 w-5" /></span>
+              <span>
+                <span className="block text-[0.65rem] font-extrabold uppercase tracking-[0.16em]">Transporte gratuito</span>
+                <span className="mt-0.5 block text-sm font-extrabold sm:text-base">Entrega em casa ou em obra na Região Centro</span>
+              </span>
+            </a>
           </div>
 
           <div className="grid grid-cols-2 gap-px overflow-hidden rounded-2xl border border-white/10 bg-white/10">
@@ -45,7 +52,7 @@ export default function LojaPage() {
           <span className="flex h-10 w-10 shrink-0 items-center justify-center rounded-xl bg-[#f05b13] text-white shadow-[0_6px_16px_rgba(240,91,19,0.2)] sm:h-11 sm:w-11"><Truck className="h-4 w-4 sm:h-5 sm:w-5" /></span>
           <span className="min-w-0 flex-1">
             <span className="block text-[0.62rem] font-extrabold uppercase tracking-[0.16em] text-[#c54d14] sm:text-xs">Entregas</span>
-            <span className="mt-0.5 block text-sm text-[#40505b] sm:text-base"><strong className="font-extrabold text-[#19242e]">Portes grátis</strong><span className="font-semibold text-[#8b5a35]"> — Região Centro</span></span>
+            <span className="mt-0.5 block text-sm text-[#40505b] sm:text-base"><strong className="font-extrabold text-[#19242e]">Transporte gratuito</strong><span className="font-semibold text-[#8b5a35]"> — Região Centro</span></span>
             <span className="mt-0.5 block text-[0.68rem] font-medium text-[#6f6257] sm:text-xs">Outras zonas do país: entrega sujeita a contacto e disponibilidade.</span>
           </span>
           <span className="hidden text-sm font-bold text-[#f05b13] sm:block">Ver materiais</span>

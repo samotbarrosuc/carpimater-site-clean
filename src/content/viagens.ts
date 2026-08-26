@@ -95,8 +95,13 @@ export const TRAVEL_DATA: TravelEntry[] = [
 
 // ─── Funções utilitárias (não editar) ─────────────────────────────────────────
 
+export const OUTRO_DISTRITO = 'Outro'
+
 /** Lista de distritos disponíveis (ordenados alfabeticamente) */
 export const DISTRITOS = [...new Set(TRAVEL_DATA.map(t => t.distrito))].sort()
+
+/** Lista apresentada nos formulários, incluindo pedidos fora da lista regular. */
+export const DISTRITOS_COM_OUTRO = [...DISTRITOS, OUTRO_DISTRITO]
 
 /** Concelhos de um distrito (ordenados alfabeticamente) */
 export function getConcelhosByDistrito(distrito: string): string[] {
