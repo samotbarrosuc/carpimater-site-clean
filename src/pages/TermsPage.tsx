@@ -40,7 +40,7 @@ export default function TermsPage() {
 
             <section className={sectionClass}>
               <h2 className="font-display text-xl font-bold text-[#19242e]">4. Pagamento, confirmação e fatura</h2>
-              <p className="mt-3">Os meios de pagamento disponíveis são MB Way e transferência bancária. A encomenda só é processada após confirmação do pagamento. O envio do comprovativo pode facilitar essa confirmação, mas não é obrigatório. A CarpiMater emitirá o documento fiscal legalmente aplicável à transmissão dos bens.</p>
+              <p className="mt-3">Os meios de pagamento disponíveis são MB Way e transferência bancária. A encomenda só é processada após confirmação do pagamento. O envio do comprovativo pode facilitar essa confirmação, mas não é obrigatório. A CarpiMater emitirá o documento fiscal legalmente aplicável à transmissão dos bens e a fatura será enviada por email.</p>
               <p className="mt-3">A estimativa de aplicação apresentada no checkout é meramente indicativa, não integra o preço pago pelos materiais e não constitui adjudicação do serviço. A aplicação é confirmada separadamente depois de avaliadas as condições da obra.</p>
             </section>
 
