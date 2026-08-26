@@ -1,8 +1,8 @@
 import type { VercelRequest, VercelResponse } from '@vercel/node'
 import { Resend } from 'resend'
 import { z } from 'zod'
-import { getNomeMaterial, NOMES_FLUTUANTES_HIBRIDOS, NOMES_RODAPES, NOMES_VINILICOS } from '../src/content/nomes-materiais'
-import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_RODAPE_PVC_BRANCO_ML, PRECO_RODAPE_PVC_ML, PRECO_VINILICO_SPC_M2 } from '../src/content/precos-materiais'
+import { getNomeMaterial, NOMES_FLUTUANTES_HIBRIDOS, NOMES_RODAPES, NOMES_VINILICOS } from '../src/content/nomes-materiais.js'
+import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_RODAPE_PVC_BRANCO_ML, PRECO_RODAPE_PVC_ML, PRECO_VINILICO_SPC_M2 } from '../src/content/precos-materiais.js'
 
 // Esta função é autónoma para ser carregada corretamente no runtime da Vercel.
 const FLOORING_BOX_AREA_M2 = 1.76
