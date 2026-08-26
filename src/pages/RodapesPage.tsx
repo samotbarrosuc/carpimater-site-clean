@@ -13,7 +13,7 @@ export default function RodapesPage() {
         <div className="mx-auto max-w-6xl">
           <p className="section-kicker">Rodapés PVC · Loja online</p>
           <h1 className="mt-4 max-w-4xl font-display text-4xl font-bold leading-[1.03] tracking-[-0.035em] sm:text-6xl">
-            Rodapés PVC em Coimbra. <span className="font-serif font-normal italic text-[#f08a45]">Venda e aplicação.</span>
+            Rodapés PVC. <span className="font-serif font-normal italic text-[#f08a45]">Venda e aplicação.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-white/70 sm:text-lg">
             Escolha o acabamento, indique os metros e encomende online. Também fazemos a aplicação em Coimbra, Aveiro, Leiria e arredores. Para outras zonas, confirme primeiro a nossa disponibilidade.
@@ -95,7 +95,7 @@ export default function RodapesPage() {
           </div>
           <div className="mt-8 rounded-2xl border border-[#2b3b47] bg-[#19242e] p-6 text-white sm:flex sm:items-center sm:justify-between sm:gap-8 sm:p-8">
             <div><h2 className="font-display text-2xl font-bold">Precisa também da instalação?</h2><p className="mt-2 max-w-2xl text-sm leading-6 text-white/65">Veja como medimos, estimamos e confirmamos os cortes e remates antes da aplicação.</p></div>
-            <a href="/instalacao-rodapes-coimbra" className="mt-5 inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-[#f08a45] sm:mt-0">Instalação de rodapés em Coimbra<ChevronRight className="h-4 w-4" /></a>
+            <a href="/instalacao-rodapes-coimbra" className="mt-5 inline-flex shrink-0 items-center gap-1.5 text-sm font-bold text-[#f08a45] sm:mt-0">Instalação de rodapés<ChevronRight className="h-4 w-4" /></a>
           </div>
         </div>
       </section>

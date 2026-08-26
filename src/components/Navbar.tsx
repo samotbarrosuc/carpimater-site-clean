@@ -29,7 +29,7 @@ const SERVICE_GROUPS: ServiceGroup[] = [
     description: 'Projeto, fabrico e montagem',
     href: '/cozinha',
     children: [
-      { label: 'Montagem de cozinhas', description: 'Serviço adicional em Coimbra e Região Centro', href: '/montagem-cozinhas-coimbra' },
+      { label: 'Montagem de cozinhas', description: 'Serviço adicional na Região Centro', href: '/montagem-cozinhas-coimbra' },
     ],
   },
   {

@@ -47,8 +47,8 @@ const LOCAL_SERVICE_SEO = Object.fromEntries(localServices.map((service) => [
 
 const SEO_BY_PATH: Record<string, SeoEntry> = {
   '/': {
-    title: 'Carpintaria em Coimbra | Cozinhas e Pavimentos | CarpiMater',
-    description: 'Carpintaria por medida em Coimbra. Cozinhas, roupeiros, pavimentos vinílicos e flutuantes, rodapés e montagem na Região Centro.',
+    title: 'CarpiMater | Fornecimento e montagem de carpintarias',
+    description: 'Carpintaria por medida. Cozinhas, roupeiros, pavimentos vinílicos e flutuantes, rodapés e montagem na Região Centro.',
     searchTopics: ['carpintaria em Coimbra', 'carpinteiro em Coimbra', 'carpintaria por medida Coimbra', 'cozinhas por medida Coimbra', 'pavimentos em Coimbra', 'roupeiros por medida Coimbra'],
   },
   '/loja': {
@@ -58,14 +58,14 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
     pageType: 'CollectionPage',
   },
   '/vinilico': {
-    title: 'Pavimento Vinílico SPC em Coimbra | Venda e Aplicação',
-    description: `Pavimento vinílico SPC a ${VINYL_PRICE} €/m², IVA incluído. Transporte gratuito em casa ou obra na Região Centro e aplicação em Coimbra e arredores.`,
+    title: 'Pavimento Vinílico SPC | Venda e Aplicação',
+    description: `Pavimento vinílico SPC a ${VINYL_PRICE} €/m², IVA incluído. Transporte gratuito em casa ou obra na Região Centro e aplicação disponível.`,
     searchTopics: ['pavimento vinílico Coimbra', 'pavimento vinílico SPC', 'aplicação de pavimento vinílico Coimbra', 'instalação de pavimento vinílico Coimbra', 'preço pavimento vinílico Coimbra'],
     serviceType: 'Venda e aplicação de pavimento vinílico SPC',
     faqs: PAVEMENT_SEO_CONTENT.vinilico.faqs,
   },
   '/flutuante': {
-    title: 'Pavimento Flutuante em Coimbra | Venda e Aplicação',
+    title: 'Pavimento Flutuante Híbrido | Venda e Aplicação',
     description: `Flutuante híbrido AC5 a ${HYBRID_PRICE} €/m², resistente à água 100 h+ e com garantia de 25 anos. Transporte gratuito e aplicação na Região Centro.`,
     searchTopics: ['pavimento flutuante Coimbra', 'pavimento flutuante híbrido', 'aplicação de pavimento flutuante Coimbra', 'instalação de chão flutuante Coimbra', 'pavimento AC5 resistente à água'],
     image: `${SITE_URL}/images/produtos-flutuante/pingo.webp`,
@@ -74,28 +74,28 @@ const SEO_BY_PATH: Record<string, SeoEntry> = {
     faqs: PAVEMENT_SEO_CONTENT.flutuante.faqs,
   },
   '/rodapes': {
-    title: 'Rodapés PVC em Coimbra | Preços, Venda e Aplicação',
-    description: 'Rodapés PVC com preços publicados, compra online e serviço de aplicação em Coimbra e na Região Centro. Rodapés em madeira sob consulta.',
+    title: 'Rodapés PVC | Preços, Venda e Aplicação',
+    description: 'Rodapés PVC com preços publicados, compra online e serviço de aplicação na Região Centro. Rodapés em madeira sob consulta.',
     searchTopics: ['rodapés PVC Coimbra', 'rodapé branco', 'comprar rodapés Coimbra', 'aplicação de rodapés Coimbra', 'rodapé em madeira Coimbra'],
     pageType: 'CollectionPage',
     serviceType: 'Venda e aplicação de rodapés PVC',
   },
   '/cozinha': {
-    title: 'Cozinhas por Medida em Coimbra | Fabrico e Montagem',
-    description: 'Cozinhas por medida em Coimbra: levantamento, proposta, fabrico e montagem. Materiais, ferragens, preço e prazo definidos por escrito.',
+    title: 'Cozinhas por Medida | Fabrico e Montagem',
+    description: 'Cozinhas por medida: levantamento, proposta, fabrico e montagem. Materiais, ferragens, preço e prazo definidos por escrito.',
     searchTopics: ['cozinhas por medida Coimbra', 'fabrico de cozinhas Coimbra', 'montagem de cozinhas Coimbra', 'carpinteiro para cozinhas Coimbra'],
     serviceType: 'Projeto, fabrico e montagem de cozinhas por medida',
     faqs: kitchenFaqs,
   },
   '/construcao': {
-    title: 'Carpintaria para Obras em Coimbra | Fornecimento e Montagem',
-    description: 'Carpinteiros para obras, remodelações e empreiteiros: pavimentos, cozinhas, roupeiros, portas e marcenaria em Coimbra, Aveiro, Leiria e arredores.',
+    title: 'Carpintaria para Obras | Fornecimento e Montagem',
+    description: 'Carpinteiros para obras, remodelações e empreiteiros: pavimentos, cozinhas, roupeiros, portas e marcenaria na Região Centro.',
     searchTopics: ['carpintaria em Coimbra', 'carpinteiros para obras', 'carpintaria por medida', 'marcenaria', 'remodelações'],
     serviceType: 'Carpintaria para construção e remodelação',
   },
   '/contactos': {
-    title: 'Pavimentos e Carpintaria em Coimbra | Contactos',
-    description: 'Contacte a CarpiMater para comprar pavimentos e rodapés ou pedir aplicação e trabalhos de carpintaria em Coimbra, Aveiro, Leiria e arredores.',
+    title: 'Pavimentos e Carpintaria | Contactos',
+    description: 'Contacte a CarpiMater para comprar pavimentos e rodapés ou pedir aplicação e trabalhos de carpintaria na Região Centro.',
     searchTopics: ['carpinteiro em Coimbra', 'loja de pavimentos', 'aplicação de pavimentos', 'rodapés PVC'],
     pageType: 'ContactPage',
   },

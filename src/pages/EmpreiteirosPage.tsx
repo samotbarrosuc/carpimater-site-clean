@@ -87,12 +87,11 @@ export default function EmpreiteirosPage() {
                   <h1 className="font-display text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] sm:text-[3.25rem] lg:text-[2.25rem] xl:text-[3rem]">
                     <span className="lg:hidden">
                       <span className="block text-[#19242e]">Carpintaria por medida</span>
-                      <span className="block text-[#19242e]">para obras em</span>
-                      <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">Coimbra.</span>
+                      <span className="block font-serif text-[0.95em] font-normal italic text-[#f08a45]">para obras.</span>
                     </span>
                     <span className="hidden lg:block">
                       <span className="block whitespace-nowrap text-[#19242e]">Carpintaria por medida para</span>
-                      <span className="block whitespace-nowrap font-serif text-[0.95em] font-normal italic text-[#f08a45]">obras e remodelações em Coimbra.</span>
+                      <span className="block whitespace-nowrap font-serif text-[0.95em] font-normal italic text-[#f08a45]">obras e remodelações.</span>
                     </span>
                   </h1>
                   <p className="mb-6 mt-5 max-w-xl text-sm leading-7 text-[#40505b] sm:text-base">

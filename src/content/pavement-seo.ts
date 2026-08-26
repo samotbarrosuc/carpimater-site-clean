@@ -21,7 +21,7 @@ const hybridPrice = formatPrice(PRECO_FLUTUANTE_HIBRIDO_M2)
 
 export const PAVEMENT_SEO_CONTENT: Record<PavementSeoVariant, PavementSeoContent> = {
   vinilico: {
-    heading: 'Pavimento vinílico SPC em Coimbra: preço e aplicação',
+    heading: 'Pavimento vinílico SPC: preço e aplicação',
     intro: `A CarpiMater vende pavimento vinílico SPC a ${vinylPrice} €/m², com IVA incluído. Entregamos gratuitamente na Região Centro e prestamos também serviço de aplicação em Coimbra, Aveiro, Leiria e localidades próximas.`,
     facts: [
       { label: 'Pavimento vinílico SPC', value: `${vinylPrice} €/m², IVA incluído` },
@@ -68,7 +68,7 @@ export const PAVEMENT_SEO_CONTENT: Record<PavementSeoVariant, PavementSeoContent
     storeHref: '/loja?categoria=vinilico#catalogo-loja',
   },
   flutuante: {
-    heading: 'Pavimento flutuante em Coimbra: fornecimento e aplicação',
+    heading: 'Pavimento flutuante híbrido: fornecimento e aplicação',
     intro: `A CarpiMater vende pavimento flutuante híbrido AC5 a ${hybridPrice} €/m², com IVA incluído, resistência à água 100 h+ e garantia do fabricante de 25 anos. A entrega é gratuita na Região Centro e o serviço de aplicação pode ser pedido em separado.`,
     facts: [
       { label: 'Flutuante híbrido AC5', value: `${hybridPrice} €/m², IVA incluído` },

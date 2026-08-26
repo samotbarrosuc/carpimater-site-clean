@@ -8,7 +8,7 @@ export const pairs = [
   {
     before: { src: "/images/antes-1.png", alt: "Cozinha antes da renovação" },
     after:  { src: "/images/depois-1.png", alt: "Cozinha depois da renovação" },
-    title: "Renovação Total em Coimbra",
+    title: "Renovação total",
     desc: "Armários lacados a branco, tampo em quartzo e chão em vinílico SPC a imitar carvalho mel.",
   },
   {

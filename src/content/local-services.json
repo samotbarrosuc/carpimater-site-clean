@@ -1,10 +1,10 @@
 [
   {
     "slug": "montagem-cozinhas-coimbra",
-    "eyebrow": "Cozinhas · Coimbra",
-    "title": "Montagem de cozinhas em Coimbra",
-    "metaTitle": "Montagem de Cozinhas em Coimbra | CarpiMater",
-    "metaDescription": "Montagem de cozinhas em Coimbra e na Região Centro. Envie plantas, medidas e fotografias para confirmarmos o trabalho e prepararmos uma proposta.",
+    "eyebrow": "Cozinhas",
+    "title": "Montagem de cozinhas",
+    "metaTitle": "Montagem de Cozinhas | CarpiMater",
+    "metaDescription": "Montagem de cozinhas na Região Centro. Envie plantas, medidas e fotografias para confirmarmos o trabalho e prepararmos uma proposta.",
     "serviceType": "Montagem de cozinhas",
     "intro": "Fazemos a montagem das cozinhas incluídas nos nossos projetos por medida. Se já tem uma cozinha ou um projeto de outro fornecedor, envie-nos a informação para confirmarmos se podemos executar a montagem.",
     "image": "/images/card-cozinhas.png",
@@ -54,7 +54,7 @@
       { "question": "A montagem inclui eletricidade e canalização?", "answer": "A proposta identifica os trabalhos incluídos e excluídos. Ligações elétricas, gás ou canalização só devem ser consideradas incluídas quando estiverem expressamente indicadas." },
       { "question": "Em que zonas fazem montagem?", "answer": "Trabalhamos regularmente em Coimbra e na Região Centro. Para outras zonas, é necessário confirmar primeiro a disponibilidade." }
     ],
-    "whatsappMessage": "Olá! Gostaria de pedir uma proposta para montagem de cozinha em Coimbra. Posso enviar plantas, medidas e fotografias?",
+    "whatsappMessage": "Olá! Gostaria de pedir uma proposta para montagem de cozinha. Posso enviar plantas, medidas e fotografias?",
     "relatedLinks": [
       { "label": "Cozinhas por medida", "href": "/cozinha" },
       { "label": "Roupeiros por medida", "href": "/roupeiros-por-medida-coimbra" },
@@ -63,10 +63,10 @@
   },
   {
     "slug": "roupeiros-por-medida-coimbra",
-    "eyebrow": "Carpintaria por medida · Coimbra",
-    "title": "Roupeiros por medida em Coimbra",
-    "metaTitle": "Roupeiros por Medida em Coimbra | CarpiMater",
-    "metaDescription": "Roupeiros por medida em Coimbra e na Região Centro. Levantamento, proposta, fabrico e montagem adaptados ao espaço disponível.",
+    "eyebrow": "Carpintaria por medida",
+    "title": "Roupeiros por medida",
+    "metaTitle": "Roupeiros por Medida | CarpiMater",
+    "metaDescription": "Roupeiros por medida na Região Centro. Levantamento, proposta, fabrico e montagem adaptados ao espaço disponível.",
     "serviceType": "Projeto, fabrico e montagem de roupeiros por medida",
     "intro": "Projetamos, fornecemos e montamos roupeiros adaptados às medidas e às necessidades de cada espaço. Os materiais, interiores, frentes, ferragens e condições do trabalho ficam definidos na proposta.",
     "image": "/images/card-obras.png",
@@ -116,7 +116,7 @@
       { "question": "Como é calculado o preço?", "answer": "O preço depende das dimensões, materiais, ferragens, organização interior, frentes, transporte e montagem. Apresentamos o valor depois de analisar o pedido." },
       { "question": "Trabalham fora de Coimbra?", "answer": "Trabalhamos regularmente na Região Centro. Para outras zonas, contacte-nos para confirmarmos a disponibilidade." }
     ],
-    "whatsappMessage": "Olá! Gostaria de pedir uma proposta para um roupeiro por medida em Coimbra. Posso enviar medidas e fotografias do espaço?",
+    "whatsappMessage": "Olá! Gostaria de pedir uma proposta para um roupeiro por medida. Posso enviar medidas e fotografias do espaço?",
     "relatedLinks": [
       { "label": "Cozinhas por medida", "href": "/cozinha" },
       { "label": "Carpintaria para obras", "href": "/construcao" },
@@ -125,10 +125,10 @@
   },
   {
     "slug": "instalacao-rodapes-coimbra",
-    "eyebrow": "Rodapés · Coimbra",
-    "title": "Instalação de rodapés em Coimbra",
-    "metaTitle": "Instalação de Rodapés em Coimbra | CarpiMater",
-    "metaDescription": "Aplicação de rodapés PVC ou madeira em Coimbra e na Região Centro. Peça uma estimativa e confirme medidas, cortes e remates em obra.",
+    "eyebrow": "Rodapés",
+    "title": "Instalação de rodapés",
+    "metaTitle": "Instalação de Rodapés | CarpiMater",
+    "metaDescription": "Aplicação de rodapés PVC ou madeira na Região Centro. Peça uma estimativa e confirme medidas, cortes e remates em obra.",
     "serviceType": "Instalação de rodapés",
     "intro": "Fornecemos e aplicamos rodapés em conjunto com o pavimento ou como trabalho separado, sujeito à análise do local. Na loja encontra rodapés PVC com preços publicados; os modelos em madeira são apresentados sob consulta.",
     "image": "/images/produtos-rodape/rodape pvc branco liso.jpg",
@@ -178,7 +178,7 @@
       { "question": "Como calcular os metros de rodapé?", "answer": "Meça o perímetro das paredes onde pretende instalar rodapé e desconte os vãos onde não haverá aplicação. A quantidade final deve considerar cortes e remates." },
       { "question": "Fazem instalação em Aveiro e Leiria?", "answer": "Trabalhamos regularmente na Região Centro, incluindo Coimbra, Aveiro, Leiria e localidades próximas. A disponibilidade é confirmada para cada pedido." }
     ],
-    "whatsappMessage": "Olá! Gostaria de pedir uma estimativa para instalação de rodapés em Coimbra. Posso enviar os metros e fotografias?",
+    "whatsappMessage": "Olá! Gostaria de pedir uma estimativa para instalação de rodapés. Posso enviar os metros e fotografias?",
     "relatedLinks": [
       { "label": "Comprar rodapés", "href": "/rodapes" },
       { "label": "Loja online", "href": "/loja" },

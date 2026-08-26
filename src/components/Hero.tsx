@@ -94,7 +94,6 @@ export default function Hero() {
               (<div className="mb-6">
                 <h1 className="font-display text-[2.65rem] font-bold leading-[0.98] tracking-[-0.04em] sm:text-[3.25rem] lg:text-[3.65rem]">
                   <span className="block text-primary">Cozinhas por medida</span>
-                  <span className="block text-[#19242e]">em Coimbra.</span>
                 </h1>
                 <p className="mb-6 mt-5 max-w-xl text-sm leading-7 text-[#40505b] sm:text-base">
                   Levantamento, proposta, fabrico e montagem adaptados ao espaço.

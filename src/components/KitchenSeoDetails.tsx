@@ -19,7 +19,7 @@ export default function KitchenSeoDetails() {
     <section className="border-y border-[#ded8cf] bg-white px-4 py-16 sm:py-20" aria-labelledby="cozinhas-coimbra-detalhes">
       <div className="mx-auto max-w-6xl">
         <div className="max-w-3xl">
-          <p className="section-kicker">Cozinhas por medida em Coimbra</p>
+          <p className="section-kicker">Cozinhas por medida</p>
           <h2 id="cozinhas-coimbra-detalhes" className="mt-3 font-display text-3xl font-bold tracking-[-0.03em] sm:text-4xl">Da primeira medida à montagem em obra</h2>
           <p className="mt-5 text-base leading-7 text-[#40505b]">Recolhemos a informação do espaço, definimos materiais e ferragens e apresentamos uma proposta com os trabalhos, o preço e o prazo previsto. O fabrico começa depois da aprovação das medidas e da proposta.</p>
         </div>
