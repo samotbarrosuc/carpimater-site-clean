@@ -5,6 +5,7 @@ import { RODAPES } from '@/content/rodapes'
 import { BUSINESS_NAME, EMAIL, PHONE_NUMBER } from '@/content/site'
 import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_VINILICO_SPC_M2 } from '@/content/precos-materiais'
 import { PAVEMENT_SEO_CONTENT } from '@/content/pavement-seo'
+import { TRAVEL_DATA } from '@/content/viagens'
 import localServices from '@/content/local-services.json'
 import kitchenFaqs from '@/content/kitchen-faq.json'
 
@@ -29,7 +30,68 @@ type SeoEntry = {
   index?: boolean
   pageType?: 'WebPage' | 'CollectionPage' | 'AboutPage' | 'ContactPage' | 'CheckoutPage'
   serviceType?: string
+  areaServed?: Array<Record<string, string>>
   faqs?: Array<{ question: string; answer: string }>
+}
+
+function slugify(value: string) {
+  return value
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/^-+|-+$/g, '')
+}
+
+function localPavementSeo(pathname: string): SeoEntry | undefined {
+  if (pathname === '/zonas-pavimentos-regiao-centro') {
+    return {
+      title: 'Pavimentos na Região Centro | Zonas de Entrega Gratuita',
+      description: 'Pavimentos vinílicos SPC, flutuante híbrido e rodapés com compra online, preços publicados e transporte gratuito para concelhos de Coimbra, Aveiro e Leiria.',
+      searchTopics: ['pavimentos região centro', 'pavimento vinílico Coimbra Aveiro Leiria', 'flutuante híbrido Coimbra Aveiro Leiria', 'loja de pavimentos região centro', 'transporte gratuito pavimentos'],
+      pageType: 'CollectionPage',
+      serviceType: 'Venda online, entrega e aplicação de pavimentos na Região Centro',
+    }
+  }
+
+  if (!pathname.startsWith('/pavimentos-')) return undefined
+
+  const localitySlug = pathname.replace('/pavimentos-', '')
+  const location = TRAVEL_DATA.find((entry) => slugify(entry.concelho) === localitySlug)
+  if (!location) return undefined
+
+  return {
+    title: `Pavimentos em ${location.concelho} | Vinílico e Flutuante`,
+    description: `Compra online de pavimento vinílico SPC a ${VINYL_PRICE} €/m², flutuante híbrido a ${HYBRID_PRICE} €/m² e rodapés para ${location.concelho}. Transporte gratuito na Região Centro e aplicação disponível.`,
+    searchTopics: [
+      `pavimentos ${location.concelho}`,
+      `loja de pavimentos ${location.concelho}`,
+      `comprar pavimento vinílico ${location.concelho}`,
+      `pavimento vinílico ${location.concelho}`,
+      `flutuante híbrido ${location.concelho}`,
+      `comprar flutuante ${location.concelho}`,
+      `rodapés ${location.concelho}`,
+      `aplicação de pavimentos ${location.concelho}`,
+      `transporte gratuito pavimentos ${location.concelho}`,
+    ],
+    pageType: 'CollectionPage',
+    serviceType: `Venda online, entrega e aplicação de pavimentos em ${location.concelho}`,
+    areaServed: [
+      { '@type': 'City', name: location.concelho },
+      { '@type': 'AdministrativeArea', name: `Distrito de ${location.distrito}` },
+      { '@type': 'AdministrativeArea', name: 'Região Centro, Portugal' },
+    ],
+    faqs: [
+      {
+        question: `Entregam pavimentos em ${location.concelho}?`,
+        answer: `Sim. A entrega regular de pavimentos e rodapés para ${location.concelho} está incluída na cobertura da Região Centro. Para situações especiais, confirmamos as condições antes de avançar.`,
+      },
+      {
+        question: `Também fazem aplicação de pavimento em ${location.concelho}?`,
+        answer: 'Sim. Pode solicitar aplicação juntamente com o material. A estimativa é apresentada separadamente e confirmada depois de analisadas as condições da obra.',
+      },
+    ],
+  }
 }
 
 const LOCAL_SERVICE_SEO = Object.fromEntries(localServices.map((service) => [
@@ -357,7 +419,7 @@ function routeSchema(pathname: string, seo: SeoEntry, canonical: string) {
       serviceType: seo.serviceType,
       category: seo.searchTopics,
       provider: { '@id': BUSINESS_ID },
-      areaServed: placeNames.map((name) => ({ '@type': 'City', name })),
+      areaServed: seo.areaServed || placeNames.map((name) => ({ '@type': 'City', name })),
       availableChannel: {
         '@type': 'ServiceChannel',
         serviceUrl: canonical,
@@ -399,7 +461,7 @@ export default function SeoManager() {
   const pathname = location.split('?')[0].replace(/\/$/, '') || '/'
 
   useEffect(() => {
-    const seo = SEO_BY_PATH[pathname] || {
+    const seo = SEO_BY_PATH[pathname] || localPavementSeo(pathname) || {
       title: 'Página não encontrada | CarpiMater',
       description: 'A página que procura não foi encontrada.',
       index: false,

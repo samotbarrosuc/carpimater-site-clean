@@ -21,6 +21,8 @@ const RodapesPage = lazy(() => import("@/pages/RodapesPage"));
 const MontagemCozinhasPage = lazy(() => import("@/pages/LocalServicePages").then((module) => ({ default: module.MontagemCozinhasPage })));
 const RoupeirosPage = lazy(() => import("@/pages/LocalServicePages").then((module) => ({ default: module.RoupeirosPage })));
 const InstalacaoRodapesPage = lazy(() => import("@/pages/LocalServicePages").then((module) => ({ default: module.InstalacaoRodapesPage })));
+const LocalPavimentosPage = lazy(() => import("@/pages/LocalPavimentosPage").then((module) => ({ default: module.LocalPavimentosPage })));
+const ZonasPavimentosPage = lazy(() => import("@/pages/LocalPavimentosPage").then((module) => ({ default: module.ZonasPavimentosPage })));
 
 const queryClient = new QueryClient();
 
@@ -41,6 +43,8 @@ function Router() {
         <Route path="/montagem-cozinhas-coimbra" component={MontagemCozinhasPage} />
         <Route path="/roupeiros-por-medida-coimbra" component={RoupeirosPage} />
         <Route path="/instalacao-rodapes-coimbra" component={InstalacaoRodapesPage} />
+        <Route path="/zonas-pavimentos-regiao-centro" component={ZonasPavimentosPage} />
+        <Route path="/pavimentos-:localSlug" component={LocalPavimentosPage} />
         <Route path="/construção" component={() => <Redirect to="/construcao" />} />
         <Route path="/empreiteiros" component={() => <Redirect to="/construcao" />} />
         <Route path="/politica-de-privacidade" component={PrivacyPolicyPage} />
