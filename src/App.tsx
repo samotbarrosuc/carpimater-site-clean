@@ -1,5 +1,5 @@
 import { lazy, Suspense } from "react";
-import { Switch, Route, Router as WouterRouter, Redirect } from "wouter";
+import { Switch, Route, Router as WouterRouter, Redirect, useLocation } from "wouter";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -26,6 +26,21 @@ const ZonasPavimentosPage = lazy(() => import("@/pages/LocalPavimentosPage").the
 
 const queryClient = new QueryClient();
 
+function FallbackRoute() {
+  const [location] = useLocation();
+  const pathname = location.split("?")[0].replace(/\/$/, "") || "/";
+
+  if (pathname === "/zonas-pavimentos-regiao-centro") {
+    return <ZonasPavimentosPage />;
+  }
+
+  if (/^\/pavimentos-[a-z0-9-]+$/i.test(pathname)) {
+    return <LocalPavimentosPage />;
+  }
+
+  return <NotFound />;
+}
+
 function Router() {
   return (
     <Suspense fallback={null}>
@@ -44,12 +59,11 @@ function Router() {
         <Route path="/roupeiros-por-medida-coimbra" component={RoupeirosPage} />
         <Route path="/instalacao-rodapes-coimbra" component={InstalacaoRodapesPage} />
         <Route path="/zonas-pavimentos-regiao-centro" component={ZonasPavimentosPage} />
-        <Route path="/pavimentos-:localSlug" component={LocalPavimentosPage} />
         <Route path="/construção" component={() => <Redirect to="/construcao" />} />
         <Route path="/empreiteiros" component={() => <Redirect to="/construcao" />} />
         <Route path="/politica-de-privacidade" component={PrivacyPolicyPage} />
         <Route path="/termos-e-condicoes" component={TermsPage} />
-        <Route component={NotFound} />
+        <Route component={FallbackRoute} />
       </Switch>
     </Suspense>
   );
