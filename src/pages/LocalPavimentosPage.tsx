@@ -19,6 +19,28 @@ function slugify(value: string) {
     .replace(/^-+|-+$/g, '')
 }
 
+const localityPrepositions = new Map([
+  ['mealhada', 'na'],
+  ['murtosa', 'na'],
+  ['lousa', 'na'],
+  ['pampilhosa-da-serra', 'na'],
+  ['batalha', 'na'],
+  ['marinha-grande', 'na'],
+  ['nazare', 'na'],
+  ['bombarral', 'no'],
+])
+
+function localityPhrase(concelho: string) {
+  return `${localityPrepositions.get(slugify(concelho)) || 'em'} ${concelho}`
+}
+
+function localityDestinationPhrase(concelho: string) {
+  const preposition = localityPrepositions.get(slugify(concelho))
+  if (preposition === 'na') return `para a ${concelho}`
+  if (preposition === 'no') return `para o ${concelho}`
+  return `para ${concelho}`
+}
+
 const groupedLocations = TRAVEL_DATA.reduce<Record<string, typeof TRAVEL_DATA>>((groups, location) => {
   groups[location.distrito] = groups[location.distrito] || []
   groups[location.distrito].push(location)
@@ -84,7 +106,7 @@ function LocationLinks() {
 }
 
 function MaterialCards({ concelho }: { concelho?: string }) {
-  const locationText = concelho ? ` para ${concelho}` : ''
+  const destinationText = concelho ? localityDestinationPhrase(concelho) : ''
 
   return (
     <section className="px-4 py-16 sm:py-20">
@@ -103,13 +125,13 @@ function MaterialCards({ concelho }: { concelho?: string }) {
           {[
             {
               title: 'Flutuante híbrido',
-              text: `AC5, resistente à água 100 h+ e disponível na loja online${locationText}.`,
+              text: `AC5, resistente à água 100 h+ e disponível na loja online${destinationText ? ` ${destinationText}` : ''}.`,
               price: `${formatEur(PRECO_FLUTUANTE_HIBRIDO_M2)}/m²`,
               href: '/loja?categoria=flutuante',
             },
             {
               title: 'Vinílico SPC',
-              text: `Pavimento vinílico impermeável para compra online${locationText}.`,
+              text: `Pavimento vinílico impermeável para compra online${destinationText ? ` ${destinationText}` : ''}.`,
               price: `${formatEur(PRECO_VINILICO_SPC_M2)}/m²`,
               href: '/loja?categoria=vinilico',
             },
@@ -177,6 +199,8 @@ export function LocalPavimentosPage() {
   if (!travelEntry) {
     return <ZonasPavimentosPage />
   }
+  const localText = localityPhrase(travelEntry.concelho)
+  const destinationText = localityDestinationPhrase(travelEntry.concelho)
 
   return (
     <main className="min-h-screen bg-[#f8f5ef] text-[#19242e]">
@@ -186,7 +210,7 @@ export function LocalPavimentosPage() {
         <div className="mx-auto max-w-6xl">
           <p className="section-kicker text-[#f08a45]">Pavimentos · {travelEntry.distrito}</p>
           <h1 className="mt-4 max-w-4xl font-display text-4xl font-bold leading-[1.03] tracking-[-0.035em] sm:text-6xl">
-            Pavimentos em {travelEntry.concelho}. <span className="font-serif font-normal italic text-[#f08a45]">Compra online.</span>
+            Pavimentos {localText}. <span className="font-serif font-normal italic text-[#f08a45]">Compra online.</span>
           </h1>
           <p className="mt-6 max-w-2xl text-base leading-7 text-white/72 sm:text-lg">
             Vinílico SPC, flutuante híbrido e rodapés com preços publicados. Entrega regular gratuita na Região Centro e aplicação disponível mediante confirmação.
@@ -194,7 +218,7 @@ export function LocalPavimentosPage() {
           <div className="mt-7 flex flex-wrap gap-3">
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-white">
               <Truck className="h-4 w-4 text-[#f08a45]" />
-              Transporte gratuito para {travelEntry.concelho}
+              Transporte gratuito {destinationText}
             </span>
             <span className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/10 px-4 py-2 text-sm font-bold text-white">
               <MapPin className="h-4 w-4 text-[#f08a45]" />

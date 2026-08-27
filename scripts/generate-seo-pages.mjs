@@ -40,6 +40,28 @@ function parseTravelLocations(source) {
   return locations
 }
 
+const localityPrepositions = new Map([
+  ['mealhada', 'na'],
+  ['murtosa', 'na'],
+  ['lousa', 'na'],
+  ['pampilhosa-da-serra', 'na'],
+  ['batalha', 'na'],
+  ['marinha-grande', 'na'],
+  ['nazare', 'na'],
+  ['bombarral', 'no'],
+])
+
+function localityPhrase(concelho) {
+  return `${localityPrepositions.get(slugify(concelho)) || 'em'} ${concelho}`
+}
+
+function localityDestinationPhrase(concelho) {
+  const preposition = localityPrepositions.get(slugify(concelho))
+  if (preposition === 'na') return `para a ${concelho}`
+  if (preposition === 'no') return `para o ${concelho}`
+  return `para ${concelho}`
+}
+
 const vinylPrice = formatMaterialPrice(readMaterialPrice('PRECO_VINILICO_SPC_M2'))
 const hybridPrice = formatMaterialPrice(readMaterialPrice('PRECO_FLUTUANTE_HIBRIDO_M2'))
 const whiteSkirtingPrice = formatMaterialPrice(readMaterialPrice('PRECO_RODAPE_PVC_BRANCO_ML'))
@@ -244,7 +266,7 @@ for (const service of localServices) {
 
 const localPavementLinks = travelLocations.map((location) => ({
   href: `/pavimentos-${slugify(location.concelho)}`,
-  label: `Pavimentos em ${location.concelho}`,
+  label: `Pavimentos ${localityPhrase(location.concelho)}`,
 }))
 
 pages.loja.links = [
@@ -293,9 +315,11 @@ pages['zonas-pavimentos-regiao-centro'] = {
 
 for (const location of travelLocations) {
   const localSlug = `pavimentos-${slugify(location.concelho)}`
+  const localText = localityPhrase(location.concelho)
+  const destinationText = localityDestinationPhrase(location.concelho)
   pages[localSlug] = {
-    title: `Pavimentos em ${location.concelho} | Vinílico e Flutuante`,
-    description: `Compra online de pavimento vinílico SPC a ${vinylPrice} €/m², flutuante híbrido a ${hybridPrice} €/m² e rodapés para ${location.concelho}. Transporte gratuito na Região Centro e aplicação disponível.`,
+    title: `Pavimentos ${localText} | Vinílico e Flutuante`,
+    description: `Compra online de pavimento vinílico SPC a ${vinylPrice} €/m², flutuante híbrido a ${hybridPrice} €/m² e rodapés ${destinationText}. Transporte gratuito na Região Centro e aplicação disponível.`,
     topics: [
       `pavimentos ${location.concelho}`,
       `loja de pavimentos ${location.concelho}`,
@@ -309,32 +333,32 @@ for (const location of travelLocations) {
       `transporte gratuito pavimentos ${location.concelho}`,
     ],
     type: 'CollectionPage',
-    serviceType: `Venda online, entrega e aplicação de pavimentos em ${location.concelho}`,
+    serviceType: `Venda online, entrega e aplicação de pavimentos ${localText}`,
     areaServed: [
       { '@type': 'City', name: location.concelho },
       { '@type': 'AdministrativeArea', name: `Distrito de ${location.distrito}` },
       { '@type': 'AdministrativeArea', name: 'Região Centro, Portugal' },
     ],
-    heading: `Pavimentos em ${location.concelho}: vinílico SPC, flutuante híbrido e rodapés`,
-    intro: `Se procura pavimento vinílico, flutuante híbrido ou rodapés em ${location.concelho}, pode comprar o material online na CarpiMater. Os preços estão publicados, incluem IVA e a entrega regular é gratuita na Região Centro. Também pode solicitar aplicação, apresentada numa estimativa separada.`,
+    heading: `Pavimentos ${localText}: vinílico SPC, flutuante híbrido e rodapés`,
+    intro: `Se procura pavimento vinílico, flutuante híbrido ou rodapés ${localText}, pode comprar o material online na CarpiMater. Os preços estão publicados, incluem IVA e a entrega regular é gratuita na Região Centro. Também pode solicitar aplicação, apresentada numa estimativa separada.`,
     facts: [
       `Pavimento vinílico SPC: ${vinylPrice} €/m², IVA incluído`,
       `Flutuante híbrido AC5: ${hybridPrice} €/m², IVA incluído`,
       `Rodapé PVC: desde ${whiteSkirtingPrice} €/m`,
-      `Transporte gratuito para ${location.concelho} e Região Centro`,
+      `Transporte gratuito ${destinationText} e Região Centro`,
       'Aplicação disponível mediante confirmação de agenda e condições da obra',
     ],
     faqs: [
       {
-        question: `Entregam pavimentos em ${location.concelho}?`,
-        answer: `Sim. A entrega regular de pavimentos e rodapés para ${location.concelho} está incluída na cobertura da Região Centro. Para situações especiais, confirmamos as condições antes de avançar.`,
+        question: `Entregam pavimentos ${localText}?`,
+        answer: `Sim. A entrega regular de pavimentos e rodapés ${destinationText} está incluída na cobertura da Região Centro. Para situações especiais, confirmamos as condições antes de avançar.`,
       },
       {
-        question: `Posso comprar apenas o material para ${location.concelho}?`,
+        question: `Posso comprar apenas o material ${destinationText}?`,
         answer: 'Sim. Pode comprar apenas pavimento vinílico SPC, flutuante híbrido ou rodapés na loja online, com preços publicados e IVA incluído.',
       },
       {
-        question: `Também fazem aplicação de pavimento em ${location.concelho}?`,
+        question: `Também fazem aplicação de pavimento ${localText}?`,
         answer: 'Sim, pode solicitar aplicação juntamente com o material. A estimativa é apresentada separadamente e confirmada depois de analisadas as condições da obra.',
       },
       {

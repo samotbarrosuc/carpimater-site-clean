@@ -43,6 +43,28 @@ function slugify(value: string) {
     .replace(/^-+|-+$/g, '')
 }
 
+const localityPrepositions = new Map([
+  ['mealhada', 'na'],
+  ['murtosa', 'na'],
+  ['lousa', 'na'],
+  ['pampilhosa-da-serra', 'na'],
+  ['batalha', 'na'],
+  ['marinha-grande', 'na'],
+  ['nazare', 'na'],
+  ['bombarral', 'no'],
+])
+
+function localityPhrase(concelho: string) {
+  return `${localityPrepositions.get(slugify(concelho)) || 'em'} ${concelho}`
+}
+
+function localityDestinationPhrase(concelho: string) {
+  const preposition = localityPrepositions.get(slugify(concelho))
+  if (preposition === 'na') return `para a ${concelho}`
+  if (preposition === 'no') return `para o ${concelho}`
+  return `para ${concelho}`
+}
+
 function localPavementSeo(pathname: string): SeoEntry | undefined {
   if (pathname === '/zonas-pavimentos-regiao-centro') {
     return {
@@ -59,10 +81,12 @@ function localPavementSeo(pathname: string): SeoEntry | undefined {
   const localitySlug = pathname.replace('/pavimentos-', '')
   const location = TRAVEL_DATA.find((entry) => slugify(entry.concelho) === localitySlug)
   if (!location) return undefined
+  const localText = localityPhrase(location.concelho)
+  const destinationText = localityDestinationPhrase(location.concelho)
 
   return {
-    title: `Pavimentos em ${location.concelho} | Vinílico e Flutuante`,
-    description: `Compra online de pavimento vinílico SPC a ${VINYL_PRICE} €/m², flutuante híbrido a ${HYBRID_PRICE} €/m² e rodapés para ${location.concelho}. Transporte gratuito na Região Centro e aplicação disponível.`,
+    title: `Pavimentos ${localText} | Vinílico e Flutuante`,
+    description: `Compra online de pavimento vinílico SPC a ${VINYL_PRICE} €/m², flutuante híbrido a ${HYBRID_PRICE} €/m² e rodapés ${destinationText}. Transporte gratuito na Região Centro e aplicação disponível.`,
     searchTopics: [
       `pavimentos ${location.concelho}`,
       `loja de pavimentos ${location.concelho}`,
@@ -75,7 +99,7 @@ function localPavementSeo(pathname: string): SeoEntry | undefined {
       `transporte gratuito pavimentos ${location.concelho}`,
     ],
     pageType: 'CollectionPage',
-    serviceType: `Venda online, entrega e aplicação de pavimentos em ${location.concelho}`,
+    serviceType: `Venda online, entrega e aplicação de pavimentos ${localText}`,
     areaServed: [
       { '@type': 'City', name: location.concelho },
       { '@type': 'AdministrativeArea', name: `Distrito de ${location.distrito}` },
@@ -83,11 +107,11 @@ function localPavementSeo(pathname: string): SeoEntry | undefined {
     ],
     faqs: [
       {
-        question: `Entregam pavimentos em ${location.concelho}?`,
-        answer: `Sim. A entrega regular de pavimentos e rodapés para ${location.concelho} está incluída na cobertura da Região Centro. Para situações especiais, confirmamos as condições antes de avançar.`,
+        question: `Entregam pavimentos ${localText}?`,
+        answer: `Sim. A entrega regular de pavimentos e rodapés ${destinationText} está incluída na cobertura da Região Centro. Para situações especiais, confirmamos as condições antes de avançar.`,
       },
       {
-        question: `Também fazem aplicação de pavimento em ${location.concelho}?`,
+        question: `Também fazem aplicação de pavimento ${localText}?`,
         answer: 'Sim. Pode solicitar aplicação juntamente com o material. A estimativa é apresentada separadamente e confirmada depois de analisadas as condições da obra.',
       },
     ],
