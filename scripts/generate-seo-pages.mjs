@@ -406,12 +406,6 @@ function replaceMeta(html, attribute, key, content) {
   return html.replace(expression, `<meta ${attribute}="${key}" content="${escapeAttribute(content)}" />`)
 }
 
-function stripAppOnlyFallbackHider(html) {
-  return html
-    .replace(/\s*<script>\s*document\.documentElement\.classList\.add\('js-enabled'\)\s*<\/script>/, '')
-    .replace(/\s*<style>\s*\.js-enabled \[data-static-seo-content\][\s\S]*?<\/style>/, '')
-}
-
 for (const [slug, page] of Object.entries(pages)) {
   const canonical = `${siteUrl}/${slug}`
   const robots = page.index === false
@@ -505,7 +499,6 @@ for (const [slug, page] of Object.entries(pages)) {
     /<div id="root">[\s\S]*?<\/body>/,
     `<div id="root">${renderStaticContent(page)}</div>\n  </body>`,
   )
-  html = stripAppOnlyFallbackHider(html)
 
   const pageDir = join(outputDir, slug)
   await mkdir(pageDir, { recursive: true })
