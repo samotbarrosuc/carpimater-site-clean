@@ -9,7 +9,7 @@
  */
 
 /** Preço do pavimento vinílico SPC por m². */
-export const PRECO_VINILICO_SPC_M2 = 22.15
+export const PRECO_VINILICO_SPC_M2 = 21.5
 
 /** Preço do pavimento flutuante híbrido por m². */
 export const PRECO_FLUTUANTE_HIBRIDO_M2 = 23.5

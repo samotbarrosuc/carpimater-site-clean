@@ -1,5 +1,5 @@
 import type { SiteVariant } from '@/content/site'
-import { PRECO_FLUTUANTE_HIBRIDO_M2 } from '@/content/precos-materiais'
+import { PRECO_FLUTUANTE_HIBRIDO_M2, PRECO_VINILICO_SPC_M2 } from '@/content/precos-materiais'
 import { NOMES_FLUTUANTES_HIBRIDOS, NOMES_VINILICOS } from '@/content/nomes-materiais'
 
 /**
@@ -60,7 +60,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: NOMES_VINILICOS['VIN-001'],
     referencia: 'VIN-001',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#C9A96E',
     imagem: '/images/produtos-vinil/carvalho_mel_IMG_2897_optimized_2000-scaled-e1729769492932.jpeg',
     useCase: 'Ideal para salas de estar modernas',
@@ -68,7 +68,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: NOMES_VINILICOS['VIN-002'],
     referencia: 'VIN-002',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#8B8680',
     imagem: '/images/produtos-vinil/carvalho_nogal_PHOTO-2023-06-13-01-28-00-e1729769602770.jpg',
     useCase: 'Perfeito para ambientes elegantes',
@@ -76,7 +76,7 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: NOMES_VINILICOS['VIN-003'],
     referencia: 'VIN-003',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#B5935A',
     imagem: '/images/produtos-vinil/eucalipto_PHOTO-2023-11-21-08-25-04-e1729769679644.jpg',
     useCase: 'Ideal para cozinhas e áreas de serviço',
@@ -84,42 +84,42 @@ const VINILICO_EDITAVEIS: ProdutoEditavel[] = [
   {
     nome: NOMES_VINILICOS['VIN-004'],
     referencia: 'VIN-004',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#D4C4A0',
     imagem: '/images/produtos-vinil/oliveira_PHOTO-2023-06-13-01-26-58-e1729769780755.jpg',
   },
   {
     nome: NOMES_VINILICOS['VIN-005'],
     referencia: 'VIN-005',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#E8D5B0',
     imagem: '/images/produtos-vinil/Tanzania_Almond_optimized_2000-scaled.jpg',
   },
   {
     nome: NOMES_VINILICOS['VIN-006'],
     referencia: 'VIN-006',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#3D2B1F',
     imagem: '/images/produtos-vinil/tanzania_coconut_IMG_2899_optimized_2000-scaled.jpeg',
   },
   {
     nome: NOMES_VINILICOS['VIN-007'],
     referencia: 'VIN-007',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#6B3A2A',
     imagem: '/images/produtos-vinil/tanzania_grey_IMG_2902_optimized_2000-scaled.jpeg',
   },
   {
     nome: NOMES_VINILICOS['VIN-008'],
     referencia: 'VIN-008',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#B0ADB0',
     imagem: '/images/produtos-vinil/Tanzania_Natural_1_optimized_2000-scaled.jpg',
   },
   {
     nome: NOMES_VINILICOS['VIN-009'],
     referencia: 'VIN-009',
-    precoM2: 21.50,
+    precoM2: PRECO_VINILICO_SPC_M2,
     cor: '#F5F0E8',
     imagem: '/images/produtos-vinil/tanzania_silver.jpeg',
   },
